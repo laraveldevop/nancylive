@@ -6,8 +6,10 @@
     RewriteEngine On
 
     # Handle Authorization Header
+    RewriteCond %{HTTP:API_KEY} .
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    RewriteRule .* - [E=HTTP_API_KEY:%{HTTP:API_KEY}]
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d

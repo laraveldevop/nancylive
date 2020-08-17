@@ -4,6 +4,12 @@
         <link href="{{asset('assets/css/scrollspyNav.css') }}" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="{{asset('plugins/select2/select2.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/switches.css') }}">
+        <style type="text/css">
+            .error{
+                color: red;
+            }
+
+        </style>
     @endpush
     <div id="content" class="main-content">
         <div class="container">
@@ -18,10 +24,10 @@
                             </div>
                         </div>
                         @if ($action=='INSERT')
-                            <form class="mb-4" method="POST" action="{{ url('video') }}"
+                            <form class="mb-4" method="POST" id="form"  action="{{ url('video') }}"
                                   enctype="multipart/form-data">
                                 @else
-                                    <form class="mb-4" method="POST"  enctype="multipart/form-data"
+                                    <form class="mb-4" method="POST" id="form" enctype="multipart/form-data"
                                           action="{{ route('video.update',$video->id) }}">
                                         @method('PUT')
                                         @endif
@@ -197,6 +203,8 @@
     </div>
 
     @push('video_script')
+        <script src="{{asset('js/jquery.validate.min.js')}}"></script>
+        <script src="{{asset('js/additional-methods.min.js')}}"></script>
         <script>
             $('#price_type').change(function (){
                 var type = $("#price_type").val();
@@ -210,7 +218,7 @@
                         '                                                            placeholder="Enter Your Price">\n' +
                         '                                                        @if ($errors->has('price'))\n' +
                         '                                                            <span class="invalid-feedback" role="alert">\n' +
-                        '                                                                  <strong>{{ $errors->first('price') }}</strong>\n' +
+                        '                                                                  <strong >{{ $errors->first('price') }}</strong>\n' +
                         '                                                             </span>\n' +
                         '                                                        @endif')
                 }
@@ -233,13 +241,13 @@
                         '                                                                value="{{ ((!empty($video->video)) ? $video->video :old('video')) }}">\n' +
                         '                                                            @if ($errors->has('video'))\n' +
                         '                                                                <span class="invalid-feedback" role="alert">\n' +
-                        '                                                                  <strong>{{ $errors->first('video') }}</strong>\n' +
+                        '                                                                  <strong class="text-danger">{{ $errors->first('video') }}</strong>\n' +
                         '                                                             </span>\n' +
                         '                                                            @endif
                             <br><div class="progress br-30">\n' +
                         '                                                <div class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">0%</div>\n' +
                         '                                            </div>\n'+
-                     ' <div class="msg"></div><br><a  class="btn btn-sm btn-success" >Upload</button>');
+                     ' <div class="msg"></div><br><a id="submit" class="btn btn-sm btn-success" >Upload</button>');
                 }
                 else {
                     $('#video_local_display').html(' <label for="exampleFormControlInput1">Video URL</label>\n' +
@@ -266,20 +274,33 @@
         <script src="{{asset('plugins/select2/custom-select2.js') }}"></script>
         <script>
             $(document).ready(function() {
+                $('#form').validate({
+                    rules: {
+                        video: {
 
+                            required: true,
+                            extension: "mp4|mov|ogg|webm|qt"
+
+                        },
+                    },
+                    messages: {
+                        video: {
+                            required: "<span class='text-danger'>Please provide a video file</span>",
+                            extension: "<span class='text-danger'>only video file allowed</span>"
+                        },
+                    },
+
+                     });
                 $(document).on("click", "a", function(){
                     $('.progress-bar').css('width', '0');
                     $('.msg').text('');
                     var video_local = $('#video_local').val();
-                    if (video_local == '') {
-                        alert('Please enter file name and select file');
-                        return;
-                    }
+
                     var fileInput = document.getElementById('video');
                     var filePath = fileInput.value;
                     var allowedExtensions = /(\.mp4)$/i;
                     if(!allowedExtensions.exec(filePath)) {
-                        alert('Please upload file having extension .mp4 only.');
+                        alert('Please upload file having video only.');
                         fileInput.value = '';
                         return ;
                     }
@@ -321,6 +342,7 @@
             });
 
         </script>
+
     @endpush
 @endsection
 

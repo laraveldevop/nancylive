@@ -3,10 +3,10 @@
 $host = request()->getHttpHost();
 if ($host == 'localhost')
 {
-    $host_url = 'http://localhost/video-status/public';
+    $host_url = 'http://localhost/video-status/public/';
 }
 else{
-    $host_url = 'http://nancybeauty.purecode.co.in/public';
+    $host_url = 'http://nancybeauty.purecode.co.in/public/';
 }
 return [
 

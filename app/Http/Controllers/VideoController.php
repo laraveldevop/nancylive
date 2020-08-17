@@ -146,6 +146,7 @@ class VideoController extends Controller
         //
     }
 
+
     public function video(Request $request) {
             $file = $request->video_local;
             $fileName = $file->getClientOriginalExtension();
