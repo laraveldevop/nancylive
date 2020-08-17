@@ -35,7 +35,7 @@
                                                             <label for="exampleFormControlInput1">Category</label>
                                                             <select
                                                                 class="basic form-control {{ $errors->has('cat_id') ? ' is-invalid' : '' }}"
-                                                                name="cat_id" id="cat_id" required>
+                                                                name="cat_id" id="cat_id" @if ($action=='INSERT') required @endif>
                                                                 <option value="">--Select Option--</option>
                                                                 @foreach($category as $key => $value)
                                                                     <option value="{{ $value->cat_id }}"
@@ -94,7 +94,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">Video Upload Option</label>
-                                                            <select name="video_type" id="video_type" class="form-control" required>
+                                                            <select name="video_type" id="video_type" class="form-control" @if ($action=='INSERT') required @endif>
                                                                 <option value="">--Select Option--</option>
                                                                 <option value="server_url"    {{ (!empty(old('video_type')) && old('video_type')=='server_url')?'selected':'' }}>Server URL</option>
                                                                 <option value="local" {{ (!empty(old('video_type')) && old('video_type')=='local')?'selected':'' }}>Browse From Computer</option>
@@ -105,11 +105,11 @@
                                                 <div class="row col-md-12">
                                                     <div class="col-md-12">
                                                         <div class="form-group" id="video_local_display">
+
+                                                        </div>
+                                                        <input type="hidden" name="video_file_name" id="video_file_name" value="{{old('video_file_name')}}" class="form-control">
                                                     </div>
                                                 </div>
-                                                <input type="hidden" name="video"
-                                                       value="{{ ((!empty($video->video)) ? $video->video :old('video')) }}">
-
                                                 <div class="row col-md-12">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
@@ -131,7 +131,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">Video Is Free OR Payable</label>
-                                                            <select name="price_type" id="price_type" class="form-control" required>
+                                                            <select name="price_type" id="price_type" class="form-control" @if ($action=='INSERT') required @endif>
                                                                 <option value="">--Select Option--</option>
                                                                 <option value="free"    {{ (!empty(old('price_type')) && old('price_type')=='free')?'selected':'' }}>It's Free</option>
                                                                 <option value="payable" {{ (!empty(old('price_type')) && old('price_type')=='payable')?'selected':'' }}>It's Payable</option>
@@ -175,8 +175,10 @@
 
                                                 </div>
 
+
                                                 <div class="col-xl-12 text-right">
-                                                    <button class="btn btn-primary"><span>
+
+                                                    <button type="submit" class="btn btn-primary" ><span>
                                                             @if ($action=='INSERT')
                                                                 Add Video
                                                             @else
@@ -186,7 +188,6 @@
 
                                                 </div>
                                             </div>
-                                        </div>
                                     </form>
 {{--                            </form>--}}
                     </div>
@@ -195,13 +196,12 @@
         </div>
     </div>
 
-
     @push('video_script')
         <script>
             $('#price_type').change(function (){
                 var type = $("#price_type").val();
 
-                if (type == "payable") {
+                if (type === "payable") {
                     $("#price").html('<label for="exampleFormControlInput1">Price</label>\n' +
                         '                                                        <input\n' +
                         '                                                            class="form-control form-control-sm {{ $errors->has('price') ? ' is-invalid' : '' }}"\n' +
@@ -218,38 +218,31 @@
                     $("#price").html('');
                 }
             });
-            // if ( $('#price_type')
-            //     .val('free')) {
-            //     $('#price_type')
-            //         .val('free')
-            //         .trigger('change');
-            // }
-            // if ( $('#price_type')
-            //     .val('payable')) {
-            //     $('#price_type')
-            //         .val('payable')
-            //         .trigger('change');
-            // }
+
             $("#price_type").trigger('change');
             $("#video_type").change(function() {
 
                 var type = $("#video_type").val();
 
-                if (type == "local") {
+                if (type === "local") {
 
                     $("#video_local_display").html(' <label for="exampleFormControlInput1">Add Video</label>\n' +
                         '                                                            <input\n' +
                         '                                                                class="form-control form-control-sm {{ $errors->has('video') ? ' is-invalid' : '' }}"\n' +
-                        '                                                                type="file" name="video" id="video" required \n' +
+                        '                                                                type="file" name="video" id="video" \n' +
                         '                                                                value="{{ ((!empty($video->video)) ? $video->video :old('video')) }}">\n' +
                         '                                                            @if ($errors->has('video'))\n' +
                         '                                                                <span class="invalid-feedback" role="alert">\n' +
                         '                                                                  <strong>{{ $errors->first('video') }}</strong>\n' +
                         '                                                             </span>\n' +
-                        '                                                            @endif');
+                        '                                                            @endif
+                            <br><div class="progress br-30">\n' +
+                        '                                                <div class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">0%</div>\n' +
+                        '                                            </div>\n'+
+                     ' <div class="msg"></div><br><a  class="btn btn-sm btn-success" >Upload</button>');
                 }
                 else {
-                    $('#video_local_display').html(' <label for="exampleFormControlInput1">Add Video URL</label>\n' +
+                    $('#video_local_display').html(' <label for="exampleFormControlInput1">Video URL</label>\n' +
                         '                                                            <input\n' +
                         '                                                                class="form-control form-control-sm {{ $errors->has('url') ? ' is-invalid' : '' }}"\n' +
                         '                                                                type="text" name="url" required placeholder="Enter Video URL"\n' +
@@ -265,23 +258,69 @@
 
             });
             $("#video_type").trigger('change');
-            // if ( $('#video_type')
-            //     .val('local')) {
-            //     $('#video_type')
-            //         .val('local')
-            //         .trigger('change');
-            // }
-            // if ( $('#video_type')
-            //     .val('server_url')) {
-            //     $('#video_type')
-            //         .val('server_url')
-            //         .trigger('change');
-            // }
+
         </script>
 
         <script src="{{asset('assets/js/scrollspyNav.js') }}"></script>
         <script src="{{asset('plugins/select2/select2.min.js') }}"></script>
         <script src="{{asset('plugins/select2/custom-select2.js') }}"></script>
+        <script>
+            $(document).ready(function() {
+
+                $(document).on("click", "a", function(){
+                    $('.progress-bar').css('width', '0');
+                    $('.msg').text('');
+                    var video_local = $('#video_local').val();
+                    if (video_local == '') {
+                        alert('Please enter file name and select file');
+                        return;
+                    }
+                    var fileInput = document.getElementById('video');
+                    var filePath = fileInput.value;
+                    var allowedExtensions = /(\.mp4)$/i;
+                    if(!allowedExtensions.exec(filePath)) {
+                        alert('Please upload file having extension .mp4 only.');
+                        fileInput.value = '';
+                        return ;
+                    }
+                    var formData = new FormData();
+                    formData.append('video_local', $('#video')[0].files[0])
+                    $('#upload').attr('disabled', 'disabled');
+                    $('.msg').text('Uploading in progress...');
+                    $.ajax({
+                        url: '{{ url('/video_upload') }}',
+                        data: formData,
+                        headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                        processData: false,
+                        contentType: false,
+                        type: 'POST',
+                        // this part is progress bar
+                        xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (evt) {
+                                if (evt.lengthComputable) {
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    $('.progress-bar').text(percentComplete + '%');
+                                    $('.progress-bar').css('width', percentComplete + '%');
+                                }
+                            }, false);
+                            return xhr;
+                        },
+                        success: function (data) {
+                            alert('Upload successfully..');
+                            $('#video_file_name').val(data);
+                            $('.msg').text("File uploaded successfully!!");
+                            $('#btn').removeAttr('disabled');
+                        },
+                        error: function () {
+                            alert('Something is Problem in Updating');
+                        },
+                    });
+                });
+            });
+
+        </script>
     @endpush
 @endsection
 

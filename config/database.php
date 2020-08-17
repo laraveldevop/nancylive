@@ -2,6 +2,21 @@
 
 use Illuminate\Support\Str;
 
+$host = request()->getHttpHost();
+if ($host == 'localhost')
+{
+    define('HOSTNAME', 'localhost');
+    define("USERNAME", "root");
+    define("PASSWORD", "");
+    define("DATABASE", "v_status");
+
+}
+else{
+    define("HOSTNAME", 'localhost');
+    define("USERNAME", "purecode_nancybe");
+    define("PASSWORD", "yF?MsLHgB.[;");
+    define("DATABASE", "purecode_nancybeauty");
+}
 return [
 
     /*
@@ -46,11 +61,11 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', 'localhost'),
+            'host' => env('DB_HOST', HOSTNAME),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'purecode_nancybeauty'),
-            'username' => env('DB_USERNAME', 'purecode_nancybe'),
-            'password' => env('DB_PASSWORD', 'yF?MsLHgB.[;'),
+            'database' => env('DB_DATABASE', DATABASE),
+            'username' => env('DB_USERNAME', USERNAME),
+            'password' => env('DB_PASSWORD', PASSWORD),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',

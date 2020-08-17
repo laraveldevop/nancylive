@@ -6,7 +6,7 @@ use App\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\Console\Input\Input;
+use Illuminate\Support\Facades\Validator;
 
 class VideoController extends Controller
 {
@@ -75,10 +75,6 @@ class VideoController extends Controller
             'video_name' => 'required',
             'detail'=>'required',
             "price" => 'numeric'
-
-//            "url" => array('nullable','regex:'.$regex),
-//            'video'=> 'nullable|mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
-
         ]);
         if ($request->hasFile('image') == null){
             $request->validate([
@@ -95,25 +91,25 @@ class VideoController extends Controller
                 "url" => 'url'
             ]);
         }
-        if ($request->hasFile('video') != null){
-            $request->validate([
-                'video'=> 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
-            ]);
-        }
+//        if ($request->hasFile('video') != null){
+//            $request->validate([
+//                'video'=> 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
+//            ]);
+//        }
 
 
         $video =new Video();
 
 //        $video->video =$request->input('video');
-        if ($request->hasFile('video')) {
-            $file=$request->file('video');
-            $fileName= $file->getClientOriginalExtension();
-             $request->file('video')->getMimeType();
-//            $request->video->move('storage/'.$fileName);
-            $path = str_replace('public/', '', $request->file('video')->store('public'));
-            $video->video = $path;
-
-        }
+//        if ($request->hasFile('video')) {
+//            $file=$request->file('video');
+//            $fileName= $file->getClientOriginalExtension();
+//             $request->file('video')->getMimeType();
+////            $request->video->move('storage/'.$fileName);
+//            $path = str_replace('public/', '', $request->file('video')->store('public'));
+//            $video->video = $path;
+//
+//        }
 
         $video->cat_id =$request->input('cat_id');
         $video->artist_id =$request->input('artist_id');
@@ -122,7 +118,7 @@ class VideoController extends Controller
         $video->token =$request->has('token');
         $video->price =$request->input('price');
         $video->url =$request->input('url');
-
+        $video->video = $request->input('video_file_name');
         if ($request->file('image')) {
             $path = Storage::disk('public')->put('thumbnail', $request->file('image'));
             $video->image = $path;
@@ -150,6 +146,14 @@ class VideoController extends Controller
         //
     }
 
+    public function video(Request $request) {
+            $file = $request->video_local;
+            $fileName = $file->getClientOriginalExtension();
+            $request->video_local->getMimeType();
+//            $request->video->move('storage/'.$fileName);
+            $path = str_replace('public/', '', $request->video_local->store('public'));
+            echo $path;
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -183,7 +187,35 @@ class VideoController extends Controller
      */
     public function update(Request $request, Video $video)
     {
-        //
+        $request->validate([
+            'cat_id'=> 'required',
+            'video_name' => 'required',
+            'detail'=>'required',
+            "price" => 'numeric'
+        ]);
+        if ($request->input('url') != null){
+            $request->validate([
+                "url" => 'url'
+            ]);
+        }
+
+        $video->cat_id =$request->input('cat_id');
+        $video->artist_id =$request->input('artist_id');
+        $video->video_name =$request->input('video_name');
+        $video->detail =$request->input('detail');
+        $video->token =$request->has('token');
+        $video->price =$request->input('price');
+        $video->url =$request->input('url');
+        $video->save();
+        if ($request->has('token') == 1)
+        {
+            DB::table('advertise')->insert(
+                ['video_id' => $video->id,'created_at' => now()]
+            );
+        }
+        else{
+            DB::table('advertise')->where('video_id', '=', $video->id)->delete();
+        }
     }
 
     /**

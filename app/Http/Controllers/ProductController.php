@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -26,7 +27,7 @@ class ProductController extends Controller
     public function index()
     {
         $product = DB::table('product')
-            ->select(DB::raw('product.id,product.product_name,product.image,product.detail,product.price,product.quantity,category.cat_name'))
+            ->select(DB::raw('product.id,product.product_name,product.video,product.detail,product.price,product.quantity,category.cat_name'))
             ->leftJoin('category', 'product.cat_id', '=', 'category.cat_id')
             ->get()
             ->toArray();
@@ -67,9 +68,9 @@ class ProductController extends Controller
             'detail' => 'required',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric',
-            'image' => 'required',
 
         ]);
+
 
         $product = new  Product();
         $product->cat_id = $request->input('category_id');
@@ -77,13 +78,33 @@ class ProductController extends Controller
         $product->detail = $request->input('detail');
         $product->price = $request->input('price');
         $product->quantity = $request->input('quantity');
-        if ($request->file('image')) {
-            $path = Storage::disk('public')->put('product', $request->file('image'));
-            $product->image = $path;
-
+        if ($request->hasFile('video') != null){
+            $request->validate([
+                'video'=> 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
+            ]);
+            $path = Storage::disk('public')->put('product', $request->file('video'));
+            $product->video = $path;
         }
 
         $product->save();
+        $images = $request->file('files');
+        if ($request->hasFile('files')) :
+            foreach ($images as $item):
+
+                $path = Storage::disk('public')->put('product_images', $item);
+                $arr[] = $path;
+                ProductImage::insert([
+                    'product_id'=> $product->id,
+                    'image'=>  $path,
+                    'created_at'=>now()
+                    //you can put other insertion here
+                ]);
+            endforeach;
+            $image = implode(",", $arr);
+        else:
+            $image = '';
+        endif;
+
         return redirect('product');
 
 
@@ -142,17 +163,38 @@ class ProductController extends Controller
         $product->price = $request->input('price');
         $product->quantity = $request->input('quantity');
 
-        if (!empty($request->hasFile('image'))) {
-            $path =  Storage::disk('public')->put('product', $request->file('image'));
-            if (!empty($product->image)){
-                $image_path = public_path().'/storage/'.$product->image;
+        if (!empty($request->hasFile('video'))) {
+            $request->validate([
+                'video'=> 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
+            ]);
+            $path =  Storage::disk('public')->put('product', $request->file('video'));
+            if (!empty($product->video)){
+                $image_path = public_path().'/storage/'.$product->video;
                 unlink($image_path);
             }
             //Update Image
-            $product->image = $path;
+            $product->video = $path;
         }
         $product->save();
-        return redirect('category');
+        $images = $request->file('files');
+        if ($request->hasFile('files')) :
+            $request->validate(['files'=>'mimes:jpg,jpeg,png']);
+            foreach ($images as $item):
+
+                $path = Storage::disk('public')->put('product_images', $item);
+                $arr[] = $path;
+                ProductImage::insert([
+                    'product_id'=> $product->id,
+                    'image'=>  $path,
+                    'updated_at'=>now()
+                    //you can put other insertion here
+                ]);
+            endforeach;
+            $image = implode(",", $arr);
+        else:
+            $image = '';
+        endif;
+        return redirect('product');
     }
 
 

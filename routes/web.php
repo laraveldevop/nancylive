@@ -25,3 +25,4 @@ Route::resource('pdf', 'PdfController');
 Route::resource('product', 'ProductController');
 Route::post('/ads','VideoController@ads');
 Route::post('/pdf_ads','PdfController@ads');
+Route::post('/video_upload','VideoController@video');

@@ -3,7 +3,8 @@
     @push('artist_style')
         <link href="{{asset('assets/css/scrollspyNav.css') }}" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="{{asset('plugins/select2/select2.min.css')}}">
-
+        <link href="{{ asset('plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}">
     @endpush
 
     <!--  BEGIN CONTENT AREA  -->
@@ -107,13 +108,13 @@
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="exampleFormControlInput1">Image</label>
+                                                            <label for="exampleFormControlInput1">Video</label>
                                                             <input type="file"
-                                                                   class="form-control form-control-sm {{ $errors->has('image') ? ' is-invalid' : '' }}"
-                                                                   name="image">
-                                                            @if ($errors->has('image'))
+                                                                   class="form-control form-control-sm {{ $errors->has('video') ? ' is-invalid' : '' }}"
+                                                                   name="video">
+                                                            @if ($errors->has('video'))
                                                                 <span class="invalid-feedback" role="alert">
-                                                                  <strong>{{ $errors->first('image') }}</strong>
+                                                                  <strong>{{ $errors->first('video') }}</strong>
                                                              </span>
                                                             @endif
                                                         </div>
@@ -137,10 +138,34 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div id="fuMultipleFile" class="col-lg-12 layout-spacing">
+                                                    <div class="statbox widget box box-shadow">
+                                                        <div class="widget-header">
+                                                            <div class="row col-md-12">
+                                                                <div class="col-md-12" style="margin-top: 24px">
+                                                                    <h4>Multiple Image Upload</h4>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="widget-content widget-content-area">
+                                                                <div class="custom-file-container" data-upload-id="mySecondImage">
+
+                                                                    <label>Upload (Allow Multiple) <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
+                                                                    <label class="custom-file-container__custom-file" >
+                                                                        <input type="file" name="files[]" class="custom-file-container__custom-file__custom-file-input" multiple
+                                                                               @if($action == 'INSERT') required @endif>
+                                                                        <span class="custom-file-container__custom-file__custom-file-control"></span>
+                                                                    </label>
+                                                                    <div class="custom-file-container__image-preview"></div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
 
 
-                                            </div>
+                                                </div>
 
 
                                             <div class="col-xl-12 text-right">
@@ -165,5 +190,11 @@
         <script src="{{asset('assets/js/scrollspyNav.js') }}"></script>
         <script src="{{asset('plugins/select2/select2.min.js') }}"></script>
         <script src="{{asset('plugins/select2/custom-select2.js') }}"></script>
+        <script src="{{ asset('plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
+        <script>
+            //Second upload
+            var secondUpload = new FileUploadWithPreview('mySecondImage')
+
+        </script>
     @endpush
 @endsection
