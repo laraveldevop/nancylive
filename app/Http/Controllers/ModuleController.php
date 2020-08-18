@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Module;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\AssignOp\Mod;

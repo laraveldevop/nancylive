@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Artist;
 use App\Image;
 use Illuminate\Http\Request;

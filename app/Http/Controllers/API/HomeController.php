@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+
 use App\Artist;
 use App\Category;
 use App\Http\Controllers\Controller;
@@ -31,7 +32,7 @@ class HomeController extends Controller
             ->get()
              ->toArray();
          $product = DB::table('product')
-            ->select(DB::raw('product.id,category.cat_name,product.product_name,product.image,product.detail,product.price,product.quantity'))
+            ->select(DB::raw('product.id,category.cat_name,product.product_name,product.detail,product.price,product.quantity'))
             ->leftJoin('category', 'product.cat_id', '=', 'category.cat_id')
             ->get()
             ->toArray();
@@ -43,10 +44,10 @@ class HomeController extends Controller
             ->where('module.module_name', '=', 'video')
             ->get()
             ->toArray();
-
+        $v=[];
         foreach ($category as $item) {
             $qu= DB::table('video')
-                ->select(array('video_name','video','image'))
+                ->select(array('video_name','url','video','image'))
                 ->where('cat_id',$item->cat_id)
                 ->get();
             $v[] = ['Category'=>$item->cat_name,'CategoryArray'=>$qu];
