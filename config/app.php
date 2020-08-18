@@ -1,13 +1,4 @@
 <?php
-
-$host = request()->getHttpHost();
-if ($host == 'localhost')
-{
-    $host_url = 'http://localhost/video-status/public/';
-}
-else{
-    $host_url = 'http://nancybeauty.purecode.co.in/public/';
-}
 return [
 
     /*
@@ -60,7 +51,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', $host_url),
+    'url' => env('APP_URL','http://nancybeauty.purecode.co.in/public/'),
 
     'asset_url' => env('ASSET_URL', null),
 
