@@ -15,6 +15,8 @@ class AuthKey
      */
     public function handle($request, Closure $next)
     {
+//        echo $request->header('Authorization');
+//        echo '<br>', $request->header('API_KEY');die();
         $token = $request->header('API_KEY');
         $authorization = $request->header('Authorization');
         $app_key = config('app.key');

@@ -6,12 +6,14 @@
     RewriteEngine On
 
     # Handle Authorization Header
-    RewriteCond %{HTTP:API_KEY} .
-    RewriteCond %{HTTP:Authorization} .
+
+      RewriteCond %{HTTP:API_KEY} .
+      RewriteCond %{HTTP:Authorization} .
+      RewriteRule .* - [E=HTTP_API_KEY:%{HTTP:API_KEY}]
+      RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
     RewriteCond %{HTTP:USER_ID} .
     RewriteCond %{HTTP:API_TOKEN} .
-    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-    RewriteRule .* - [E=HTTP_API_KEY:%{HTTP:API_KEY}]
     RewriteRule .* - [E=HTTP_USER_ID:%{HTTP:USER_ID}]
     RewriteRule .* - [E=HTTP_API_TOKEN:%{HTTP:API_TOKEN}]
 

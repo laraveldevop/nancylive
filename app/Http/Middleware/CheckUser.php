@@ -16,6 +16,8 @@ class CheckUser
      */
     public function handle($request, Closure $next)
     {
+//        echo $request->header('USER_ID');
+//        echo '<br>', $request->header('API_TOKEN');die();
         $id = $request->header('USER_ID');
         $api_token = $request->header('API_TOKEN');
 
