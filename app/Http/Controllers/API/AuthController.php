@@ -3,26 +3,18 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
-class RegisterController extends Controller
+class AuthController extends Controller
 {
-    /**
-     * Register api
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function register(Request $request) {
+    public function register (Request $request) {
 
         $validator = Validator::make($request->all(),[
             'name' => ['required', 'string', 'max:255'],
@@ -34,14 +26,17 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'image' => ['required','mimes:jpeg,jpg,png,gif'],
         ]);
-        if ($validator->fails()) {
+
+        if ($validator->fails())
+        {
             return response()->json([
                 'status'=> false,
-                'message'=>$validator->errors()], 401);
+                'message'=>$validator->errors()->all()], 422);
         }
-        $token = Str::random(60);
+
 
         $user = new User();
+
         $user->name = $request['name'];
         $user->email = $request['email'];
         $user->city = $request['city'];
@@ -50,38 +45,20 @@ class RegisterController extends Controller
         $user->business_name = $request['business_name'];
         $user->password = Hash::make($request['password']);
         $user->email_verified_at = now();
-        $user->api_token = $token;
         if ($request->file('image')) {
             $path = Storage::disk('public')->put('user', $request->file('image'));
             $user->image = $path;
 
         }
-            $user->save();
 
-       return response()->json([
-           'status'=> true,
-           'message'=>'User Register SuccessFull',
-           'data'=>[
-           'id'=>$user->id,
-           'name'=>$user->name,
-           'email'=>$user->email,
-           'mobile'=>$user->mobile,
-           'business_name'=>$user->business_name,
-           'city'=>$user->city,
-           'address'=>$user->address,]
-       ]);
+        $user->save();
+
+        return response()->json(['status'=> true,
+           'message'=>'User Register SuccessFull','data'=>$user],200);
+
     }
 
-    /**
-     * Login api
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public $successStatus = 200;
-
-    public function login(Request $request)
-    {
+    public function login (Request $request) {
         $validator = Validator::make($request->all(), [
             'email' => 'email|required',
             'password' => 'required',
@@ -92,54 +69,49 @@ class RegisterController extends Controller
                 'status' => false,
                 'message' => $validator->errors()], 401);
         }
-        $loginData = $request->validate([
-            'email' => 'email|required',
-            'password' => 'required',
-        ]);
-        if (!auth()->attempt($loginData)) {
-            return response([ 'status' => false,'message' => 'Invalid Credentials']);
-        }
         $user = User::where('email', '=', $request['email'])->first();
         $device_id = User::where([['device_id', null], ['email', $request['email']]])->first();
 
         if (isset($device_id)) {
-            DB::table('users')
-                ->where([['device_id', null], ['email', $request['email']]])
-                ->update(['device_id' => $request['device_id']]);
-            return response()->json(['status' => true, 'message' => 'Login SuccessFull', 'data' => [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'mobile' => $user->mobile,
-                'business_name' => $user->business_name,
-                'city' => $user->city,
-                'address' => $user->address,],
-                'api_token' => $user->api_token]);
-        } elseif ($request['device_id'] == $user['device_id']) {
-            return response()->json(['status' => true, 'message' => 'Login SuccessFull', 'data' => [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'mobile' => $user->mobile,
-                'business_name' => $user->business_name,
-                'city' => $user->city,
-                'address' => $user->address,],
-                'api_token' => $user->api_token]);
-        } else {
-            return response()->json(['status' => false, 'message' => 'Login Fail, Already User Has Login','data'=>[]]);
+            $data=User::where('email', '=', $request['email'])->first();
+            if (Hash::check($request->password, $user->password)) {
+                $token = $user->createToken('MyApp')->accessToken;
+                $response = ['token' => $token];
+                DB::table('users')
+                    ->where([['device_id', null], ['email', $request['email']]])
+                    ->update(['device_id' => $request['device_id'],'token'=>$token]);
+                return response()->json(['status' => true, 'message' => 'Login SuccessFull', 'data' =>$data,'token'=>$response],200);
+            } else {
+                $response = "Password miss match";
+                return response()->json([
+                    'status' => false,'message'=>$response,'data'=>''],422);
+            }
+
+        }  elseif ($request['device_id'] == $user['device_id']) {
+            if (Hash::check($request->password, $user->password)) {
+                $data=User::where('email', '=', $request['email'])->first();
+            return response()->json(['status' => true, 'message' => 'Login SuccessFull', 'data' =>$data],200);
+            } else {
+                $response = "Password miss match";
+                return response()->json([
+                    'status' => false,'message'=>$response,'data'=>''],422);
+            }
+        }
+        else {
+            $response = 'User does not exist';
+            return response()->json([
+                'status' => false,'message'=>$response,'data'=>''],422);
         }
 
     }
-
-    public function logout(Request $request){
-
-            $device_id = User::where([['device_id', $request['device_id']], ['email', $request['email']]])->first();
-            if (isset($device_id)) {
-                DB::table('users')
-                    ->where([['device_id', $request['device_id']], ['email', $request['email']]])
-                    ->update(['device_id' => null]);
-                return response()->json(['status' => false, 'message' => 'Successfully Log-Out']);
-            }
+    public function logout (Request $request) {
+        $device_id = User::where([['device_id', $request['device_id']], ['email', $request['email']]])->first();
+        if (isset($device_id)) {
+            DB::table('users')
+                ->where([['device_id', $request['device_id']], ['email', $request['email']]])
+                ->update(['device_id' => null,'token'=> null]);
+            return response()->json(['status' => true, 'message' => 'Successfully Log-Out']);
+        }
         return response(['status'=>false,'message' => 'Invalid Credentials']);
 
     }
@@ -196,6 +168,7 @@ class RegisterController extends Controller
         return response()->json(['status' => true, 'message' => ' SuccessFull','otp'=>$otp]);
 
     }
+
 
 
 }

@@ -16,29 +16,10 @@ class CheckUser
      */
     public function handle($request, Closure $next)
     {
-//        echo $request->header('USER_ID');
-//        echo '<br>', $request->header('API_TOKEN');die();
         $id = $request->header('USER_ID');
         $api_token = $request->header('API_TOKEN');
-
-        if (empty($id))
-        {
-            return response()->json([
-                'status'=> false,
-                'message' => 'User Id filed is Required'
-            ], 401);
-        }
-        if (empty($api_token))
-        {
-            return response()->json([
-                'status'=> false,
-                'message' => 'API Token filed is Required'
-            ], 401);
-        }
-
         $user =  User::where([
-            ['id', '=', $id],
-            ['api_token', '=', $api_token],
+            ['id', '=', $id],['token', '=', $api_token],
         ])->first();
         if (!empty($user)){
             return $next($request);

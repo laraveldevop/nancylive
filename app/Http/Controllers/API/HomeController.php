@@ -55,4 +55,19 @@ class HomeController extends Controller
         return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['Advertise'=>$advertise,'video' => $v,'Magazine'=>$pdf,'Product'=>$product,'Artiest'=>$results]]);
 
     }
+
+    public function artist() {
+        $results = Artist::orderBy('rate','desc')->get();
+        $v=[];
+        foreach ($results as $item) {
+            $qu= DB::table('video')
+                ->select(array('video_name','url','video','image'))
+                ->where('artist_id',$item->id)
+                ->get();
+            $v[] = ['Artist'=>$item->artist_name,'Artist Detail'=>$qu];
+        }
+        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['Artist Info' => $v]]);
+
+
+    }
 }

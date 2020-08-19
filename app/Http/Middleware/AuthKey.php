@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\OauthClients;
 use Closure;
+use Illuminate\Support\Facades\DB;
 
 class AuthKey
 {
@@ -15,22 +17,27 @@ class AuthKey
      */
     public function handle($request, Closure $next)
     {
-//        echo $request->header('Authorization');
-//        echo '<br>', $request->header('API_KEY');die();
         $token = $request->header('API_KEY');
         $authorization = $request->header('Authorization');
         $app_key = config('app.key');
-        if($token != 'kkcoswggwgwkkc8w4ok808o48kswc40c0www4wss') {
+
+        $oauth_clients = OauthClients::where(['secret'=>$token])->first();
+//        echo $oauth_clients;die();
+        if (empty($oauth_clients)) {
             return response()->json([
+                'status'=> false,
                 'message' => 'Api Key Not Valid'
             ], 401);
         }
-        if ($authorization != $app_key) {
+        elseif ($authorization != $app_key) {
             return response()->json([
-                'message' => 'Un Authorized'
+                'status'=> false,
+                'message' => 'App Key Not Valid'
             ], 401);
         }
+        else {
+            return $next($request);
+        }
 
-        return $next($request);
     }
 }
