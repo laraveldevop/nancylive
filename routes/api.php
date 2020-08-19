@@ -28,9 +28,9 @@ Route::group(['middleware' => ['json.response']], function () {
     });
 
     // public routes
-    Route::post('/login', 'Api\AuthController@login')->name('login.api');
-    Route::post('/register', 'Api\AuthController@register')->name('register.api');
-    Route::post('/logout', 'Api\AuthController@logout');
+    Route::post('/login', 'API\AuthController@login')->name('login.api');
+    Route::post('/register', 'API\AuthController@register')->name('register.api');
+    Route::post('/logout', 'API\AuthController@logout');
     Route::get('home', 'API\HomeController@advertise')->middleware('checkUser');
     Route::get('artist', 'API\HomeController@artist')->middleware('checkUser');
     Route::get('product', 'API\ProductController@index')->middleware('checkUser');
