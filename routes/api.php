@@ -32,8 +32,12 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('/register', 'API\AuthController@register')->name('register.api');
     Route::post('/logout', 'API\AuthController@logout');
     Route::get('home', 'API\HomeController@advertise')->middleware('checkUser');
-    Route::get('artist', 'API\HomeController@artist')->middleware('checkUser');
+    Route::get('artist-detail', 'API\HomeController@artist')->middleware('checkUser');
+    Route::post('artist', 'API\HomeController@index')->middleware('checkUser');
     Route::get('product', 'API\ProductController@index')->middleware('checkUser');
+    Route::get('document', 'API\PdfController@index')->middleware('checkUser');
+    Route::get('video', 'API\VideoController@index')->middleware('checkUser');
+    Route::post('user-update', 'API\HomeController@userUpdate')->middleware('checkUser');
     Route::post('check_user', 'API\AuthController@check_user');
 
     // private routes

@@ -6,8 +6,12 @@ namespace App\Http\Controllers\API;
 use App\Artist;
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class HomeController extends Controller
 {
@@ -70,4 +74,70 @@ class HomeController extends Controller
 
 
     }
+    public function index(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|numeric',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => $validator->errors()], 401);
+        }
+        $artist = Artist::where('id', '=', $request['id'])->first();
+//        echo $artist;die();
+        if (isset($artist)){
+            return response()->json(['status'=>true,'message'=>'Artist retrieved successfully.' ,'data'=>$artist->toArray(), ],200);
+        }
+        else{
+            return response()->json(['status'=>false,'message'=>'Incorrect Id.' ,'data'=>$artist, ],200);
+        }
+
+
+    }
+
+    public function userUpdate(Request $request)
+    {
+        $id= $request->header('USER_ID');
+        $validator = Validator::make($request->all(),[
+            'name' => ['required', 'string', 'max:255'],
+            'business_name' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string'],
+            'mobile' => ['required', 'string','numeric','min:10',
+                Rule::unique('users')->ignore($id)],
+            'image' => ['mimes:jpeg,jpg,png,gif'],
+            'email' => [
+                'required','string', 'email', 'max:255',
+                Rule::unique('users')->ignore($id),
+            ],
+        ]);
+        if ($validator->fails())
+        {
+            return response()->json([
+                'status'=> false,
+                'message'=>$validator->errors()->all()], 422);
+        }
+        $data= User::find($id);
+//        echo $data->image;die();
+        $data->name = $request['name'];
+        $data->email = $request['email'];
+        $data->business_name = $request['business_name'];
+        $data->city = $request['city'];
+        $data->address = $request['address'];
+        $data->mobile = $request['mobile'];
+        if (!empty($request->hasFile('image'))) {
+            $path = Storage::disk('public')->put('user', $request->file('image'));
+            if (!empty($data->image)){
+                $image_path = public_path().'/storage/'.$data->image;
+                unlink($image_path);
+            }
+            $data->image = $path;
+        }
+        $data->save();
+        return response()->json(['status'=>true,'message'=>'User Update successfully.' ,'data'=>$data, ],200);
+
+    }
+
+
 }
