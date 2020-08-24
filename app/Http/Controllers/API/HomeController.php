@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -138,6 +139,40 @@ class HomeController extends Controller
         return response()->json(['status'=>true,'message'=>'User Update successfully.' ,'data'=>$data, ],200);
 
     }
+
+    public function changePassword(Request $request)
+    {
+        $id= $request->header('USER_ID');
+        $validator = Validator::make($request->all(),[
+            'new_password'=>['required','string','min:8','confirmed'],
+            'password' => ['required', 'string', 'min:8'],
+        ]);
+        if ($validator->fails())
+        {
+            return response()->json([
+                'status'=> false,
+                'message'=>$validator->errors()->all()], 422);
+        }
+
+        $user = User::where('id',$id)->first();
+       $ps = Hash::make($request['password']);
+        if (isset($user)) {
+            if (Hash::check($request->password, $user->password)) {
+                $user->password =  Hash::make($request['new_password']);
+                $user->save();
+                return response()->json(['status' => true, 'message' => 'Password Changed successfully.', 'data' => $user,], 200);
+            }
+
+            else{
+                return response()->json(['status'=>true,'message'=>'Please Check Your Password' ,'data'=>[], ],200);
+
+            }
+        }
+        return response()->json(['status'=>true,'message'=>'Please Check Your Password' ,'data'=>[], ],200);
+
+    }
+
+
 
 
 }

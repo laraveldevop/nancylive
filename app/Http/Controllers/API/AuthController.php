@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
-    public function register (Request $request) {
+    public function register(Request $request) {
 
         $validator = Validator::make($request->all(),[
             'name' => ['required', 'string', 'max:255'],
@@ -166,6 +166,11 @@ class AuthController extends Controller
 
 
         return response()->json(['status' => true, 'message' => ' SuccessFull','otp'=>$otp]);
+
+    }
+
+    public function forgot(Request $request)
+    {
 
     }
 
