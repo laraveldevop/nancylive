@@ -29,7 +29,7 @@ Route::group(['middleware' => ['json.response']], function () {
 
     // public routes
     Route::post('/login', 'API\AuthController@login');
-    Route::post('/register', 'API\AuthController@register');
+    Route::post('/user-register', 'API\AuthController@userRegister');
     Route::post('/logout', 'API\AuthController@logout');
     Route::post('/password/email', 'Api\ForgotPasswordController@sendResetLinkEmail');
     Route::post('/password/reset', 'Api\ResetPasswordController@reset');
