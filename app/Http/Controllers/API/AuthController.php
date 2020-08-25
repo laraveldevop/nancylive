@@ -169,10 +169,7 @@ class AuthController extends Controller
 
     }
 
-    public function forgot(Request $request)
-    {
 
-    }
 
 
 

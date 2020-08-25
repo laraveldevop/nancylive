@@ -32,14 +32,14 @@ class HomeController extends Controller
             ->get()
             ->toArray();
 
-        $category = DB::table('category')
+        $category_video = DB::table('category')
             ->select(array('cat_id','cat_name','cat_image'))
             ->leftJoin('module','category.module_id', '=', 'module.id')
             ->where('module.module_name', '=', 'video')
             ->get()
             ->toArray();
         $v=[];
-        foreach ($category as $item) {
+        foreach ($category_video as $item) {
             $qu= DB::table('video')
                 ->select(array('video_name','url','video','image'))
                 ->where('cat_id',$item->cat_id)
@@ -48,8 +48,14 @@ class HomeController extends Controller
             $v_d= count($qu);
             $v[] = ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item-count'=>$v_d];
         }
+        $category_pdf = DB::table('category')
+            ->select(array('cat_id','cat_name','cat_image'))
+            ->leftJoin('module','category.module_id', '=', 'module.id')
+            ->where('module.module_name', '=', 'pdf')
+            ->get()
+            ->toArray();
         $pdf=[];
-        foreach ($category as $item){
+        foreach ($category_pdf as $item){
             $qu= DB::table('pdf')
                 ->select(array('pdf_name','file'))
                 ->where('cat_id',$item->cat_id)
@@ -59,7 +65,13 @@ class HomeController extends Controller
             $pdf = ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item-count'=>$p_d];
         }
         $product=[];
-        foreach ($category as $item){
+        $category_product = DB::table('category')
+            ->select(array('cat_id','cat_name','cat_image'))
+            ->leftJoin('module','category.module_id', '=', 'module.id')
+            ->where('module.module_name', '=', 'product')
+            ->get()
+            ->toArray();
+        foreach ($category_product as $item){
             $qu= DB::table('product')
                 ->select(array('product_name','detail'))
                 ->where('cat_id',$item->cat_id)
@@ -81,7 +93,7 @@ class HomeController extends Controller
 
         }
         $results = DB::table('artist')->where('rate',5)->orderBy('rate','desc')->get();
-        $artist =DB::table('artist')->where('rate','<=',5)->orderBy('rate','desc')->get();
+        $artist =DB::table('artist')->where('rate','<',5)->orderBy('rate','desc')->get();
         return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['Advertise'=>$advertise,'video' => $v,'Magazine'=>$pdf,'Product'=>$product,'Brand'=>$br_d,'Artiest'=>$artist,'SponserArtiest'=>$results]]);
 
     }
