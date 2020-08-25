@@ -80,7 +80,7 @@ class HomeController extends Controller
             $br_d = ['Brand_id'=>$item->id,'Brand'=>$item->brand_name,'Brand_image'=>$item->brand_image,'item-count'=>$pd];
 
         }
-        $results = Artist::where('rate',5)->orderBy('rate','desc')->get();
+        $results = DB::table('artist')->where('rate',5)->orderBy('rate','desc')->get();
         $artist =DB::table('artist')->where('rate','<=',5)->orderBy('rate','desc')->get();
         return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['Advertise'=>$advertise,'video' => $v,'Magazine'=>$pdf,'Product'=>$product,'Brand'=>$br_d,'Artiest'=>$artist,'SponserArtiest'=>$results]]);
 
