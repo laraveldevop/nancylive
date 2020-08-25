@@ -17,7 +17,7 @@
                         <div class="widget-header">
                             <div class="row">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>@if ($action=='INSERT') Create a new Document @else Update  Document @endif</h4>
+                                    <h4>@if ($action=='INSERT') Create a new Product @else Update  Product @endif</h4>
                                 </div>
                             </div>
                         </div>
@@ -58,6 +58,34 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
+                                                            <label for="exampleFormControlInput1">Brand</label>
+                                                            <select
+                                                                class="basic form-control {{ $errors->has('brand') ? ' is-invalid' : '' }}"
+                                                                name="brand" id="brand">
+                                                                <option >Choose Brand</option>
+                                                                @foreach($brand as $key => $value)
+                                                                    <option value="{{ $value->id }}"
+                                                                        {{ (!empty(old('brand')) && old('brand')==$value->id)?'selected':'' }}
+                                                                        {{ (!empty($product->brand) && $product->brand==$value->id)?'selected':'' }}
+                                                                    >{{ $value->brand_name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                            @if ($errors->has('brand'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                  <strong>{{ $errors->first('brand') }}</strong>
+                                                             </span>
+                                                            @endif
+
+                                                        </div>
+                                                    </div>
+
+
+
+
+                                                </div>
+                                                <div class="row col-md-12">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
                                                             <label for="exampleFormControlInput1">Name</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('product_name') ? ' is-invalid' : '' }}"
@@ -71,11 +99,22 @@
                                                             @endif
                                                         </div>
                                                     </div>
-
-
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlInput1">Video</label>
+                                                            <input type="file"
+                                                                   class="form-control form-control-sm {{ $errors->has('video') ? ' is-invalid' : '' }}"
+                                                                   name="video">
+                                                            @if ($errors->has('video'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                  <strong>{{ $errors->first('video') }}</strong>
+                                                             </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="row col-md-12">
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">Price</label>
                                                             <input
@@ -90,7 +129,7 @@
                                                             @endif
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">Quantity</label>
                                                             <input
@@ -106,20 +145,9 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="exampleFormControlInput1">Video</label>
-                                                            <input type="file"
-                                                                   class="form-control form-control-sm {{ $errors->has('video') ? ' is-invalid' : '' }}"
-                                                                   name="video">
-                                                            @if ($errors->has('video'))
-                                                                <span class="invalid-feedback" role="alert">
-                                                                  <strong>{{ $errors->first('video') }}</strong>
-                                                             </span>
-                                                            @endif
-                                                        </div>
-                                                    </div>
+
                                                 </div>
+
                                                 <div class="row col-md-12">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
@@ -171,9 +199,9 @@
                                             <div class="col-xl-12 text-right">
                                                 <button class="btn btn-primary"><span>
                                                             @if ($action=='INSERT')
-                                                            Create Document
+                                                            Create Product
                                                         @else
-                                                            Update Document
+                                                            Update Product
                                                         @endif</span>
                                                 </button>
 

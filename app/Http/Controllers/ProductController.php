@@ -28,8 +28,9 @@ class ProductController extends Controller
     public function index()
     {
         $product = DB::table('product')
-            ->select(DB::raw('product.id,product.product_name,product.video,product.detail,product.price,product.quantity,category.cat_name'))
+            ->select(DB::raw('product.id,product.product_name,product.video,product.detail,product.price,product.quantity,category.cat_name,brand.brand_name,brand.image'))
             ->leftJoin('category', 'product.cat_id', '=', 'category.cat_id')
+            ->leftJoin('brand', 'product.brand', '=', 'brand.id')
             ->get()
             ->toArray();
         return view('container.product.index')->with(compact('product'));
@@ -51,8 +52,13 @@ class ProductController extends Controller
             ->orderBy('cat_name', 'ASC')
             ->get()
             ->toArray();
+        $brand= DB::table('brand')
+            ->select(array('id','brand_name','image'))
+            ->orderBy('brand_name', 'ASC')
+            ->get()
+            ->toArray();
 
-        return view('container.product.create')->with('action', 'INSERT')->with('category',$category);
+        return view('container.product.create')->with('action', 'INSERT')->with('category',$category)->with('brand',$brand);
     }
 
     /**
@@ -65,6 +71,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'category_id' => 'required',
+            'brand' => 'required',
             'product_name' => 'required',
             'detail' => 'required',
             'price' => 'required|numeric',
@@ -75,6 +82,7 @@ class ProductController extends Controller
 
         $product = new  Product();
         $product->cat_id = $request->input('category_id');
+        $product->brand = $request->input('brand');
         $product->product_name = $request->input('product_name');
         $product->detail = $request->input('detail');
         $product->price = $request->input('price');
@@ -138,7 +146,12 @@ class ProductController extends Controller
             ->get()
             ->toArray();
 
-        return view('container.product.create')->with('action', 'UPDATE')->with(compact('product','category'));
+        $brand= DB::table('brand')
+            ->select(array('id','brand_name','image'))
+            ->orderBy('brand_name', 'ASC')
+            ->get()
+            ->toArray();
+        return view('container.product.create')->with('action', 'UPDATE')->with(compact('product','category','brand'));
     }
 
     /**
@@ -152,6 +165,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'category_id' => 'required',
+            'brand' => 'required',
             'product_name' => 'required',
             'detail' => 'required',
             'price' => 'required|numeric',
@@ -159,6 +173,7 @@ class ProductController extends Controller
 
         ]);
         $product->cat_id = $request->input('category_id');
+        $product->brand = $request->input('brand');
         $product->product_name = $request->input('product_name');
         $product->detail = $request->input('detail');
         $product->price = $request->input('price');

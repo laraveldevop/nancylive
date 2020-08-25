@@ -156,6 +156,7 @@
                                     @if(request()->is('video')) Video @endif
                                     @if(request()->is('pdf')) Documents @endif
                                     @if(request()->is('product')) Product @endif
+                                    @if(request()->is('brand')) Brnad @endif
                                 </span></li>
                         </ol>
                     </nav>
@@ -323,8 +324,8 @@
 
                 <li class="menu">
                     <a href="#elements" data-toggle="collapse"
-                       aria-expanded="{{ ((request()->is('product')) ? 'true' : 'false') }}"
-                       data-active="{{ ((request()->is('product'))  ? 'true' : 'false') }}"
+                       aria-expanded="{{ ((request()->is('product')) || (request()->is('brand')) ? 'true' : 'false') }}"
+                       data-active="{{ ((request()->is('product')) || (request()->is('brand')) ? 'true' : 'false') }}"
                        class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -344,12 +345,16 @@
                             </svg>
                         </div>
                     </a>
-                    <ul class="collapse submenu list-unstyled {{ ((request()->is('product'))  ? 'show' : '') }}"
+                    <ul class="collapse submenu list-unstyled {{ ((request()->is('product')) || (request()->is('brand'))  ? 'show' : '') }}"
                         id="elements" data-parent="#accordionExample">
 
                         <li class="{{ ((request()->is('product')) ? 'active' : '') }}">
                             <a href="{{url('product')}}"> Products </a>
                         </li>
+                        <li class="{{ ((request()->is('brand')) ? 'active' : '') }}">
+                            <a href="{{url('brand')}}"> Brand </a>
+                        </li>
+
 
                     </ul>
                 </li>

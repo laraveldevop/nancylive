@@ -85,11 +85,12 @@
                                                 <span class="new-control-indicator"></span>
                                             </label>
                                         </div>
-                                        <h4>product</h4>
+                                        <h4>Brand</h4>
                                     </div>
                                     <div class="user-email">
                                         <h4>Name</h4>
                                     </div>
+
 
                                     <div class="action-btn">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -115,7 +116,12 @@
                                                     <span class="new-control-indicator"></span>
                                                 </label>
                                             </div>
-{{--                                            <img width="100px"  src="{{ asset(!empty($value->image)?'storage/'.$value->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">--}}
+                                            <img width="100px"  src="{{ asset(!empty($value->image)?'storage/'.$value->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">
+                                        </div>
+                                        <div class="user-email">
+                                            <p class="info-title">Brand Name: </p>
+                                            <p class="usr-email-addr"
+                                               data-email="{{ $value->brand_name }}">{{ $value->brand_name }}</p>
                                         </div>
                                         <div class="user-email">
                                             <p class="info-title">product Name: </p>
