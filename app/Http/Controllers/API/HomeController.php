@@ -46,7 +46,7 @@ class HomeController extends Controller
                 ->get()
                 ->toArray();
             $v_d= count($qu);
-            $v[] = ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item-count'=>$v_d];
+            array_push($v , ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item-count'=>$v_d]);
         }
         $category_pdf = DB::table('category')
             ->select(array('cat_id','cat_name','cat_image'))
@@ -62,7 +62,7 @@ class HomeController extends Controller
                 ->get()
                 ->toArray();
             $p_d = count($qu);
-            $pdf = ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item-count'=>$p_d];
+            array_push($pdf , ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item-count'=>$p_d]);
         }
         $product=[];
         $category_product = DB::table('category')
@@ -78,10 +78,14 @@ class HomeController extends Controller
                 ->get()
                 ->toArray();
             $pd = count($qu);
-            $product = ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item-count'=>$pd];
+            array_push( $product , ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item-count'=>$pd]);
         }
-        $brand= Brand::all();
         $br_d=[];
+        $brand= DB::table('brand')
+            ->select(array('id','brand_name','image'))
+            ->get()
+            ->toArray();
+
         foreach ($brand as $item){
             $qu= DB::table('product')
                 ->select(array('product_name','detail'))
@@ -89,12 +93,12 @@ class HomeController extends Controller
                 ->get()
                 ->toArray();
             $pd = count($qu);
-            $br_d = ['Brand_id'=>$item->id,'Brand'=>$item->brand_name,'Brand_image'=>$item->brand_image,'item-count'=>$pd];
-
+            array_push($br_d, ['Brand_id'=>$item->id,'Brand'=>$item->brand_name,'Brand_image'=>$item->image,'item-count'=>$pd]);
         }
+
         $results = DB::table('artist')->where('rate',5)->orderBy('rate','desc')->get();
         $artist =DB::table('artist')->where('rate','<',5)->orderBy('rate','desc')->get();
-        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['Advertise'=>$advertise,'video' => $v,'Magazine'=>$pdf,'Product'=>[$product],'Brand'=>[$br_d],'Artiest'=>$artist,'SponserArtiest'=>$results]]);
+        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['Advertise'=>$advertise,'video' => $v,'Magazine'=>$pdf,'Product'=>$product,'Brand'=>$br_d,'Artiest'=>$artist,'SponserArtiest'=>$results]]);
 
     }
 
