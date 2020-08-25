@@ -94,7 +94,7 @@ class HomeController extends Controller
         }
         $results = DB::table('artist')->where('rate',5)->orderBy('rate','desc')->get();
         $artist =DB::table('artist')->where('rate','<',5)->orderBy('rate','desc')->get();
-        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['Advertise'=>$advertise,'video' => $v,'Magazine'=>$pdf,'Product'=>$product,'Brand'=>$br_d,'Artiest'=>$artist,'SponserArtiest'=>$results]]);
+        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['Advertise'=>$advertise,'video' => $v,'Magazine'=>$pdf,'Product'=>[$product],'Brand'=>[$br_d],'Artiest'=>$artist,'SponserArtiest'=>$results]]);
 
     }
 
