@@ -25,12 +25,38 @@ class HomeController extends Controller
     public function advertise()
     {
         $advertise= DB::table('advertise')
-            ->select(DB::raw('advertise.id,video.video_name,video.image,video.video,pdf.pdf_name'))
+            ->select(DB::raw('advertise.id,advertise.status,advertise.video_id,advertise.pdf_id,advertise.product_id,video.video_name,video.image,video.video,pdf.pdf_name,product.product_name,product.image'))
             ->leftJoin('video','advertise.video_id','=','video.id')
             ->leftJoin('pdf','advertise.pdf_id','=','pdf.id')
-            ->orderBy('advertise.id','desc')
+            ->leftJoin('product','advertise.product_id','=','product.id')
+//            ->orderBy('advertise.id','desc')
             ->get()
             ->toArray();
+        $ad=[];
+
+        foreach ($advertise as $item) {
+            if ($item->status == 1){
+                $id= $item->video_id;
+                $title= $item->video_name;
+                $image= $item->image;
+            }
+            elseif ($item->status == 2)
+            {
+                $id= $item->pdf_id;
+                $title= $item->pdf_name;
+                $image= $item->image;
+            }
+            elseif ($item->status == 3){
+                $id= $item->product_id;
+                $title= $item->product_name;
+                $image= $item->image;
+            }
+                array_push($ad, ['ad_id' => $item->id,'id'=>$id, 'status' => $item->status, 'title' =>$title]);
+
+
+        }
+
+
 
         $category_video = DB::table('category')
             ->select(array('cat_id','cat_name','cat_image'))
@@ -98,7 +124,7 @@ class HomeController extends Controller
 
         $results = DB::table('artist')->where('rate',5)->orderBy('rate','desc')->get();
         $artist =DB::table('artist')->where('rate','<',5)->orderBy('rate','desc')->get();
-        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['Advertise'=>$advertise,'video' => $v,'Magazine'=>$pdf,'Product'=>$product,'Brand'=>$br_d,'Artiest'=>$artist,'SponserArtiest'=>$results]]);
+        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['Advertise'=>$ad,'video' => $v,'Magazine'=>$pdf,'Product'=>$product,'Brand'=>$br_d,'Artiest'=>$artist,'SponserArtiest'=>$results]]);
 
     }
 

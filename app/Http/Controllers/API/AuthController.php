@@ -20,7 +20,7 @@ class AuthController extends Controller
             'business_name' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
             'address' => ['required', 'string'],
-            'mobile' => ['required', 'string','numeric','min:10',  'unique:users'],
+            'mobile' => ['required','numeric','min:10',  'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'image' => ['required','mimes:jpeg,jpg,png,gif'],
@@ -126,7 +126,7 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status'=> false,
-                'error'=>$validator->errors()], 401);
+                'message'=>$validator->errors(),'data'=>[]], 401);
         }
         $otp =  mt_rand(1000, 9999);
 //        $mobile = $request['mobile'];

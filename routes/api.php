@@ -36,9 +36,7 @@ Route::group(['middleware' => ['json.response']], function () {
 
 
     Route::get('home', 'API\HomeController@advertise')->middleware('checkUser');
-    Route::get('video-category', 'API\CategoryViewController@videoCategory')->middleware('checkUser');
-    Route::get('product-category', 'API\CategoryViewController@productCategory')->middleware('checkUser');
-    Route::get('pdf-category', 'API\CategoryViewController@pdfCategory')->middleware('checkUser');
+    Route::post('category-detail', 'API\CategoryViewController@categoryDetail')->middleware('checkUser');
     Route::get('artist-detail', 'API\HomeController@artist')->middleware('checkUser');
     Route::post('artist', 'API\HomeController@index')->middleware('checkUser');
     Route::get('product', 'API\ProductController@index')->middleware('checkUser');
