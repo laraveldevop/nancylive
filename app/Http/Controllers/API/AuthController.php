@@ -30,7 +30,7 @@ class AuthController extends Controller
         {
             return response()->json([
                 'status'=> false,
-                'message'=>$validator->errors()->all()], 422);
+                'message'=>$validator->errors()], 422);
         }
 
 
@@ -126,7 +126,7 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status'=> false,
-                'message'=>$validator->errors(),'data'=>[]], 401);
+                'message'=>$validator->errors()->all(),'data'=>[]], 401);
         }
         $otp =  mt_rand(1000, 9999);
 //        $mobile = $request['mobile'];

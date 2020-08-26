@@ -25,7 +25,7 @@ class CategoryViewController extends Controller
         {
             return response()->json([
                 'status'=> false,
-                'message'=>$validator->errors()->all()], 422);
+                'message'=>$validator->errors()], 422);
         }
         if ($request['status'] == 1){
             $video= Video::where('cat_id',$request['cat_id'])

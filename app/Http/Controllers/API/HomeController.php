@@ -7,6 +7,7 @@ use App\Artist;
 use App\Brand;
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\ProductImage;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,16 +26,17 @@ class HomeController extends Controller
     public function advertise()
     {
         $advertise= DB::table('advertise')
-            ->select(DB::raw('advertise.id,advertise.status,advertise.video_id,advertise.pdf_id,advertise.product_id,video.video_name,video.image,video.video,pdf.pdf_name,product.product_name,product.image'))
+            ->select(DB::raw('advertise.id,advertise.status,advertise.video_id,advertise.pdf_id,advertise.product_id,video.video_name,video.image,video.video,pdf.pdf_name,product.product_name'))
             ->leftJoin('video','advertise.video_id','=','video.id')
             ->leftJoin('pdf','advertise.pdf_id','=','pdf.id')
             ->leftJoin('product','advertise.product_id','=','product.id')
-//            ->orderBy('advertise.id','desc')
+            ->orderBy('advertise.id','desc')
             ->get()
             ->toArray();
         $ad=[];
 
         foreach ($advertise as $item) {
+            $product_image= ProductImage::where('product_id',$item->product_id)->first();
             if ($item->status == 1){
                 $id= $item->video_id;
                 $title= $item->video_name;
@@ -44,14 +46,19 @@ class HomeController extends Controller
             {
                 $id= $item->pdf_id;
                 $title= $item->pdf_name;
-                $image= $item->image;
+                $image= null;
             }
             elseif ($item->status == 3){
                 $id= $item->product_id;
                 $title= $item->product_name;
-                $image= $item->image;
+                $image= $product_image['image'];
             }
-                array_push($ad, ['ad_id' => $item->id,'id'=>$id, 'status' => $item->status, 'title' =>$title]);
+            else{
+                $id= null;
+                $title= null;
+                $image= null;
+            }
+                array_push($ad, ['ad_id' => $item->id,'id'=>$id, 'status' => $item->status, 'title' =>$title,'image'=>$image,'video'=>$item->video]);
 
 
         }
@@ -244,7 +251,7 @@ class HomeController extends Controller
             $data->image = $path;
         }
         $data->save();
-        return response()->json(['status'=>true,'message'=>'User Update successfully.' ,'data'=>$data, ],200);
+        return response()->json(['status'=>true,'message'=>'User Update successfully.' ,'data'=>$data ],200);
 
     }
 
