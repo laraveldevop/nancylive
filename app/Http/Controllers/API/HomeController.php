@@ -46,7 +46,7 @@ class HomeController extends Controller
                 ->get()
                 ->toArray();
             $v_d= count($qu);
-            array_push($v , ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item-count'=>$v_d]);
+            array_push($v , ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item_count'=>$v_d]);
         }
         $category_pdf = DB::table('category')
             ->select(array('cat_id','cat_name','cat_image'))
@@ -62,7 +62,7 @@ class HomeController extends Controller
                 ->get()
                 ->toArray();
             $p_d = count($qu);
-            array_push($pdf , ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item-count'=>$p_d]);
+            array_push($pdf , ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item_count'=>$p_d]);
         }
         $product=[];
         $category_product = DB::table('category')
@@ -78,7 +78,7 @@ class HomeController extends Controller
                 ->get()
                 ->toArray();
             $pd = count($qu);
-            array_push( $product , ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item-count'=>$pd]);
+            array_push( $product , ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item_count'=>$pd]);
         }
         $br_d=[];
         $brand= DB::table('brand')
@@ -93,7 +93,7 @@ class HomeController extends Controller
                 ->get()
                 ->toArray();
             $pd = count($qu);
-            array_push($br_d, ['Brand_id'=>$item->id,'Brand'=>$item->brand_name,'Brand_image'=>$item->image,'item-count'=>$pd]);
+            array_push($br_d, ['Brand_id'=>$item->id,'Brand'=>$item->brand_name,'Brand_image'=>$item->image,'item_count'=>$pd]);
         }
 
         $results = DB::table('artist')->where('rate',5)->orderBy('rate','desc')->get();
