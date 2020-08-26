@@ -15,8 +15,6 @@ use Illuminate\Support\Facades\Storage;
 class AuthController extends Controller
 {
     public function userRegister(Request $request) {
-        echo 'run';
-        die();
         $validator = Validator::make($request->all(),[
             'name' => ['required', 'string', 'max:255'],
             'business_name' => ['required', 'string', 'max:255'],
