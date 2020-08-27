@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\OauthAccessToken;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -49,11 +50,13 @@ class AuthController extends Controller
             $user->image = $path;
 
         }
-
         $user->save();
-
+        $token = $user->createToken('MyApp')->accessToken;
+        DB::table('oauth_access_tokens')
+            ->where('user_id', $user->id)
+            ->update(['remember_token'=>$token]);
         return response()->json(['status'=> true,
-           'message'=>'User Register SuccessFull','data'=>$user],200);
+           'message'=>'User Register SuccessFull','data'=>$user, 'token'=>$token],200);
 
     }
 
@@ -72,14 +75,17 @@ class AuthController extends Controller
         $device_id = User::where([['device_id', null], ['email', $request['email']]])->first();
 
         if (isset($device_id)) {
-            $data=User::where('email', '=', $request['email'])->first();
+
             if (Hash::check($request->password, $user->password)) {
-                $token = $user->createToken('MyApp')->accessToken;
-                $response = ['token' => $token];
-                DB::table('users')
-                    ->where([['device_id', null], ['email', $request['email']]])
-                    ->update(['device_id' => $request['device_id'],'token'=>$token]);
-                return response()->json(['status' => true, 'message' => 'Login SuccessFull', 'data' =>$data,'token'=>$response],200);
+                $data=User::where('email', '=', $request['email'])->first();
+                $data->device_id = $request['device_id'];
+                $data->save();
+                $token =OauthAccessToken::where('user_id',$data->id)->first();
+//                echo  $token['remember_token'];die();
+//                DB::table('users')
+//                    ->where([['device_id', null], ['email', $request['email']]])
+//                    ->update(['device_id' => $request['device_id']]);
+                return response()->json(['status' => true, 'message' => 'Login SuccessFull', 'data' =>$data,'token'=>$token['remember_token']],200);
             } else {
                 $response = "Password miss match";
                 return response()->json([
@@ -89,7 +95,9 @@ class AuthController extends Controller
         }  elseif ($request['device_id'] == $user['device_id']) {
             if (Hash::check($request->password, $user->password)) {
                 $data=User::where('email', '=', $request['email'])->first();
-            return response()->json(['status' => true, 'message' => 'Login SuccessFull', 'data' =>$data],200);
+                $token =OauthAccessToken::where('user_id',$data->id)->first();
+
+            return response()->json(['status' => true, 'message' => 'Login SuccessFull', 'data' =>$data,'token'=>$token['remember_token']],200);
             } else {
                 $response = "Password miss match";
                 return response()->json([
