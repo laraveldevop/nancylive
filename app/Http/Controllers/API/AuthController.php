@@ -80,12 +80,12 @@ class AuthController extends Controller
                 $data=User::where('email', '=', $request['email'])->first();
                 $data->device_id = $request['device_id'];
                 $data->save();
-                $token =OauthAccessToken::where('user_id',$data->id)->first();
-//                echo  $token['remember_token'];die();
-//                DB::table('users')
-//                    ->where([['device_id', null], ['email', $request['email']]])
-//                    ->update(['device_id' => $request['device_id']]);
-                return response()->json(['status' => true, 'message' => 'Login SuccessFull', 'data' =>$data,'token'=>$token['remember_token']],200);
+                $token = $user->createToken('MyApp')->accessToken;
+//
+                DB::table('oauth_access_tokens')
+                    ->where('user_id', $data->id)
+                    ->update(['remember_token'=>$token]);
+                return response()->json(['status' => true, 'message' => 'Login SuccessFull', 'data' =>$data,'token'=>$token],200);
             } else {
                 $response = "Password miss match";
                 return response()->json([
@@ -116,7 +116,10 @@ class AuthController extends Controller
         if (isset($device_id)) {
             DB::table('users')
                 ->where([['device_id', $request['device_id']], ['email', $request['email']]])
-                ->update(['device_id' => null,'token'=> null]);
+                ->update(['device_id' => null]);
+            DB::table('oauth_access_tokens')
+                ->where('user_id', $device_id->id)
+                ->update(['remember_token'=> null]);
             return response()->json(['status' => true, 'message' => 'Successfully Log-Out']);
         }
         return response(['status'=>false,'message' => 'Invalid Credentials']);

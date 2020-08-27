@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\OauthAccessToken;
 use App\User;
 use Closure;
 
@@ -18,8 +19,8 @@ class CheckUser
     {
         $id = $request->header('USER_ID');
         $api_token = $request->header('API_TOKEN');
-        $user =  User::where([
-            ['id', '=', $id],['token', '=', $api_token],
+        $user =  OauthAccessToken::where([
+            ['user_id', '=', $id],['remember_token', '=', $api_token],
         ])->first();
         if (!empty($user)){
             return $next($request);
