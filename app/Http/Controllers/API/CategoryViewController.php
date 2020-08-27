@@ -31,40 +31,52 @@ class CategoryViewController extends Controller
         $v=[];
         $data=[];
         if ($request['cat_id'] == null){
-            if ($request['status'] == 1){
-                $video= DB::table('category')
-                    ->select(array('cat_id', 'category.cat_name','category.cat_image','module.module_name'))
-                    ->leftJoin('module','category.module_id', '=', 'module.id')
-                    ->where('module.module_name', '=', 'video')
-                    ->orderBy('cat_name', 'ASC')
+            $category_video = DB::table('category')
+                ->select(array('cat_id','cat_name','cat_image'))
+                ->leftJoin('module','category.module_id', '=', 'module.id')
+                ->where('module.module_name', '=', 'video')
+                ->get()
+                ->toArray();
+            foreach ($category_video as $item) {
+                $qu= DB::table('video')
+                    ->select(array('video_name','url','video','image'))
+                    ->where('cat_id',$item->cat_id)
                     ->get()
                     ->toArray();
-                $v = $video;
+                $v_d= count($qu);
+                array_push($v , ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item_count'=>$v_d]);
             }
-            elseif ($request['status'] == 2){
-                $pdf=   DB::table('category')
-                    ->select(array('cat_id', 'category.cat_name','category.cat_image','module.module_name'))
-                    ->leftJoin('module','category.module_id', '=', 'module.id')
-                    ->where('module.module_name', '=', 'pdf')
-                    ->orderBy('cat_name', 'ASC')
-                    ->get()
-                    ->toArray();
-                $v = $pdf;
-            }
-            elseif($request['status'] == 3){
-                $product=  DB::table('category')
-                    ->select(array('cat_id', 'category.cat_name','category.cat_image','module.module_name'))
-                    ->leftJoin('module','category.module_id', '=', 'module.id')
-                    ->where('module.module_name', '=', 'product')
-                    ->orderBy('cat_name', 'ASC')
-                    ->get()
-                    ->toArray();
+            $category_pdf = DB::table('category')
+                ->select(array('cat_id','cat_name','cat_image'))
+                ->leftJoin('module','category.module_id', '=', 'module.id')
+                ->where('module.module_name', '=', 'pdf')
+                ->get()
+                ->toArray();
 
-                $v = $product;
+            foreach ($category_pdf as $item){
+                $qu= DB::table('pdf')
+                    ->select(array('pdf_name','file'))
+                    ->where('cat_id',$item->cat_id)
+                    ->get()
+                    ->toArray();
+                $p_d = count($qu);
+                array_push($v , ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item_count'=>$p_d]);
             }
-            else{
-                return response()->json(['status' => false, 'message' => 'Status Not valid', 'data' => []]);
-
+            $product=[];
+            $category_product = DB::table('category')
+                ->select(array('cat_id','cat_name','cat_image'))
+                ->leftJoin('module','category.module_id', '=', 'module.id')
+                ->where('module.module_name', '=', 'product')
+                ->get()
+                ->toArray();
+            foreach ($category_product as $item){
+                $qu= DB::table('product')
+                    ->select(array('product_name','detail'))
+                    ->where('cat_id',$item->cat_id)
+                    ->get()
+                    ->toArray();
+                $pd = count($qu);
+                array_push( $v , ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item_count'=>$pd]);
             }
         }
         else {
