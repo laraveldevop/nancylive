@@ -23,7 +23,7 @@ class AuthController extends Controller
             'address' => ['required', 'string'],
             'mobile' => ['required','numeric','min:10',  'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'confirmed'],
             'image' => ['required','mimes:jpeg,jpg,png,gif'],
             'device_id'=>['required','string']
         ]);
