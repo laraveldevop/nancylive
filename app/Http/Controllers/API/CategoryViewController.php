@@ -30,24 +30,24 @@ class CategoryViewController extends Controller
         if ($request['status'] == 1){
             $video= Video::where('cat_id',$request['cat_id'])
                 ->paginate();
-            $v = ['Magazine'=>$video];
+            $v = [$video];
         }
         elseif ($request['status'] == 2){
             $pdf= Pdf::where('cat_id',$request['cat_id'])
                 ->paginate();
-            $v = ['Magazine'=>$pdf];
+            $v = [$pdf];
         }
         elseif($request['status'] == 3){
             $product= Product::where('cat_id',$request['cat_id'])
                 ->paginate();
-            $v = ['Magazine'=>$product];
+            $v = [$product];
         }
         else{
             return response()->json(['status' => false, 'message' => 'Status Not valid', 'data' => []]);
 
         }
 
-        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['category-data'=>$v]]);
+        return response()->json(['status' => true, 'message' => 'Available Data', 'data' =>$v]);
     }
 
 }
