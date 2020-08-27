@@ -149,7 +149,7 @@
                                                 </div>
 
                                                 <div class="row col-md-12">
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">Detail</label>
                                                             <textarea
@@ -164,6 +164,18 @@
                                                              </span>
                                                             @endif
                                                         </div>
+                                                    </div>
+                                                    <div class="col-md-3" style="margin-top: 45px;">
+                                                        <label>Add To Advertise</label>
+                                                    </div>
+                                                    <div class="col-md-3" style="margin-top: 45px;">
+                                                        <span class="sub-switch">
+                                                            <label class="switch s-outline s-outline-primary  mb-4 mr-2">
+                                                                <input type="checkbox"
+                                                                       {{ ((!empty($product->token)) ? 'checked' :old('token')) }}  name="token">
+                                                                    <span class="slider round"></span>
+                                                            </label>
+                                                        </span>
                                                     </div>
                                                 </div>
                                                 <div id="fuMultipleFile" class="col-lg-12 layout-spacing">

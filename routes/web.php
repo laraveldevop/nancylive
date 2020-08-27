@@ -26,5 +26,6 @@ Route::resource('product', 'ProductController');
 Route::resource('brand', 'BrandController');
 Route::post('/ads','VideoController@ads');
 Route::post('/pdf_ads','PdfController@ads');
+Route::post('/product_ads','ProductController@ads');
 Route::post('/video_upload','VideoController@video');
 

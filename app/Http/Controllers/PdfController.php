@@ -87,6 +87,12 @@ class PdfController extends Controller
         }
 
         $pdf->save();
+        if ($request->has('token') == 1)
+        {
+            DB::table('advertise')->insert(
+                ['pdf_id' => $pdf->id,'status'=>2,'created_at' => now()]
+            );
+        }
         return redirect('pdf');
 
     }
@@ -157,6 +163,15 @@ class PdfController extends Controller
             $pdf->file = $path;
         }
         $pdf->save();
+        if ($request->has('token') == 1)
+        {
+            DB::table('advertise')->insert(
+                ['pdf_id' => $pdf->id,'status'=>2,'created_at' => now()]
+            );
+        }
+        else{
+            DB::table('advertise')->where('pdf_id', '=', $pdf->id)->delete();
+        }
         return redirect('pdf');
     }
 
@@ -187,7 +202,7 @@ class PdfController extends Controller
             DB::table('advertise')
                 ->updateOrInsert(
                     ['pdf_id' =>  $request->id],
-                    ['pdf_id' => $request->id,'updated_at'=>now()]
+                    ['pdf_id' => $request->id,'status'=> 2,'updated_at'=>now()]
                 );
         }
 

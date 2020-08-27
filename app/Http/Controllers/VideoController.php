@@ -130,7 +130,7 @@ class VideoController extends Controller
         if ($request->has('token') == 1)
         {
             DB::table('advertise')->insert(
-                ['video_id' => $video->id,'created_at' => now()]
+                ['video_id' => $video->id,'status'=>1,'created_at' => now()]
             );
         }
         return redirect('video');
@@ -212,7 +212,7 @@ class VideoController extends Controller
         if ($request->has('token') == 1)
         {
             DB::table('advertise')->insert(
-                ['video_id' => $video->id,'created_at' => now()]
+                ['video_id' => $video->id,'status'=>1,'created_at' => now()]
             );
         }
         else{
@@ -250,7 +250,7 @@ class VideoController extends Controller
             DB::table('advertise')
                 ->updateOrInsert(
                     ['video_id' =>  $request->id],
-                    ['video_id' => $request->id,'updated_at'=>now()]
+                    ['video_id' => $request->id,'status'=> 1,'updated_at'=>now()]
                 );
         }
 

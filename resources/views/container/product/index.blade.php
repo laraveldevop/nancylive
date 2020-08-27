@@ -158,6 +158,14 @@
                                                     </svg>
                                                 </button>
                                             </form>
+                                            <span class="sub-switch">
+                                            <label class="switch s-outline s-outline-primary">
+                                                <input class="searchType" type="checkbox"
+                                                       {{ ($value->token == 0)? '':  'checked' }}  name="token"
+                                                       id="{{$value->id}}" value="{{ $value->token}}">
+                                                <span class="slider round"></span>
+                                            </label>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -173,6 +181,38 @@
     </div>
     <!--  END CONTENT AREA  -->
     @push('artist_script')
+        <script>
+
+            $('.searchType').on('change', function () {
+                // alert($(this).attr('id'));
+                var id = $(this).attr('id');
+                var val = $(this).val();
+                // alert(val);
+                $.ajax({
+                    type: "POST",
+                    url: '{{ url('/product_ads') }}',
+                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                    data: {"id": id, 'val': val},
+                    success: function (data) {
+                        if ($('#' + id).val() == 1) {
+                            // alert('not');
+                            $('#' + id).val(0);
+
+                        } else {
+                            // alert('else');
+                            $('#' + id).val(1);
+                        }
+                        alert('Update Successfully')
+                    },
+                    error: function () {
+                        alert('Something is Problem in Updating');
+                    },
+                    complete: function () {
+                        // alert('it completed');
+                    }
+                });
+            });
+        </script>
         <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('assets/js/apps/contact.js') }}"></script>
     @endpush

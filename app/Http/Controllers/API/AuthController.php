@@ -25,6 +25,7 @@ class AuthController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'image' => ['required','mimes:jpeg,jpg,png,gif'],
+            'device_id'=>['required','string']
         ]);
 
         if ($validator->fails())
@@ -43,6 +44,7 @@ class AuthController extends Controller
         $user->address = $request['address'];
         $user->mobile = $request['mobile'];
         $user->business_name = $request['business_name'];
+        $user->device_id = $request['device_id'];
         $user->password = Hash::make($request['password']);
         $user->email_verified_at = now();
         if ($request->file('image')) {
@@ -117,9 +119,7 @@ class AuthController extends Controller
             DB::table('users')
                 ->where([['device_id', $request['device_id']], ['email', $request['email']]])
                 ->update(['device_id' => null]);
-            DB::table('oauth_access_tokens')
-                ->where('user_id', $device_id->id)
-                ->update(['remember_token'=> null]);
+            DB::table('oauth_access_tokens')->where('user_id', $device_id->id)->delete();
             return response()->json(['status' => true, 'message' => 'Successfully Log-Out']);
         }
         return response(['status'=>false,'message' => 'Invalid Credentials']);

@@ -28,7 +28,7 @@ class ProductController extends Controller
     public function index()
     {
         $product = DB::table('product')
-            ->select(DB::raw('product.id,product.product_name,product.video,product.detail,product.price,product.quantity,category.cat_name,brand.brand_name,brand.image'))
+            ->select(DB::raw('product.id,product.product_name,product.video,product.detail,product.price,product.quantity,product.token,category.cat_name,brand.brand_name,brand.image'))
             ->leftJoin('category', 'product.cat_id', '=', 'category.cat_id')
             ->leftJoin('brand', 'product.brand', '=', 'brand.id')
             ->get()
@@ -87,6 +87,7 @@ class ProductController extends Controller
         $product->detail = $request->input('detail');
         $product->price = $request->input('price');
         $product->quantity = $request->input('quantity');
+        $product->token = $request->has('token');
         if ($request->hasFile('video') != null){
             $request->validate([
                 'video'=> 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
@@ -96,6 +97,12 @@ class ProductController extends Controller
         }
 
         $product->save();
+        if ($request->has('token') == 1)
+        {
+            DB::table('advertise')->insert(
+                ['product_id' => $product->id,'status'=>3,'created_at' => now()]
+            );
+        }
         $images = $request->file('files');
         if ($request->hasFile('files')) :
             foreach ($images as $item):
@@ -178,7 +185,7 @@ class ProductController extends Controller
         $product->detail = $request->input('detail');
         $product->price = $request->input('price');
         $product->quantity = $request->input('quantity');
-
+        $product->token = $request->has('token');
         if (!empty($request->hasFile('video'))) {
             $request->validate([
                 'video'=> 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
@@ -192,6 +199,15 @@ class ProductController extends Controller
             $product->video = $path;
         }
         $product->save();
+        if ($request->has('token') == 1)
+        {
+            DB::table('advertise')->insert(
+                ['product_id' => $product->id,'status'=>3,'created_at' => now()]
+            );
+        }
+        else{
+            DB::table('advertise')->where('product_id', '=', $product->id)->delete();
+        }
         $images = $request->file('files');
         if ($request->hasFile('files')) :
             $request->validate(['files'=>'mimes:jpg,jpeg,png']);
@@ -224,5 +240,29 @@ class ProductController extends Controller
     {
         Product::destroy($product);
         return redirect('product');
+    }
+
+    public function ads(Request $request)
+    {
+        if($request->val == 1){
+            DB::table('product')
+                ->where('id', $request->id)
+                ->update(['token' => 0,'updated_at'=>now()]);
+            DB::table('advertise')->where('product_id', '=', $request->id)->delete();
+
+        } else {
+            DB::table('product')
+                ->where('id', $request->id)
+                ->update(['token' => 1]);
+            DB::table('advertise')
+                ->updateOrInsert(
+                    ['product_id' =>  $request->id],
+                    ['product_id' => $request->id,'status'=> 3,'updated_at'=>now()]
+                );
+        }
+
+        return response()->json([
+            'val' => 'sucsses'
+        ]);
     }
 }
