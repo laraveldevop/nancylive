@@ -33,7 +33,7 @@ class CategoryViewController extends Controller
         if ($request['cat_id'] == null){
             if ($request['status'] == 1){
                 $video= DB::table('category')
-                    ->select(array('cat_id', 'category.cat_name','module.module_name'))
+                    ->select(array('cat_id', 'category.cat_name','category.cat_image','module.module_name'))
                     ->leftJoin('module','category.module_id', '=', 'module.id')
                     ->where('module.module_name', '=', 'video')
                     ->orderBy('cat_name', 'ASC')
@@ -43,7 +43,7 @@ class CategoryViewController extends Controller
             }
             elseif ($request['status'] == 2){
                 $pdf=   DB::table('category')
-                    ->select(array('cat_id', 'category.cat_name','module.module_name'))
+                    ->select(array('cat_id', 'category.cat_name','category.cat_image','module.module_name'))
                     ->leftJoin('module','category.module_id', '=', 'module.id')
                     ->where('module.module_name', '=', 'pdf')
                     ->orderBy('cat_name', 'ASC')
@@ -53,7 +53,7 @@ class CategoryViewController extends Controller
             }
             elseif($request['status'] == 3){
                 $product=  DB::table('category')
-                    ->select(array('cat_id', 'category.cat_name','module.module_name'))
+                    ->select(array('cat_id', 'category.cat_name','category.cat_image','module.module_name'))
                     ->leftJoin('module','category.module_id', '=', 'module.id')
                     ->where('module.module_name', '=', 'product')
                     ->orderBy('cat_name', 'ASC')
