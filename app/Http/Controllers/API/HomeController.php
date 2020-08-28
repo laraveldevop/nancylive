@@ -196,14 +196,18 @@ class HomeController extends Controller
 
             $qu= Video::where('artist_id',$item->id)
                 ->get();
-
-//            echo $qu;die();
             foreach ($qu as $item) {
                 if ($item->price == null){
                     $item['payment_status']= 'free';
                 }
                 else{
                     $item['payment_status']= 'payable';
+                }
+                if ($item->url == null){
+                    $item['video_status'] = 1;
+                }
+                else{
+                    $item['video_status'] = 2;
                 }
             }
         }
@@ -224,9 +228,9 @@ class HomeController extends Controller
                 ->select(array('id','image'))
                 ->where('artist_id',$item->id)
                 ->get();
-            $item['image']= $qu;
+            $item['images']= $qu;
         }
-        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['Artist Info' => $results]]);
+        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['artist' => $results]]);
 
     }
 
