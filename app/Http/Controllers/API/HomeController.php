@@ -7,8 +7,10 @@ use App\Artist;
 use App\Brand;
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Image;
 use App\ProductImage;
 use App\User;
+use App\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -176,22 +178,7 @@ class HomeController extends Controller
 //
 //    }
 
-    public function artist() {
-        $results = Artist::orderBy('rate','desc')->get();
-        $v=[];
-        foreach ($results as $item) {
-            $qu= DB::table('video')
-                ->select(array('video_name','url','video','image'))
-                ->where('artist_id',$item->id)
-                ->get();
-            $v[] = ['Artist'=>$item->artist_name,'Artist Detail'=>$qu];
-        }
-        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['Artist Info' => $v]]);
-
-
-    }
-    public function index(Request $request)
-    {
+    public function artist(Request  $request) {
         $validator = Validator::make($request->all(), [
             'id' => 'required|numeric',
         ]);
@@ -200,15 +187,46 @@ class HomeController extends Controller
                 'status' => false,
                 'message' => $validator->errors()], 401);
         }
-        $artist = Artist::where('id', '=', $request['id'])->first();
-//        echo $artist;die();
-        if (isset($artist)){
-            return response()->json(['status'=>true,'message'=>'Artist retrieved successfully.' ,'data'=>$artist->toArray(), ],200);
-        }
-        else{
-            return response()->json(['status'=>false,'message'=>'Incorrect Id.' ,'data'=>$artist, ],200);
+        $results = Artist::select(array('id','artist_name'))->orderBy('rate','desc')->get();
+        $v=[];
+        $video=[];
+        foreach ($results as $item) {
+            $images = Image::where('artist_id',$item->id)->get();
+            $item['image']=$images;
+
+            $qu= Video::where('artist_id',$item->id)
+                ->get();
+
+//            echo $qu;die();
+            foreach ($qu as $item) {
+                if ($item->price == null){
+                    $item['payment_status']= 'free';
+                }
+                else{
+                    $item['payment_status']= 'payable';
+                }
+            }
         }
 
+
+        $v[] = ['artist'=>$results,'artist_detail'=>$qu];
+        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['artist_info' => $v]]);
+
+
+    }
+    public function index()
+    {
+
+        $results = Artist::orderBy('rate','desc')->get();
+        $v=[];
+        foreach ($results as $item) {
+            $qu= DB::table('image')
+                ->select(array('id','image'))
+                ->where('artist_id',$item->id)
+                ->get();
+            $item['image']= $qu;
+        }
+        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['Artist Info' => $results]]);
 
     }
 
