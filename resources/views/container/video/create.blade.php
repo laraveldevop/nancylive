@@ -113,7 +113,7 @@
                                                         <div class="form-group" id="video_local_display">
 
                                                         </div>
-                                                        <input type="hidden" name="video_file_name" id="video_file_name" value="{{old('video_file_name')}}" class="form-control">
+                                                        <input type="text" name="video_file_name" id="video_file_name" value="{{old('video_file_name')}}" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="row col-md-12">
@@ -250,6 +250,7 @@
                      ' <div class="msg"></div><br><a id="submit" class="btn btn-sm btn-success" >Upload</button>');
                 }
                 else {
+                    $('#video_file_name').val('');
                     $('#video_local_display').html(' <label for="exampleFormControlInput1">Video URL</label>\n' +
                         '                                                            <input\n' +
                         '                                                                class="form-control form-control-sm {{ $errors->has('url') ? ' is-invalid' : '' }}"\n' +
