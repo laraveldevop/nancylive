@@ -187,7 +187,7 @@ class HomeController extends Controller
                 'status' => false,
                 'message' => $validator->errors()], 401);
         }
-        $results = Artist::select(array('id','artist_name'))->orderBy('rate','desc')->get();
+        $results = Artist::select(array('id','artist_name'))->where('id',$request['id'])->orderBy('rate','desc')->get();
         $v=[];
         $video=[];
         foreach ($results as $item) {
@@ -196,18 +196,18 @@ class HomeController extends Controller
 
             $qu= Video::where('artist_id',$item->id)
                 ->get();
-            foreach ($qu as $item) {
-                if ($item->price == null){
-                    $item['payment_status']= 'free';
+            foreach ($qu as $value) {
+                if ($value->price == null){
+                    $value['payment_status']= 'free';
                 }
                 else{
-                    $item['payment_status']= 'payable';
+                    $value['payment_status']= 'payable';
                 }
-                if ($item->url == null){
-                    $item['video_status'] = 1;
+                if ($value->url == null){
+                    $value['video_status'] = 1;
                 }
                 else{
-                    $item['video_status'] = 2;
+                    $value['video_status'] = 2;
                 }
             }
         }
