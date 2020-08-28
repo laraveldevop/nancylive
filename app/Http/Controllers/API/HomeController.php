@@ -187,12 +187,12 @@ class HomeController extends Controller
                 'status' => false,
                 'message' => $validator->errors()], 401);
         }
-        $results = Artist::select(array('id','artist_name'))->where('id',$request['id'])->orderBy('rate','desc')->get();
+        $results = Artist::where('id',$request['id'])->orderBy('rate','desc')->get();
         $v=[];
         $video=[];
         foreach ($results as $item) {
             $images = Image::where('artist_id',$item->id)->get();
-            $item['image']=$images;
+            $item['images']=$images;
 
             $qu= Video::where('artist_id',$item->id)
                 ->get();
