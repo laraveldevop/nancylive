@@ -14,9 +14,24 @@ class BrandViewController extends Controller
     public function brandDetail(Request $request)
     {
         $v=[];
+        $br_d=[];
         if ($request['brand_id'] == null){
-            $brand= Brand::all();
-            $v= $brand;
+
+            $brand= DB::table('brand')
+                ->select(array('id','brand_name','image'))
+                ->get()
+                ->toArray();
+
+            foreach ($brand as $item){
+                $qu= DB::table('product')
+                    ->select(array('product_name','detail'))
+                    ->where('brand',$item->id)
+                    ->get()
+                    ->toArray();
+                $pd = count($qu);
+                array_push($br_d, ['Brand_id'=>$item->id,'Brand'=>$item->brand_name,'Brand_image'=>$item->image,'item_count'=>$pd]);
+            }
+            $v= $br_d;
         }else{
             $brand= Brand::where('id',$request['brand_id'])->paginate(15);
             $product_view=[];
