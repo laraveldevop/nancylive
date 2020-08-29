@@ -6,12 +6,10 @@ use App\Category;
 use App\Http\Controllers\Controller;
 use App\Pdf;
 use App\Product;
-use App\ProductImage;
-use App\User;
+
 use App\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Facades\Validator;
 
 class CategoryViewController extends Controller
@@ -91,6 +89,7 @@ class CategoryViewController extends Controller
         else {
             if ($request['status'] == 1) {
                 $video = Video::where('cat_id', $request['cat_id'])
+                    ->leftjoin('artist','artist_id','=','artist.id')
                     ->paginate(15);
                 $v = [$video];
             } elseif ($request['status'] == 2) {

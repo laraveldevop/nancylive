@@ -38,6 +38,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('home', 'API\HomeController@advertise')->middleware('checkUser');
     Route::post('category-detail', 'API\CategoryViewController@categoryDetail')->middleware('checkUser');
     Route::post('brand-detail', 'API\BrandViewController@brandDetail')->middleware('checkUser');
+    Route::post('sponsor-detail', 'API\SponsorViewController@sponsorDetail')->middleware('checkUser');
     Route::post('artist-detail', 'API\HomeController@artist')->middleware('checkUser');
     Route::get('artist', 'API\HomeController@index')->middleware('checkUser');
     Route::get('product', 'API\ProductController@index')->middleware('checkUser');
