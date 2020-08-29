@@ -28,9 +28,10 @@ class ProductController extends Controller
     public function index()
     {
         $product = DB::table('product')
-            ->select(DB::raw('product.id,product.product_name,product.video,product.detail,product.price,product.quantity,product.token,category.cat_name,brand.brand_name,brand.image'))
+            ->select(DB::raw('product.id,product.product_name,product.video,product.detail,product.price,product.quantity,product.token,category.cat_name,brand.brand_name,brand.image,sponsor.sponsor_name'))
             ->leftJoin('category', 'product.cat_id', '=', 'category.cat_id')
             ->leftJoin('brand', 'product.brand', '=', 'brand.id')
+            ->leftJoin('sponsor', 'product.sponsor_id', '=', 'sponsor.id')
             ->get()
             ->toArray();
         return view('container.product.index')->with(compact('product'));
@@ -57,8 +58,14 @@ class ProductController extends Controller
             ->orderBy('brand_name', 'ASC')
             ->get()
             ->toArray();
+        $sponsor= DB::table('sponsor')
+            ->select(array('id','sponsor_name','image'))
+            ->orderBy('sponsor_name', 'ASC')
+            ->get()
+            ->toArray();
 
-        return view('container.product.create')->with('action', 'INSERT')->with('category',$category)->with('brand',$brand);
+
+        return view('container.product.create')->with('action', 'INSERT')->with(compact('category','brand','sponsor'));
     }
 
     /**
@@ -71,6 +78,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'category_id' => 'required',
+            'sponsor_id' => 'required',
             'brand' => 'required',
             'product_name' => 'required',
             'detail' => 'required',
@@ -82,6 +90,7 @@ class ProductController extends Controller
 
         $product = new  Product();
         $product->cat_id = $request->input('category_id');
+        $product->sponsor_id = $request->input('sponsor_id');
         $product->brand = $request->input('brand');
         $product->product_name = $request->input('product_name');
         $product->detail = $request->input('detail');
@@ -158,7 +167,12 @@ class ProductController extends Controller
             ->orderBy('brand_name', 'ASC')
             ->get()
             ->toArray();
-        return view('container.product.create')->with('action', 'UPDATE')->with(compact('product','category','brand'));
+        $sponsor= DB::table('sponsor')
+            ->select(array('id','sponsor_name','image'))
+            ->orderBy('sponsor_name', 'ASC')
+            ->get()
+            ->toArray();
+        return view('container.product.create')->with('action', 'UPDATE')->with(compact('product','category','brand','sponsor'));
     }
 
     /**
@@ -172,6 +186,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'category_id' => 'required',
+            'sponsor_id' => 'required',
             'brand' => 'required',
             'product_name' => 'required',
             'detail' => 'required',
@@ -180,6 +195,7 @@ class ProductController extends Controller
 
         ]);
         $product->cat_id = $request->input('category_id');
+        $product->sponsor_id = $request->input('sponsor_id');
         $product->brand = $request->input('brand');
         $product->product_name = $request->input('product_name');
         $product->detail = $request->input('detail');
@@ -239,6 +255,8 @@ class ProductController extends Controller
     public function destroy($product)
     {
         Product::destroy($product);
+        DB::table('product_image')->where('product_id',$product)->delete();
+
         return redirect('product');
     }
 

@@ -5,6 +5,8 @@
         <link rel="stylesheet" type="text/css" href="{{asset('plugins/select2/select2.min.css')}}">
         <link href="{{ asset('plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="{{ asset('plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('plugins/editors/markdown/simplemde.min.css') }}">
+
     @endpush
 
     <!--  BEGIN CONTENT AREA  -->
@@ -79,11 +81,30 @@
                                                         </div>
                                                     </div>
 
-
-
-
                                                 </div>
                                                 <div class="row col-md-12">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlInput1">Sponsor</label>
+                                                            <select
+                                                                class="basic form-control {{ $errors->has('sponsor') ? ' is-invalid' : '' }}"
+                                                                name="sponsor_id" id="sponsor_id">
+                                                                <option >Choose sponsor</option>
+                                                                @foreach($sponsor as $key => $value)
+                                                                    <option value="{{ $value->id }}"
+                                                                        {{ (!empty(old('sponsor_id')) && old('sponsor_id')==$value->id)?'selected':'' }}
+                                                                        {{ (!empty($product->sponsor_id) && $product->sponsor_id==$value->id)?'selected':'' }}
+                                                                    >{{ $value->sponsor_name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                            @if ($errors->has('sponsor_id'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                  <strong>{{ $errors->first('sponsor_id') }}</strong>
+                                                             </span>
+                                                            @endif
+
+                                                        </div>
+                                                    </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">Name</label>
@@ -99,6 +120,9 @@
                                                             @endif
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="row col-md-12">
+
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">Video</label>
@@ -111,6 +135,18 @@
                                                              </span>
                                                             @endif
                                                         </div>
+                                                    </div>
+                                                    <div class="col-md-3" style="margin-top: 30px;">
+                                                        <label>Add To Advertise</label>
+                                                    </div>
+                                                    <div class="col-md-3" style="margin-top: 30px;">
+                                                        <span class="sub-switch">
+                                                            <label class="switch s-outline s-outline-primary  mb-4 mr-2">
+                                                                <input type="checkbox"
+                                                                       {{ ((!empty($product->token)) ? 'checked' :old('token')) }}  name="token">
+                                                                    <span class="slider round"></span>
+                                                            </label>
+                                                        </span>
                                                     </div>
                                                 </div>
                                                 <div class="row col-md-12">
@@ -147,35 +183,29 @@
 
 
                                                 </div>
-
-                                                <div class="row col-md-12">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="exampleFormControlInput1">Detail</label>
-                                                            <textarea
-                                                                class="form-control form-control-sm {{ $errors->has('detail') ? ' is-invalid' : '' }}"
-                                                                name="detail"
-                                                                placeholder="About">
-                                                                {{ ((!empty($product->detail)) ? $product->detail :old('detail')) }}
-                                                            </textarea>
-                                                            @if ($errors->has('detail'))
-                                                                <span class="invalid-feedback" role="alert">
+                                                <div class="container">
+                                                    <div id="basic" class="row layout-spacing  layout-top-spacing">
+                                                        <div class="col-lg-12">
+                                                            <div class="statbox widget box box-shadow">
+                                                                <div class="widget-header">
+                                                                    <div class="row">
+                                                                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                                                            <h4> Detail </h4>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="widget-content widget-content-area">
+                                                                    <textarea id="demo1" name="detail" class=" {{ $errors->has('detail') ? ' is-invalid' : '' }}">
+                                                                          {{ ((!empty($product->detail)) ? $product->detail :old('detail')) }}
+                                                                    </textarea>
+                                                                    @if ($errors->has('detail'))
+                                                                        <span class="invalid-feedback" role="alert">
                                                                   <strong>{{ $errors->first('detail') }}</strong>
                                                              </span>
-                                                            @endif
+                                                                    @endif
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-3" style="margin-top: 45px;">
-                                                        <label>Add To Advertise</label>
-                                                    </div>
-                                                    <div class="col-md-3" style="margin-top: 45px;">
-                                                        <span class="sub-switch">
-                                                            <label class="switch s-outline s-outline-primary  mb-4 mr-2">
-                                                                <input type="checkbox"
-                                                                       {{ ((!empty($product->token)) ? 'checked' :old('token')) }}  name="token">
-                                                                    <span class="slider round"></span>
-                                                            </label>
-                                                        </span>
                                                     </div>
                                                 </div>
                                                 <div id="fuMultipleFile" class="col-lg-12 layout-spacing">
@@ -231,6 +261,8 @@
         <script src="{{asset('plugins/select2/select2.min.js') }}"></script>
         <script src="{{asset('plugins/select2/custom-select2.js') }}"></script>
         <script src="{{ asset('plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
+        <script src="{{ asset('plugins/editors/markdown/simplemde.min.js') }}"></script>
+        <script src="{{ asset('plugins/editors/markdown/custom-markdown.js') }}"></script>
         <script>
             //Second upload
             var secondUpload = new FileUploadWithPreview('mySecondImage')

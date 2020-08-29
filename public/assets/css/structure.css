@@ -101,8 +101,8 @@ code { color: #e7515a; }
     margin-bottom: 0;
     box-shadow: 0 0.75rem 1.5rem rgba(18,38,63,.03);
 }
-.layout-top-spacing { margin-top: 20px; }
-.layout-spacing { padding-bottom: 40px; }
+.layout-top-spacing { /*margin-top: 20px;*/ }
+.layout-spacing { /*padding-bottom: 40px;*/ }
 .layout-px-spacing { padding: 0 20px 0 18px!important; min-height: calc(100vh - 170px)!important; }
 .sidebar-closed .layout-px-spacing { padding: 0 16px!important;}
 .widget.box .widget-header {
@@ -159,7 +159,7 @@ code { color: #e7515a; }
 }
 
 
-/* 
+/*
 =====================
     Navigation Bar
 =====================
@@ -582,7 +582,7 @@ code { color: #e7515a; }
     fill: rgba(0, 23, 55, 0.08);
 }
 
-/* 
+/*
 ===============
     Sidebar
 ===============
@@ -622,7 +622,7 @@ code { color: #e7515a; }
     display: flex;
     padding: 0 0;
 }
-.sub-header-container .breadcrumb-one { 
+.sub-header-container .breadcrumb-one {
     display: inline-block;
 }
 .sub-header-container .breadcrumb-one .breadcrumb {
@@ -661,7 +661,7 @@ code { color: #e7515a; }
 }
 .sub-header-container .more-dropdown .custom-dropdown-icon { padding-right: 20px; }
 .sub-header-container .more-dropdown .custom-dropdown-icon a.dropdown-toggle {
-    position: relative; 
+    position: relative;
     padding: 9px 35px 10px 15px;
     border: 1px solid #3b3f5c;
     border-radius: 8px;
@@ -716,7 +716,7 @@ code { color: #e7515a; }
     color: #e0e6ed;
 }
 
-/* 
+/*
 ===============
     Sidebar
 ===============
@@ -982,7 +982,7 @@ code { color: #e7515a; }
 }
 
 
-/*  
+/*
     ======================
         Footer-wrapper
     ======================
@@ -1019,7 +1019,7 @@ code { color: #e7515a; }
     vertical-align: text-top;
 }
 
-/*  
+/*
     ======================
         MEDIA QUERIES
     ======================

@@ -18,6 +18,7 @@
     <!-- END GLOBAL MANDATORY STYLES -->
 
 
+
     @stack('artist_style')
     @stack('video_style')
 

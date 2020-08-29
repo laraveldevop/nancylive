@@ -3,6 +3,8 @@
     @push('artist_style')
         <link href="{{asset('assets/css/scrollspyNav.css') }}" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="{{asset('plugins/select2/select2.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/switches.css') }}">
+        <link rel="stylesheet" href="{{ asset('plugins/editors/markdown/simplemde.min.css') }}">
 
     @endpush
 
@@ -74,7 +76,7 @@
 
                                                 </div>
                                                 <div class="row col-md-12">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">Price</label>
                                                             <input
@@ -89,7 +91,7 @@
                                                             @endif
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">Attach File</label>
                                                             <input type="file"
@@ -102,28 +104,10 @@
                                                             @endif
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row col-md-12">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="exampleFormControlInput1">Detail</label>
-                                                            <textarea
-                                                                class="form-control form-control-sm {{ $errors->has('detail') ? ' is-invalid' : '' }}"
-                                                                name="detail"
-                                                                placeholder="About">
-                                                                {{ ((!empty($pdf->detail)) ? $pdf->detail :old('detail')) }}
-                                                            </textarea>
-                                                            @if ($errors->has('detail'))
-                                                                <span class="invalid-feedback" role="alert">
-                                                                  <strong>{{ $errors->first('detail') }}</strong>
-                                                             </span>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3" style="margin-top: 45px;">
+                                                    <div class="col-md-2" style="margin-top: 45px;">
                                                         <label>Add To Advertise</label>
                                                     </div>
-                                                    <div class="col-md-3" style="margin-top: 45px;">
+                                                    <div class="col-md-2" style="margin-top: 45px;">
                                                         <span class="sub-switch">
                                                             <label class="switch s-outline s-outline-primary  mb-4 mr-2">
                                                                 <input type="checkbox"
@@ -134,6 +118,31 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="container">
+                                                    <div id="basic" class="row layout-spacing  layout-top-spacing">
+                                                        <div class="col-lg-12">
+                                                            <div class="statbox widget box box-shadow">
+                                                                <div class="widget-header">
+                                                                    <div class="row">
+                                                                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                                                            <h4> Detail </h4>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="widget-content widget-content-area">
+                                                                    <textarea id="demo1" name="detail" class=" {{ $errors->has('detail') ? ' is-invalid' : '' }}">
+                                                                         {{ ((!empty($pdf->detail)) ? $pdf->detail :old('detail')) }}
+                                                                    </textarea>
+                                                                    @if ($errors->has('detail'))
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                  <strong>{{ $errors->first('detail') }}</strong>
+                                                             </span>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
 
                                             </div>
@@ -161,5 +170,7 @@
         <script src="{{asset('assets/js/scrollspyNav.js') }}"></script>
         <script src="{{asset('plugins/select2/select2.min.js') }}"></script>
         <script src="{{asset('plugins/select2/custom-select2.js') }}"></script>
+        <script src="{{ asset('plugins/editors/markdown/simplemde.min.js') }}"></script>
+        <script src="{{ asset('plugins/editors/markdown/custom-markdown.js') }}"></script>
     @endpush
 @endsection

@@ -88,7 +88,11 @@
                                         <h4>Brand</h4>
                                     </div>
                                     <div class="user-email">
-                                        <h4>Name</h4>
+                                        <h4>Sponsor Name</h4>
+                                    </div>
+
+                                    <div class="user-email">
+                                        <h4>Product</h4>
                                     </div>
 
 
@@ -123,8 +127,15 @@
                                             <p class="usr-email-addr"
                                                data-email="{{ $value->brand_name }}">{{ $value->brand_name }}</p>
                                         </div>
+
                                         <div class="user-email">
-                                            <p class="info-title">product Name: </p>
+                                            <p class="info-title">Sponsor Name: </p>
+                                            <p class="usr-email-addr"
+                                               data-email="{{ $value->sponsor_name }}">{{ $value->sponsor_name }}</p>
+                                        </div>
+
+                                        <div class="user-email">
+                                            <p class="info-title">product: </p>
                                             <p class="usr-email-addr"
                                                data-email="{{ $value->product_name }}">{{ $value->product_name }}</p>
                                         </div>

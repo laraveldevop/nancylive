@@ -4,12 +4,7 @@
         <link href="{{asset('assets/css/scrollspyNav.css') }}" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="{{asset('plugins/select2/select2.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/switches.css') }}">
-        <style type="text/css">
-            .error{
-                color: red;
-            }
-
-        </style>
+        <link rel="stylesheet" href="{{ asset('plugins/editors/markdown/simplemde.min.css') }}">
     @endpush
     <div id="content" class="main-content">
         <div class="container">
@@ -113,24 +108,7 @@
                                                         <div class="form-group" id="video_local_display">
 
                                                         </div>
-                                                        <input type="text" name="video_file_name" id="video_file_name" value="{{old('video_file_name')}}" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="row col-md-12">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label for="exampleFormControlInput1">Detail</label>
-                                                            <textarea
-                                                                class="form-control form-control-sm {{ $errors->has('detail') ? ' is-invalid' : '' }}"
-                                                                name="detail" >
-                                                                {{ ((!empty($video->detail)) ? $video->detail :old('detail')) }}
-                                                            </textarea>
-                                                            @if ($errors->has('detail'))
-                                                                <span class="invalid-feedback" role="alert">
-                                                                  <strong>{{ $errors->first('detail') }}</strong>
-                                                             </span>
-                                                            @endif
-                                                        </div>
+                                                        <input type="hidden" name="video_file_name" id="video_file_name" value="{{old('video_file_name')}}" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="row col-md-12">
@@ -178,8 +156,35 @@
                                                         </span>
                                                     </div>
                                                     </div>
+                                                <div class="container">
+                                                    <div id="basic" class="row layout-spacing  layout-top-spacing">
+                                                        <div class="col-lg-12">
+                                                            <div class="statbox widget box box-shadow">
+                                                                <div class="widget-header">
+                                                                    <div class="row">
+                                                                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                                                            <h4> Detail </h4>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="widget-content widget-content-area">
+                                                                    <textarea id="demo1" name="detail" class=" {{ $errors->has('detail') ? ' is-invalid' : '' }}">
+                                                                         {{ ((!empty($video->detail)) ? $video->detail :old('detail')) }}
+                                                                    </textarea>
+                                                                    @if ($errors->has('detail'))
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                  <strong>{{ $errors->first('detail') }}</strong>
+                                                             </span>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
 
                                                 </div>
+
 
 
                                                 <div class="col-xl-12 text-right">
@@ -344,6 +349,8 @@
 
         </script>
 
+        <script src="{{ asset('plugins/editors/markdown/simplemde.min.js') }}"></script>
+        <script src="{{ asset('plugins/editors/markdown/custom-markdown.js') }}"></script>
     @endpush
 @endsection
 
