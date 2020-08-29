@@ -156,6 +156,7 @@
                                                         </span>
                                                     </div>
                                                     </div>
+
                                                 <div class="container">
                                                     <div id="basic" class="row layout-spacing  layout-top-spacing">
                                                         <div class="col-lg-12">
@@ -181,8 +182,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-
                                                 </div>
 
 
@@ -348,7 +347,6 @@
             });
 
         </script>
-
         <script src="{{ asset('plugins/editors/markdown/simplemde.min.js') }}"></script>
         <script src="{{ asset('plugins/editors/markdown/custom-markdown.js') }}"></script>
     @endpush
