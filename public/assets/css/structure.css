@@ -101,8 +101,8 @@ code { color: #e7515a; }
     margin-bottom: 0;
     box-shadow: 0 0.75rem 1.5rem rgba(18,38,63,.03);
 }
-.layout-top-spacing { /*margin-top: 20px;*/ }
-.layout-spacing { /*padding-bottom: 40px;*/ }
+.layout-top-spacing { margin-top: 20px; }
+.layout-spacing { padding-bottom: 40px; }
 .layout-px-spacing { padding: 0 20px 0 18px!important; min-height: calc(100vh - 170px)!important; }
 .sidebar-closed .layout-px-spacing { padding: 0 16px!important;}
 .widget.box .widget-header {
