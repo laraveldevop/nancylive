@@ -19,6 +19,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('category', 'CategoryController');
 Route::resource('artist', 'ArtistController');
+Route::resource('sponsor', 'SponsorController');
 Route::resource('video', 'VideoController');
 Route::resource('module', 'ModuleController');
 Route::resource('pdf', 'PdfController');

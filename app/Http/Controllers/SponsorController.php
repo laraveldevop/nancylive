@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Artist;
 use App\Image;
+use App\Sponsor;
+use App\SponsorImage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-class ArtistController extends Controller
+class SponsorController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -29,8 +29,9 @@ class ArtistController extends Controller
      */
     public function index()
     {
-        $artist = Artist::all();
-        return view('container.artist.index')->with(compact('artist'));
+        $sponsor = Sponsor::all();
+        return view('container.sponsor.index')->with(compact('sponsor'));
+
     }
 
     /**
@@ -40,7 +41,7 @@ class ArtistController extends Controller
      */
     public function create()
     {
-        return view('container.artist.create')->with('action', 'INSERT');
+        return view('container.sponsor.create')->with('action', 'INSERT');
 
     }
 
@@ -53,7 +54,7 @@ class ArtistController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'artist_name' => 'required',
+            'sponsor_name' => 'required',
             'about' => 'required',
             'city' => 'required',
             'firm_address' => 'required',
@@ -66,43 +67,41 @@ class ArtistController extends Controller
 
         ]);
 
-        $artist = new  Artist();
+        $sponsor = new  Sponsor();
 
-        $artist->artist_name = $request->input('artist_name');
-        $artist->email = $request->input('email');
-        $artist->city = $request->input('city');
-        $artist->firm_address = $request->input('firm_address');
-        $artist->phone = $request->input('phone');
-        $artist->about = $request->input('about');
-        $artist->facebook = $request->input('facebook');
-        $artist->instagram = $request->input('instagram');
-        $artist->youtube = $request->input('youtube');
-        $artist->rate = $request->input('demo_vertical');
-//        $artist->image = $request->input('image');
+        $sponsor->sponsor_name = $request->input('sponsor_name');
+        $sponsor->email = $request->input('email');
+        $sponsor->city = $request->input('city');
+        $sponsor->firm_address = $request->input('firm_address');
+        $sponsor->phone = $request->input('phone');
+        $sponsor->about = $request->input('about');
+        $sponsor->facebook = $request->input('facebook');
+        $sponsor->instagram = $request->input('instagram');
+        $sponsor->youtube = $request->input('youtube');
         if ($request->file('image')) {
-            $path = Storage::disk('public')->put('artist', $request->file('image'));
-            $artist->image = $path;
+            $path = Storage::disk('public')->put('sponsor', $request->file('image'));
+            $sponsor->image = $path;
 
         }
         if ($request->hasFile('video')) {
             $file=$request->file('video');
             $fileName= $file->getClientOriginalExtension();
             $request->file('video')->getMimeType();
-            $path = Storage::disk('public')->put('artist-video', $request->file('video'));
-            $artist->video = $path;
+            $path = Storage::disk('public')->put('sponsor-video', $request->file('video'));
+            $sponsor->video = $path;
 
         }
-        $artist->save();
+        $sponsor->save();
 
 
         $images = $request->file('files');
         if ($request->hasFile('files')) :
             foreach ($images as $item):
 
-                $path = Storage::disk('public')->put('images', $item);
+                $path = Storage::disk('public')->put('sponsor_images', $item);
                 $arr[] = $path;
-                Image::insert( [
-                    'artist_id'=> $artist->id,
+                SponsorImage::insert( [
+                    'sponsor_id'=> $sponsor->id,
                     'image'=>  $path,
                     'created_at'=>now()
                     //you can put other insertion here
@@ -113,16 +112,17 @@ class ArtistController extends Controller
             $image = '';
         endif;
 
-        return redirect('artist');
+        return redirect('sponsor');
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Artist  $artist
+     * @param  \App\Sponsor  $sponsor
      * @return \Illuminate\Http\Response
      */
-    public function show(Artist $artist)
+    public function show(Sponsor $sponsor)
     {
         //
     }
@@ -130,12 +130,12 @@ class ArtistController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Artist  $artist
+     * @param  \App\Sponsor  $sponsor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Artist $artist)
+    public function edit(Sponsor $sponsor)
     {
-        return view('container.artist.create')->with(compact('artist'))->with('action','UPDATE');
+        return view('container.sponsor.create')->with(compact('sponsor'))->with('action','UPDATE');
 
     }
 
@@ -143,13 +143,13 @@ class ArtistController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Artist  $artist
+     * @param  \App\Sponsor  $sponsor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Artist $artist)
+    public function update(Request $request, Sponsor $sponsor)
     {
         $request->validate([
-            'artist_name' => 'required',
+            'sponsor_name' => 'required',
             'about' => 'required',
             'city' => 'required',
             'firm_address' => 'required',
@@ -160,51 +160,50 @@ class ArtistController extends Controller
 
 
         ]);
-        $artist->artist_name = $request->input('artist_name');
-        $artist->email = $request->input('email');
-        $artist->city = $request->input('city');
-        $artist->firm_address = $request->input('firm_address');
-        $artist->phone = $request->input('phone');
-        $artist->about = $request->input('about');
-        $artist->facebook = $request->input('facebook');
-        $artist->instagram = $request->input('instagram');
-        $artist->youtube = $request->input('youtube');
-        $artist->rate = $request->input('demo_vertical');
+        $sponsor->sponsor_name = $request->input('sponsor_name');
+        $sponsor->email = $request->input('email');
+        $sponsor->city = $request->input('city');
+        $sponsor->firm_address = $request->input('firm_address');
+        $sponsor->phone = $request->input('phone');
+        $sponsor->about = $request->input('about');
+        $sponsor->facebook = $request->input('facebook');
+        $sponsor->instagram = $request->input('instagram');
+        $sponsor->youtube = $request->input('youtube');
 
         if (!empty($request->hasFile('image'))) {
             $request->validate([
                 'image' => 'mimes:jpg,jpeg,png',
-                ]);
-            $path =  Storage::disk('public')->put('artist', $request->file('image'));
-            if (!empty($artist->image)){
-                $image_path = public_path().'/storage/'.$artist->image;
+            ]);
+            $path =  Storage::disk('public')->put('sponsor', $request->file('image'));
+            if (!empty($sponsor->image)){
+                $image_path = public_path().'/storage/'.$sponsor->image;
                 unlink($image_path);
             }
             //Update Image
-            $artist->image = $path;
+            $sponsor->image = $path;
         }
         if (!empty($request->hasFile('video'))) {
             $request->validate([
                 'video'=> 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
-                ]);
-            $v_path =  Storage::disk('public')->put('artist-video', $request->file('video'));
-            if (!empty($artist->video)){
-                $image_path = public_path().'/storage/'.$artist->video;
+            ]);
+            $v_path =  Storage::disk('public')->put('sponsor-video', $request->file('video'));
+            if (!empty($sponsor->video)){
+                $image_path = public_path().'/storage/'.$sponsor->video;
                 unlink($image_path);
             }
             //Update Image
-            $artist->video = $v_path;
+            $sponsor->video = $v_path;
         }
 
-        $artist->save();
+        $sponsor->save();
         $images = $request->file('files');
         if ($request->hasFile('files')) :
             foreach ($images as $item):
 
-                $path = Storage::disk('public')->put('images', $item);
+                $path = Storage::disk('public')->put('sponsor_images', $item);
                 $arr[] = $path;
-                Image::insert([
-                    'artist_id'=> $artist->id,
+                SponsorImage::insert([
+                    'sponsor_id'=> $sponsor->id,
                     'image'=>  $path,
                     'updated_at'=>now()
                     //you can put other insertion here
@@ -216,20 +215,20 @@ class ArtistController extends Controller
         endif;
 
 
-        return redirect('artist');
+        return redirect('sponsor');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Artist  $artist
+     * @param  \App\Sponsor  $sponsor
      * @return \Illuminate\Http\Response
      */
-    public function destroy($artist)
+    public function destroy($sponsor)
     {
-        Artist::destroy($artist);
-        DB::table('video')->where('artist_id',$artist)->delete();
-        DB::table('image')->where('artist_id',$artist)->delete();
-        return redirect('artist');
+        Sponsor::destroy($sponsor);
+        DB::table('product')->where('sponsor_id',$sponsor)->delete();
+        DB::table('sponsor_image')->where('sponsor_id',$sponsor)->delete();
+        return redirect('sponsor');
     }
 }

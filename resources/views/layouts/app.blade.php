@@ -324,8 +324,8 @@
 
                 <li class="menu">
                     <a href="#elements" data-toggle="collapse"
-                       aria-expanded="{{ ((request()->is('product')) || (request()->is('brand')) ? 'true' : 'false') }}"
-                       data-active="{{ ((request()->is('product')) || (request()->is('brand')) ? 'true' : 'false') }}"
+                       aria-expanded="{{ ((request()->is('product')) || (request()->is('brand')) || (request()->is('sponsor')) ? 'true' : 'false') }}"
+                       data-active="{{ ((request()->is('product')) || (request()->is('brand')) || (request()->is('sponsor')) ? 'true' : 'false') }}"
                        class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -345,15 +345,19 @@
                             </svg>
                         </div>
                     </a>
-                    <ul class="collapse submenu list-unstyled {{ ((request()->is('product')) || (request()->is('brand'))  ? 'show' : '') }}"
+                    <ul class="collapse submenu list-unstyled {{ ((request()->is('product')) || (request()->is('brand')) || (request()->is('sponsor'))   ? 'show' : '') }}"
                         id="elements" data-parent="#accordionExample">
+                        <li class="{{ ((request()->is('brand')) ? 'active' : '') }}">
+                            <a href="{{url('brand')}}"> Brand </a>
+                        </li>
+                        <li class="{{ ((request()->is('sponsor')) ? 'active' : '') }}">
+                            <a href="{{url('sponsor')}}"> Sponsor </a>
+                        </li>
 
                         <li class="{{ ((request()->is('product')) ? 'active' : '') }}">
                             <a href="{{url('product')}}"> Products </a>
                         </li>
-                        <li class="{{ ((request()->is('brand')) ? 'active' : '') }}">
-                            <a href="{{url('brand')}}"> Brand </a>
-                        </li>
+
 
 
                     </ul>

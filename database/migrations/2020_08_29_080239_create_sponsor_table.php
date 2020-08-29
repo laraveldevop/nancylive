@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateArtistTable extends Migration
+class CreateSponsorTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateArtistTable extends Migration
      */
     public function up()
     {
-        Schema::create('artist', function (Blueprint $table) {
+        Schema::create('sponsor', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('artist_name')->nullable();
+            $table->string('sponsor_name')->nullable();
             $table->string('email')->nullable();
             $table->string('city')->nullable();
             $table->string('firm_address')->nullable();
@@ -27,7 +27,6 @@ class CreateArtistTable extends Migration
             $table->string('image')->nullable();
             $table->string('image_id')->nullable();
             $table->string('video')->nullable();
-            $table->string('rate')->nullable();
             $table->timestamps();
         });
     }
@@ -39,6 +38,6 @@ class CreateArtistTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('artist');
+        Schema::dropIfExists('sponsor');
     }
 }
