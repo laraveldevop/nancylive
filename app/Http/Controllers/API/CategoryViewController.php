@@ -31,52 +31,61 @@ class CategoryViewController extends Controller
         $v=[];
         $data=[];
         if ($request['cat_id'] == null){
-            $category_video = DB::table('category')
-                ->select(array('cat_id','cat_name','cat_image'))
-                ->leftJoin('module','category.module_id', '=', 'module.id')
-                ->where('module.module_name', '=', 'video')
-                ->get()
-                ->toArray();
-            foreach ($category_video as $item) {
-                $qu= DB::table('video')
-                    ->select(array('video_name','url','video','image'))
-                    ->where('cat_id',$item->cat_id)
+            if ($request['status'] == 1) {
+                $category_video = DB::table('category')
+                    ->select(array('cat_id', 'cat_name', 'cat_image'))
+                    ->leftJoin('module', 'category.module_id', '=', 'module.id')
+                    ->where('module.module_name', '=', 'video')
                     ->get()
                     ->toArray();
-                $v_d= count($qu);
-                array_push($v , ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item_count'=>$v_d]);
+                foreach ($category_video as $item) {
+                    $qu = DB::table('video')
+                        ->select(array('video_name', 'url', 'video', 'image'))
+                        ->where('cat_id', $item->cat_id)
+                        ->get()
+                        ->toArray();
+                    $v_d = count($qu);
+                    array_push($v, ['category_id' => $item->cat_id, 'Category' => $item->cat_name, 'category_image' => $item->cat_image, 'item_count' => $v_d]);
+                }
             }
+            elseif ($request['status'] == 2) {
             $category_pdf = DB::table('category')
-                ->select(array('cat_id','cat_name','cat_image'))
-                ->leftJoin('module','category.module_id', '=', 'module.id')
+                ->select(array('cat_id', 'cat_name', 'cat_image'))
+                ->leftJoin('module', 'category.module_id', '=', 'module.id')
                 ->where('module.module_name', '=', 'pdf')
                 ->get()
                 ->toArray();
 
-            foreach ($category_pdf as $item){
-                $qu= DB::table('pdf')
-                    ->select(array('pdf_name','file'))
-                    ->where('cat_id',$item->cat_id)
+            foreach ($category_pdf as $item) {
+                $qu = DB::table('pdf')
+                    ->select(array('pdf_name', 'file'))
+                    ->where('cat_id', $item->cat_id)
                     ->get()
                     ->toArray();
                 $p_d = count($qu);
-                array_push($v , ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item_count'=>$p_d]);
+                array_push($v, ['category_id' => $item->cat_id, 'Category' => $item->cat_name, 'category_image' => $item->cat_image, 'item_count' => $p_d]);
             }
-            $product=[];
-            $category_product = DB::table('category')
-                ->select(array('cat_id','cat_name','cat_image'))
-                ->leftJoin('module','category.module_id', '=', 'module.id')
-                ->where('module.module_name', '=', 'product')
-                ->get()
-                ->toArray();
-            foreach ($category_product as $item){
-                $qu= DB::table('product')
-                    ->select(array('product_name','detail'))
-                    ->where('cat_id',$item->cat_id)
+            } elseif ($request['status'] == 3) {
+                $product = [];
+                $category_product = DB::table('category')
+                    ->select(array('cat_id', 'cat_name', 'cat_image'))
+                    ->leftJoin('module', 'category.module_id', '=', 'module.id')
+                    ->where('module.module_name', '=', 'product')
                     ->get()
                     ->toArray();
-                $pd = count($qu);
-                array_push( $v , ['category_id'=>$item->cat_id,'Category'=>$item->cat_name,'category_image'=>$item->cat_image,'item_count'=>$pd]);
+                foreach ($category_product as $item) {
+                    $qu = DB::table('product')
+                        ->select(array('product_name', 'detail'))
+                        ->where('cat_id', $item->cat_id)
+                        ->get()
+                        ->toArray();
+                    $pd = count($qu);
+                    array_push($v, ['category_id' => $item->cat_id, 'Category' => $item->cat_name, 'category_image' => $item->cat_image, 'item_count' => $pd]);
+                }
+            }
+            else {
+                return response()->json(['status' => false, 'message' => 'Status Not valid', 'data' => []]);
+
             }
         }
         else {
