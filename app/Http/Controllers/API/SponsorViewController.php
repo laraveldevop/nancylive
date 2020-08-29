@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Brand;
 use App\Http\Controllers\Controller;
 use App\Product;
+use App\Sponsor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +21,6 @@ class SponsorViewController extends Controller
                 ->select(array('id','sponsor_name','image'))
                 ->get()
                 ->toArray();
-
             foreach ($sponsor as $item){
                 $qu= DB::table('product')
                     ->select(array('product_name','detail'))
@@ -28,16 +28,16 @@ class SponsorViewController extends Controller
                     ->get()
                     ->toArray();
                 $pd = count($qu);
-                array_push($spo, ['sponsor_id'=>$item->id,'sponsor'=>$item->sponsor_name,'sponsor_image'=>$item->image,'item_count'=>$pd]);
+                array_push($br_d, ['sponsor_id'=>$item->id,'sponsor'=>$item->sponsor_name,'sponsor_image'=>$item->image,'item_count'=>$pd]);
 
             }
             $v= $br_d;
         }else{
-            $brand= Brand::where('id',$request['brand_id'])->paginate(15);
+            $sponsor= Sponsor::where('id',$request['sponsor_id'])->paginate(15);
             $product_view=[];
             $image_view=[];
-            foreach ($brand as $item) {
-                $product = Product::where('brand',$item->id)->get();
+            foreach ($sponsor as $item) {
+                $product = Product::where('sponsor_id',$item->id)->get();
                 $item['product'] = $product;
                 array_push($product_view,['product'=>$item]);
                 foreach ($product as $value) {
@@ -49,7 +49,7 @@ class SponsorViewController extends Controller
                     array_push($image_view,['product_name'=>$item]);
                 }
             }
-            $v=$brand;
+            $v=$sponsor;
         }
         return response()->json(['status' => true, 'message' => 'Available Data', 'data' =>$v]);
 
