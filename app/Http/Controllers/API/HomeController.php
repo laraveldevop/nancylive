@@ -130,10 +130,23 @@ class HomeController extends Controller
             $pd = count($qu);
             array_push($br_d, ['Brand_id'=>$item->id,'Brand'=>$item->brand_name,'Brand_image'=>$item->image,'item_count'=>$pd]);
         }
+        $spo=[];
+        $sponsor= DB::table('sponsor')
+            ->select(array('id','sponsor_name','image'))
+            ->get()
+            ->toArray();
+        foreach ($sponsor as $item){
+            $qu= DB::table('product')
+                ->select(array('product_name','detail'))
+                ->where('sponsor_id',$item->id)
+                ->get()
+                ->toArray();
+            $pd = count($qu);
+            array_push($spo, ['sponsor_id'=>$item->id,'sponsor'=>$item->sponsor_name,'sponsor_image'=>$item->image,'item_count'=>$pd]);
+        }
 
-        $results = DB::table('artist')->where('rate',5)->orderBy('rate','desc')->get();
-        $artist =DB::table('artist')->where('rate','<',5)->orderBy('rate','desc')->get();
-        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['Advertise'=>$ad,'video' => $v,'Magazine'=>$pdf,'Product'=>$product,'Brand'=>$br_d,'Artiest'=>$artist,'SponserArtiest'=>$results]]);
+        $results = DB::table('artist')->orderBy('rate','desc')->get();
+        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['Advertise'=>$ad,'video' => $v,'Magazine'=>$pdf,'Product'=>$product,'Brand'=>$br_d,'sponsor'=>$spo,'Artiest'=>$results]]);
 
     }
 
