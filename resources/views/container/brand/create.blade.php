@@ -83,7 +83,6 @@
     </div>
     </div>
     @push('artist_script')
-        <script src="{{asset('assets/js/scrollspyNav.js') }}"></script>
         <script src="{{asset('plugins/select2/select2.min.js') }}"></script>
         <script src="{{asset('plugins/select2/custom-select2.js') }}"></script>
     @endpush

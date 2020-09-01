@@ -16,9 +16,13 @@
     <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/css/plugins.css') }}" rel="stylesheet" type="text/css"/>
     <!-- END GLOBAL MANDATORY STYLES -->
-
-
-
+    <!-- BEGIN Sweetest Alert Style -->
+    <link href="{{ asset('plugins/animate/animate.css') }}" rel="stylesheet" type="text/css" />
+    <script src="{{ asset('plugins/sweetalerts/promise-polyfill.js') }}"></script>
+    <link href="{{ asset('plugins/sweetalerts/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('plugins/sweetalerts/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/components/custom-sweetalert.css') }}" rel="stylesheet" type="text/css" />
+    <!-- END Sweetest Alert Style -->
     @stack('artist_style')
     @stack('video_style')
 
@@ -391,12 +395,16 @@
 
 <script src="{{ asset('assets/js/custom.js') }}"></script>
 <!-- END GLOBAL MANDATORY SCRIPTS -->
-
+<script src="{{ asset('assets/js/scrollspyNav.js') }}"></script>
 
 @stack('artist_script')
 
 @stack('video_script')
 
+<!-- BEGIN Sweetest Alert SCRIPT -->
+<script src="{{ asset('plugins/sweetalerts/sweetalert2.min.js') }}"></script>
+<script src="{{ asset('plugins/sweetalerts/custom-sweetalert.js') }}"></script>
+<!-- END Sweetest Alert SCRIPT -->
 </body>
 
 

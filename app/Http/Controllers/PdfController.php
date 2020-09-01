@@ -184,6 +184,7 @@ class PdfController extends Controller
     public function destroy($pdf)
     {
         Pdf::destroy($pdf);
+        DB::table('advertise')->where('pdf_id',$pdf)->delete();
         return redirect('pdf');
     }
 

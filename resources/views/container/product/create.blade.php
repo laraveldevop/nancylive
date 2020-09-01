@@ -5,7 +5,8 @@
         <link rel="stylesheet" type="text/css" href="{{asset('plugins/select2/select2.min.css')}}">
         <link href="{{ asset('plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="{{ asset('plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('plugins/editors/markdown/simplemde.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('plugins/editors/quill/quill.snow.css') }}">
+
 
     @endpush
 
@@ -184,30 +185,39 @@
 
                                                 </div>
                                                 <div class="container">
-                                                    <div id="basic" class="row layout-spacing  layout-top-spacing">
+
+                                                    <div id="basic" class="row layout-spacing layout-top-spacing">
                                                         <div class="col-lg-12">
                                                             <div class="statbox widget box box-shadow">
                                                                 <div class="widget-header">
                                                                     <div class="row">
-                                                                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                                                            <h4> Detail </h4>
+                                                                        <div
+                                                                            class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                                                            <h4> Basic </h4>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="widget-content widget-content-area">
-                                                                    <textarea id="demo1" name="detail" class=" {{ $errors->has('detail') ? ' is-invalid' : '' }}">
-                                                                          {{ ((!empty($product->detail)) ? $product->detail :old('detail')) }}
-                                                                    </textarea>
+                                                                    <div id="editor-container">
+
+                                                                    </div>
                                                                     @if ($errors->has('detail'))
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                  <strong>{{ $errors->first('detail') }}</strong>
-                                                             </span>
+                                                                        <span class="text-danger">
+                                                                    <strong>{{ $errors->first('detail') }}</strong>
+                                                                    </span>
                                                                     @endif
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
+
+
                                                 </div>
+
+                                                <textarea hidden id="detail" name="detail">
+                                                        {{ ((!empty($product->detail)) ? $product->detail :old('detail')) }}
+                                                </textarea>
+
                                                 <div id="fuMultipleFile" class="col-lg-12 layout-spacing">
                                                     <div class="statbox widget box box-shadow">
                                                         <div class="widget-header">
@@ -257,16 +267,29 @@
         </div>
     </div>
     @push('artist_script')
-        <script src="{{asset('assets/js/scrollspyNav.js') }}"></script>
         <script src="{{asset('plugins/select2/select2.min.js') }}"></script>
         <script src="{{asset('plugins/select2/custom-select2.js') }}"></script>
         <script src="{{ asset('plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
-        <script src="{{ asset('plugins/editors/markdown/simplemde.min.js') }}"></script>
-        <script src="{{ asset('plugins/editors/markdown/custom-markdown.js') }}"></script>
+        <script src="{{ asset('plugins/editors/quill/quill.js') }}"></script>
+        <script src="{{ asset('plugins/editors/quill/custom-quill.js') }}"></script>
         <script>
             //Second upload
             var secondUpload = new FileUploadWithPreview('mySecondImage')
 
         </script>
+        <script>
+            $('.ql-editor').keyup(function () {
+                var item = $(".ql-editor").html();
+                $("#detail").val(item);
+
+            });
+
+        </script>
+        @if ($action=='UPDATE')
+            <script>
+                var $item = $('#detail').val();
+                $('.ql-editor').html($item);
+            </script>
+        @endif
     @endpush
 @endsection

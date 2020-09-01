@@ -29,7 +29,7 @@ class VideoController extends Controller
     public function index()
     {
         $video = DB::table('video')
-        ->select(DB::raw('video.id,video.video_name,video.video,video.token,video.url,video.image as v_image,category.cat_name,artist.artist_name,artist.image,artist.about'))
+        ->select(DB::raw('video.id,video.video_name,video.video,video.detail,video.token,video.url,video.image as v_image,category.cat_name,artist.artist_name,artist.image,artist.about'))
         ->leftJoin('category', 'video.cat_id', '=', 'category.cat_id')
             ->leftjoin('artist','video.artist_id','=','artist.id')
             ->get()
@@ -207,7 +207,37 @@ class VideoController extends Controller
         $video->detail =$request->input('detail');
         $video->token =$request->has('token');
         $video->price =$request->input('price');
-        $video->url =$request->input('url');
+
+        if (!empty($request->input('url'))){
+            $video->video = null;
+            $video->url =$request->input('url');
+        }
+        if (!empty($request->hasFile('video'))) {
+            $request->validate([
+                'video'=> 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
+            ]);
+            $v_path =  Storage::disk('public')->put('', $request->file('video'));
+            if (!empty($video->video)){
+                $image_path = public_path().'/storage/'.$video->video;
+                unlink($image_path);
+            }
+            //Update Image
+            $video->video = $v_path;
+            $video->url = null;
+        }
+
+        if (!empty($request->hasFile('image'))) {
+            $request->validate([
+                'image' => 'mimes:jpg,jpeg,png',
+            ]);
+            $path =  Storage::disk('public')->put('thumbnail', $request->file('image'));
+            if (!empty($video->image)){
+                $image_path = public_path().'/storage/'.$video->image;
+                unlink($image_path);
+            }
+            //Update Image
+            $video->image = $path;
+        }
         $video->save();
         if ($request->has('token') == 1)
         {
@@ -218,6 +248,7 @@ class VideoController extends Controller
         else{
             DB::table('advertise')->where('video_id', '=', $video->id)->delete();
         }
+        return redirect('video');
     }
 
     /**

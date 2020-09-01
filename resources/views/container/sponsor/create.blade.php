@@ -240,7 +240,6 @@
         </div>
     </div>
     @push('artist_script')
-        <script src="{{ asset('assets/js/scrollspyNav.js') }}"></script>
         <script src="{{ asset('plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
         <script>
             //Second upload

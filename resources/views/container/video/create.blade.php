@@ -4,7 +4,8 @@
         <link href="{{asset('assets/css/scrollspyNav.css') }}" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="{{asset('plugins/select2/select2.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/switches.css') }}">
-        <link rel="stylesheet" href="{{ asset('plugins/editors/markdown/simplemde.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{asset('plugins/editors/quill/quill.snow.css') }}">
+
     @endpush
     <div id="content" class="main-content">
         <div class="container">
@@ -19,7 +20,7 @@
                             </div>
                         </div>
                         @if ($action=='INSERT')
-                            <form class="mb-4" method="POST" id="form"  action="{{ url('video') }}"
+                            <form class="mb-4" method="POST" id="form" action="{{ url('video') }}"
                                   enctype="multipart/form-data">
                                 @else
                                     <form class="mb-4" method="POST" id="form" enctype="multipart/form-data"
@@ -36,7 +37,8 @@
                                                             <label for="exampleFormControlInput1">Category</label>
                                                             <select
                                                                 class="basic form-control {{ $errors->has('cat_id') ? ' is-invalid' : '' }}"
-                                                                name="cat_id" id="cat_id" @if ($action=='INSERT') required @endif>
+                                                                name="cat_id" id="cat_id"
+                                                                @if ($action=='INSERT') required @endif>
                                                                 <option value="">--Select Option--</option>
                                                                 @foreach($category as $key => $value)
                                                                     <option value="{{ $value->cat_id }}"
@@ -58,7 +60,7 @@
                                                             <label for="exampleFormControlInput1">Artist</label>
                                                             <select
                                                                 class="basic form-control {{ $errors->has('artist_id') ? ' is-invalid' : '' }}"
-                                                                name="artist_id" id="artist_id" >
+                                                                name="artist_id" id="artist_id">
                                                                 <option value="">--Select Artist--</option>
                                                                 @foreach($artist as $key => $value)
                                                                     <option value="{{ $value->id }}"
@@ -94,11 +96,20 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="exampleFormControlInput1">Video Upload Option</label>
-                                                            <select name="video_type" id="video_type" class="form-control" @if ($action=='INSERT') required @endif>
+                                                            <label for="exampleFormControlInput1">Video Upload
+                                                                Option</label>
+                                                            <select name="video_type" id="video_type"
+                                                                    class="form-control"
+                                                                    @if ($action=='INSERT') required @endif>
                                                                 <option value="">--Select Option--</option>
-                                                                <option value="server_url"    {{ (!empty(old('video_type')) && old('video_type')=='server_url')?'selected':'' }}>Server URL</option>
-                                                                <option value="local" {{ (!empty(old('video_type')) && old('video_type')=='local')?'selected':'' }}>Browse From Computer</option>
+                                                                <option
+                                                                    value="server_url" {{ (!empty($video->url) && $video->url != null)?'selected':'' }} {{ (!empty(old('video_type')) && old('video_type')=='server_url')?'selected':'' }}>
+                                                                    Server URL
+                                                                </option>
+                                                                <option
+                                                                    value="local" {{ (!empty($video->video) && $video->video != null)?'selected':'' }} {{ (!empty(old('video_type')) && old('video_type')=='local')?'selected':'' }}>
+                                                                    Browse From Computer
+                                                                </option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -108,17 +119,27 @@
                                                         <div class="form-group" id="video_local_display">
 
                                                         </div>
-                                                        <input type="hidden" name="video_file_name" id="video_file_name" value="{{old('video_file_name')}}" class="form-control">
+                                                        <input type="hidden" name="video_file_name" id="video_file_name"
+                                                               value="{{old('video_file_name')}}" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="row col-md-12">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="exampleFormControlInput1">Video Is Free OR Payable</label>
-                                                            <select name="price_type" id="price_type" class="form-control" @if ($action=='INSERT') required @endif>
+                                                            <label for="exampleFormControlInput1">Video Is Free OR
+                                                                Payable</label>
+                                                            <select name="price_type" id="price_type"
+                                                                    class="form-control"
+                                                                    @if ($action=='INSERT') required @endif>
                                                                 <option value="">--Select Option--</option>
-                                                                <option value="free"    {{ (!empty(old('price_type')) && old('price_type')=='free')?'selected':'' }}>It's Free</option>
-                                                                <option value="payable" {{ (!empty(old('price_type')) && old('price_type')=='payable')?'selected':'' }}>It's Payable</option>
+                                                                <option
+                                                                    value="free" @if($action=='UPDATE') {{ (empty($video->price) && $video->price == null)?'selected':'' }} @endif {{ (!empty(old('price_type')) && old('price_type')=='free')?'selected':'' }}>
+                                                                    It's Free
+                                                                </option>
+                                                                <option
+                                                                    value="payable"  {{ (!empty($video->price) && $video->price != null)?'selected':'' }}  {{ (!empty(old('price_type')) && old('price_type')=='payable')?'selected':'' }}>
+                                                                    It's Payable
+                                                                </option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -131,7 +152,8 @@
                                                 <div class="row col-md-12">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="exampleFormControlInput1"> Thumbnail Image</label>
+                                                            <label for="exampleFormControlInput1"> Thumbnail
+                                                                Image</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('image') ? ' is-invalid' : '' }}"
                                                                 type="file" name="image"
@@ -148,58 +170,65 @@
                                                     </div>
                                                     <div class="col-md-3" style="margin-top: 40px;">
                                                         <span class="sub-switch">
-                                                            <label class="switch s-outline s-outline-primary  mb-4 mr-2">
+                                                            <label
+                                                                class="switch s-outline s-outline-primary  mb-4 mr-2">
                                                                 <input type="checkbox"
-                                                               {{ ((!empty($video->token)) ? 'checked' :old('token')) }}  name="token">
+                                                                       {{ ((!empty($video->token)) ? 'checked' :old('token')) }}  name="token">
                                                                     <span class="slider round"></span>
                                                             </label>
                                                         </span>
                                                     </div>
-                                                    </div>
+                                                </div>
 
                                                 <div class="container">
-                                                    <div id="basic" class="row layout-spacing  layout-top-spacing">
+
+                                                    <div id="basic" class="row layout-spacing layout-top-spacing">
                                                         <div class="col-lg-12">
                                                             <div class="statbox widget box box-shadow">
                                                                 <div class="widget-header">
                                                                     <div class="row">
-                                                                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                                                            <h4> Detail </h4>
+                                                                        <div
+                                                                            class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                                                            <h4> Basic </h4>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="widget-content widget-content-area">
-                                                                    <textarea id="demo1" name="detail" class=" {{ $errors->has('detail') ? ' is-invalid' : '' }}">
-                                                                         {{ ((!empty($video->detail)) ? $video->detail :old('detail')) }}
-                                                                    </textarea>
+                                                                    <div id="editor-container">
+
+                                                                    </div>
                                                                     @if ($errors->has('detail'))
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                  <strong>{{ $errors->first('detail') }}</strong>
-                                                             </span>
+                                                                    <span class="text-danger">
+                                                                    <strong>{{ $errors->first('detail') }}</strong>
+                                                                    </span>
                                                                     @endif
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                </div>
 
-
-
-                                                <div class="col-xl-12 text-right">
-
-                                                    <button type="submit" class="btn btn-primary" ><span>
-                                                            @if ($action=='INSERT')
-                                                                Add Video
-                                                            @else
-                                                                Update Video
-                                                            @endif</span>
-                                                    </button>
 
                                                 </div>
+
+                                                <textarea hidden id="detail" name="detail">
+                                                        {{ ((!empty($video->detail)) ? $video->detail :old('detail')) }}
+                                                </textarea>
+
                                             </div>
+
+                                            <div class="col-xl-12 text-right">
+                                                <button type="submit" class="btn btn-primary"><span>
+                                                            @if ($action=='INSERT')
+                                                            Add Video
+                                                        @else
+                                                            Update Video
+                                                        @endif</span>
+                                                </button>
+
+                                            </div>
+                                        </div>
                                     </form>
-{{--                            </form>--}}
+                            {{--                            </form>--}}
                     </div>
                 </div>
             </div>
@@ -210,7 +239,7 @@
         <script src="{{asset('js/jquery.validate.min.js')}}"></script>
         <script src="{{asset('js/additional-methods.min.js')}}"></script>
         <script>
-            $('#price_type').change(function (){
+            $('#price_type').change(function () {
                 var type = $("#price_type").val();
 
                 if (type === "payable") {
@@ -225,14 +254,13 @@
                         '                                                                  <strong >{{ $errors->first('price') }}</strong>\n' +
                         '                                                             </span>\n' +
                         '                                                        @endif')
-                }
-                else {
+                } else {
                     $("#price").html('');
                 }
             });
 
             $("#price_type").trigger('change');
-            $("#video_type").change(function() {
+            $("#video_type").change(function () {
 
                 var type = $("#video_type").val();
 
@@ -250,16 +278,15 @@
                         '                                                            @endif
                             <br><div class="progress br-30">\n' +
                         '                                                <div class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">0%</div>\n' +
-                        '                                            </div>\n'+
-                     ' <div class="msg"></div><br><a id="submit" class="btn btn-sm btn-success" >Upload</button>');
-                }
-                else {
+                        '                                            </div>\n' +
+                        ' <div class="msg"></div><br><a id="submit" class="btn btn-sm btn-success" >Upload</button>');
+                } else {
                     $('#video_file_name').val('');
                     $('#video_local_display').html(' <label for="exampleFormControlInput1">Video URL</label>\n' +
                         '                                                            <input\n' +
                         '                                                                class="form-control form-control-sm {{ $errors->has('url') ? ' is-invalid' : '' }}"\n' +
                         '                                                                type="text" name="url" required placeholder="Enter Video URL"\n' +
-                        '                                                                value="{{ ((!empty($video->video)) ? $video->video :old('url')) }}">\n' +
+                        '                                                                value="{{ ((!empty($video->url)) ? $video->url :old('url')) }}">\n' +
                         '                                                            @if ($errors->has('url'))\n' +
                         '                                                                <span class="invalid-feedback" role="alert">\n' +
                         '                                                                  <strong>{{ $errors->first('url') }}</strong>\n' +
@@ -268,17 +295,15 @@
                 }
 
 
-
             });
             $("#video_type").trigger('change');
 
         </script>
 
-        <script src="{{asset('assets/js/scrollspyNav.js') }}"></script>
         <script src="{{asset('plugins/select2/select2.min.js') }}"></script>
         <script src="{{asset('plugins/select2/custom-select2.js') }}"></script>
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#form').validate({
                     rules: {
                         video: {
@@ -295,8 +320,8 @@
                         },
                     },
 
-                     });
-                $(document).on("click", "a", function(){
+                });
+                $(document).on("click", "a", function () {
                     $('.progress-bar').css('width', '0');
                     $('.msg').text('');
                     var video_local = $('#video_local').val();
@@ -304,10 +329,10 @@
                     var fileInput = document.getElementById('video');
                     var filePath = fileInput.value;
                     var allowedExtensions = /(\.mp4)$/i;
-                    if(!allowedExtensions.exec(filePath)) {
+                    if (!allowedExtensions.exec(filePath)) {
                         alert('Please upload file having video only.');
                         fileInput.value = '';
-                        return ;
+                        return;
                     }
                     var formData = new FormData();
                     formData.append('video_local', $('#video')[0].files[0])
@@ -347,8 +372,22 @@
             });
 
         </script>
-        <script src="{{ asset('plugins/editors/markdown/simplemde.min.js') }}"></script>
-        <script src="{{ asset('plugins/editors/markdown/custom-markdown.js') }}"></script>
+        <script src="{{asset('plugins/editors/quill/quill.js') }}"></script>
+        <script src="{{asset('plugins/editors/quill/custom-quill.js') }}"></script>
+        <script>
+            $('.ql-editor').keyup(function () {
+                var item = $(".ql-editor").html();
+                $("#detail").val(item);
+
+            });
+
+        </script>
+        @if ($action=='UPDATE')
+            <script>
+            var $item = $('#detail').val();
+                $('.ql-editor').html($item);
+            </script>
+        @endif
     @endpush
 @endsection
 

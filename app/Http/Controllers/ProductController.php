@@ -256,6 +256,7 @@ class ProductController extends Controller
     {
         Product::destroy($product);
         DB::table('product_image')->where('product_id',$product)->delete();
+        DB::table('advertise')->where('product_id',$product)->delete();
 
         return redirect('product');
     }

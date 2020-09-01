@@ -134,11 +134,7 @@
                                                data-email="{{ $value->sponsor_name }}">{{ $value->sponsor_name }}</p>
                                         </div>
 
-                                        <div class="user-email">
-                                            <p class="info-title">product: </p>
-                                            <p class="usr-email-addr"
-                                               data-email="{{ $value->product_name }}">{{ $value->product_name }}</p>
-                                        </div>
+
 
 
                                         <div class="action-btn">
