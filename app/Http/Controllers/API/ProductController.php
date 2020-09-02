@@ -31,7 +31,13 @@ class ProductController extends Controller
             return response()->json(['status' => true, 'message' => 'Products retrieved successfully.', 'data' => $products,], 200);
         } else {
             $products = Product::all();
-
+            foreach ($products as $item) {
+                $qu= DB::table('product_image')
+                    ->select(array('id','image'))
+                    ->where('product_id',$item->id)
+                    ->get();
+                $item['images']= $qu;
+            }
 
             return response()->json(['status' => true, 'message' => 'Products retrieved successfully.', 'data' => $products->toArray(),], 200);
         }
