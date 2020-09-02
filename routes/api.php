@@ -41,9 +41,9 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('sponsor-detail', 'API\SponsorViewController@sponsorDetail')->middleware('checkUser');
     Route::post('artist-detail', 'API\HomeController@artist')->middleware('checkUser');
     Route::get('artist', 'API\HomeController@index')->middleware('checkUser');
-    Route::get('product', 'API\ProductController@index')->middleware('checkUser');
+    Route::post('product', 'API\ProductController@index')->middleware('checkUser');
     Route::get('document', 'API\PdfController@index')->middleware('checkUser');
-    Route::get('video', 'API\VideoController@index')->middleware('checkUser');
+    Route::post('video', 'API\VideoController@index')->middleware('checkUser');
     Route::post('user-update', 'API\HomeController@userUpdate')->middleware('checkUser');
     Route::post('change-password', 'API\HomeController@changePassword')->middleware('checkUser');
     Route::post('check_user', 'API\AuthController@check_user');
