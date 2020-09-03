@@ -123,6 +123,21 @@
                                                     </div>
                                                 </div>
                                                 <div class="row col-md-12">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlInput1">Mobile</label>
+                                                            <input
+                                                                class="form-control form-control-sm {{ $errors->has('mobile') ? ' is-invalid' : '' }}"
+                                                                type="text" name="mobile"
+                                                                value="{{ ((!empty($product->product_name)) ? $product->product_name :old('mobile')) }}"
+                                                                placeholder="Enter mobile Number">
+                                                            @if ($errors->has('mobile'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                  <strong>{{ $errors->first('mobile') }}</strong>
+                                                             </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
@@ -137,18 +152,7 @@
                                                             @endif
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3" style="margin-top: 30px;">
-                                                        <label>Add To Advertise</label>
-                                                    </div>
-                                                    <div class="col-md-3" style="margin-top: 30px;">
-                                                        <span class="sub-switch">
-                                                            <label class="switch s-outline s-outline-primary  mb-4 mr-2">
-                                                                <input type="checkbox"
-                                                                       {{ ((!empty($product->token)) ? 'checked' :old('token')) }}  name="token">
-                                                                    <span class="slider round"></span>
-                                                            </label>
-                                                        </span>
-                                                    </div>
+
                                                 </div>
                                                 <div class="row col-md-12">
                                                     <div class="col-md-6">
@@ -183,6 +187,20 @@
                                                     </div>
 
 
+                                                </div>
+                                                <div class="row col-md-12">
+                                                    <div class="col-md-3" style="margin-top: 30px;">
+                                                        <label>Add To Advertise</label>
+                                                    </div>
+                                                    <div class="col-md-3" style="margin-top: 30px;">
+                                                        <span class="sub-switch">
+                                                            <label class="switch s-outline s-outline-primary  mb-4 mr-2">
+                                                                <input type="checkbox"
+                                                                       {{ ((!empty($product->token)) ? 'checked' :old('token')) }}  name="token">
+                                                                    <span class="slider round"></span>
+                                                            </label>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                                 <div class="container">
 

@@ -84,6 +84,7 @@ class ProductController extends Controller
             'detail' => 'required',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric',
+            'mobile' => 'required|numeric',
 
         ]);
 
@@ -94,6 +95,7 @@ class ProductController extends Controller
         $product->brand = $request->input('brand');
         $product->product_name = $request->input('product_name');
         $product->detail = $request->input('detail');
+        $product->mobile = $request->input('mobile');
         $product->price = $request->input('price');
         $product->quantity = $request->input('quantity');
         $product->token = $request->has('token');
@@ -192,6 +194,7 @@ class ProductController extends Controller
             'detail' => 'required',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric',
+            'mobile' => 'required|numeric',
 
         ]);
         $product->cat_id = $request->input('category_id');
@@ -199,6 +202,7 @@ class ProductController extends Controller
         $product->brand = $request->input('brand');
         $product->product_name = $request->input('product_name');
         $product->detail = $request->input('detail');
+        $product->mobile = $request->input('mobile');
         $product->price = $request->input('price');
         $product->quantity = $request->input('quantity');
         $product->token = $request->has('token');
