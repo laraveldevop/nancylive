@@ -131,7 +131,7 @@
                                                 </label>
                                             </div>
                                             <img width="50px" height="50px"
-                                                 src="{{ asset(!empty($value->image)?'storage/'.$value->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}"
+                                                 src="{{ asset(!empty($value->image)?'public/storage/'.$value->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}"
                                                  alt="avatar">
                                             <div class="user-meta-info">
                                                 <p class="user-name"
@@ -154,15 +154,15 @@
                                         <div class="user-location">
                                             @if(!empty($value->video))
 
-                                            <video width="200px" poster="{{ asset(!empty($value->v_image)?'storage/'.$value->v_image:'')}}" controls>
+                                            <video width="200px" poster="{{ asset(!empty($value->v_image)?'public/storage/'.$value->v_image:'')}}" controls>
                                                 <source
-                                                    src="{{ asset(!empty($value->video)?'storage/'.$value->video:'')}}"
+                                                    src="{{ asset(!empty($value->video)?'public/storage/'.$value->video:'')}}"
                                                     type="video/mp4">
                                                 Your browser does not support the video tag.
                                             </video>
                                             @endif
                                                 @if(!empty($value->url))
-                                                    <a href="{{ $value->url }}" target="_blank"><img alt="url Link" title="URL Link" src="{{ asset(!empty($value->v_image)?'storage/'.$value->v_image:'')}}"  width="200px"></a>
+                                                    <a href="{{ $value->url }}" target="_blank"><img alt="url Link" title="URL Link" src="{{ asset(!empty($value->v_image)?'public/storage/'.$value->v_image:'')}}"  width="200px"></a>
                                                 @endif
                                         </div>
 

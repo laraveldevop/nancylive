@@ -75,7 +75,7 @@
                                                 <span class="new-control-indicator"></span>
                                             </label>
                                         </div>
-                                        <img width="100px"  height="100px" src="{{ asset(!empty($value->image)?'storage/'.$value->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">
+                                        <img width="100px"  height="100px" src="{{ asset(!empty($value->image)?'public/storage/'.$value->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">
                                         <div class="user-meta-info">
                                             <p class="user-name" data-name="{{ $value->artist_name }}">{{ $value->artist_name }}</p>
                                             <p class="user-work" data-occupation="{{ $value->about }}">{{ $value->about }}</p>
