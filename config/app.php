@@ -51,9 +51,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL','http://nancybeauty.purecode.co.in/public/'),
+    'url' => env('APP_URL','https://nencybeauty.com/public'),
 
-    'asset_url' => env('ASSET_URL', null),
+    'asset_url' => env('ASSET_URL', 'https://nencybeauty.com/public'),
 
     /*
     |--------------------------------------------------------------------------
@@ -164,6 +164,7 @@ return [
         /*
          * Package Service Providers...
          */
+        NotificationChannels\OneSignal\OneSignalServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -226,6 +227,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+//        'OneSignal' => Berkayk\OneSignal\OneSignalFacade::class,
 
     ],
 

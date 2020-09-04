@@ -8,7 +8,7 @@ class Product extends Model
 {
     protected $table = 'product';
     protected $primaryKey = 'id';
-    protected $fillable = ['category_id','product_name','detail','price','video','brand','sponsor_id','token','quantity','created_at','updated_at'];
+    protected $fillable = ['category_id','product_name','detail','mobile','price','video','brand','sponsor_id','token','quantity','created_at','updated_at'];
 
     public function productImage()
     {

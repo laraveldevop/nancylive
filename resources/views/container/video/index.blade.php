@@ -245,9 +245,7 @@
                     error: function () {
                         alert('Something is Problem in Updating');
                     },
-                    complete: function () {
-                        // alert('it completed');
-                    }
+
                 });
             });
         </script>
