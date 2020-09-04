@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
@@ -25,8 +26,9 @@ Route::resource('module', 'ModuleController');
 Route::resource('pdf', 'PdfController');
 Route::resource('product', 'ProductController');
 Route::resource('brand', 'BrandController');
+Route::resource('notification', 'NotificationController');
 Route::post('/ads','VideoController@ads');
 Route::post('/pdf_ads','PdfController@ads');
 Route::post('/product_ads','ProductController@ads');
 Route::post('/video_upload','VideoController@video');
-
+Route::get('send-notification', 'NotificationController@sendOfferNotification');
