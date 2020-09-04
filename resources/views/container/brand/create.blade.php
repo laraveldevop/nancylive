@@ -2,8 +2,8 @@
 @section('content')
     @push('artist_style')
         <!--  BEGIN CUSTOM STYLE FILE  -->
-        <link href="{{asset('assets/css/scrollspyNav.css') }}" rel="stylesheet" type="text/css"/>
-        <link rel="stylesheet" type="text/css" href="{{asset('plugins/select2/select2.min.css')}}">
+        <link href="{{ asset('public/assets/css/scrollspyNav.css') }}" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/select2/select2.min.css')}}">
         <!--  END CUSTOM STYLE FILE  -->
     @endpush
 
@@ -70,20 +70,17 @@
                                                             Update brand
                                                         @endif</span>
                                                 </button>
-
                                             </div>
                                         </div>
-
+                                    </form>
+                            </form>
                     </div>
-                    </form>
-
                 </div>
             </div>
         </div>
     </div>
-    </div>
     @push('artist_script')
-        <script src="{{asset('plugins/select2/select2.min.js') }}"></script>
-        <script src="{{asset('plugins/select2/custom-select2.js') }}"></script>
+        <script src="{{ asset('public/plugins/select2/select2.min.js') }}"></script>
+        <script src="{{ asset('public/plugins/select2/custom-select2.js') }}"></script>
     @endpush
 @endsection

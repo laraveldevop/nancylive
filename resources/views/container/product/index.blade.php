@@ -3,9 +3,9 @@
 
 @section('content')
     @push('artist_style')
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/theme-checkbox-radio.css') }}">
-        <link href="{{ asset('plugins/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet" type="text/css"/>
-        <link href="{{ asset('assets/css/apps/contacts.css') }}" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/forms/theme-checkbox-radio.css') }}">
+        <link href="{{ asset('public/plugins/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('public/assets/css/apps/contacts.css') }}" rel="stylesheet" type="text/css"/>
     @endpush
     <!--  BEGIN CONTENT AREA  -->
     <div id="content" class="main-content">
@@ -120,7 +120,8 @@
                                                     <span class="new-control-indicator"></span>
                                                 </label>
                                             </div>
-                                            <img width="100px"  src="{{ asset(!empty($value->image)?'storage/'.$value->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">
+                                           {{ $product_image = \App\ProductImage::where('product_id',$value->id)->first()}}
+                                            <img width="100px"  src="{{ asset(!empty($value->image)?'public/storage/'.$product_image->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">
                                         </div>
                                         <div class="user-email">
                                             <p class="info-title">Brand Name: </p>
@@ -220,7 +221,7 @@
                 });
             });
         </script>
-        <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-        <script src="{{ asset('assets/js/apps/contact.js') }}"></script>
+        <script src="{{ asset('public/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+        <script src="{{ asset('public/assets/js/apps/contact.js') }}"></script>
     @endpush
 @endsection

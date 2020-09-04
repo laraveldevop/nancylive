@@ -53,7 +53,7 @@ return [
 
     'url' => env('APP_URL','https://nencybeauty.com/public'),
 
-    'asset_url' => env('ASSET_URL', 'https://nencybeauty.com/public'),
+    'asset_url' => env('ASSET_URL', null),
 
     /*
     |--------------------------------------------------------------------------

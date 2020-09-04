@@ -2,9 +2,9 @@
 @section('content')
     @push('artist_style')
         <!-- BEGIN PAGE LEVEL STYLES -->
-        <link href="{{ asset('assets/css/scrollspyNav.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" type="text/css" href="{{ asset('plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}">
+        <link href="{{ asset('public/assets/css/scrollspyNav.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('public/plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}">
         <!-- END PAGE LEVEL STYLES -->
     @endpush
     <div id="content" class="main-content">
@@ -246,13 +246,13 @@
         </div>
     </div>
     @push('artist_script')
-        <script src="{{ asset('plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
+        <script src="{{ asset('public/plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
         <script>
             //Second upload
             var secondUpload = new FileUploadWithPreview('mySecondImage')
 
         </script>
-        <script src="{{ asset('plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js') }}"></script>
-        <script src="{{ asset('plugins/bootstrap-touchspin/custom-bootstrap-touchspin.js') }}"></script>
+        <script src="{{ asset('public/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js') }}"></script>
+        <script src="{{ asset('public/plugins/bootstrap-touchspin/custom-bootstrap-touchspin.js') }}"></script>
     @endpush
 @endsection

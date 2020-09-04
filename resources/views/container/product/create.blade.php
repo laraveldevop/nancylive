@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
     @push('artist_style')
-        <link href="{{asset('assets/css/scrollspyNav.css') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('public/assets/css/scrollspyNav.css') }}" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="{{asset('plugins/select2/select2.min.css')}}">
-        <link href="{{ asset('plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" type="text/css" href="{{ asset('plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('plugins/editors/quill/quill.snow.css') }}">
+        <link href="{{ asset('public/plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/editors/quill/quill.snow.css') }}">
 
 
     @endpush
@@ -287,9 +287,9 @@
     @push('artist_script')
         <script src="{{asset('plugins/select2/select2.min.js') }}"></script>
         <script src="{{asset('plugins/select2/custom-select2.js') }}"></script>
-        <script src="{{ asset('plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
-        <script src="{{ asset('plugins/editors/quill/quill.js') }}"></script>
-        <script src="{{ asset('plugins/editors/quill/custom-quill.js') }}"></script>
+        <script src="{{ asset('public/plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
+        <script src="{{ asset('public/plugins/editors/quill/quill.js') }}"></script>
+        <script src="{{ asset('public/plugins/editors/quill/custom-quill.js') }}"></script>
         <script>
             //Second upload
             var secondUpload = new FileUploadWithPreview('mySecondImage')

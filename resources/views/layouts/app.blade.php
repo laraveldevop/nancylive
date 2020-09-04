@@ -6,22 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <title>Sales Admin | CORK - Multipurpose Bootstrap Dashboard Template </title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.ico') }}"/>
-    <link href="{{ asset('assets/css/loader.css') }}" rel="stylesheet" type="text/css"/>
-    <script src="{{ asset('assets/js/loader.js') }}"></script>
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/switches.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/elements/alert.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('public/assets/img/favicon.ico') }}"/>
+    <link href="{{ asset('public/assets/css/loader.css') }}" rel="stylesheet" type="text/css"/>
+    <script src="{{ asset('public/assets/js/loader.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/forms/switches.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/elements/alert.css') }}">
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
-    <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('assets/css/plugins.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('public/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('public/assets/css/plugins.css') }}" rel="stylesheet" type="text/css"/>
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN Sweetest Alert Style -->
-    <link href="{{ asset('plugins/animate/animate.css') }}" rel="stylesheet" type="text/css" />
-    <script src="{{ asset('plugins/sweetalerts/promise-polyfill.js') }}"></script>
-    <link href="{{ asset('plugins/sweetalerts/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('plugins/sweetalerts/sweetalert.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/css/components/custom-sweetalert.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('public/plugins/animate/animate.css') }}" rel="stylesheet" type="text/css" />
+    <script src="{{ asset('public/plugins/sweetalerts/promise-polyfill.js') }}"></script>
+    <link href="{{ asset('public/plugins/sweetalerts/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('public/plugins/sweetalerts/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('public/assets/css/components/custom-sweetalert.css') }}" rel="stylesheet" type="text/css" />
     <!-- END Sweetest Alert Style -->
     @stack('artist_style')
     @stack('video_style')
@@ -45,7 +45,7 @@
         <ul class="navbar-item theme-brand flex-row  text-center">
             <li class="nav-item theme-logo">
                 <a href="{{url('/')}}">
-                    <img src="{{ asset('assets/img/logo.svg') }}" class="navbar-logo" alt="logo">
+                    <img src="{{ asset('public/assets/img/logo.svg') }}" class="navbar-logo" alt="logo">
                 </a>
             </li>
             <li class="nav-item theme-text">
@@ -53,28 +53,48 @@
             </li>
         </ul>
 
-{{--        <ul class="navbar-item flex-row ml-md-0 ml-auto">--}}
-{{--            <li class="nav-item align-self-center search-animated">--}}
-{{--                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"--}}
-{{--                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"--}}
-{{--                     class="feather feather-search toggle-search">--}}
-{{--                    <circle cx="11" cy="11" r="8"></circle>--}}
-{{--                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>--}}
-{{--                </svg>--}}
-{{--                <form class="form-inline search-full form-inline search" role="search">--}}
-{{--                    <div class="search-bar">--}}
-{{--                        <input type="text" class="form-control search-form-control  ml-lg-auto" placeholder="Search...">--}}
-{{--                    </div>--}}
-{{--                </form>--}}
-{{--            </li>--}}
-{{--        </ul>--}}
-
         <ul class="navbar-item flex-row ml-md-auto">
+            <li class="nav-item dropdown notification-dropdown">
+                <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg><span class="badge badge-success"></span>
+                </a>
+                <div class="dropdown-menu position-absolute" aria-labelledby="notificationDropdown">
+                    <div class="notification-scroll">
+
+                        <div class="dropdown-item">
+                            <div class="media">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                <div class="media-body">
+                                    <div class="notification-para"><span class="user-name">Shaun Park</span> likes your photo.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dropdown-item">
+                            <div class="media">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share-2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                                <div class="media-body">
+                                    <div class="notification-para"><span class="user-name">Kelly Young</span> shared your post</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dropdown-item">
+                            <div class="media">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+                                <div class="media-body">
+                                    <div class="notification-para"><span class="user-name">Kelly Young</span> mentioned you in comment.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
 
             <li class="nav-item dropdown user-profile-dropdown">
                 <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <img src="{{ asset('assets/img/boy-2.png') }}" alt="avatar">
+                    <img src="{{ asset('public/assets/img/boy-2.png') }}" alt="avatar">
                 </a>
                 <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
                     <div class="">
@@ -161,7 +181,8 @@
                                     @if(request()->is('video')) Video @endif
                                     @if(request()->is('pdf')) Documents @endif
                                     @if(request()->is('product')) Product @endif
-                                    @if(request()->is('brand')) Brnad @endif
+                                    @if(request()->is('brand')) Brand @endif
+                                    @if(request()->is('notification')) Notification @endif
                                 </span></li>
                         </ol>
                     </nav>
@@ -368,6 +389,16 @@
                     </ul>
                 </li>
 
+                <li class="menu">
+                    <a href="{{ url('notification') }}" data-active="{{ ((request()->is('notification')) ? 'true' : 'false') }}"
+                       aria-expanded="{{ ((request()->is('notification')) ? 'true' : 'false') }}" class="dropdown-toggle">
+                        <div class="">
+                            <i class="far fa-bell"></i>
+                            <span>Send Notification</span>
+                        </div>
+                    </a>
+                </li>
+
             </ul>
             <!-- <div class="shadow-bottom"></div> -->
 
@@ -381,29 +412,29 @@
 </div>
 <!-- END MAIN CONTAINER -->
 <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-<script src="{{ asset('assets/js/libs/jquery-3.1.1.min.js') }}"></script>
-<script src="{{ asset('bootstrap/js/popper.min.js') }}"></script>
-<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
-{{--<script src="{{ asset('plugins/blockui/jquery.blockUI.min.js') }}"></script>--}}
-<script src="{{ asset('assets/js/app.js') }}"></script>
+<script src="{{ asset('public/assets/js/libs/jquery-3.1.1.min.js') }}"></script>
+<script src="{{ asset('public/bootstrap/js/popper.min.js') }}"></script>
+<script src="{{ asset('public/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('public/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+{{--<script src="{{ asset('public/plugins/blockui/jquery.blockUI.min.js') }}"></script>--}}
+<script src="{{ asset('public/assets/js/app.js') }}"></script>
 <script>
     $(document).ready(function () {
         App.init();
     });
 </script>
 
-<script src="{{ asset('assets/js/custom.js') }}"></script>
+<script src="{{ asset('public/assets/js/custom.js') }}"></script>
 <!-- END GLOBAL MANDATORY SCRIPTS -->
-<script src="{{ asset('assets/js/scrollspyNav.js') }}"></script>
+<script src="{{ asset('public/assets/js/scrollspyNav.js') }}"></script>
 
 @stack('artist_script')
 
 @stack('video_script')
 
 <!-- BEGIN Sweetest Alert SCRIPT -->
-<script src="{{ asset('plugins/sweetalerts/sweetalert2.min.js') }}"></script>
-<script src="{{ asset('plugins/sweetalerts/custom-sweetalert.js') }}"></script>
+<script src="{{ asset('public/plugins/sweetalerts/sweetalert2.min.js') }}"></script>
+<script src="{{ asset('public/plugins/sweetalerts/custom-sweetalert.js') }}"></script>
 <!-- END Sweetest Alert SCRIPT -->
 </body>
 
