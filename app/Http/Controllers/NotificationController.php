@@ -16,7 +16,7 @@ class NotificationController extends Controller
 
     public function index()
     {
-        return view('container.notification.create')->with('action','Update');
+        return view('container.notification.create');
 
     }
 

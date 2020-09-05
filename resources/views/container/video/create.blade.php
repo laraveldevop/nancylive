@@ -3,7 +3,7 @@
     @push('video_style')
         <link href="{{ asset('public/assets/css/scrollspyNav.css') }}" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/select2/select2.min.css')}}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/switches.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/forms/switches.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/editors/quill/quill.snow.css') }}">
 
     @endpush
@@ -236,8 +236,8 @@
     </div>
 
     @push('video_script')
-        <script src="{{asset('js/jquery.validate.min.js')}}"></script>
-        <script src="{{asset('js/additional-methods.min.js')}}"></script>
+        <script src="{{ asset('public/js/jquery.validate.min.js')}}"></script>
+        <script src="{{ asset('public/js/additional-methods.min.js')}}"></script>
         <script>
             $('#price_type').change(function () {
                 var type = $("#price_type").val();

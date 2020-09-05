@@ -21,99 +21,90 @@
                                 </div>
                             </div>
                         </div>
-                        @if ($action=='INSERT')
-                            <form class="mb-4" method="POST" action="{{ url('notification') }}"
-                                  enctype="multipart/form-data">
-                                @else
-                                    <form class="mb-4" method="POST"  enctype="multipart/form-data"
-                                          action="{{ url('notification/sendOfferNotification') }}">
-                                        @method('PUT')
-                                        @endif
-                                        @csrf
-                                        <div class="widget-content widget-content-area">
+                        <form class="mb-4" method="PUT" action="{{ url('notification/sendOfferNotification') }}"
+                              enctype="multipart/form-data">
+                            @csrf
+                            <div class="widget-content widget-content-area">
 
-                                            <div class="row">
-                                                <div class="col-md-10">
-                                                    <div class="form-group">
-                                                        <label for="exampleFormControlInput1">Title</label>
-                                                        <input
-                                                            class="form-control form-control-sm {{ $errors->has('title') ? ' is-invalid' : '' }}"
-                                                            type="text" name="title"
-                                                            placeholder="Enter Title">
-                                                        @if ($errors->has('title'))
-                                                            <span class="invalid-feedback" role="alert">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Title</label>
+                                            <input
+                                                class="form-control form-control-sm {{ $errors->has('title') ? ' is-invalid' : '' }}"
+                                                type="text" name="title"
+                                                placeholder="Enter Title">
+                                            @if ($errors->has('title'))
+                                                <span class="invalid-feedback" role="alert">
                                                                   <strong>{{ $errors->first('title') }}</strong>
                                                              </span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10">
-                                                    <div class="form-group">
-                                                        <label for="exampleFormControlInput1">Message</label>
-                                                        <textarea rows="10"
-                                                            class="form-control form-control-sm {{ $errors->has('message') ? ' is-invalid' : '' }}" name="message">
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Message</label>
+                                            <textarea rows="10"
+                                                      class="form-control form-control-sm {{ $errors->has('message') ? ' is-invalid' : '' }}"
+                                                      name="message">
 
                                                         </textarea>
-                                                        @if ($errors->has('message'))
-                                                            <span class="invalid-feedback" role="alert">
+                                            @if ($errors->has('message'))
+                                                <span class="invalid-feedback" role="alert">
                                                                   <strong>{{ $errors->first('message') }}</strong>
                                                              </span>
-                                                        @endif
-                                                    </div>
-                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
 
 
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Image</label>
+                                            <input type="file"
+                                                   class="form-control form-control-sm"
+                                                   name="image">
 
-                                                <div class="col-md-10">
-                                                    <div class="form-group">
-                                                        <label for="exampleFormControlInput1">Image</label>
-                                                        <input type="file"
-                                                               class="form-control form-control-sm"
-                                                               name="image">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Video</label>
+                                            <input type="file"
+                                                   class="form-control form-control-sm"
+                                                   name="video">
 
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10">
-                                                    <div class="form-group">
-                                                        <label for="exampleFormControlInput1">Video</label>
-                                                        <input type="file"
-                                                               class="form-control form-control-sm"
-                                                               name="video">
-
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-10">
-                                                    <div class="form-group">
-                                                        <label for="exampleFormControlInput1">External Link</label>
-                                                        <input
-                                                            class="form-control form-control-sm {{ $errors->has('external_link') ? ' is-invalid' : '' }}"
-                                                            type="text" name="external_link"
-                                                            placeholder="Enter External Link">
-                                                        @if ($errors->has('external_link'))
-                                                            <span class="invalid-feedback" role="alert">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">External Link</label>
+                                            <input
+                                                class="form-control form-control-sm {{ $errors->has('external_link') ? ' is-invalid' : '' }}"
+                                                type="text" name="external_link"
+                                                placeholder="Enter External Link">
+                                            @if ($errors->has('external_link'))
+                                                <span class="invalid-feedback" role="alert">
                                                                   <strong>{{ $errors->first('external_link') }}</strong>
                                                              </span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-
-
-                                            <div class="col-xl-12 text-right">
-                                                <button class="btn btn-primary"><span>
-                                                            @if ($action=='INSERT')
-                                                            Send notification
-                                                        @else
-                                                            Update notification
-                                                        @endif</span>
-                                                </button>
-
-                                            </div>
+                                            @endif
                                         </div>
-                                    </form>
-                            {{--                            </form>--}}
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="col-xl-12 text-right">
+                                    <button class="btn btn-primary">
+                                        <span>Send notification</span>
+
+                                    </button>
+
+                                </div>
+                            </div>
+                        </form>
+                        {{--                            </form>--}}
                     </div>
                 </div>
             </div>

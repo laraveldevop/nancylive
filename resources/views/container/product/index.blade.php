@@ -120,8 +120,8 @@
                                                     <span class="new-control-indicator"></span>
                                                 </label>
                                             </div>
-                                           {{ $product_image = \App\ProductImage::where('product_id',$value->id)->first()}}
-                                            <img width="100px"  src="{{ asset(!empty($value->image)?'public/storage/'.$product_image->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">
+
+                                            <img width="100px"  src="{{ asset(!empty($value->image)?'public/storage/'.$value->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">
                                         </div>
                                         <div class="user-email">
                                             <p class="info-title">Brand Name: </p>

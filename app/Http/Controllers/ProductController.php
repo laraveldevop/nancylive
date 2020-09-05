@@ -28,12 +28,14 @@ class ProductController extends Controller
     public function index()
     {
         $product = DB::table('product')
-            ->select(DB::raw('product.id,product.product_name,product.video,product.detail,product.price,product.quantity,product.token,category.cat_name,brand.brand_name,brand.image,sponsor.sponsor_name'))
+            ->select(DB::raw('product.id,product.product_name,product.video,product.detail,product.price,product.quantity,product.token,category.cat_name,brand.brand_name,product_image.image,sponsor.sponsor_name'))
             ->leftJoin('category', 'product.cat_id', '=', 'category.cat_id')
             ->leftJoin('brand', 'product.brand', '=', 'brand.id')
             ->leftJoin('sponsor', 'product.sponsor_id', '=', 'sponsor.id')
-            ->get()
-            ->toArray();
+            ->leftJoin('product_image', 'product.id', '=', 'product_image.product_id')
+            ->get();
+//            ->toArray();
+//        echo $product;die();
         return view('container.product.index')->with(compact('product'));
 
 
@@ -152,7 +154,7 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function edit(Product $product)
     {
