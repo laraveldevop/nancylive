@@ -31,4 +31,4 @@ Route::post('/ads','VideoController@ads');
 Route::post('/pdf_ads','PdfController@ads');
 Route::post('/product_ads','ProductController@ads');
 Route::post('/video_upload','VideoController@video');
-Route::get('send-notification', 'NotificationController@sendOfferNotification');
+Route::POST('send-notification', 'NotificationController@sendOfferNotification');

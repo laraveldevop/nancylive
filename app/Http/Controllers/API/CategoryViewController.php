@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Artist;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Pdf;
@@ -89,8 +90,19 @@ class CategoryViewController extends Controller
         else {
             if ($request['status'] == 1) {
                 $video = Video::where('cat_id', $request['cat_id'])
-                    ->leftjoin('artist','artist_id','=','artist.id')
                     ->paginate(15);
+                foreach ($video as $item){
+                    if ($item->price == null){
+                        $item['payment_status'] = 'free';
+
+                    }
+                    else{
+                        $item['payment_status']= 'payable';
+                    }
+                    $artist = Artist::where('id',$item->artist_id)->get();
+                    $item['artist']= $artist;
+
+                }
                 $v = [$video];
             } elseif ($request['status'] == 2) {
                 $pdf = Pdf::where('cat_id', $request['cat_id'])

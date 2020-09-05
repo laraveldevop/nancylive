@@ -217,7 +217,7 @@
                                             </div>
 
                                             <div class="col-xl-12 text-right">
-                                                <button type="submit" class="btn btn-primary"><span>
+                                                <button type="submit" id="insert" class="btn btn-primary"><span>
                                                             @if ($action=='INSERT')
                                                             Add Video
                                                         @else
@@ -269,7 +269,7 @@
                     $("#video_local_display").html(' <label for="exampleFormControlInput1">Add Video</label>\n' +
                         '                                                            <input\n' +
                         '                                                                class="form-control form-control-sm {{ $errors->has('video') ? ' is-invalid' : '' }}"\n' +
-                        '                                                                type="file" name="video" id="video" \n' +
+                        '                                                                type="file" name="video" id="video" onchange="handleFileSelect(event)" \n' +
                         '                                                                value="{{ ((!empty($video->video)) ? $video->video :old('video')) }}">\n' +
                         '                                                            @if ($errors->has('video'))\n' +
                         '                                                                <span class="invalid-feedback" role="alert">\n' +
@@ -279,7 +279,7 @@
                             <br><div class="progress br-30">\n' +
                         '                                                <div class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">0%</div>\n' +
                         '                                            </div>\n' +
-                        ' <div class="msg"></div><br><a id="submit" class="btn btn-sm btn-success" >Upload</button>');
+                        ' <div class="msg"></div><br><a id="submit" class="btn btn-sm btn-success">Upload</a>');
                 } else {
                     $('#video_file_name').val('');
                     $('#video_local_display').html(' <label for="exampleFormControlInput1">Video URL</label>\n' +
@@ -297,13 +297,19 @@
 
             });
             $("#video_type").trigger('change');
-
         </script>
+        <script type="text/javascript">
+            function handleFileSelect(evt) {
+                var files = evt.target.files; // FileList object
+                $('#insert').attr("disabled", true);
 
+            }
+        </script>
         <script src="{{ asset('public/plugins/select2/select2.min.js') }}"></script>
         <script src="{{ asset('public/plugins/select2/custom-select2.js') }}"></script>
         <script>
             $(document).ready(function () {
+
                 $('#form').validate({
                     rules: {
                         video: {
@@ -322,6 +328,7 @@
 
                 });
                 $(document).on("click", "a", function () {
+                    $('#insert').attr("disabled", false);
                     $('.progress-bar').css('width', '0');
                     $('.msg').text('');
                     var video_local = $('#video_local').val();
@@ -336,7 +343,7 @@
                     }
                     var formData = new FormData();
                     formData.append('video_local', $('#video')[0].files[0])
-                    $('#upload').attr('disabled', 'disabled');
+                    $('#submit').css("pointer-events", 'none',"cursor",'default');
                     $('.msg').text('Uploading in progress...');
                     $.ajax({
                         url: '{{ url('/video_upload') }}',
@@ -362,7 +369,7 @@
                             alert('Upload successfully..');
                             $('#video_file_name').val(data);
                             $('.msg').text("File uploaded successfully!!");
-                            $('#btn').removeAttr('disabled');
+
                         },
                         error: function () {
                             alert('Something is Problem in Updating');

@@ -21,7 +21,7 @@
                                 </div>
                             </div>
                         </div>
-                        <form class="mb-4" method="PUT" action="{{ url('notification/sendOfferNotification') }}"
+                        <form class="mb-4" method="POST" action="{{ url('send-notification') }}"
                               enctype="multipart/form-data">
                             @csrf
                             <div class="widget-content widget-content-area">

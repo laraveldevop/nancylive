@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Notifications\SendNotify;
 use Illuminate\Http\Request;
 
 use App\User;
@@ -21,19 +22,9 @@ class NotificationController extends Controller
     }
 
     public function sendOfferNotification() {
-        $userSchema = User::first();
 
-        $offerData = [
-            'name' => 'BOGO',
-            'body' => 'You received an offer.',
-            'thanks' => 'Thank you',
-            'offerText' => 'Check out the offer',
-            'offerUrl' => url('/'),
-            'offer_id' => 007
-        ];
+        auth()->user()->notify(new SendNotify());
 
-        Notification::send($userSchema, new TaskComplete($offerData));
-
-        dd('Task completed!');
+       return redirect('notification');
     }
 }

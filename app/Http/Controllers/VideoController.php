@@ -92,25 +92,8 @@ class VideoController extends Controller
                 "url" => 'url'
             ]);
         }
-//        if ($request->hasFile('video') != null){
-//            $request->validate([
-//                'video'=> 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
-//            ]);
-//        }
-
 
         $video =new Video();
-
-//        $video->video =$request->input('video');
-//        if ($request->hasFile('video')) {
-//            $file=$request->file('video');
-//            $fileName= $file->getClientOriginalExtension();
-//             $request->file('video')->getMimeType();
-////            $request->video->move('storage/'.$fileName);
-//            $path = str_replace('public/', '', $request->file('video')->store('public'));
-//            $video->video = $path;
-//
-//        }
 
         $video->cat_id =$request->input('cat_id');
         $video->artist_id =$request->input('artist_id');
