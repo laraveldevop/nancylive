@@ -27,6 +27,7 @@ Route::resource('pdf', 'PdfController');
 Route::resource('product', 'ProductController');
 Route::resource('brand', 'BrandController');
 Route::resource('notification', 'NotificationController');
+Route::resource('package', 'PackageController');
 Route::post('/ads','VideoController@ads');
 Route::post('/pdf_ads','PdfController@ads');
 Route::post('/product_ads','ProductController@ads');

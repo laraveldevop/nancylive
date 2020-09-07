@@ -169,6 +169,7 @@
                                     @if(request()->is('product')) Product @endif
                                     @if(request()->is('brand')) Brand @endif
                                     @if(request()->is('notification')) Notification @endif
+                                    @if(request()->is('package')) Package @endif
                                 </span></li>
                         </ol>
                     </nav>
@@ -384,9 +385,19 @@
                         </div>
                     </a>
                 </li>
+                <li class="menu">
+                    <a href="{{ url('package') }}" data-active="{{ ((request()->is('package')) ? 'true' : 'false') }}"
+                       aria-expanded="{{ ((request()->is('package')) ? 'true' : 'false') }}" class="dropdown-toggle">
+                        <div class="">
+                            <i class="far fa-bell"></i>
+                            <span>Package</span>
+                        </div>
+                    </a>
+                </li>
+
 
             </ul>
-            <!-- <div class="shadow-bottom"></div> -->
+{{--            <div class="shadow-bottom"></div>--}}
 
         </nav>
 
