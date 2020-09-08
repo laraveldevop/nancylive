@@ -136,6 +136,48 @@
 
                                                                 </div>
                                                             </div>
+                                                            <div class="col-md-10">
+                                                                <div class="row col-md-12">
+                                                                    <label for="exampleFormControlInput1">Select Time Duration method</label>
+
+                                                                </div>
+                                                                <div class="row col-md-12">
+                                                                    <div class="n-chk">
+                                                                        <label class="new-control new-radio new-radio-text radio-classic-info">
+                                                                            <input type="radio" id="day"  value="day" class="new-control-input" name="custom-radio-4">
+                                                                            <span class="new-control-indicator"></span><span class="new-radio-content">Day</span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="n-chk">
+                                                                        <label class="new-control new-radio new-radio-text radio-classic-info">
+                                                                            <input type="radio" id="month" value="month" class="new-control-input" name="custom-radio-4">
+                                                                            <span class="new-control-indicator"></span><span class="new-radio-content">Month</span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="n-chk">
+                                                                        <label class="new-control new-radio new-radio-text radio-classic-info">
+                                                                            <input type="radio" id="year" value="year" class="new-control-input" name="custom-radio-4">
+                                                                            <span class="new-control-indicator"></span><span class="new-radio-content">Year</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-10">
+                                                                <div class="form-group">
+                                                                    <label for="exampleFormControlInput1">Count Duration</label>
+                                                                    <input
+                                                                        class="form-control form-control-sm {{ $errors->has('count_duration') ? ' is-invalid' : '' }}"
+                                                                        type="number" name="count_duration" readonly id="count_duration"
+                                                                        value="{{ ((!empty($package->count_duration)) ? $package->count_duration :old('count_duration')) }}"
+                                                                        placeholder="Enter Content Count">
+                                                                    @if ($errors->has('count_duration'))
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                      <strong>{{ $errors->first('count_duration') }}</strong>
+                                                                 </span>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+
                                                             <div class="container" id="package_module">
 
                                                                 <div id="basic"
@@ -215,7 +257,11 @@
 
             </script>
         @endif
-
+        <script>
+            $('input[type=radio][name=custom-radio-4]').change(function() {
+                $('#count_duration').attr('readonly',false);
+            });
+        </script>
     @endpush
 
 @endsection

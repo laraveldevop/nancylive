@@ -76,18 +76,21 @@ class PackageController extends Controller
             'detail'=>'required',
         ]);
         $ct= $request->input('category_id');
-
+        $method =$request->input("custom-radio-4");
 
         $package=  new Package();
-
         $package->name = $request->input('name');
         $package->price = $request->input('price');
         if ($ct == null){$package->module_type =  $module->id;}else{
             $package->category_id = $ct;
-
         }
         $package->content_count = $request->input('content_count');
         $package->detail = $request->input('detail');
+        $package->time_method = $method;
+        if ($method == 'day'){$package->day = $request->input('count_duration');
+        }elseif ($method == 'month'){$package->month = $request->input('count_duration');
+        }else{$package->year = $request->input('count_duration');
+        }
         $package->save();
         return redirect('package');
 
