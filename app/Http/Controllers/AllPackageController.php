@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\AllPackage;
 use App\Package;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AllPackageController extends Controller
 {
@@ -15,7 +16,11 @@ class AllPackageController extends Controller
      */
     public function index()
     {
-        $package = Package::where('content_count', null)->get();
+        $package = DB::table('package')->where([
+            ['module_type', '=', null],
+            ['content_count', '=', null],
+            ['category_id','=',null]
+        ])->get();
         return view('container.package.all_index')->with('package',$package);
     }
 
@@ -43,6 +48,7 @@ class AllPackageController extends Controller
             'price'=>'required',
             'count_duration'=>'required',
             'detail'=>'required',
+            'custom-radio-4'=>'required',
         ]);
 
         $method =$request->input("custom-radio-4");
@@ -85,9 +91,10 @@ class AllPackageController extends Controller
      * @param  \App\AllPackage  $allPackage
      * @return \Illuminate\Http\Response
      */
-    public function edit(AllPackage $allPackage)
+    public function edit(Package $allPackage)
     {
-        //
+        return view('container.package.create_all')->with('action', 'UPDATE')->with(compact('allPackage'));
+
     }
 
     /**
@@ -99,7 +106,35 @@ class AllPackageController extends Controller
      */
     public function update(Request $request, AllPackage $allPackage)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'price'=>'required',
+            'count_duration'=>'required',
+            'detail'=>'required',
+            'custom-radio-4'=>'required',
+        ]);
+        $method=$request->input("custom-radio-4");
+        $allPackage->name = $request->input('name');
+        $allPackage->price = $request->input('price');
+        $allPackage->count_duration = $request->input('count_duration');
+        $allPackage->detail = $request->input('detail');
+        $allPackage->time_method = $request->input("custom-radio-4");
+        if ($method == 'day'){
+            $allPackage->day = $request->input('count_duration');
+        }
+        elseif ($method == 'month'){
+            $allPackage->month = $request->input('count_duration');
+
+        }
+        else{
+            $allPackage->year = $request->input('count_duration');
+
+        }
+
+        $allPackage->save();
+
+
+        return redirect('package');
     }
 
     /**

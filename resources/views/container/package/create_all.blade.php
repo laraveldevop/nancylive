@@ -26,27 +26,14 @@
                         </div>
                         <div class="widget-content widget-content-area simple-pills">
                             <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist">
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
-                                       role="button"
-                                       aria-haspopup="true" aria-expanded="false">Packages
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                             stroke-linecap="round" stroke-linejoin="round"
-                                             class="feather feather-chevron-down">
-                                            <polyline points="6 9 12 15 18 9"></polyline>
-                                        </svg>
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" id="pills-profile-tab"
-                                           href="{{url('package/create')}}" >Module Package</a>
-                                        <a class="dropdown-item" id="pills-profile-tab2"
-                                           href="{{url('create-cat')}}">Category Package</a>
-                                    </div>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-contact-tab" href="{{url('package/create')}}">Module Package</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="pills-contact-tab" data-toggle="pill" href="{{url('all-package/create')}}"
-                                       role="tab" aria-controls="pills-contact" aria-selected="false">All Package</a>
+                                    <a class="nav-link" id="pills-contact-tab" href="{{ url('create-cat') }}">Category Package</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-contact-tab" href="{{url('all-package/create')}}">All Package</a>
                                 </li>
 
                             </ul>
@@ -58,7 +45,7 @@
                                               enctype="multipart/form-data">
                                             @else
                                                 <form class="mb-4" method="POST" enctype="multipart/form-data"
-                                                      action="{{ route('all-package.update',$package->id) }}">
+                                                      action="{{ route('all-package.update',$allPackage->id) }}">
                                                     @method('PUT')
                                                     @endif
                                                     @csrf
@@ -72,7 +59,7 @@
                                                                     <input
                                                                         class="form-control form-control-sm {{ $errors->has('name') ? ' is-invalid' : '' }}"
                                                                         type="text" name="name"
-                                                                        value="{{ ((!empty($package->name)) ? $package->name :old('name')) }}"
+                                                                        value="{{ ((!empty($allPackage->name)) ? $allPackage->name :old('name')) }}"
                                                                         placeholder="Enter package Name">
                                                                     @if ($errors->has('name'))
                                                                         <span class="invalid-feedback" role="alert">
@@ -88,7 +75,7 @@
                                                                     <input
                                                                         class="form-control form-control-sm {{ $errors->has('price') ? ' is-invalid' : '' }}"
                                                                         type="text" name="price"
-                                                                        value="{{ ((!empty($package->price)) ? $package->price :old('price')) }}"
+                                                                        value="{{ ((!empty($allPackage->price)) ? $allPackage->price :old('price')) }}"
                                                                         placeholder="Enter package price">
                                                                     @if ($errors->has('price'))
                                                                         <span class="invalid-feedback" role="alert">
@@ -105,19 +92,28 @@
                                                                 <div class="row col-md-12">
                                                                 <div class="n-chk">
                                                                     <label class="new-control new-radio new-radio-text radio-classic-info">
-                                                                        <input type="radio" id="day"  value="day" class="new-control-input" name="custom-radio-4">
+                                                                        <input type="radio" id="day"
+                                                                               {{ old('custom-radio-4')=="day" ? 'checked' : '' }}
+                                                                               {{ (!empty($allPackage->time_method) && $allPackage->time_method=='day')?'checked':'' }}
+                                                                               value="day" class="new-control-input" name="custom-radio-4">
                                                                         <span class="new-control-indicator"></span><span class="new-radio-content">Day</span>
                                                                     </label>
                                                                 </div>
                                                                 <div class="n-chk">
                                                                     <label class="new-control new-radio new-radio-text radio-classic-info">
-                                                                        <input type="radio" id="month" value="month" class="new-control-input" name="custom-radio-4">
+                                                                        <input type="radio" id="month"
+                                                                               {{ old('custom-radio-4')=="month" ? 'checked' : '' }}
+                                                                               {{ (!empty($allPackage->time_method) && $allPackage->time_method=='month')?'checked':'' }}
+                                                                               value="month" class="new-control-input" name="custom-radio-4">
                                                                         <span class="new-control-indicator"></span><span class="new-radio-content">Month</span>
                                                                     </label>
                                                                 </div>
                                                                 <div class="n-chk">
                                                                     <label class="new-control new-radio new-radio-text radio-classic-info">
-                                                                        <input type="radio" id="year" value="year" class="new-control-input" name="custom-radio-4">
+                                                                        <input type="radio" id="year"
+                                                                               {{ old('custom-radio-4')=="year" ? 'checked' : '' }}
+                                                                               {{ (!empty($allPackage->time_method) && $allPackage->time_method=='year')?'checked':'' }}
+                                                                               value="year" class="new-control-input" name="custom-radio-4">
                                                                         <span class="new-control-indicator"></span><span class="new-radio-content">Year</span>
                                                                     </label>
                                                                 </div>
@@ -129,8 +125,8 @@
                                                                     <input
                                                                         class="form-control form-control-sm {{ $errors->has('count_duration') ? ' is-invalid' : '' }}"
                                                                         type="number" name="count_duration" readonly id="count_duration"
-                                                                        value="{{ ((!empty($package->count_duration)) ? $package->count_duration :old('count_duration')) }}"
-                                                                        placeholder="Enter Content Count">
+                                                                        value="{{ ((!empty($allPackage->count_duration)) ? $allPackage->count_duration :old('count_duration')) }}"
+                                                                        placeholder="Enter Day Or Month Or Year Count">
                                                                     @if ($errors->has('count_duration'))
                                                                         <span class="invalid-feedback" role="alert">
                                                                       <strong>{{ $errors->first('count_duration') }}</strong>
@@ -172,7 +168,7 @@
                                                             </div>
 
                                                             <textarea hidden id="detail" name="detail">
-                                                        {{ ((!empty($package->detail)) ? $package->detail :old('detail')) }}
+                                                        {{ ((!empty($allPackage->detail)) ? $allPackage->detail :old('detail')) }}
                                                 </textarea>
                                                         </div>
 

@@ -26,9 +26,16 @@ class PackageController extends Controller
      */
     public function index()
     {
-        $package = Package::where('content_count','!=', null)->get();
+        $package = Package::where('module_type','!=', null)->get();
         return view('container.package.index')->with('package',$package);
     }
+
+    public function catIndex()
+    {
+        $package = Package::where('category_id','!=', null)->get();
+        return view('container.package.cat_index')->with('package',$package);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -74,6 +81,8 @@ class PackageController extends Controller
             'price'=>'required',
             'content_count'=>'required',
             'detail'=>'required',
+            'custom-radio-4'=>'required',
+            'count_duration'=>'required',
         ]);
         $ct= $request->input('category_id');
         $method =$request->input("custom-radio-4");
@@ -103,21 +112,33 @@ class PackageController extends Controller
      * @param  \App\Package  $package
      * @return \Illuminate\Http\Response
      */
-    public function show(Package $package)
+    public function show($id)
     {
-        //
-    }
+        $package = Package::find($id);
+        $category = DB::table('category')
+            ->select(array('cat_id', 'cat_name'))
+            ->leftJoin('module','category.module_id', '=', 'module.id')
+            ->where('module.module_name', '=', 'video')
+            ->orderBy('cat_name', 'ASC')
+            ->get()
+            ->toArray();
 
+        return view('container.package.create_cat')->with('action', 'UPDATE')->with(compact('package','category'));
+    }
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Package  $package
      * @return \Illuminate\Http\Response
      */
+
     public function edit(Package $package)
     {
-        //
+        return view('container.package.create')->with('action', 'UPDATE')->with(compact('package'));
+
     }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -128,7 +149,36 @@ class PackageController extends Controller
      */
     public function update(Request $request, Package $package)
     {
-        //
+        $module = DB::table('module')
+            ->where('module_name','video')
+            ->first();
+        $request->validate([
+            'name' => 'required',
+            'price'=>'required',
+            'content_count'=>'required',
+            'detail'=>'required',
+            'custom-radio-4'=>'required',
+            'count_duration'=>'required',
+        ]);
+        $ct= $request->input('category_id');
+        $method =$request->input("custom-radio-4");
+
+        $package->name = $request->input('name');
+        $package->price = $request->input('price');
+        if ($ct == null){$package->module_type =  $module->id;}else{
+            $package->category_id = $ct;
+        }
+        $package->content_count = $request->input('content_count');
+        $package->detail = $request->input('detail');
+        $package->time_method = $method;
+        if ($method == 'day'){$package->day = $request->input('count_duration');
+        }elseif ($method == 'month'){$package->month = $request->input('count_duration');
+        }else{$package->year = $request->input('count_duration');
+        }
+        $package->save();
+        return redirect('package');
+
+
     }
 
     /**

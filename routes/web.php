@@ -30,6 +30,8 @@ Route::resource('notification', 'NotificationController');
 Route::resource('package', 'PackageController');
 Route::resource('all-package', 'AllPackageController');
 Route::get('create-cat', 'PackageController@createCat');
+Route::get('cat-package', 'PackageController@catIndex');
+Route::get('cat-edit/{id}', 'PackageController@show');
 Route::post('/ads','VideoController@ads');
 Route::post('/pdf_ads','PdfController@ads');
 Route::post('/product_ads','ProductController@ads');

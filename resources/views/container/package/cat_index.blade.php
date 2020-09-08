@@ -15,10 +15,10 @@
         <div class="widget-content widget-content-area simple-pills">
             <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="pills-contact-tab" href="{{url('package')}}">Module Package</a>
+                    <a class="nav-link" id="pills-contact-tab" href="{{url('package')}}">Module Package</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-contact-tab" href="{{url('cat-package')}}">Category Package</a>
+                    <a class="nav-link active" id="pills-contact-tab" href="{{url('cat-package')}}">Category Package</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="pills-contact-tab" href="{{url('all-package')}}">All Package</a>
@@ -47,7 +47,7 @@
 
                                         <div class="col-xl-8 col-lg-7 col-md-7 col-sm-5 text-sm-right text-center layout-spacing align-self-center">
                                             <div class="d-flex justify-content-sm-end justify-content-center">
-                                                <a href="{{ url('package/create') }}"> <svg  id="btn-add-contact" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg></a>
+                                                <a href="{{ url('create-cat') }}"> <svg  id="btn-add-contact" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg></a>
 
                                                 <div class="switch align-self-center">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list view-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg>
@@ -94,7 +94,7 @@
                                                                 <span class="new-control-indicator"></span>
                                                             </label>
                                                         </div>
-{{--                                                        <img width="100px"  src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">--}}
+                                                        {{--                                                        <img width="100px"  src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">--}}
 
                                                     </div>
                                                     <div class="user-email">
@@ -107,20 +107,20 @@
                                                         <p class="usr-email-addr"
                                                            data-email="{{ $value->price }}">{{ $value->price }}</p>
                                                     </div>
-{{--                                                    @if($value->category_id != null)--}}
-{{--                                                        <div class="user-email">--}}
-{{--                                                            <p class="info-title">Category: </p>--}}
-{{--                                                            <p class="usr-email-addr"--}}
-{{--                                                               data-email="{{ $value->cat_name }}">{{ $value->cat_name }}</p>--}}
-{{--                                                        </div>--}}
-{{--                                                        @endif--}}
+                                                    {{--                                                    @if($value->category_id != null)--}}
+                                                    {{--                                                        <div class="user-email">--}}
+                                                    {{--                                                            <p class="info-title">Category: </p>--}}
+                                                    {{--                                                            <p class="usr-email-addr"--}}
+                                                    {{--                                                               data-email="{{ $value->cat_name }}">{{ $value->cat_name }}</p>--}}
+                                                    {{--                                                        </div>--}}
+                                                    {{--                                                        @endif--}}
 
 
 
 
                                                     <div class="action-btn">
 
-                                                        <a href="{{ url('package/'.$value->id. '/edit')}}"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 edit"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                                        <a href="{{ url('/cat-edit/'.$value->id)}}"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 edit"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
 
                                                         <form method="POST" style="display:inline;"
                                                               action="{{ route('package.destroy',$value->id) }}">
