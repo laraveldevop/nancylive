@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     @push('artist_style')
-        <link href="{{ asset('public/assets/css/scrollspyNav.css') }}" rel="stylesheet" type="text/css"/>
+
         <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/select2/select2.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/forms/switches.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/editors/quill/quill.snow.css') }}">
@@ -128,12 +128,12 @@
                                                                     <div class="row">
                                                                         <div
                                                                             class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                                                            <h4> Basic </h4>
+                                                                            <h4> Detail </h4>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="widget-content widget-content-area">
-                                                                    <div id="editor-container">
+                                                                    <div class="editor-container">
 
                                                                     </div>
                                                                     @if ($errors->has('detail'))

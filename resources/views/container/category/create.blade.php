@@ -2,7 +2,7 @@
 @section('content')
     @push('artist_style')
         <!--  BEGIN CUSTOM STYLE FILE  -->
-        <link href="{{ asset('public/assets/css/scrollspyNav.css') }}" rel="stylesheet" type="text/css"/>
+
         <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/select2/select2.min.css')}}">
         <!--  END CUSTOM STYLE FILE  -->
     @endpush

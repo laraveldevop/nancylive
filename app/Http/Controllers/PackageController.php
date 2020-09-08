@@ -26,7 +26,7 @@ class PackageController extends Controller
      */
     public function index()
     {
-        $package = Package::all();
+        $package = Package::where('content_count','!=', null)->get();
         return view('container.package.index')->with('package',$package);
     }
 
@@ -37,6 +37,17 @@ class PackageController extends Controller
      */
     public function create()
     {
+
+        return view('container.package.create')->with('action', 'INSERT');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     */
+    public function createCat()
+    {
         $category = DB::table('category')
             ->select(array('cat_id', 'cat_name'))
             ->leftJoin('module','category.module_id', '=', 'module.id')
@@ -44,14 +55,9 @@ class PackageController extends Controller
             ->orderBy('cat_name', 'ASC')
             ->get()
             ->toArray();
-        $module = DB::table('module')
-            ->select(array('id', 'module_name'))
-            ->where('module_name','video')
-            ->get()
-            ->toArray();
-        return view('container.package.create')->with('action', 'INSERT')->with(compact('module','category'));
-    }
 
+        return view('container.package.create_cat')->with('action', 'INSERT')->with(compact('category'));
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -60,24 +66,28 @@ class PackageController extends Controller
      */
     public function store(Request $request)
     {
+        $module = DB::table('module')
+            ->where('module_name','video')
+            ->first();
         $request->validate([
             'name' => 'required',
             'price'=>'required',
             'content_count'=>'required',
-
+            'detail'=>'required',
         ]);
-        $module = $request->input('module_id');
-        if ($module == null ){
-            $request->validate([
-                'category_id' => 'required',
-            ]);
-        }
+        $ct= $request->input('category_id');
+
+
         $package=  new Package();
+
         $package->name = $request->input('name');
         $package->price = $request->input('price');
-        $package->module_type = $request->input('module_id');
+        if ($ct == null){$package->module_type =  $module->id;}else{
+            $package->category_id = $ct;
+
+        }
         $package->content_count = $request->input('content_count');
-        if ($module == null ){$package->category_id = $request->input('category_id');}
+        $package->detail = $request->input('detail');
         $package->save();
         return redirect('package');
 

@@ -1,6 +1,6 @@
 // Basic
 
-var quill = new Quill('#editor-container', {
+var quill = new Quill('.editor-container', {
   modules: {
     toolbar: [
       [{ header: [1, 2, false] }],
@@ -22,10 +22,10 @@ var quill = new Quill('#editor-container', {
     placeholder: 'Compose an epic...',
     theme: 'snow'
   });
-  
+
   // Enable all tooltips
   $('[data-toggle="tooltip"]').tooltip();
-  
+
   // Can control programmatically too
   $('.ql-italic').mouseover();
   setTimeout(function() {

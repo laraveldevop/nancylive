@@ -19,7 +19,7 @@ class CreatePackageTable extends Migration
             $table->string('price');
             $table->string('module_type')->nullable();
             $table->bigInteger('category_id')->nullable();
-            $table->string('content_count');
+            $table->string('content_count')->nullable();
             $table->timestamps();
         });
     }

@@ -26,7 +26,7 @@
                         </div>
                         <div class="widget-content widget-content-area simple-pills">
                             <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist">
-                                <li class="nav-item dropdown">
+                                <li class="nav-item dropdown ">
                                     <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#"
                                        role="button"
                                        aria-haspopup="true" aria-expanded="false">Packages
@@ -38,19 +38,20 @@
                                         </svg>
                                     </a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item active" id="pills-profile-tab"
+                                        <a class="dropdown-item" id="pills-profile-tab"
                                            href="{{url('package/create')}}">Module Package</a>
-                                        <a class="dropdown-item" id="pills-profile-tab2"
-                                           href="{{ url('create-cat') }}">Category Package</a>
+                                        <a class="dropdown-item active" id="pills-profile-tab2"
+                                           href="{{url('create-cat')}}">Category Package</a>
                                     </div>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="pills-contact-tab" href="{{url('all-package/create')}}">All Package</a>
+                                    <a class="nav-link" id="pills-contact-tab" href="{{url('all-package/create')}}"
+                                      >All Package</a>
                                 </li>
 
                             </ul>
                             <div class="tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade show active" id="pills-profile" role="tabpanel"
+                                <div class="tab-pane fade show active" id="pills-profile2" role="tabpanel"
                                      aria-labelledby="pills-profile-tab">
                                     @if ($action=='INSERT')
                                         <form class="mb-4" id="form" method="POST" action="{{ url('package') }}"
@@ -112,6 +113,29 @@
                                                                     @endif
                                                                 </div>
                                                             </div>
+                                                            <div class="col-md-10" id="cat" >
+                                                                <div class="form-group">
+                                                                    <label
+                                                                        for="exampleFormControlInput1">category</label>
+                                                                    <select required
+                                                                        class="basic form-control {{ $errors->has('category_id') ? ' is-invalid' : '' }}"
+                                                                        name="category_id" id="category_id">
+                                                                        <option value="">--Choose Option--</option>
+                                                                        @foreach($category as $key => $value)
+                                                                            <option value="{{ $value->cat_id }}"
+                                                                                {{ (!empty(old('category_id')) && old('category_id')==$value->cat_id)?'selected':'' }}
+                                                                                {{ (!empty($package->category_id) && $package->category_id==$value->cat_id)?'selected':'' }}
+                                                                            >{{ $value->cat_name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    @if ($errors->has('category_id'))
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                            <strong>{{ $errors->first('category_id') }}</strong>
+                                                                        </span>
+                                                                    @endif
+
+                                                                </div>
+                                                            </div>
                                                             <div class="container" id="package_module">
 
                                                                 <div id="basic"
@@ -163,7 +187,7 @@
                                                         </div>
                                                     </div>
                                                 </form>
-{{--                                                                                </form>--}}
+                                        </form>
                                 </div>
                             </div>
 

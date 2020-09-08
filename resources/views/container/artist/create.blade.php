@@ -2,7 +2,7 @@
 @section('content')
     @push('artist_style')
         <!-- BEGIN PAGE LEVEL STYLES -->
-        <link href="{{ asset('public/assets/css/scrollspyNav.css') }}" rel="stylesheet" type="text/css" />
+
         <link href="{{ asset('public/plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}">
         <!-- END PAGE LEVEL STYLES -->

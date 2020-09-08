@@ -27,7 +27,7 @@
                         <div class="widget-content widget-content-area simple-pills">
                             <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist">
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#"
+                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
                                        role="button"
                                        aria-haspopup="true" aria-expanded="false">Packages
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -38,14 +38,15 @@
                                         </svg>
                                     </a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item active" id="pills-profile-tab"
-                                           href="{{url('package/create')}}">Module Package</a>
+                                        <a class="dropdown-item" id="pills-profile-tab"
+                                           href="{{url('package/create')}}" >Module Package</a>
                                         <a class="dropdown-item" id="pills-profile-tab2"
-                                           href="{{ url('create-cat') }}">Category Package</a>
+                                           href="{{url('create-cat')}}">Category Package</a>
                                     </div>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="pills-contact-tab" href="{{url('all-package/create')}}">All Package</a>
+                                    <a class="nav-link active" id="pills-contact-tab" data-toggle="pill" href="{{url('all-package/create')}}"
+                                       role="tab" aria-controls="pills-contact" aria-selected="false">All Package</a>
                                 </li>
 
                             </ul>
@@ -53,11 +54,11 @@
                                 <div class="tab-pane fade show active" id="pills-profile" role="tabpanel"
                                      aria-labelledby="pills-profile-tab">
                                     @if ($action=='INSERT')
-                                        <form class="mb-4" id="form" method="POST" action="{{ url('package') }}"
+                                        <form class="mb-4" id="form" method="POST" action="{{ url('all-package') }}"
                                               enctype="multipart/form-data">
                                             @else
                                                 <form class="mb-4" method="POST" enctype="multipart/form-data"
-                                                      action="{{ route('package.update',$package->id) }}">
+                                                      action="{{ route('all-package.update',$package->id) }}">
                                                     @method('PUT')
                                                     @endif
                                                     @csrf
@@ -97,21 +98,47 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-10">
+                                                                <div class="row col-md-12">
+                                                                    <label for="exampleFormControlInput1">Select Time Duration method</label>
+
+                                                                </div>
+                                                                <div class="row col-md-12">
+                                                                <div class="n-chk">
+                                                                    <label class="new-control new-radio new-radio-text radio-classic-info">
+                                                                        <input type="radio" id="day"  value="day" class="new-control-input" name="custom-radio-4">
+                                                                        <span class="new-control-indicator"></span><span class="new-radio-content">Day</span>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="n-chk">
+                                                                    <label class="new-control new-radio new-radio-text radio-classic-info">
+                                                                        <input type="radio" id="month" value="month" class="new-control-input" name="custom-radio-4">
+                                                                        <span class="new-control-indicator"></span><span class="new-radio-content">Month</span>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="n-chk">
+                                                                    <label class="new-control new-radio new-radio-text radio-classic-info">
+                                                                        <input type="radio" id="year" value="year" class="new-control-input" name="custom-radio-4">
+                                                                        <span class="new-control-indicator"></span><span class="new-radio-content">Year</span>
+                                                                    </label>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-10">
                                                                 <div class="form-group">
-                                                                    <label for="exampleFormControlInput1">Content
-                                                                        Count</label>
+                                                                    <label for="exampleFormControlInput1">Count Duration</label>
                                                                     <input
-                                                                        class="form-control form-control-sm {{ $errors->has('content_count') ? ' is-invalid' : '' }}"
-                                                                        type="number" name="content_count"
-                                                                        value="{{ ((!empty($package->content_count)) ? $package->content_count :old('content_count')) }}"
+                                                                        class="form-control form-control-sm {{ $errors->has('count_duration') ? ' is-invalid' : '' }}"
+                                                                        type="number" name="count_duration" readonly id="count_duration"
+                                                                        value="{{ ((!empty($package->count_duration)) ? $package->count_duration :old('count_duration')) }}"
                                                                         placeholder="Enter Content Count">
-                                                                    @if ($errors->has('content_count'))
+                                                                    @if ($errors->has('count_duration'))
                                                                         <span class="invalid-feedback" role="alert">
-                                                                      <strong>{{ $errors->first('content_count') }}</strong>
+                                                                      <strong>{{ $errors->first('count_duration') }}</strong>
                                                                  </span>
                                                                     @endif
                                                                 </div>
                                                             </div>
+
                                                             <div class="container" id="package_module">
 
                                                                 <div id="basic"
@@ -163,7 +190,7 @@
                                                         </div>
                                                     </div>
                                                 </form>
-{{--                                                                                </form>--}}
+                                        </form>
                                 </div>
                             </div>
 
@@ -191,7 +218,11 @@
 
             </script>
         @endif
-
+        <script>
+            $('input[type=radio][name=custom-radio-4]').change(function() {
+                $('#count_duration').attr('readonly',false);
+            });
+        </script>
     @endpush
 
 @endsection

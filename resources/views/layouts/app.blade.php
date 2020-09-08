@@ -23,6 +23,11 @@
     <link href="{{ asset('public/plugins/sweetalerts/sweetalert.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('public/assets/css/components/custom-sweetalert.css') }}" rel="stylesheet" type="text/css" />
     <!-- END Sweetest Alert Style -->
+    <link href="{{ asset('public/assets/css/scrollspyNav.css') }}" rel="stylesheet" type="text/css" />
+
+    <link href="{{ asset('public/assets/css/components/custom-modal.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/forms/theme-checkbox-radio.css') }}">
+
     @stack('artist_style')
     @stack('video_style')
 
@@ -421,6 +426,7 @@
     });
 </script>
 
+<script src="{{ asset('public/plugins/highlight/highlight.pack.js') }}"></script>
 <script src="{{ asset('public/assets/js/custom.js') }}"></script>
 <!-- END GLOBAL MANDATORY SCRIPTS -->
 <script src="{{ asset('public/assets/js/scrollspyNav.js') }}"></script>

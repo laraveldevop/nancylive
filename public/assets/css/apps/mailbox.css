@@ -91,7 +91,7 @@
     border-radius: 6px;
     background-color: #0e1726;
     height: calc(100vh - 179px);
-    box-shadow: 5px 5px 14px #02030a, 
+    box-shadow: 5px 5px 14px #02030a,
                 -5px -5px 14px #0a0d26;
     margin-bottom: 10px;
 }
@@ -208,7 +208,7 @@
     margin-bottom: 7px;
     fill: rgba(0, 23, 55, 0.08);
     color: #888ea8;
-} 
+}
 .tab-title .nav-pills a.nav-link span.nav-names {
     display: block;
     letter-spacing: 1px;
@@ -526,13 +526,13 @@
     display: inline-block;
 }
 .mailbox-inbox .mail-item div.mail-item-heading.work .mail-item-inner .f-body .tags span.g-dot-warning {
-    display: inline-block;   
+    display: inline-block;
 }
 .mailbox-inbox .mail-item div.mail-item-heading.social .mail-item-inner .f-body .tags span.g-dot-success {
     display: inline-block;
 }
 .mailbox-inbox .mail-item div.mail-item-heading.private .mail-item-inner .f-body .tags span.g-dot-danger {
-    display: inline-block;    
+    display: inline-block;
 }
 .mailbox-inbox .mail-item div.mail-item-heading .mail-item-inner .f-body .tags span[class*="g-dot-"]:before {
     top: -11px;
@@ -667,7 +667,7 @@
     margin-bottom: 0;
     font-weight: 600;
     margin-left: 8px;
-    display: inline-block;   
+    display: inline-block;
 }
 .mailbox-inbox .mail-content-container .user-info .user-cc-mail span {
     font-size: 16px;
@@ -763,7 +763,7 @@
     font-weight: 600;
     margin-bottom: 0;
 }
-#editor-container { height: 200px; }
+.editor-container { height: 200px; }
 .ql-toolbar.ql-snow { border: 1px solid #191e3a;  margin-top: 30px; }
 .ql-container.ql-snow { border: 1px solid #191e3a; }
 .modal-backdrop {
@@ -854,7 +854,7 @@
 .form-control-file.form-control-file-rounded::-webkit-file-upload-button {
     background-color: #009688;
 }
-.compose-box .compose-content form #editor-container h1 { color: #3b3f5c; }
+.compose-box .compose-content form .editor-container h1 { color: #3b3f5c; }
 .ql-editor.ql-blank::before { color: #bfc9d4; }
 #composeMailModal .modal-content .modal-footer {
     border-top: none;
@@ -1025,7 +1025,7 @@
         padding: 0 0 0 10px;
     }
     .mailbox-inbox .mail-item div.mail-item-heading .mail-item-inner .f-body .meta-time {
-        min-width: auto;   
+        min-width: auto;
     }
     .mailbox-inbox .mail-item div.mail-item-heading .mail-item-inner .mail-content-excerpt {
         width: calc(100vw - 192px);
