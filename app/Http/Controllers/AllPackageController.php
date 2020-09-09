@@ -71,7 +71,7 @@ class AllPackageController extends Controller
         }
 
         $package->save();
-        return redirect('package');
+        return redirect('all-package');
     }
 
     /**
@@ -134,7 +134,7 @@ class AllPackageController extends Controller
         $allPackage->save();
 
 
-        return redirect('package');
+        return redirect('all-package');
     }
 
     /**

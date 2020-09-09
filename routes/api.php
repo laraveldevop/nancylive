@@ -46,6 +46,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('video', 'API\VideoController@index')->middleware('checkUser');
     Route::post('user-update', 'API\HomeController@userUpdate')->middleware('checkUser');
     Route::post('change-password', 'API\HomeController@changePassword')->middleware('checkUser');
+    Route::get('package', 'API\PackageController@index')->middleware('checkUser');
     Route::post('check_user', 'API\AuthController@check_user');
 
     // private routes

@@ -30,7 +30,7 @@
                                     <a class="nav-link" id="pills-contact-tab" href="{{url('package/create')}}">Module Package</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="pills-contact-tab" href="{{ url('create-cat') }}">Category Package</a>
+                                    <a class="nav-link" id="pills-contact-tab" href="{{ url('cat-package/create') }}">Category Package</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link active" id="pills-contact-tab" href="{{url('all-package/create')}}">All Package</a>
@@ -207,13 +207,13 @@
                 $("#detail").val(item);
             });
         </script>
-        @if ($action=='UPDATE')
+
             <script>
                 var $item = $('#detail').val();
                 $('.ql-editor').html($item);
 
             </script>
-        @endif
+
         <script>
             $('input[type=radio][name=custom-radio-4]').change(function() {
                 $('#count_duration').attr('readonly',false);

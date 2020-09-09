@@ -31,7 +31,7 @@
                                         Package</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {{(($action=='UPDATE') ?'disabled':'')}}" id="pills-contact-tab" href="{{ url('create-cat') }}">Category
+                                    <a class="nav-link {{(($action=='UPDATE') ?'disabled':'')}}" id="pills-contact-tab" href="{{ url('cat-package/create') }}">Category
                                         Package</a>
                                 </li>
                                 <li class="nav-item">

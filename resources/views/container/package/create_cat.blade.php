@@ -30,7 +30,7 @@
                                     <a class="nav-link {{(($action=='UPDATE') ?'disabled':'')}}" id="pills-contact-tab" href="{{url('package/create')}}">Module Package</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="pills-contact-tab" href="{{ url('create-cat') }}">Category Package</a>
+                                    <a class="nav-link active" id="pills-contact-tab" href="{{ url('cat-package/create') }}">Category Package</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link {{(($action=='UPDATE') ?'disabled':'')}}" id="pills-contact-tab" href="{{url('all-package/create')}}">All Package</a>
@@ -41,11 +41,11 @@
                                 <div class="tab-pane fade show active" id="pills-profile2" role="tabpanel"
                                      aria-labelledby="pills-profile-tab">
                                     @if ($action=='INSERT')
-                                        <form class="mb-4" id="form" method="POST" action="{{ url('package') }}"
+                                        <form class="mb-4" id="form" method="POST" action="{{ url('cat-package') }}"
                                               enctype="multipart/form-data">
                                             @else
                                                 <form class="mb-4" method="POST" enctype="multipart/form-data"
-                                                      action="{{ route('package.update',$package) }}">
+                                                      action="{{ route('cat-package.update',$package->id) }}">
                                                     @method('PUT')
                                                     @endif
                                                     @csrf
@@ -230,13 +230,13 @@
                 $("#detail").val(item);
             });
         </script>
-        @if ($action=='UPDATE')
+
             <script>
                 var $item = $('#detail').val();
                 $('.ql-editor').html($item);
 
             </script>
-        @endif
+
         <script>
             $('input[type=radio][name=custom-radio-4]').change(function() {
                 $('#count_duration').attr('readonly',false);

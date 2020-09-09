@@ -69,13 +69,13 @@
                                                             <span class="new-control-indicator"></span>
                                                         </label>
                                                     </div>
-                                                    <h4>package Image</h4>
+{{--                                                    <h4>package Image</h4>--}}
                                                 </div>
                                                 <div class="user-email">
                                                     <h4>Name</h4>
                                                 </div>
                                                 <div class="user-email">
-                                                    <h4>Module </h4>
+                                                    <h4>Price </h4>
                                                 </div>
 
 
@@ -103,7 +103,7 @@
                                                            data-email="{{ $value->name }}">{{ $value->name }}</p>
                                                     </div>
                                                     <div class="user-email">
-                                                        <p class="info-title">Module: </p>
+                                                        <p class="info-title">Price: </p>
                                                         <p class="usr-email-addr"
                                                            data-email="{{ $value->price }}">{{ $value->price }}</p>
                                                     </div>

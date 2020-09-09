@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+
 use App\Package;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PackageController extends Controller
+class PackageCategoryController extends Controller
 {
-
     /**
      * Create a new controller instance.
      *
@@ -22,31 +22,31 @@ class PackageController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $package = Package::where('module_type','!=', null)->get();
-        return view('container.package.index')->with('package',$package);
+        $package = Package::where('category_id','!=', null)->get();
+        return view('container.package.cat_index')->with('package',$package);
     }
-
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
+        $category = DB::table('category')
+            ->select(array('cat_id', 'cat_name'))
+            ->leftJoin('module','category.module_id', '=', 'module.id')
+            ->where('module.module_name', '=', 'video')
+            ->orderBy('cat_name', 'ASC')
+            ->get()
+            ->toArray();
 
-        return view('container.package.create')->with('action', 'INSERT');
+        return view('container.package.create_cat')->with('action', 'INSERT')->with(compact('category'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
-     */
 
     /**
      * Store a newly created resource in storage.
@@ -56,24 +56,21 @@ class PackageController extends Controller
      */
     public function store(Request $request)
     {
-        $module = DB::table('module')
-            ->where('module_name','video')
-            ->first();
         $request->validate([
             'name' => 'required',
             'price'=>'required',
-            'content_count'=>'required',
             'detail'=>'required',
             'custom-radio-4'=>'required',
             'count_duration'=>'required',
+            'category_id'=>'required'
         ]);
+        $ct= $request->input('category_id');
         $method =$request->input("custom-radio-4");
 
         $package=  new Package();
         $package->name = $request->input('name');
         $package->price = $request->input('price');
-       $package->module_type =  $module->id;
-        $package->content_count = $request->input('content_count');
+        $package->category_id = $ct;
         $package->detail = $request->input('detail');
         $package->time_method = $method;
         $package->count_duration = $request->input('count_duration');
@@ -82,9 +79,7 @@ class PackageController extends Controller
         }else{$package->year = $request->input('count_duration');
         }
         $package->save();
-        return redirect('package');
-
-
+        return redirect('cat-package');
     }
 
     /**
@@ -93,25 +88,30 @@ class PackageController extends Controller
      * @param  \App\Package  $package
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Package $package)
     {
-
-
+        //
     }
+
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Package  $package
      * @return \Illuminate\Http\Response
      */
-
-    public function edit(Package $package)
+    public function edit($id)
     {
-        return view('container.package.create')->with('action', 'UPDATE')->with(compact('package'));
+        $package = Package::find($id);
+        $category = DB::table('category')
+            ->select(array('cat_id', 'cat_name'))
+            ->leftJoin('module','category.module_id', '=', 'module.id')
+            ->where('module.module_name', '=', 'video')
+            ->orderBy('cat_name', 'ASC')
+            ->get()
+            ->toArray();
 
+        return view('container.package.create_cat')->with('action', 'UPDATE')->with(compact('package','category'));
     }
-
-
 
     /**
      * Update the specified resource in storage.
@@ -120,36 +120,33 @@ class PackageController extends Controller
      * @param  \App\Package  $package
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Package $package)
+    public function update(Request $request, $id)
     {
-        $module = DB::table('module')
-            ->where('module_name','video')
-            ->first();
+
         $request->validate([
             'name' => 'required',
             'price'=>'required',
-            'content_count'=>'required',
             'detail'=>'required',
             'custom-radio-4'=>'required',
             'count_duration'=>'required',
+            'category_id'=>'required',
         ]);
+        $package = Package::find($id);
+        $ct= $request->input('category_id');
         $method =$request->input("custom-radio-4");
 
         $package->name = $request->input('name');
         $package->price = $request->input('price');
-       $package->module_type =  $module->id;
-        $package->content_count = $request->input('content_count');
+        $package->category_id = $ct;
+        $package->count_duration = $request->input('count_duration');
         $package->detail = $request->input('detail');
         $package->time_method = $method;
-        $package->count_duration = $request->input('count_duration');
         if ($method == 'day'){$package->day = $request->input('count_duration');
         }elseif ($method == 'month'){$package->month = $request->input('count_duration');
         }else{$package->year = $request->input('count_duration');
         }
         $package->save();
-        return redirect('package');
-
-
+        return redirect('cat-package');
     }
 
     /**
