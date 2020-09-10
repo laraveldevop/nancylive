@@ -6,58 +6,7 @@
         <link href="{{ asset('public/plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}">
         <!-- END PAGE LEVEL STYLES -->
-        <style>
-            #videosList {
-                max-width: 1400px;
-                margin: 0 auto;
-                padding: 0px 80px; }
-            @media (max-width: 1250px) {
-                #videosList {
-                    padding: 0px 50px; } }
-            @media (max-width: 900px) {
-                #videosList {
-                    padding: 60px 20px; } }
-            #videosList .video {
-                width: 50%;
-                display: inline-block;
-                float: left;
-                position: relative;
-                overflow: hidden; }
-            @media (max-width: 500px) {
-                #videosList .video {
-                    width: 100%; } }
-            #videosList .video .videoSlate {
-                width: 100%;
-                height: 0;
-                padding: 60% 0 0 0;
-                -webkit-transition: 5000ms 50ms;
-                -moz-transition: 5000ms 50ms;
-                transition: 5000ms 50ms; }
-            #videosList .video .videoSlate:after {
-                content: ' ';
-                position: absolute;
-                top: 0;
-                left: 0;
-                display: block;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.3);
-                -webkit-transition: 500ms 50ms;
-                -moz-transition: 500ms 50ms;
-                transition: 500ms 50ms; }
-            #videosList .video .videoSlate video {
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                position: absolute; }
-            #videosList .video .videoListCopy {
-                display: inline-block;
-                text-align: center;
-                width: 100%;
-                z-index: 20; }
 
-        </style>
     @endpush
     <div id="content" class="main-content">
         <div class="container">
