@@ -75,7 +75,7 @@ class VideoController extends Controller
             'cat_id'=> 'required',
             'video_name' => 'required',
             'detail'=>'required',
-            "price" => 'numeric'
+            "price" => 'numeric',
         ]);
         if ($request->hasFile('image') == null){
             $request->validate([
@@ -102,7 +102,7 @@ class VideoController extends Controller
         $video->token =$request->has('token');
         $video->price =$request->input('price');
         $video->url =$request->input('url');
-        $video->video = $request->input('video_file_name');
+//        $video->video = $request->input('video_file_name');
         if ($request->file('image')) {
             $path = Storage::disk('public')->put('thumbnail', $request->file('image'));
             $video->image = $path;
@@ -137,7 +137,7 @@ class VideoController extends Controller
             $request->video_local->getMimeType();
 //            $request->video->move('storage/'.$fileName);
             $path = str_replace('public/', '', $request->video_local->store('public'));
-            echo $path;
+            echo  $path;
     }
     /**
      * Show the form for editing the specified resource.

@@ -6,6 +6,58 @@
         <link href="{{ asset('public/plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}">
         <!-- END PAGE LEVEL STYLES -->
+        <style>
+            #videosList {
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 0px 80px; }
+            @media (max-width: 1250px) {
+                #videosList {
+                    padding: 0px 50px; } }
+            @media (max-width: 900px) {
+                #videosList {
+                    padding: 60px 20px; } }
+            #videosList .video {
+                width: 50%;
+                display: inline-block;
+                float: left;
+                position: relative;
+                overflow: hidden; }
+            @media (max-width: 500px) {
+                #videosList .video {
+                    width: 100%; } }
+            #videosList .video .videoSlate {
+                width: 100%;
+                height: 0;
+                padding: 60% 0 0 0;
+                -webkit-transition: 5000ms 50ms;
+                -moz-transition: 5000ms 50ms;
+                transition: 5000ms 50ms; }
+            #videosList .video .videoSlate:after {
+                content: ' ';
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: block;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.3);
+                -webkit-transition: 500ms 50ms;
+                -moz-transition: 500ms 50ms;
+                transition: 500ms 50ms; }
+            #videosList .video .videoSlate video {
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                position: absolute; }
+            #videosList .video .videoListCopy {
+                display: inline-block;
+                text-align: center;
+                width: 100%;
+                z-index: 20; }
+
+        </style>
     @endpush
     <div id="content" class="main-content">
         <div class="container">
@@ -104,8 +156,9 @@
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('image') ? ' is-invalid' : '' }}"
                                                                 type="file" name="image"
-                                                                value="{{ ((!empty($artist->image)) ? $artist->image :old('image')) }}">
+                                                                value="">
                                                         </div>
+                                                        <img src="{{ ((!empty($artist->image)) ?asset('public/storage/'. $artist->image ):old('image')) }}" width="150px" height="130px">
                                                     </div>
 
                                                     <div class="col-md-6">
@@ -115,6 +168,12 @@
                                                                 class="form-control form-control-sm {{ $errors->has('video') ? ' is-invalid' : '' }}"
                                                                 type="file" name="video"
                                                                 value="{{ ((!empty($artist->video)) ? $artist->video :old('video')) }}">
+                                                        </div>
+                                                        <div class="video">
+                                                        <video class="thevideo"  width="300px" loop>
+                                                            <source src="http://www.w3schools.com/html/movie.ogg" type="video/ogg">
+                                                            Your browser does not support the video tag.
+                                                        </video>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -219,7 +278,13 @@
                                                                     <input type="file" name="files[]" class="custom-file-container__custom-file__custom-file-input" multiple>
                                                                     <span class="custom-file-container__custom-file__custom-file-control"></span>
                                                                 </label>
-                                                                <div class="custom-file-container__image-preview"></div>
+                                                                <div class="custom-file-container__image-preview" >
+{{--                                                                    <div class="custom-file-container__image-multi-preview" data-upload-token="1jghnmeedlr40hknjbg4em" style="background-image: url('{{asset('public/assets/img/3.jpg')}}');">--}}
+{{--                                                                         <span class="custom-file-container__image-multi-preview__single-image-clear">--}}
+{{--                                                                            <span class="custom-file-container__image-multi-preview__single-image-clear__icon" data-upload-token="1jghnmeedlr40hknjbg4em">×</span>--}}
+{{--                                                                         </span>--}}
+{{--                                                                    </div>--}}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -251,6 +316,23 @@
             //Second upload
             var secondUpload = new FileUploadWithPreview('mySecondImage')
 
+        </script>
+        <script>
+            var figure = $(".video");
+            var vid = $("video");
+
+            [].forEach.call(figure, function (item) {
+                item.addEventListener('mouseover', hoverVideo, false);
+                item.addEventListener('mouseout', hideVideo, false);
+            });
+
+            function hoverVideo(e) {
+                $('.thevideo')[0].play();
+            }
+
+            function hideVideo(e) {
+                $('.thevideo')[0].pause();
+            }
         </script>
         <script src="{{ asset('public/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js') }}"></script>
         <script src="{{ asset('public/plugins/bootstrap-touchspin/custom-bootstrap-touchspin.js') }}"></script>

@@ -119,7 +119,7 @@
                                                         <div class="form-group" id="video_local_display">
 
                                                         </div>
-                                                        <input type="hidden" name="video_file_name" id="video_file_name"
+                                                        <input type="text" name="video_file_name" id="video_file_name"
                                                                value="{{old('video_file_name')}}" class="form-control">
                                                     </div>
                                                 </div>
@@ -332,7 +332,7 @@
                     $('.progress-bar').css('width', '0');
                     $('.msg').text('');
                     var video_local = $('#video_local').val();
-
+                    console.log(video_local);
                     var fileInput = document.getElementById('video');
                     var filePath = fileInput.value;
                     var allowedExtensions = /(\.mp4)$/i;

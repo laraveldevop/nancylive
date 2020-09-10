@@ -122,17 +122,21 @@
                                             </div>
 
                                             <img width="100px"  src="{{ asset(!empty($value->image)?'public/storage/'.$value->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">
+                                            <div class="user-meta-info">
+                                                <p class="user-name" data-name="{{ $value->brand_name }}">{{ $value->brand_name }}</p>
+{{--                                                <p class="user-work" data-occupation="{{ $value->about }}">{{ $value->about }}</p>--}}
+                                            </div>
                                         </div>
                                         <div class="user-email">
-                                            <p class="info-title">Brand Name: </p>
+                                            <p class="info-title">Product Name: </p>
                                             <p class="usr-email-addr"
-                                               data-email="{{ $value->brand_name }}">{{ $value->brand_name }}</p>
+                                               data-email="{{ $value->product_name }}">{{ $value->product_name }}</p>
                                         </div>
 
                                         <div class="user-email">
-                                            <p class="info-title">Sponsor Name: </p>
+                                            <p class="info-title">Category Name: </p>
                                             <p class="usr-email-addr"
-                                               data-email="{{ $value->sponsor_name }}">{{ $value->sponsor_name }}</p>
+                                               data-email="{{ $value->cat_name }}">{{ $value->cat_name }}</p>
                                         </div>
 
 
