@@ -171,7 +171,7 @@
                                                         </div>
                                                         <div class="video">
                                                         <video class="thevideo"  width="300px" loop>
-                                                            <source src="http://www.w3schools.com/html/movie.ogg" type="video/ogg">
+                                                            <source src="{{ ((!empty($artist->video)) ?asset('public/storage/'. $artist->video) :old('video')) }}" type="video/ogg">
                                                             Your browser does not support the video tag.
                                                         </video>
                                                         </div>
