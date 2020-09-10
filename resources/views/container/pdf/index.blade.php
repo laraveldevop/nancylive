@@ -6,7 +6,22 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/forms/theme-checkbox-radio.css') }}">
         <link href="{{ asset('public/plugins/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('public/assets/css/apps/contacts.css') }}" rel="stylesheet" type="text/css"/>
+        <style type="text/css">
+            #loading {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                background: rgba(0,0,0,0.75) url({{asset('public/assets/img/loading.gif')}}) no-repeat center center;
+                z-index: 10000;
+            }
+        </style>
     @endpush
+
+    <div id="loading"></div>
     <!--  BEGIN CONTENT AREA  -->
     <div id="content" class="main-content">
         <div class="layout-px-spacing">
@@ -115,7 +130,7 @@
                                                     <span class="new-control-indicator"></span>
                                                 </label>
                                             </div>
-                                           <a href="{{ asset(!empty($value->file)?'public/storage/'.$value->file:'')}}" target="_blank"><img src="{{asset('assets/img/pdf.png')}}" height="100px" width="100px"></a>
+                                           <a href="{{ asset(!empty($value->file)?'public/storage/'.$value->file:'')}}" target="_blank"><img src="{{asset('public/assets/img/pdf.png')}}" height="100px" width="100px"></a>
                                         </div>
                                         <div class="user-email">
                                             <p class="info-title"> Name: </p>
@@ -179,9 +194,11 @@
 
             $('.searchType').on('change', function () {
                 // alert($(this).attr('id'));
+                var spinner = $('#loading');
                 var id = $(this).attr('id');
                 var val = $(this).val();
                 // alert(val);
+                spinner.show();
                 $.ajax({
                     type: "POST",
                     url: '{{ url('/pdf_ads') }}',
@@ -189,14 +206,13 @@
                     data: {"id": id, 'val': val},
                     success: function (data) {
                         if ($('#' + id).val() == 1) {
-                            // alert('not');
                             $('#' + id).val(0);
 
                         } else {
-                            // alert('else');
                             $('#' + id).val(1);
                         }
                         alert('Update Successfully')
+                        spinner.hide();
                     },
                     error: function () {
                         alert('Something is Problem in Updating');
