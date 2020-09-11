@@ -102,7 +102,7 @@ class VideoController extends Controller
         $video->token =$request->has('token');
         $video->price =$request->input('price');
         $video->url =$request->input('url');
-//        $video->video = $request->input('video_file_name');
+        $video->video = $request->input('video_file_name');
         if ($request->file('image')) {
             $path = Storage::disk('public')->put('thumbnail', $request->file('image'));
             $video->image = $path;
