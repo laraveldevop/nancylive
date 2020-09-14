@@ -85,9 +85,9 @@ class CategoryController extends Controller
         $category->cat_name = $request->input('cat_name');
         $category->module_id = $request->input('module_id');
 
-        if ($request->file('cat_image')) {
-            $path = Storage::disk('public')->put('category', $request->file('cat_image'));
-            $category->cat_image = $path;
+        if (!empty($request->input('image_data'))) {
+//            $path = Storage::disk('public')->put('category', $request->file('cat_image'));
+            $category->cat_image = $request->input('image_data');
 
         }
 
@@ -138,14 +138,14 @@ class CategoryController extends Controller
         $category->cat_name=$request->input('cat_name');
         $category->module_id=$request->input('module_id');
 
-        if (!empty($request->hasFile('cat_image'))) {
-           $path =  Storage::disk('public')->put('category', $request->file('cat_image'));
+        if (!empty($request->input('image_data'))) {
+//           $path =  Storage::disk('public')->put('category', $request->file('cat_image'));
            if (!empty($category->cat_image)){
               $image_path = public_path().'/storage/'.$category->cat_image;
              unlink($image_path);
            }
             //Update Image
-            $category->cat_image = $path;
+            $category->cat_image = $request->input('image_data');
         }
         $category->save();
         return redirect('category');

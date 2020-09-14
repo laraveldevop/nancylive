@@ -64,13 +64,14 @@ class BrandController extends Controller
 
         $brand = new  Brand();
         $brand->brand_name = $request->input('brand_name');
+        $brand->image = $request->input('image_data');
 
 
-        if ($request->file('image')) {
-            $path = Storage::disk('public')->put('brand', $request->file('image'));
-            $brand->image = $path;
-
-        }
+//        if ($request->file('image')) {
+//            $path = Storage::disk('public')->put('brand', $request->file('image'));
+//            $brand->image = $path;
+//
+//        }
 
         $brand->save();
         return redirect('brand');
@@ -115,14 +116,14 @@ class BrandController extends Controller
         $brand->brand_name=$request->input('brand_name');
 
 
-        if (!empty($request->hasFile('image'))) {
-            $path =  Storage::disk('public')->put('brand', $request->file('image'));
+        if (!empty($request->input('image_data'))) {
+//            $path =  Storage::disk('public')->put('brand', $request->file('image'));
             if (!empty($brand->image)){
                 $image_path = public_path().'/storage/'.$brand->image;
                 unlink($image_path);
             }
             //Update Image
-            $brand->image = $path;
+            $brand->image = $request->input('image_data');
         }
         $brand->save();
         return redirect('brand');

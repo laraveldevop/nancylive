@@ -161,8 +161,8 @@
                                                                     <div class="carousel-item active">
                                                                         <img class="d-block w-100 slide-image" src="{{ asset(!empty($value->v_image)?'public/storage/'.$value->v_image:'')}}" alt="First slide">
                                                                         <div class="carousel-caption">
-                                                                            <a class="btn btn-outline-dark mb-2 mr-2 rounded-circle" href="{{ asset(!empty($value->video)?'public/storage/'.$value->video:'')}}" target="_blank ">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play"><polygon points="5 3 19 12 5 21 5 20"></polygon></svg>
+                                                                            <a class="btn btn-outline-dark rounded-circle" href="{{ asset(!empty($value->video)?'public/storage/'.$value->video:'')}}" target="_blank ">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play"><polygon points="5 3 19 12 5 21 5 20"></polygon></svg>
                                                                             </a>
                                                                         </div>
                                                                     </div>
@@ -172,12 +172,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-{{--                                            <video width="200px" poster="{{ asset(!empty($value->v_image)?'public/storage/'.$value->v_image:'')}}" controls>--}}
-{{--                                                <source--}}
-{{--                                                    src="{{ asset(!empty($value->video)?'public/storage/'.$value->video:'')}}"--}}
-{{--                                                    type="video/mp4">--}}
-{{--                                                Your browser does not support the video tag.--}}
-{{--                                            </video>--}}
                                             @endif
                                                 @if(!empty($value->url))
                                                     <a href="{{ $value->url }}" target="_blank"><img alt="url Link" title="URL Link" src="{{ asset(!empty($value->v_image)?'public/storage/'.$value->v_image:'')}}"  width="200px"></a>

@@ -3,8 +3,11 @@
     @push('artist_style')
         <!-- BEGIN PAGE LEVEL STYLES -->
 
-        <link href="{{ asset('public/plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}">
+        <link href="{{ asset('public/plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet"
+              type="text/css"/>
+        <link rel="stylesheet" type="text/css"
+              href="{{ asset('public/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('public/css/croppie.min.css') }}">
         <!-- END PAGE LEVEL STYLES -->
 
     @endpush
@@ -103,11 +106,30 @@
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">artist Image</label>
                                                             <input
-                                                                class="form-control form-control-sm {{ $errors->has('image') ? ' is-invalid' : '' }}"
-                                                                type="file" name="image"
+                                                                class="form-control form-control-sm {{ $errors->has('image_data') ? ' is-invalid' : '' }}"
+                                                                type="file" name="image" id="upload_image"
                                                                 value="">
+                                                            @if ($errors->has('image_data'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                  <strong>{{ $errors->first('image_data') }}</strong>
+                                                             </span>
+                                                            @endif
                                                         </div>
-                                                        <img src="{{ ((!empty($artist->image)) ?asset('public/storage/'. $artist->image ):old('image')) }}" width="150px" height="130px">
+                                                        @if ($action=='UPDATE')
+                                                            <img id="preview_old_image"
+                                                                 src="{{ ((!empty($artist->image)) ? asset('public/storage/'.$artist->image) :old('image')) }}">
+                                                        @endif
+                                                        <div id="pre-view" class="col-md-6" style="display: none">
+
+                                                            <div id="image-preview">
+
+                                                            </div>
+                                                            <a class="btn btn-success crop_image">Crop & Upload
+                                                                Image</a>
+                                                        </div>
+                                                        <input type="hidden" name="image_data"
+                                                               value="{{old('image_data')}}">
+
                                                     </div>
 
                                                     <div class="col-md-6">
@@ -115,15 +137,19 @@
                                                             <label for="exampleFormControlInput1">Upload Video</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('video') ? ' is-invalid' : '' }}"
-                                                                type="file" name="video"
+                                                                type="file" name="video" id="video"
                                                                 value="{{ ((!empty($artist->video)) ? $artist->video :old('video')) }}">
                                                         </div>
-                                                        <div class="video">
-                                                        <video class="thevideo"  width="300px" loop>
-                                                            <source src="{{ ((!empty($artist->video)) ?asset('public/storage/'. $artist->video) :old('video')) }}" type="video/ogg">
-                                                            Your browser does not support the video tag.
-                                                        </video>
-                                                        </div>
+                                                        @if ($action=='UPDATE')
+                                                            <div class="video" id="preview_old_video">
+                                                                <video class="thevideo" width="300px" loop>
+                                                                    <source
+                                                                        src="{{ ((!empty($artist->video)) ?asset('public/storage/'. $artist->video) :old('video')) }}"
+                                                                        type="video/ogg">
+                                                                    Your browser does not support the video tag.
+                                                                </video>
+                                                            </div>
+                                                        @endif
                                                     </div>
                                                 </div>
 
@@ -215,43 +241,64 @@
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
-                                                                        <label for="exampleFormControlInput1">Give Rate </label>
-                                                                        <input id="demo_vertical" type="text" value="{{ ((!empty($artist->rate)) ? $artist->rate :old('demo_vertical')) }}" readonly name="demo_vertical">
+                                                                        <label for="exampleFormControlInput1">Give
+                                                                            Rate </label>
+                                                                        <input id="demo_vertical" type="text"
+                                                                               value="{{ ((!empty($artist->rate)) ? $artist->rate :old('demo_vertical')) }}"
+                                                                               readonly name="demo_vertical">
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="widget-content widget-content-area">
-                                                            <div class="custom-file-container" data-upload-id="mySecondImage">
-                                                                <label>Upload (Allow Multiple) <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
-                                                                <label class="custom-file-container__custom-file" >
-                                                                    <input type="file" name="files[]" class="custom-file-container__custom-file__custom-file-input" multiple>
-                                                                    <span class="custom-file-container__custom-file__custom-file-control"></span>
-                                                                </label>
-                                                                <div class="custom-file-container__image-preview" >
-{{--                                                                    <div class="custom-file-container__image-multi-preview" data-upload-token="1jghnmeedlr40hknjbg4em" style="background-image: url('{{asset('public/assets/img/3.jpg')}}');">--}}
-{{--                                                                         <span class="custom-file-container__image-multi-preview__single-image-clear">--}}
-{{--                                                                            <span class="custom-file-container__image-multi-preview__single-image-clear__icon" data-upload-token="1jghnmeedlr40hknjbg4em">×</span>--}}
-{{--                                                                         </span>--}}
-{{--                                                                    </div>--}}
+                                                            <div class="widget-content widget-content-area">
+                                                                <div class="custom-file-container"
+                                                                     data-upload-id="mySecondImage">
+                                                                    <label>Upload (Allow Multiple) <a
+                                                                            href="javascript:void(0)"
+                                                                            class="custom-file-container__image-clear"
+                                                                            title="Clear Image">x</a></label>
+                                                                    <label class="custom-file-container__custom-file">
+                                                                        <input type="file" name="files[]" id="files"
+                                                                               class="custom-file-container__custom-file__custom-file-input"
+                                                                               multiple>
+                                                                        <span
+                                                                            class="custom-file-container__custom-file__custom-file-control"></span>
+                                                                    </label>
+
+                                                                    <div class="custom-file-container__image-preview">
+                                                                    </div>
+                                                                    @if($action == 'UPDATE')
+                                                                    <div class="custom-file-container__image-preview_extra" id="img_load">
+                                                                        @foreach($image as $value)
+                                                                            <input type="hidden" value="{{$value->id}}" id="image_id_{{$value->id}}">
+                                                                            <div class="custom-file-container_im"
+                                                                                 style="background-image: url('{{asset('public/storage/'.$value->image)}}');">
+                                                                            <span id="{{$value->id}}"
+                                                                                  class="custom-file-container__image-multi">
+                                                                                <span
+                                                                                    class="custom-file-container__image-multi_icon">×</span>
+                                                                            </span>
+                                                                            </div>
+                                                                        @endforeach
+                                                                    </div>
+                                                                    @endif
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="col-xl-12 text-right">
-                                                    <button class="btn btn-primary"><span>
+                                                    <div class="col-xl-12 text-right">
+                                                        <button class="btn btn-primary"><span>
                                                             @if ($action=='INSERT')
-                                                                Add Artist
-                                                            @else
-                                                                Update Artist
-                                                            @endif</span>
-                                                    </button>
+                                                                    Add Artist
+                                                                @else
+                                                                    Update Artist
+                                                                @endif</span>
+                                                        </button>
 
+                                                    </div>
                                                 </div>
-
-
                                             </div>
+                                        </div>
                                     </form>
                             </form>
                     </div>
@@ -259,6 +306,7 @@
             </div>
         </div>
     </div>
+
     @push('artist_script')
         <script src="{{ asset('public/plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
         <script>
@@ -285,5 +333,91 @@
         </script>
         <script src="{{ asset('public/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js') }}"></script>
         <script src="{{ asset('public/plugins/bootstrap-touchspin/custom-bootstrap-touchspin.js') }}"></script>
+        <script src="{{ asset('public/js/croppie.js') }}"></script>
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+
+                $('#upload_image').on('change', function () {
+                    $('#pre-view').css('display', '');
+                    $('#preview_old_image').css('display', 'none');
+                });
+
+                $('#video').on('change', function () {
+                    $('#preview_old_video').css('display', 'none');
+                });
+
+                $image_crop = $('#image-preview').croppie({
+                    enableExif: true,
+                    viewport: {
+                        width: 200,
+                        height: 200,
+                        type: 'square'
+                    },
+                    boundary: {
+                        width: 300,
+                        height: 300
+                    }
+                });
+
+                $('#upload_image').change(function () {
+                    var reader = new FileReader();
+
+                    reader.onload = function (event) {
+                        $image_crop.croppie('bind', {
+                            url: event.target.result
+                        }).then(function () {
+                            console.log('jQuery bind complete');
+                        });
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                });
+
+                $('.crop_image').click(function (event) {
+                    $image_crop.croppie('result', {
+                        type: 'canvas',
+                        size: 'viewport'
+                    }).then(function (response) {
+                        var token = $('meta[name="csrf-token"]').attr('content');
+                        $.ajax({
+                            url: '{{ route("image_crop.uploadArtist") }}',
+                            type: 'post',
+                            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                            data: {"image": response, _token: token},
+                            dataType: "json",
+                            success: function (data) {
+                                $('input[name=image_data]').val(data.path);
+                                $('#pre-view').css('display', 'none');
+                            }
+                        });
+                    });
+                });
+
+            });
+            @if($action == 'UPDATE')
+            @foreach($image as $item)
+            $('#{{$item->id}}').on('click',function (){
+
+                var img= $('input[id=image_id_{{$value->id}}]').val();
+
+                console.log(img);
+                $.ajax({
+                    url: '{{ route("image_crop.deleteImage") }}',
+                    type: 'post',
+                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                    data: {"image": img},
+                    dataType: "json",
+                    success: function (data) {
+                        location.reload();
+
+                    },
+                    complete: function (data) {
+
+                    }
+                });
+            });
+            @endforeach
+            @endif
+        </script>
     @endpush
 @endsection

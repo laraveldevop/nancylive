@@ -60,7 +60,7 @@ class ArtistController extends Controller
             'instagram' => 'required',
             'facebook' => 'required',
             'youtube' => 'required',
-            'image' => 'required',
+            'image_data' => 'required',
             'video'=> 'required|mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
 
 
@@ -78,12 +78,10 @@ class ArtistController extends Controller
         $artist->instagram = $request->input('instagram');
         $artist->youtube = $request->input('youtube');
         $artist->rate = $request->input('demo_vertical');
-//        $artist->image = $request->input('image');
-        if ($request->file('image')) {
-            $path = Storage::disk('public')->put('artist', $request->file('image'));
-            $artist->image = $path;
-
-        }
+        $artist->image = $request->input('image_data');
+//        if ($request->file('image')) {
+//            $path = Storage::disk('public')->put('artist', $request->file('image'));
+//        }
         if ($request->hasFile('video')) {
             $file=$request->file('video');
             $fileName= $file->getClientOriginalExtension();
@@ -135,7 +133,8 @@ class ArtistController extends Controller
      */
     public function edit(Artist $artist)
     {
-        return view('container.artist.create')->with(compact('artist'))->with('action','UPDATE');
+        $image= DB::table('image')->where('artist_id',$artist->id)->get();
+        return view('container.artist.create')->with(compact('artist','image'))->with('action','UPDATE');
 
     }
 
@@ -171,17 +170,17 @@ class ArtistController extends Controller
         $artist->youtube = $request->input('youtube');
         $artist->rate = $request->input('demo_vertical');
 
-        if (!empty($request->hasFile('image'))) {
+        if (!empty($request->input('image_data'))) {
             $request->validate([
                 'image' => 'mimes:jpg,jpeg,png',
                 ]);
-            $path =  Storage::disk('public')->put('artist', $request->file('image'));
+//            $path =  Storage::disk('public')->put('artist', $request->file('image'));
             if (!empty($artist->image)){
                 $image_path = public_path().'/storage/'.$artist->image;
                 unlink($image_path);
             }
             //Update Image
-            $artist->image = $path;
+            $artist->image = $request->input('image_data');
         }
         if (!empty($request->hasFile('video'))) {
             $request->validate([
@@ -228,7 +227,9 @@ class ArtistController extends Controller
     public function destroy($artist)
     {
         Artist::destroy($artist);
+
         DB::table('video')->where('artist_id',$artist)->delete();
+
         DB::table('image')->where('artist_id',$artist)->delete();
         return redirect('artist');
     }

@@ -2,7 +2,7 @@
 @section('content')
     @push('artist_style')
 
-        <link rel="stylesheet" type="text/css" href="{{asset('plugins/select2/select2.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('public/plugins/select2/select2.min.css')}}">
         <link href="{{ asset('public/plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/editors/quill/quill.snow.css') }}">
@@ -142,7 +142,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">Video</label>
-                                                            <input type="file"
+                                                            <input type="file" id="video"
                                                                    class="form-control form-control-sm {{ $errors->has('video') ? ' is-invalid' : '' }}"
                                                                    name="video">
                                                             @if ($errors->has('video'))
@@ -151,6 +151,16 @@
                                                              </span>
                                                             @endif
                                                         </div>
+                                                        @if ($action=='UPDATE')
+                                                            <div class="video" id="preview_old_video">
+                                                                <video class="thevideo" width="300px" loop>
+                                                                    <source
+                                                                        src="{{ ((!empty($product->video)) ?asset('public/storage/'. $product->video) :old('video')) }}"
+                                                                        type="video/ogg">
+                                                                    Your browser does not support the video tag.
+                                                                </video>
+                                                            </div>
+                                                        @endif
                                                     </div>
 
                                                 </div>
@@ -285,11 +295,28 @@
         </div>
     </div>
     @push('artist_script')
-        <script src="{{asset('plugins/select2/select2.min.js') }}"></script>
-        <script src="{{asset('plugins/select2/custom-select2.js') }}"></script>
+        <script src="{{ asset('public/plugins/select2/select2.min.js') }}"></script>
+        <script src="{{ asset('public/plugins/select2/custom-select2.js') }}"></script>
         <script src="{{ asset('public/plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
         <script src="{{ asset('public/plugins/editors/quill/quill.js') }}"></script>
         <script src="{{ asset('public/plugins/editors/quill/custom-quill.js') }}"></script>
+        <script>
+            var figure = $(".video");
+            var vid = $("video");
+
+            [].forEach.call(figure, function (item) {
+                item.addEventListener('mouseover', hoverVideo, false);
+                item.addEventListener('mouseout', hideVideo, false);
+            });
+
+            function hoverVideo(e) {
+                $('.thevideo')[0].play();
+            }
+
+            function hideVideo(e) {
+                $('.thevideo')[0].pause();
+            }
+        </script>
         <script>
             //Second upload
             var secondUpload = new FileUploadWithPreview('mySecondImage')
@@ -303,6 +330,7 @@
             });
 
         </script>
+
         @if ($action=='UPDATE')
             <script>
                 var $item = $('#detail').val();

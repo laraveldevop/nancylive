@@ -30,6 +30,17 @@ Route::resource('notification', 'NotificationController');
 Route::resource('package', 'PackageController');
 Route::resource('all-package', 'AllPackageController');
 Route::resource('cat-package', 'PackageCategoryController');
+Route::resource('image', 'ImageController');
+
+Route::get('crop-image', 'ImageController@index');
+
+Route::post('image_crop/uploadCategory', 'ImageController@uploadCategory')->name('image_crop.uploadCategory');
+Route::post('image_crop/uploadArtist', 'ImageController@uploadArtist')->name('image_crop.uploadArtist');
+Route::post('image_crop/uploadVideo', 'ImageController@uploadVideo')->name('image_crop.uploadVideo');
+Route::post('image_crop/uploadBrand', 'ImageController@uploadBrand')->name('image_crop.uploadBrand');
+Route::post('image_crop/uploadSponsor', 'ImageController@uploadSponsor')->name('image_crop.uploadSponsor');
+Route::post('image_crop/deleteImage', 'ImageController@deleteImage')->name('image_crop.deleteImage');
+Route::post('image_crop/deleteSponsorImage', 'ImageController@deleteSponsorImage')->name('image_crop.deleteSponsorImage');
 Route::post('/ads','VideoController@ads');
 Route::post('/pdf_ads','PdfController@ads');
 Route::post('/product_ads','ProductController@ads');

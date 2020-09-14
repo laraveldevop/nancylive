@@ -5,6 +5,8 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/select2/select2.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/forms/switches.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/editors/quill/quill.snow.css') }}">
+        <link rel="stylesheet" href="{{ asset('public/css/croppie.min.css') }}">
+
 
     @endpush
     <div id="content" class="main-content">
@@ -119,7 +121,17 @@
                                                         <div class="form-group" id="video_local_display">
 
                                                         </div>
-                                                        <input type="text" name="video_file_name" id="video_file_name"
+                                                        @if ($action=='UPDATE')
+                                                            <div class="video" id="preview_old_video">
+                                                                <video class="thevideo" width="300px" loop>
+                                                                    <source
+                                                                        src="{{ ((!empty($video->video)) ?asset('public/storage/'. $video->video) :old('video')) }}"
+                                                                        type="video/ogg">
+                                                                    Your browser does not support the video tag.
+                                                                </video>
+                                                            </div>
+                                                        @endif
+                                                        <input type="hidden" name="video_file_name" id="video_file_name"
                                                                value="{{old('video_file_name')}}" class="form-control">
                                                     </div>
                                                 </div>
@@ -156,7 +168,7 @@
                                                                 Image</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('image') ? ' is-invalid' : '' }}"
-                                                                type="file" name="image"
+                                                                type="file" name="image" id="upload_image"
                                                                 value="{{ ((!empty($video->image)) ? $video->image :old('image')) }}">
                                                             @if ($errors->has('image'))
                                                                 <span class="invalid-feedback" role="alert">
@@ -164,6 +176,18 @@
                                                              </span>
                                                             @endif
                                                         </div>
+                                                        @if ($action=='UPDATE')
+                                                            <img id="preview_old_image"
+                                                                 src="{{ ((!empty($video->image)) ? asset('public/storage/'.$video->image) :old('image')) }}">
+                                                        @endif
+                                                        <div  id="pre-view"  class="col-md-6" style="display: none">
+
+                                                            <div id="image-preview">
+
+                                                            </div>
+                                                            <a class="btn btn-success crop_image">Crop & Upload Image</a>
+                                                        </div>
+                                                        <input type="hidden" name="image_data"   value="{{old('image_data')}}">
                                                     </div>
                                                     <div class="col-md-3" style="margin-top: 40px;">
                                                         <label>Add To Advertise</label>
@@ -308,7 +332,25 @@
         <script src="{{ asset('public/plugins/select2/select2.min.js') }}"></script>
         <script src="{{ asset('public/plugins/select2/custom-select2.js') }}"></script>
         <script>
+            var figure = $(".video");
+            var vid = $("video");
+
+            [].forEach.call(figure, function (item) {
+                item.addEventListener('mouseover', hoverVideo, false);
+                item.addEventListener('mouseout', hideVideo, false);
+            });
+
+            function hoverVideo(e) {
+                $('.thevideo')[0].play();
+            }
+
+            function hideVideo(e) {
+                $('.thevideo')[0].pause();
+            }
+        </script>
+        <script>
             $(document).ready(function () {
+
 
                 $('#form').validate({
                     rules: {
@@ -327,7 +369,7 @@
                     },
 
                 });
-                $(document).on("click", "a", function () {
+                $('#submit').on("click", function () {
                     $('#insert').attr("disabled", false);
                     $('.progress-bar').css('width', '0');
                     $('.msg').text('');
@@ -395,6 +437,68 @@
                 $('.ql-editor').html($item);
             </script>
         @endif
+        <script src="{{ asset('public/js/croppie.js') }}"></script>
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+
+                $('#upload_image').on('change', function (){
+                    $('#pre-view').css('display','');
+                    $('#preview_old_image').css('display','none');
+                });
+
+                $('#video').on('change', function (){
+                    $('#preview_old_video').css('display','none');
+                });
+
+                $image_crop = $('#image-preview').croppie({
+                    enableExif: true,
+                    viewport: {
+                        width: 400,
+                        height: 200,
+                        type: 'landscape'
+                    },
+                    boundary: {
+                        width: 400,
+                        height: 400
+                    }
+                });
+
+                $('#upload_image').change(function () {
+                    var reader = new FileReader();
+
+                    reader.onload = function (event) {
+                        $image_crop.croppie('bind', {
+                            url: event.target.result
+                        }).then(function () {
+                            console.log('jQuery bind complete');
+                        });
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                });
+
+                $('.crop_image').on('click',function (event) {
+                    $image_crop.croppie('result', {
+                        type: 'canvas',
+                        size: 'viewport'
+                    }).then(function (response) {
+                        var token = $('meta[name="csrf-token"]').attr('content');
+                        $.ajax({
+                            url: '{{ route("image_crop.uploadVideo") }}',
+                            type: 'post',
+                            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                            data: {"image": response, _token: token},
+                            dataType: "json",
+                            success: function (data) {
+                                $('input[name=image_data]').val(data.path);
+                                $('#pre-view').css('display','none');
+                            }
+                        });
+                    });
+                });
+
+            });
+        </script>
     @endpush
 @endsection
 

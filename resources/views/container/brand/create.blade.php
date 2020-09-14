@@ -4,6 +4,8 @@
         <!--  BEGIN CUSTOM STYLE FILE  -->
 
         <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/select2/select2.min.css')}}">
+        <link rel="stylesheet" href="{{ asset('public/css/croppie.min.css') }}">
+
         <!--  END CUSTOM STYLE FILE  -->
     @endpush
 
@@ -53,11 +55,24 @@
                                                 <div class="col-md-10">
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">brand Image</label>
-                                                        <input type="file"
+                                                        <input type="file" id="upload_image"
                                                                class="form-control form-control-sm"
                                                                name="image">
 
                                                     </div>
+                                                    @if ($action=='UPDATE')
+                                                        <img id="preview_old_image"
+                                                             src="{{ ((!empty($brand->image)) ? asset('public/storage/'.$brand->image) :old('image')) }}">
+                                                    @endif
+                                                    <div  id="pre-view"  class="col-md-6" style="display: none">
+
+                                                        <div id="image-preview">
+
+                                                        </div>
+                                                        <a class="btn btn-success crop_image">Crop & Upload Image</a>
+                                                    </div>
+                                                    <input type="hidden" name="image_data"   value="{{old('image_data')}}">
+
                                                 </div>
                                             </div>
 
@@ -82,5 +97,64 @@
     @push('artist_script')
         <script src="{{ asset('public/plugins/select2/select2.min.js') }}"></script>
         <script src="{{ asset('public/plugins/select2/custom-select2.js') }}"></script>
+        <script src="{{ asset('public/js/croppie.js') }}"></script>
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+
+                $('#upload_image').on('change', function (){
+                    $('#pre-view').css('display','');
+                    $('#preview_old_image').css('display','none');
+                });
+
+
+                $image_crop = $('#image-preview').croppie({
+                    enableExif: true,
+                    viewport: {
+                        width: 200,
+                        height: 200,
+                        type: 'square'
+                    },
+                    boundary: {
+                        width: 300,
+                        height: 300
+                    }
+                });
+
+                $('#upload_image').change(function () {
+                    var reader = new FileReader();
+
+                    reader.onload = function (event) {
+                        $image_crop.croppie('bind', {
+                            url: event.target.result
+                        }).then(function () {
+                            console.log('jQuery bind complete');
+                        });
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                });
+
+                $('.crop_image').click(function (event) {
+                    $image_crop.croppie('result', {
+                        type: 'canvas',
+                        size: 'viewport'
+                    }).then(function (response) {
+                        var token = $('meta[name="csrf-token"]').attr('content');
+                        $.ajax({
+                            url: '{{ route("image_crop.uploadBrand") }}',
+                            type: 'post',
+                            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                            data: {"image": response, _token: token},
+                            dataType: "json",
+                            success: function (data) {
+                                $('input[name=image_data]').val(data.path);
+                                $('#pre-view').css('display','none');
+                            }
+                        });
+                    });
+                });
+
+            });
+        </script>
     @endpush
 @endsection

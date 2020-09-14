@@ -106,3 +106,50 @@
         color: #1b55e2;
         display: block;
         margin-top: -2px; }
+
+
+
+.custom-file-container__image-preview_extra {
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+    margin-top: 54px;
+    margin-bottom: 40px;
+    height: 250px;
+    width: 100%;
+    border-radius: 4px;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    overflow: auto;
+    padding: 15px; }
+.custom-file-container_im {
+    position: relative;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+    border-radius: 6px;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    float: left;
+    margin: 1.858736%;
+    width: 29.615861214%;
+    height: 90px;
+    box-shadow: 0 4px 10px 0 rgba(51, 51, 51, 0.25); }
+.custom-file-container__image-multi {
+    left: -6px;
+    background: #ffffff;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    margin-top: -6px;
+    box-shadow: 0 4px 10px 0 rgba(51, 51, 51, 0.25); }
+.custom-file-container__image-multi:hover {
+    background: #cbcbbd;
+    cursor: pointer; }
+.custom-file-container__image-multi_icon {
+    color: #1b55e2;
+    display: block;
+    margin-top: -2px; }

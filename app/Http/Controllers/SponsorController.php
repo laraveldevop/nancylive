@@ -78,11 +78,13 @@ class SponsorController extends Controller
         $sponsor->facebook = $request->input('facebook');
         $sponsor->instagram = $request->input('instagram');
         $sponsor->youtube = $request->input('youtube');
-        if ($request->file('image')) {
-            $path = Storage::disk('public')->put('sponsor', $request->file('image'));
-            $sponsor->image = $path;
+        $sponsor->image = $request->input('image_data');
 
-        }
+//        if ($request->file('image')) {
+//            $path = Storage::disk('public')->put('sponsor', $request->file('image'));
+//            $sponsor->image = $path;
+//
+//        }
         if ($request->hasFile('video')) {
             $file=$request->file('video');
             $fileName= $file->getClientOriginalExtension();
@@ -135,7 +137,9 @@ class SponsorController extends Controller
      */
     public function edit(Sponsor $sponsor)
     {
-        return view('container.sponsor.create')->with(compact('sponsor'))->with('action','UPDATE');
+        $image= DB::table('sponsor_image')->where('sponsor_id',$sponsor->id)->get();
+
+        return view('container.sponsor.create')->with(compact('sponsor','image'))->with('action','UPDATE');
 
     }
 
@@ -170,17 +174,17 @@ class SponsorController extends Controller
         $sponsor->instagram = $request->input('instagram');
         $sponsor->youtube = $request->input('youtube');
 
-        if (!empty($request->hasFile('image'))) {
+        if (!empty($request->input('image_data'))) {
             $request->validate([
                 'image' => 'mimes:jpg,jpeg,png',
             ]);
-            $path =  Storage::disk('public')->put('sponsor', $request->file('image'));
+//            $path =  Storage::disk('public')->put('sponsor', $request->file('image'));
             if (!empty($sponsor->image)){
                 $image_path = public_path().'/storage/'.$sponsor->image;
                 unlink($image_path);
             }
             //Update Image
-            $sponsor->image = $path;
+            $sponsor->image = $request->input('image_data');
         }
         if (!empty($request->hasFile('video'))) {
             $request->validate([

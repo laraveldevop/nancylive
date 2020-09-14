@@ -4,6 +4,7 @@
         <!--  BEGIN CUSTOM STYLE FILE  -->
 
         <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/select2/select2.min.css')}}">
+        <link rel="stylesheet" href="{{ asset('public/css/croppie.min.css') }}">
         <!--  END CUSTOM STYLE FILE  -->
     @endpush
 
@@ -25,7 +26,7 @@
                             <form class="mb-4" method="POST" action="{{ url('category') }}"
                                   enctype="multipart/form-data">
                                 @else
-                                    <form class="mb-4" method="POST"  enctype="multipart/form-data"
+                                    <form class="mb-4" method="POST" enctype="multipart/form-data"
                                           action="{{ route('category.update',$category->cat_id) }}">
                                         @method('PUT')
                                         @endif
@@ -33,26 +34,24 @@
                                         <div class="widget-content widget-content-area">
 
                                             <div class="row">
-                                                <div class="col-md-10">
-                                                    <div class="form-group">
-                                                        <label for="exampleFormControlInput1">Module</label>
-                                                        <select
-                                                            class="basic form-control {{ $errors->has('module_id') ? ' is-invalid' : '' }}"
-                                                            name="module_id" id="module_id" required>
-                                                            <option value="">--Choose Option--</option>
-                                                            @foreach($module as $key => $value)
-                                                                <option value="{{ $value->id }}"
-                                                                    {{ (!empty(old('module_id')) && old('module_id')==$value->id)?'selected':'' }}
-                                                                    {{ (!empty($category->module_id) && $category->module_id==$value->id)?'selected':'' }}
-                                                                >{{ $value->module_name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @if ($errors->has('module_id'))
-                                                            <span class="invalid-feedback" role="alert">
-                                                                  <strong>{{ $errors->first('module_id') }}</strong>
-                                                             </span>
-                                                        @endif
-
+                                                <div class="col-md-10" style="margin-left: 50px">
+                                                    <div class="row col-md-12">
+                                                        @foreach($module as $key => $value)
+                                                            <div class="n-chk">
+                                                                <label
+                                                                    class="new-control new-radio new-radio-text radio-classic-info">
+                                                                    <input type="radio" id="{{ $value->module_name }}"
+                                                                           value="{{ $value->id }}"
+                                                                           class="new-control-input"
+                                                                           {{ (!empty(old('module_id')) && old('module_id')==$value->id)?'checked':'' }}
+                                                                           {{ (!empty($category->module_id) && $category->module_id==$value->id)?'checked':'' }}
+                                                                           name="module_id">
+                                                                    <span
+                                                                        class="new-control-indicator"></span><span
+                                                                        class="new-radio-content">{{ $value->module_name }} Category</span>
+                                                                </label>
+                                                            </div>
+                                                        @endforeach
                                                     </div>
                                                 </div>
                                                 <div class="col-md-10">
@@ -75,11 +74,24 @@
                                                 <div class="col-md-10">
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Category Image</label>
-                                                        <input type="file"
-                                                            class="form-control form-control-sm"
-                                                             name="cat_image">
-
+                                                        <input type="file" id="upload_image" disabled
+                                                               class="form-control form-control-sm"
+                                                               name="cat_image">
                                                     </div>
+                                                    @if ($action=='UPDATE')
+                                                        <img id="preview_old_image"
+                                                             src="{{ ((!empty($category->cat_image)) ? asset('public/storage/'.$category->cat_image) :old('cat_image')) }}">
+                                                    @endif
+                                                    <div id="pre-view" class="col-md-6" style="display: none">
+
+                                                        <div id="image-preview">
+
+                                                        </div>
+                                                        <a class="btn btn-success crop_image">Crop & Upload Image</a>
+                                                    </div>
+                                                    <input type="hidden" name="image_data"
+                                                           value="{{old('image_data')}}">
+
                                                 </div>
                                             </div>
 
@@ -96,7 +108,7 @@
                                             </div>
                                         </div>
                                     </form>
-{{--                            </form>--}}
+                            {{--                            </form>--}}
                     </div>
                 </div>
             </div>
@@ -105,5 +117,85 @@
     @push('artist_script')
         <script src="{{ asset('public/plugins/select2/select2.min.js') }}"></script>
         <script src="{{ asset('public/plugins/select2/custom-select2.js') }}"></script>
+        <script src="{{ asset('public/js/croppie.js') }}"></script>
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+
+                $('#upload_image').on('click', function () {
+                    $('#pre-view').css('display', '');
+                    $('#preview_old_image').css('display', 'none');
+                });
+                $("input[name=module_id]:radio").on('click',function () {
+                    $('#upload_image').removeAttr('disabled')
+                    if ($('input[id=video]:checked').val() == "1") {
+                        $image_crop = $('#image-preview').croppie({
+                            enableExif: true,
+                            viewport: {
+                                width: 400,
+                                height: 200,
+                                type: 'landscape'
+                            },
+                            boundary: {
+                                width: 400,
+                                height: 400
+                            }
+                        });
+                    }
+                    else {
+                        $image_crop = $('#image-preview').croppie({
+                            enableExif: true,
+                            viewport: {
+                                width: 400,
+                                height: 400,
+                                type: 'square'
+                            },
+                            boundary: {
+                                width: 500,
+                                height: 500
+                            }
+                        });
+                    }
+
+                });
+
+
+
+
+                $('#upload_image').change(function () {
+                    var reader = new FileReader();
+
+                    reader.onload = function (event) {
+                        $image_crop.croppie('bind', {
+                            url: event.target.result
+                        }).then(function () {
+                            console.log('jQuery bind complete');
+                        });
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                });
+
+                $('.crop_image').click(function (event) {
+                    $image_crop.croppie('result', {
+                        type: 'canvas',
+                        size: 'viewport'
+                    }).then(function (response) {
+                        var token = $('meta[name="csrf-token"]').attr('content');
+                        $.ajax({
+                            url: '{{ route("image_crop.uploadCategory") }}',
+                            type: 'post',
+                            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                            data: {"image": response, _token: token},
+                            dataType: "json",
+                            success: function (data) {
+                                $('input[name=image_data]').val(data.path);
+                                $('#pre-view').css('display', 'none');
+                            }
+                        });
+                    });
+                });
+
+            });
+        </script>
     @endpush
 @endsection
