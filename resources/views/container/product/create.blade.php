@@ -129,7 +129,7 @@
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('mobile') ? ' is-invalid' : '' }}"
                                                                 type="text" name="mobile"
-                                                                value="{{ ((!empty($product->product_name)) ? $product->product_name :old('mobile')) }}"
+                                                                value="{{ ((!empty($product->mobile)) ? $product->mobile :old('mobile')) }}"
                                                                 placeholder="Enter mobile Number">
                                                             @if ($errors->has('mobile'))
                                                                 <span class="invalid-feedback" role="alert">

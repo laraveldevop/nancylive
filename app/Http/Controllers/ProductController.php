@@ -32,13 +32,9 @@ class ProductController extends Controller
             ->leftJoin('category', 'product.cat_id', '=', 'category.cat_id')
             ->leftJoin('brand', 'product.brand', '=', 'brand.id')
             ->leftJoin('sponsor', 'product.sponsor_id', '=', 'sponsor.id')
+//            ->leftJoin('product_image','product.id','=','product_image.product_id')
             ->get();
-//            ->toArray();
-//        echo $product;die();
-        foreach ($product as $item) {
-            $product_image = \App\ProductImage::where('product_id', $item->id)->first();
-        }
-        return view('container.product.index')->with(compact('product','product_image'));
+        return view('container.product.index')->with(compact('product'));
 
 
     }

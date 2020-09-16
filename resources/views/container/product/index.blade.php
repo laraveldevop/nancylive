@@ -121,8 +121,8 @@
                                                     <span class="new-control-indicator"></span>
                                                 </label>
                                             </div>
-
-                                            <img width="100px"  src="{{ asset(!empty($product_image->image)?'public/storage/'.$product_image['image']:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">
+                                            <span hidden>{{$product_im=\App\ProductImage::where('product_id',$value->id)->first()}}</span>
+                                            <img width="100px"  src="{{ asset(!empty($product_im->image)?'public/storage/'.$product_im->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">
                                             <div class="user-meta-info">
                                                 <p class="user-name" data-name="{{ $value->brand_name }}">{{ $value->brand_name }}</p>
 {{--                                                <p class="user-work" data-occupation="{{ $value->about }}">{{ $value->about }}</p>--}}
