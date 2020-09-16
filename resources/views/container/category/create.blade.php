@@ -122,7 +122,7 @@
 
             $(document).ready(function () {
 
-                $('#upload_image').on('click', function () {
+                $('#upload_image').on('change', function () {
                     $('#pre-view').css('display', '');
                     $('#preview_old_image').css('display', 'none');
                 });

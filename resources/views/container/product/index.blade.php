@@ -111,6 +111,7 @@
                                 </div>
                             </div>
                             @foreach($product as $key=>$value)
+
                                 <div class="items">
                                     <div class="item-content">
                                         <div class="user-profile">
@@ -121,7 +122,7 @@
                                                 </label>
                                             </div>
 
-                                            <img width="100px"  src="{{ asset(!empty($value->image)?'public/storage/'.$value->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">
+                                            <img width="100px"  src="{{ asset(!empty($product_image->image)?'public/storage/'.$product_image['image']:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">
                                             <div class="user-meta-info">
                                                 <p class="user-name" data-name="{{ $value->brand_name }}">{{ $value->brand_name }}</p>
 {{--                                                <p class="user-work" data-occupation="{{ $value->about }}">{{ $value->about }}</p>--}}

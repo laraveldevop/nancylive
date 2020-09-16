@@ -378,12 +378,12 @@
                         type: 'canvas',
                         size: 'viewport'
                     }).then(function (response) {
-                        var token = $('meta[name="csrf-token"]').attr('content');
+
                         $.ajax({
                             url: '{{ route("image_crop.uploadArtist") }}',
                             type: 'post',
                             headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-                            data: {"image": response, _token: token},
+                            data: {"image": response},
                             dataType: "json",
                             success: function (data) {
                                 $('input[name=image_data]').val(data.path);

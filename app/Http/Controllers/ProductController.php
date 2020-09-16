@@ -28,15 +28,17 @@ class ProductController extends Controller
     public function index()
     {
         $product = DB::table('product')
-            ->select(DB::raw('product.id,product.product_name,product.video,product.detail,product.price,product.quantity,product.token,category.cat_name,brand.brand_name,product_image.image,sponsor.sponsor_name'))
+            ->select(DB::raw('product.id,product.product_name,product.video,product.detail,product.price,product.quantity,product.token,category.cat_name,brand.brand_name,sponsor.sponsor_name'))
             ->leftJoin('category', 'product.cat_id', '=', 'category.cat_id')
             ->leftJoin('brand', 'product.brand', '=', 'brand.id')
             ->leftJoin('sponsor', 'product.sponsor_id', '=', 'sponsor.id')
-            ->leftJoin('product_image', 'product.id', '=', 'product_image.product_id')
             ->get();
 //            ->toArray();
 //        echo $product;die();
-        return view('container.product.index')->with(compact('product'));
+        foreach ($product as $item) {
+            $product_image = \App\ProductImage::where('product_id', $item->id)->first();
+        }
+        return view('container.product.index')->with(compact('product','product_image'));
 
 
     }

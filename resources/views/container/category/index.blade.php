@@ -173,7 +173,7 @@
                                                             </label>
                                                         </div>
                                                         <img width="100px"
-                                                             src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}"
+                                                             src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'')}}"
                                                              alt="avatar">
 
                                                     </div>
@@ -279,7 +279,7 @@
                                                             </label>
                                                         </div>
                                                         <img width="100px"
-                                                             src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}"
+                                                             src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'')}}"
                                                              alt="avatar">
 
                                                     </div>
@@ -384,7 +384,7 @@
                                                             </label>
                                                         </div>
                                                         <img width="100px"
-                                                             src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}"
+                                                             src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'')}}"
                                                              alt="avatar">
 
                                                     </div>
