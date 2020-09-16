@@ -92,7 +92,7 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="myExtraLargeModalLabel">Extra Large</h5>
+                    <h5 class="modal-title" id="myExtraLargeModalLabel">Product Details</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
