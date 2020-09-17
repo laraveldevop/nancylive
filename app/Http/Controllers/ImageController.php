@@ -20,7 +20,7 @@ class ImageController extends Controller
             $image_name = time() . '.jpg';
             $upload_path = public_path('storage/artist/' . $image_name);
             file_put_contents($upload_path, $data);
-            return response()->json(['path' => 'artist/' . $image_name]);
+            return response()->json(['path' => 'artist/' . $image_array_1,$image_array_2]);
         }
     }
 

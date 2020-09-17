@@ -127,7 +127,7 @@
                                                             <a class="btn btn-success crop_image">Crop & Upload
                                                                 Image</a>
                                                         </div>
-                                                        <input type="hidden" name="image_data"
+                                                        <input type="text" name="image_data"
                                                                value="{{old('image_data')}}">
 
                                                     </div>
@@ -376,7 +376,7 @@
                 $('.crop_image').click(function (event) {
                     $image_crop.croppie('result', {
                         type: 'canvas',
-                        size: 'viewport'
+                        size: 'original'
                     }).then(function (response) {
 
                         $.ajax({

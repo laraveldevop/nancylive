@@ -154,6 +154,7 @@
                                     @if(request()->is('notification')) Notification @endif
                                     @if(request()->is('package')) Package @endif
                                     @if(request()->is('order')) Order @endif
+                                    @if(request()->is('user-package')) Order @endif
                                 </span></li>
                         </ol>
                     </nav>
@@ -379,6 +380,15 @@
                     </a>
                 </li>
                 <li class="menu">
+                    <a href="{{ url('user-package') }}" data-active="{{ ((request()->is('user-package')) ? 'true' : 'false') }}"
+                       aria-expanded="{{ ((request()->is('user-package')) ? 'true' : 'false') }}" class="dropdown-toggle">
+                        <div class="">
+                            <i class="far fa-bell"></i>
+                            <span>User Package</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="menu">
                     <a href="{{ url('order') }}" data-active="{{ ((request()->is('order')) ? 'true' : 'false') }}"
                        aria-expanded="{{ ((request()->is('order')) ? 'true' : 'false') }}" class="dropdown-toggle">
                         <div class="">
@@ -387,6 +397,7 @@
                         </div>
                     </a>
                 </li>
+
 
             </ul>
 {{--            <div class="shadow-bottom"></div>--}}
