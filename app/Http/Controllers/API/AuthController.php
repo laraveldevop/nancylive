@@ -209,25 +209,26 @@ class AuthController extends Controller
                 'message'=>$validator->errors()->all(),'data'=>[]], 401);
         }
         $otp =  mt_rand(1000, 9999);
-        $OPT_SMS = urlencode($otp)." verification code.";
-        $to = $request['mobile'];
-        $name = 'karan';
-        $msg = $OPT_SMS;
-        $authKey = '';
-        $sender = 'DIALME';
-        $route = 4;
-        $postData = $request->all();
+//        $OPT_SMS = urlencode($otp)." verification code.";
+//        $to = $request['mobile'];
+//        $name = 'karan';
+//        $msg = $OPT_SMS;
+//        $authKey = '';
+//        $sender = 'DIALME';
+//        $route = 4;
+//        $postData = $request->all();
 
-        $url =  "http://www.alots.in/sms-panel/api/http/index.php?username=" . $name . "&apikey=DAEF6-BE96B&apirequest=Text&sender=" . $sender . "&mobile=" . $to . "&message=" . $msg . "&route=TRANS&format=JSON";
-        $url = preg_replace("/ /", "%20", $url);
-        $response = file_get_contents($url);
+//        $url =  "http://www.alots.in/sms-panel/api/http/index.php?username=" . $name . "&apikey=DAEF6-BE96B&apirequest=Text&sender=" . $sender . "&mobile=" . $to . "&message=" . $msg . "&route=TRANS&format=JSON";
+//        $url = preg_replace("/ /", "%20", $url);
+//        $response = file_get_contents($url);
         // Process your response here
         // echo $response;
         // die;
         if (!empty($response)) {
             return response()->json(['status' => true, 'message' => ' SuccessFull','data'=>$otp]);
         }
-        return FALSE;
+        return response()->json(['status' => false]);
+
     }
 
 
