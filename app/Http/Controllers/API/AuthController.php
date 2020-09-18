@@ -224,10 +224,10 @@ class AuthController extends Controller
         // Process your response here
         // echo $response;
         // die;
-        if (!empty($response)) {
+//        if (!empty($response)) {
             return response()->json(['status' => true, 'message' => ' SuccessFull','data'=>$otp]);
-        }
-        return response()->json(['status' => false]);
+//        }
+//        return response()->json(['status' => false]);
 
     }
 
