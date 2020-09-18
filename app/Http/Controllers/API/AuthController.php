@@ -154,8 +154,8 @@ class AuthController extends Controller
             $url = preg_replace("/ /", "%20", $url);
             $response = file_get_contents($url);
             // Process your response here
-             echo $response;
-             die;
+            // echo $response;
+            // die;
             if (!empty($response)) {
                 $user->otp = $otp;
                 $user->save();
