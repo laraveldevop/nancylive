@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use \Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -126,9 +127,77 @@ class AuthController extends Controller
 
     }
 
+    public function forgot_password(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'mobile' => 'required|numeric|min:10|exists:users'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'=> false,
+                'message'=>$validator->errors()->all(),'data'=>[]], 401);
+        }
+        else{
+            $user = User::where('mobile',$request['mobile'])->first();
+            $otp =  mt_rand(1000, 9999);
+            $OPT_SMS = urlencode($otp)." verification code. UserId ". $user->id;
+            $to = $request['mobile'];
+            $name = 'karan';
+            $msg = $OPT_SMS;
+            $authKey = '';
+            $sender = 'DIALME';
+            $route = 4;
+            $postData = $request->all();
+
+            $url =  "http://www.alots.in/sms-panel/api/http/index.php?username=" . $name . "&apikey=DAEF6-BE96B&apirequest=Text&sender=" . $sender . "&mobile=" . $to . "&message=" . $msg . "&route=TRANS&format=JSON";
+            $url = preg_replace("/ /", "%20", $url);
+            $response = file_get_contents($url);
+            // Process your response here
+            // echo $response;
+            // die;
+            if (!empty($response)) {
+                $user->otp = $otp;
+                $user->save();
+                return response()->json(['status' => true, 'message' => 'Send SuccessFull','data'=>$OPT_SMS,'otp'=>$otp,'user_id'=>$user->id]);
+
+            }
+            return FALSE;
+        }
+    }
+
+    public function verify_otp(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'otp' => 'required|numeric',
+            'id' => 'required|numeric|exists:users',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'=> false,
+                'message'=>$validator->errors()->all(),'data'=>[]], 401);
+        }
+
+        else{
+            $user = DB::table('users')->where([
+                ['id', '=', $request['id']],
+                ['otp', '=', $request['otp']],
+            ])->first();
+            if (!empty($user)){
+                $users=  User::where('id',$request['id'])->first();
+                $users->forgot_password_stat = 1;
+                $users->otp = null;
+                $users->password =  Hash::make($request['otp']);
+                $users->save();
+                return response()->json(['status' => true, 'message' => 'OTP Verified','data'=>$users]);
+            }
+            return response()->json(['status' => true, 'message' => 'Invalid Credentials','data'=>$user]);
+
+        }
+    }
 
     public function check_user(Request $request) {
-//        echo 'tes';die();
         $validator = Validator::make($request->all(),[
             'email' => 'required|email|unique:users',
             'mobile' => 'required|numeric|min:10|unique:users'
@@ -140,43 +209,25 @@ class AuthController extends Controller
                 'message'=>$validator->errors()->all(),'data'=>[]], 401);
         }
         $otp =  mt_rand(1000, 9999);
-//        $mobile = $request['mobile'];
-//        $encodeMassage = urlencode($otp);
-//        $authKey = '';
-//        $senderId = '';
-//        $route = 4;
-//        $postData = $request->all();
-//
-//        $data = array(
-//            'authKey'=>$authKey,
-//            'mobile'=>$mobile,
-//            'message'=> $encodeMassage,
-//            'sender'=> $senderId,
-//            'route'=>$route
-//        );
-//        $url = '';
-//        $ch = curl_init();
-//        curl_setopt_array($ch, array(
-//            CURLOPT_URL => $url,
-//            CURLOPT_RETURNTRANSFER => true,
-//            CURLOPT_PORT => true,
-//            CURLOPT_POSTFIELDS => $postData
-//        ));
-//        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-//        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-//        $output = curl_exec($ch);
-//        if (curl_errno($ch)) {
-//            echo 'error:' . curl_error($ch);
-//        }
-//        curl_close($ch);
+        $OPT_SMS = urlencode($otp)." verification code.";
+        $to = $request['mobile'];
+        $name = 'karan';
+        $msg = $OPT_SMS;
+        $authKey = '';
+        $sender = 'DIALME';
+        $route = 4;
+        $postData = $request->all();
 
-//        if (!empty($output)) {
-//            return response()->json(['status' => true, 'message' => ' SuccessFull','otp'=>$otp]);
-//        }
-
-
-        return response()->json(['status' => true, 'message' => ' SuccessFull','otp'=>$otp]);
-
+        $url =  "http://www.alots.in/sms-panel/api/http/index.php?username=" . $name . "&apikey=DAEF6-BE96B&apirequest=Text&sender=" . $sender . "&mobile=" . $to . "&message=" . $msg . "&route=TRANS&format=JSON";
+        $url = preg_replace("/ /", "%20", $url);
+        $response = file_get_contents($url);
+        // Process your response here
+        // echo $response;
+        // die;
+        if (!empty($response)) {
+            return response()->json(['status' => true, 'message' => ' SuccessFull','data'=>$otp]);
+        }
+        return FALSE;
     }
 
 

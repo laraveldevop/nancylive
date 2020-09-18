@@ -270,6 +270,7 @@ class HomeController extends Controller
         if (isset($user)) {
             if (Hash::check($request->password, $user->password)) {
                 $user->password =  Hash::make($request['new_password']);
+                $user->forgot_password_stat = 0;
                 $user->save();
                 return response()->json(['status' => true, 'message' => 'Password Changed successfully.', 'data' => $user,], 200);
             }

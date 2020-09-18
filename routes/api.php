@@ -31,6 +31,8 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('/login', 'API\AuthController@login');
     Route::post('/user-register', 'API\AuthController@userRegister');
     Route::post('/logout', 'API\AuthController@logout');
+    Route::post('/forgot-password', 'API\AuthController@forgot_password');
+    Route::post('/verify-otp', 'API\AuthController@verify_otp');
     Route::post('/password/email', 'Api\ForgotPasswordController@sendResetLinkEmail');
     Route::post('/password/reset', 'Api\ResetPasswordController@reset');
 
