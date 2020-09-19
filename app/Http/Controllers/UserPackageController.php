@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Package;
 use App\UserPackage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,8 +22,39 @@ class UserPackageController extends Controller
             ->leftJoin('package','user_package.package_id','=','package.id')
             ->orderBy('user_package.id','desc')
             ->get();
-        return view('container.user_package.index')->with(compact('userPackage'));
+        $package= Package::all();
+        return view('container.user_package.index')->with(compact('userPackage','package'));
 
+    }
+
+    public function packageList(Request $request)
+    {
+        if ($request->ajax()) {
+            $type = $request->type;
+            $package = DB::table('user_package')
+                ->select(DB::raw('user_package.id,user_package.user_id,user_package.package_id,users.image,users.mobile,users.name as u_name,package.name,package.price'))
+                ->leftJoin('users','user_package.user_id','=','users.id')
+                ->leftJoin('package','user_package.package_id','=','package.id')
+                ->where('package_id',$type)
+                ->orderBy('user_package.id','desc')
+                ->get();
+            $output = '';
+            $output .= '';
+            foreach ($package as $item) {
+                $output .= '<tr>';
+                $output .= '<td>';
+                $output .= '<div class="d-flex">';
+                $output .= '<div class="usr-img-frame mr-2 rounded-circle">';
+                $output .= '<img alt="avatar" class="img-fluid rounded-circle" src="'.asset(!empty($item->image)?"public/storage/". $item->image:"").'">';
+                $output .= ' </div><p class="align-self-center mb-0 admin-name"> ' . $item->u_name . ' </p>';
+                $output .= '</div></td>';
+                $output .= '<td>' . $item->mobile . '</td>';
+                $output .= '<td>' . $item->name . '</td>';
+                $output .= '</tr>';
+            }
+
+            return response()->json($output);
+        }
     }
 
     /**

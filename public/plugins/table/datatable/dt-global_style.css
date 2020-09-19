@@ -69,8 +69,8 @@ table.dataTable {
     transform: translateY(-1px) scale(1.01);
 }
 .table-hover.non-hover:not(.table-dark) tbody tr:hover {
-    -webkit-transform: none; 
-    transform: none; 
+    -webkit-transform: none;
+    transform: none;
 }
 div.dataTables_wrapper div.dataTables_info {
     padding-top: 0.85em;
@@ -107,7 +107,7 @@ div.dataTables_wrapper div.dataTables_filter svg {
     background: #1b2e4b;
 }
 div.dataTables_wrapper div.dataTables_filter input {
-    width: 150px;
+    width: 400px;
 }
 .dataTables_wrapper .dataTables_length select.form-control {
     padding: 8px 17px 8px 14px;
@@ -137,7 +137,7 @@ div.dataTables_wrapper div.dataTables_paginate {
     box-shadow: none;
 }
 div.dataTables_wrapper div.dataTables_paginate ul.pagination {
-    margin: 3px 0;   
+    margin: 3px 0;
 }
 .page-item.disabled .page-link {
     background: #191e3a;

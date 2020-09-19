@@ -42,6 +42,7 @@ Route::post('image_crop/uploadBrand', 'ImageController@uploadBrand')->name('imag
 Route::post('image_crop/uploadSponsor', 'ImageController@uploadSponsor')->name('image_crop.uploadSponsor');
 Route::post('image_crop/deleteImage', 'ImageController@deleteImage')->name('image_crop.deleteImage');
 Route::post('image_crop/deleteSponsorImage', 'ImageController@deleteSponsorImage')->name('image_crop.deleteSponsorImage');
+Route::post('package_user/packageList', 'UserPackageController@packageList')->name('package_user.list');
 
 
 Route::post('add_status/Update_status', 'OrderController@updateStatus')->name('add_status.Update_status');

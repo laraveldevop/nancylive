@@ -2,9 +2,11 @@
 @section('content')
 
     @push('artist_style')
-        <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/table/datatable/datatables.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/table/datatable/dt-global_style.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/table/datatable/datatables.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/table/datatable/dt-global_style.css') }}"/>
         <link href="{{ asset('public/assets/css/elements/miscellaneous.css') }}" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/select2/select2.min.css')}}">
+
     @endpush
 
     <div class="overlay"></div>
@@ -12,28 +14,44 @@
     <!--  BEGIN CONTENT AREA  -->
     <div id="content" class="main-content">
         <div class="layout-px-spacing">
-
             <div class="row layout-top-spacing">
+                <div class="col-sm-12 col-md-6">
+                    <select class="basic form-control" name="package" id="package">
+                        <option value="all_package">
+                            All Package
+                        </option>
+                       @foreach($package as $item)
+                            <option value="{{ $item->id }}"
+                                {{ (!empty(old('package')) && old('package')==$item->id)?'selected':'' }}
+                            >{{ $item->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <span id="table_data">
 
+            </span>
+            <div class="row layout-top-spacing">
                 <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                     <div class="widget-content widget-content-area br-6">
                         <div class="table-responsive mb-4 mt-4">
                             <table id="zero-config" class="table table-hover" style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th>User </th>
+                                    <th>User</th>
                                     <th>Mobile</th>
                                     <th>Package Name</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody >
 
                                 @foreach($userPackage as $item)
                                     <tr>
                                         <td>
                                             <div class="d-flex">
                                                 <div class="usr-img-frame mr-2 rounded-circle">
-                                                    <img alt="avatar" class="img-fluid rounded-circle" src="{{ asset(!empty($item->image)?'public/storage/'.$item->image:'')}}">
+                                                    <img alt="avatar" class="img-fluid rounded-circle"
+                                                         src="{{ asset(!empty($item->image)?'public/storage/'.$item->image:'')}}">
                                                 </div>
                                                 <p class="align-self-center mb-0 admin-name"> {{$item->u_name}} </p>
                                             </div>
@@ -55,7 +73,29 @@
 
     <!--  END CONTENT AREA  -->
     @push('artist_script')
-
+        <script src="{{ asset('public/plugins/select2/select2.min.js') }}"></script>
+        <script>
+            $('#package').change(function (){
+                var type = $("#package").val();
+                if (type === "all_package") {
+                    location.reload();
+                }
+                else {
+                    $.ajax({
+                        url: '{{ route("package_user.list") }}',
+                        type: 'post',
+                        headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                        data: {"type": type},
+                        dataType: "json",
+                        success: function (data) {
+                            console.log(data);
+                            $('tbody').html(data);
+                        }
+                    });
+                }
+            });
+        </script>
+        <script src="{{ asset('public/plugins/select2/custom-select2.js') }}"></script>
         <script src="{{ asset('public/plugins/table/datatable/datatables.js') }}"></script>
         <script>
             $('#zero-config').DataTable({
