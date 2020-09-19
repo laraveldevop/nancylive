@@ -17,7 +17,7 @@ class UserPackageController extends Controller
     public function index()
     {
         $userPackage = DB::table('user_package')
-            ->select(DB::raw('user_package.id,user_package.user_id,user_package.package_id,users.image,users.mobile,users.name as u_name,package.name,package.price'))
+            ->select(DB::raw('user_package.id,user_package.user_id,user_package.package_id,users.image,users.mobile,users.name as u_name,package.name,package.price,user_package.created_at,package.time_method,package.day,package.year,package.month'))
             ->leftJoin('users','user_package.user_id','=','users.id')
             ->leftJoin('package','user_package.package_id','=','package.id')
             ->orderBy('user_package.id','desc')

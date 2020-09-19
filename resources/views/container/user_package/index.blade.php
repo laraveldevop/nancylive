@@ -40,6 +40,8 @@
                                 <tr>
                                     <th>User</th>
                                     <th>Mobile</th>
+                                    <th>From Date</th>
+                                    <th>To Date</th>
                                     <th>Package Name</th>
                                 </tr>
                                 </thead>
@@ -57,6 +59,18 @@
                                             </div>
                                         </td>
                                         <td>{{$item->mobile}}</td>
+                                        <td>{{$item->created_at}}</td>
+                                        @if(!empty($item->year))
+                                        <td>{{date('Y-m-d', strtotime($item->created_at. '+ '.$item->year.' year'))}}</td>
+                                        @endif
+                                         @if(!empty($item->month))
+                                        <td>{{date('Y-m-d', strtotime($item->created_at. '+ '.$item->month.' month'))}}</td>
+                                        @endif
+                                         @if(!empty($item->day))
+                                        <td>{{date('Y-m-d', strtotime($item->created_at. '+ '.$item->day.' day'))}}</td>
+                                        @endif
+
+
                                         <td>{{$item->name}}</td>
                                     </tr>
                                 @endforeach
