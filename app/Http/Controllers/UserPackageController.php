@@ -32,7 +32,7 @@ class UserPackageController extends Controller
         if ($request->ajax()) {
             $type = $request->type;
             $package = DB::table('user_package')
-                ->select(DB::raw('user_package.id,user_package.user_id,user_package.package_id,users.image,users.mobile,users.name as u_name,package.name,package.price'))
+                ->select(DB::raw('user_package.id,user_package.user_id,user_package.package_id,users.image,users.mobile,users.name as u_name,package.name,package.price,user_package.created_at,package.time_method,package.day,package.year,package.month'))
                 ->leftJoin('users','user_package.user_id','=','users.id')
                 ->leftJoin('package','user_package.package_id','=','package.id')
                 ->where('package_id',$type)
@@ -49,6 +49,13 @@ class UserPackageController extends Controller
                 $output .= ' </div><p class="align-self-center mb-0 admin-name"> ' . $item->u_name . ' </p>';
                 $output .= '</div></td>';
                 $output .= '<td>' . $item->mobile . '</td>';
+                $output .= '<td>' . $item->created_at . '</td>';
+                if(!empty($item->year))
+                    $output .= '<td>' . date('Y-m-d', strtotime($item->created_at. '+ '.$item->year.' year')) . '</td>';
+                elseif (!empty($item->month))
+                    $output .= '<td>' . date('Y-m-d', strtotime($item->created_at. '+ '.$item->month.' month')) . '</td>';
+                else
+                    $output .= '<td>' . date('Y-m-d', strtotime($item->created_at. '+ '.$item->day.' day')) . '</td>';
                 $output .= '<td>' . $item->name . '</td>';
                 $output .= '</tr>';
             }
