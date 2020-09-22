@@ -96,7 +96,7 @@
                 $('.crop_image').click(function (event) {
                     $image_crop.croppie('result', {
                         type: 'canvas',
-                        size: 'viewport'
+                        size: 'original'
                     }).then(function (response) {
                         var _token = $('input[name=_token]').val();
                         $.ajax({

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Image;
+use App\ProductImage;
 use App\SponsorImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -90,6 +91,19 @@ class ImageController extends Controller
             return response()->json(asset('public/storage/'.$artist->image));
         }
     }
+
+    public function deleteProductImage(Request  $request)
+    {
+        if ($request->ajax()) {
+            $image= $request->image;
+            $product = ProductImage::where('id',$image)->first();
+            $image_path = public_path().'/storage/'.$product['image'];
+            unlink($image_path);
+            DB::table('product_image')->where('id',$image)->delete();
+            return response()->json(asset('public/storage/'.$product->image));
+        }
+    }
+
 
      public function deleteSponsorImage(Request  $request)
     {

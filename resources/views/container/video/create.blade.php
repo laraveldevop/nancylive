@@ -480,7 +480,7 @@
                 $('.crop_image').on('click',function (event) {
                     $image_crop.croppie('result', {
                         type: 'canvas',
-                        size: 'viewport'
+                        size: 'original'
                     }).then(function (response) {
                         var token = $('meta[name="csrf-token"]').attr('content');
                         $.ajax({

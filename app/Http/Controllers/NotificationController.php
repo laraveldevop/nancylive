@@ -6,10 +6,8 @@ use Illuminate\Http\Request;
 
 use App\User;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Notifications\Notification;
 use App\Notifications\TaskComplete;
 use NotificationChannels\OneSignal\OneSignalMessage;
-use NotificationChannels\OneSignal\OneSignalWebButton;
 
 class NotificationController extends Controller
 {
@@ -25,9 +23,50 @@ class NotificationController extends Controller
 
     }
 
-    public function sendOfferNotification(Request $request, TaskComplete $taskComplete) {
+    public function sendOfferNotification(Request $request) {
 //      Notification::send();
-      Notification::send();
+        $title= $request->input('title');
+        $body= $request->input('message');
+
+//        $user = User::first();
+//        $user->notify(new TaskComplete($title));
+        $playerIds = 'fa68eeb7-e4b3-49d9-a3db-997045cce38b';
+        $key = ''; // add one single key
+        $message = $title;
+
+        $title = '';
+        $ids = array($playerIds);
+        $content = array(
+            "en" => $message,
+            "title" => $title,
+            "message" => $body,
+        );
+        $fields = array(
+            'app_id' => "", // add one single app_id
+            // 'included_segments' => array('All'),
+            'large_icon' => "ic_launcher.png",
+            'small_icon' => "ic_launcher_small.png",
+            'include_player_ids' => $ids,
+            'contents' => $content
+        );
+
+        $fields = json_encode($fields);
+        //var_dump($fields);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
+            'Authorization: Basic ' . $key));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+        //print("\nJSON sent:\n");
+        print($response);
+        die;
        return redirect('notification');
     }
 }

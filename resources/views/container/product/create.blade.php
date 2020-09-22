@@ -265,6 +265,21 @@
                                                                         <span class="custom-file-container__custom-file__custom-file-control"></span>
                                                                     </label>
                                                                     <div class="custom-file-container__image-preview"></div>
+                                                                    @if($action == 'UPDATE')
+                                                                        <div class="custom-file-container__image-preview_extra" id="img_load">
+                                                                            @foreach($image as $value)
+                                                                                <input type="hidden" value="{{$value->id}}" id="image_id_{{$value->id}}">
+                                                                                <div class="custom-file-container_im"
+                                                                                     style="background-image: url('{{asset('public/storage/'.$value->image)}}');">
+                                                                            <span id="{{$value->id}}"
+                                                                                  class="custom-file-container__image-multi">
+                                                                                <span
+                                                                                    class="custom-file-container__image-multi_icon">×</span>
+                                                                            </span>
+                                                                                </div>
+                                                                            @endforeach
+                                                                        </div>
+                                                                    @endif
                                                                 </div>
 
                                                             </div>
@@ -335,7 +350,32 @@
             <script>
                 var $item = $('#detail').val();
                 $('.ql-editor').html($item);
+
+                @foreach($image as $item)
+                $('#{{$item->id}}').on('click',function (){
+
+                    var img= $('input[id=image_id_{{$value->id}}]').val();
+
+                    console.log(img);
+                    $.ajax({
+                        url: '{{ route("image_crop.deleteProductImage") }}',
+                        type: 'post',
+                        headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                        data: {"image": img},
+                        dataType: "json",
+                        success: function (data) {
+                            location.reload();
+
+                        },
+                        complete: function (data) {
+
+                        }
+                    });
+                });
+                @endforeach
             </script>
         @endif
+
+
     @endpush
 @endsection

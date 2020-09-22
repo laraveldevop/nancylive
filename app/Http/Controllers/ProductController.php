@@ -174,7 +174,8 @@ class ProductController extends Controller
             ->orderBy('sponsor_name', 'ASC')
             ->get()
             ->toArray();
-        return view('container.product.create')->with('action', 'UPDATE')->with(compact('product','category','brand','sponsor'));
+        $image= DB::table('product_image')->where('product_id',$product->id)->get();
+        return view('container.product.create')->with('action', 'UPDATE')->with(compact('product','category','brand','sponsor','image'));
     }
 
     /**

@@ -36,8 +36,9 @@ class TaskComplete extends Notification
     }
     public function toOneSignal($notifiable)
     {
+        echo 'done'; die;
         return OneSignalMessage::create()
-            ->setSubject("Your {$notifiable->service} account was approved!")
+            ->setSubject("Your {$notifiable->title} account was approved!")
             ->setBody("Click here to see details.")
             ->setUrl('http://onesignal.com')
             ->setWebButton(
