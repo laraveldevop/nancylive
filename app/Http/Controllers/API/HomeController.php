@@ -8,6 +8,7 @@ use App\Brand;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Image;
+use App\Order;
 use App\ProductImage;
 use App\User;
 use App\Video;
@@ -205,6 +206,15 @@ class HomeController extends Controller
             $item['images']= $qu;
         }
         return response()->json(['status' => true, 'message' => 'Available Data', 'data' => $results]);
+
+    }
+    public function order(){
+            $order_product = DB::table('order')
+                ->select(DB::raw('order.id as order_id,order.user_id,order.total as price,order.product_id,product.product_name'))
+                ->leftJoin('product','order.product_id','=','product.id')
+                ->get();
+
+        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => $order_product]);
 
     }
 
