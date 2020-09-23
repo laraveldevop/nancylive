@@ -265,8 +265,8 @@ class HomeController extends Controller
     {
         $id= $request->header('USER_ID');
         $validator = Validator::make($request->all(),[
-            'new_password'=>['required','string','min:8','confirmed'],
-            'password' => ['required', 'string', 'min:8'],
+            'new_password'=>['required','string','confirmed'],
+            'password' => ['required', 'string'],
         ]);
         if ($validator->fails())
         {
