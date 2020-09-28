@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\History;
 use App\Http\Controllers\Controller;
 use App\Order;
 use App\Package;
@@ -18,7 +19,9 @@ class UserPackageController extends Controller
         $validator = Validator::make($request->all(), [
             'user_id' => ['required', 'numeric'],
             'package_id' => ['numeric'],
-            'video_id' => ['numeric']
+            'video_id' => ['numeric'],
+            'payment_status' =>['required'],
+            'transaction_id'=>['required']
         ]);
 
         if ($validator->fails()) {
@@ -27,42 +30,109 @@ class UserPackageController extends Controller
                 'message' => $validator->errors()->all()], 422);
         }
 
-        if ($request['package_id'] != null) {
-            $package = Package::where('id', $request['package_id'])->first();
+        $package = Package::where('id', $request['package_id'])->first();
+        $video = Video::where('id', $request['video_id'])->first();
 
-            $userPackage = new UserPackage();
+        if($request['payment_status'] == 'true') {
+            if ($request['package_id'] != null) {
+                $userPackage = new UserPackage();
 
-            if (!empty($package['year'])) {
-                $userPackage->expire_date = date('Y-m-d', strtotime(today() . '+ ' . $package['year'] . ' year'));
-            } elseif (!empty($package['month'])) {
-                $userPackage->expire_date = date('Y-m-d', strtotime(today() . '+ ' . $package['month'] . ' month'));
+                if (!empty($package['year'])) {
+                    $userPackage->expire_date = date('Y-m-d', strtotime(today() . '+ ' . $package['year'] . ' year'));
+                } elseif (!empty($package['month'])) {
+                    $userPackage->expire_date = date('Y-m-d', strtotime(today() . '+ ' . $package['month'] . ' month'));
+                } else {
+                    $userPackage->expire_date = date('Y-m-d', strtotime(today() . '+ ' . $package['day'] . ' day'));
+                }
+                $userPackage->user_id = $request['user_id'];
+                $userPackage->package_id = $request['package_id'];
+                $userPackage->payment = $request['payment_status'];
+                $userPackage->transaction_id = $request['transaction_id'];
+                if (!empty($package['category_id'])) {
+                    $userPackage->stat = 2;
+                    $userPackage->category_id = $package['category_id'];
+                } elseif (empty($package['category_id']) && empty($package['content_count'])) {
+                    $userPackage->stat = 1;
+                } else {
+                    $userPackage->stat = 3;
+                    $userPackage->video_count = $package['content_count'];
+                }
+                $userPackage->save();
+
+                $history = new History();
+                $history->expire_date = $userPackage->expire_date;
+                $history->user_id = $request['user_id'];
+                $history->package_id = $request['package_id'];
+                $history->stat = $userPackage->stat;
+                $history->video_count = $userPackage->video_count;
+                $history->category_id =$userPackage->category_id;
+                $history->payment = $request['payment_status'];
+                $history->transaction_id = $request['transaction_id'];
+                $history->save();
+                return response()->json(['status' => true, 'message' => 'User Package Create successfully.', 'data' => $userPackage], 200);
             } else {
-                $userPackage->expire_date = date('Y-m-d', strtotime(today() . '+ ' . $package['day'] . ' day'));
+                $userPackage = new UserPackage();
+                $userPackage->user_id = $request['user_id'];
+                $userPackage->single_video_id = $request['video_id'];
+                $userPackage->stat = 4;
+                $userPackage->payment = $request['payment_status'];
+                $userPackage->transaction_id = $request['transaction_id'];
+                $userPackage->expire_date = date('Y-m-d', strtotime(today() . '+ ' . $video['day'] . ' day'));
+                $userPackage->save();
+
+                $history = new History();
+                $history->user_id =$userPackage->user_id ;
+                $history->single_video_id =$userPackage->single_video_id;
+                $history->stat = $userPackage->stat;
+                $history->expire_date = $userPackage->expire_date;
+                $history->payment = $request['payment_status'];
+                $history->transaction_id = $request['transaction_id'];
+                $history->save();
+                return response()->json(['status' => true, 'message' => 'User Package Create successfully.', 'data' => $userPackage], 200);
             }
-            $userPackage->user_id = $request['user_id'];
-            $userPackage->package_id = $request['package_id'];
-            if (!empty($package['category_id'])) {
-                $userPackage->stat = 2;
-                $userPackage->category_id = $package['category_id'];
-            } elseif (empty($package['category_id']) && empty($package['content_count'])) {
-                $userPackage->stat = 1;
+        }
+        elseif($request['payment_status'] == 'false'){
+            if ($request['package_id'] != null) {
+                $userPackage = new History();
+
+                if (!empty($package['year'])) {
+                    $userPackage->expire_date = date('Y-m-d', strtotime(today() . '+ ' . $package['year'] . ' year'));
+                } elseif (!empty($package['month'])) {
+                    $userPackage->expire_date = date('Y-m-d', strtotime(today() . '+ ' . $package['month'] . ' month'));
+                } else {
+                    $userPackage->expire_date = date('Y-m-d', strtotime(today() . '+ ' . $package['day'] . ' day'));
+                }
+                $userPackage->user_id = $request['user_id'];
+                $userPackage->package_id = $request['package_id'];
+                $userPackage->payment = $request['payment_status'];
+                $userPackage->transaction_id = $request['transaction_id'];
+                if (!empty($package['category_id'])) {
+                    $userPackage->stat = 2;
+                    $userPackage->category_id = $package['category_id'];
+                } elseif (empty($package['category_id']) && empty($package['content_count'])) {
+                    $userPackage->stat = 1;
+                } else {
+                    $userPackage->stat = 3;
+                    $userPackage->video_count = $package['content_count'];
+                }
+                $userPackage->save();
+                return response()->json(['status' => true, 'message' => 'User Package History Create successfully.', 'data' => $userPackage], 200);
             } else {
-                $userPackage->stat = 3;
-                $userPackage->video_count = $package['content_count'];
+                $userPackage = new History();
+                $userPackage->user_id = $request['user_id'];
+                $userPackage->single_video_id = $request['video_id'];
+                $userPackage->stat = 4;
+                $userPackage->payment = $request['payment_status'];
+                $userPackage->transaction_id = $request['transaction_id'];
+                $userPackage->expire_date = date('Y-m-d', strtotime(today() . '+ ' . $video['day'] . ' day'));
+                $userPackage->save();
+
+                return response()->json(['status' => true, 'message' => 'User Package History Create successfully.', 'data' => $userPackage], 200);
             }
-            $userPackage->save();
+        }
+        else{
+            return response()->json(['status' => false, 'message' => 'payment status allow only true or false.', 'data' => []], 200);
 
-            return response()->json(['status' => true, 'message' => 'User Package Create successfully.', 'data' => $userPackage], 200);
-        } else {
-            $video = Video::where('id', $request['video_id'])->first();
-            $userPackage = new UserPackage();
-            $userPackage->user_id = $request['user_id'];
-            $userPackage->single_video_id = $request['video_id'];
-            $userPackage->stat = 4;
-            $userPackage->expire_date = date('Y-m-d', strtotime(today() . '+ ' . $video['day'] . ' day'));
-            $userPackage->save();
-
-            return response()->json(['status' => true, 'message' => 'User Package Create successfully.', 'data' => $userPackage], 200);
         }
 
     }

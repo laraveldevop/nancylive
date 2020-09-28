@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\History;
 use App\Http\Controllers\Controller;
 use App\Order;
 use Illuminate\Http\Request;
@@ -16,15 +17,44 @@ class OrderController extends Controller
         $userData = json_decode($request->getContent(), true);
 
         $d =array();
+
         foreach ($userData as $key => $seat_id) {
-            $order = new Order();
-            $order->user_id = $seat_id['user_id'];
-            $order->product_id = $seat_id['product_id'];
-            $order->total = $seat_id['total'];
-            $order->transaction_id = $seat_id['transaction_id'];
-            $order->status = $seat_id['status'];
-            $order->save();
-             array_push($d,$order);
+            if ($seat_id['payment_status'] == 'true'){
+                $order = new Order();
+                $order->user_id = $seat_id['user_id'];
+                $order->product_id = $seat_id['product_id'];
+                $order->total = $seat_id['total'];
+                $order->transaction_id = $seat_id['transaction_id'];
+                $order->status = $seat_id['status'];
+                $order->payment = $seat_id['payment_status'];
+                $order->save();
+
+                $history = new History();
+                $history->order_id = $order->id;
+                $history->user_id = $seat_id['user_id'];
+                $history->product_id = $seat_id['product_id'];
+                $history->total = $seat_id['total'];
+                $history->transaction_id = $seat_id['transaction_id'];
+                $history->status = $seat_id['status'];
+                $history->payment = $seat_id['payment_status'];
+                $history->save();
+                array_push($d,$order);
+            }
+            elseif ($seat_id['payment_status']== 'false'){
+                $history = new History();
+                $history->user_id = $seat_id['user_id'];
+                $history->product_id = $seat_id['product_id'];
+                $history->total = $seat_id['total'];
+                $history->transaction_id = $seat_id['transaction_id'];
+                $history->status = $seat_id['status'];
+                $history->payment = $seat_id['payment_status'];
+                $history->save();
+            }
+            else{
+                return response()->json(['status' => false, 'message' => 'payment status allow only true or false.', 'data' => $history], 200);
+
+            }
+
         }
 
 //            $data = Order::all();

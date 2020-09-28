@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserPackageTable extends Migration
+class CreateHistoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,14 @@ class CreateUserPackageTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_package', function (Blueprint $table) {
+        Schema::create('history', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_id');
-            $table->bigInteger('package_id');
+            $table->integer('Order_id')->nullable();
+            $table->integer('user_id')->nullable();
+            $table->integer('product_id')->nullable();
+            $table->string('total')->nullable();
+            $table->string('transaction_id')->nullable();
+            $table->enum('status',['pending','shipping','complete'])->default('pending');
             $table->integer('video_id')->nullable();
             $table->integer('single_video_id')->nullable();
             $table->integer('video_count')->nullable();
@@ -35,6 +39,6 @@ class CreateUserPackageTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_package');
+        Schema::dropIfExists('history');
     }
 }
