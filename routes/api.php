@@ -46,6 +46,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('artist', 'API\HomeController@index')->middleware('checkUser');
     Route::post('product', 'API\ProductController@index')->middleware('checkUser');
     Route::get('document', 'API\PdfController@index')->middleware('checkUser');
+    Route::get('history', 'API\HistoryController@index')->middleware('checkUser');
     Route::post('video', 'API\VideoController@index')->middleware('checkUser');
     Route::post('user-update', 'API\HomeController@userUpdate')->middleware('checkUser');
     Route::post('order-post', 'API\OrderController@orderPost')->middleware('checkUser');
