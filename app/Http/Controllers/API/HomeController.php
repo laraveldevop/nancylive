@@ -9,6 +9,7 @@ use App\Category;
 use App\Http\Controllers\Controller;
 use App\Image;
 use App\Order;
+use App\Package;
 use App\ProductImage;
 use App\User;
 use App\Video;
@@ -147,7 +148,10 @@ class HomeController extends Controller
         }
 
         $results = DB::table('artist')->orderBy('rate','desc')->get();
-        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['Advertise'=>$ad,'video' => $v,'Magazine'=>$pdf,'Product'=>$product,'Brand'=>$br_d,'sponsor'=>$spo,'Artiest'=>$results]]);
+
+        $package = Package::all();
+
+        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => ['Advertise'=>$ad,'video' => $v,'Magazine'=>$pdf,'Product'=>$product,'Brand'=>$br_d,'sponsor'=>$spo,'Artiest'=>$results,'package' => $package]]);
 
     }
 
