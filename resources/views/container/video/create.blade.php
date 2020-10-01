@@ -350,8 +350,7 @@
         </script>
         <script>
             $(document).ready(function () {
-
-
+                @if($action == 'INSERT')
                 $('#form').validate({
                     rules: {
                         video: {
@@ -369,6 +368,7 @@
                     },
 
                 });
+                @endif
                 $('#submit').on("click", function () {
                     $('#insert').attr("disabled", false);
                     $('.progress-bar').css('width', '0');
