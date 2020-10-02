@@ -132,7 +132,6 @@ class UserPackageController extends Controller
         }
         else{
             return response()->json(['status' => false, 'message' => 'payment status allow only true or false.', 'data' => []], 200);
-
         }
 
     }
@@ -213,7 +212,7 @@ class UserPackageController extends Controller
         }
 
 
-        return response()->json(['status' => false, 'message' => 'User Package Not Found.', 'data' => $a], 200);
+        return response()->json(['status' => false, 'message' => 'User Package Not Found.', 'data' => []], 200);
 
     }
 }

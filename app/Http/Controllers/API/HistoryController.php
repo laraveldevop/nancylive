@@ -13,7 +13,42 @@ class HistoryController extends Controller
     public function index(Request $request)
     {
         $id= $request->header('USER_ID');
-        $history = DB::table('history')->where('user_id',$id)->get();
+
+        $history = History::where('user_id',$id)->get();
+        foreach ($history as $value){
+            $video = DB::table('history')
+                ->leftJoin('video','history.single_video_id','=','video.id')
+                ->where('user_id',$value->user_id)
+                ->where('single_video_id',$value->single_video_id)
+                ->select('video.video_name as name')->first();
+            $package = DB::table('history')
+                ->leftJoin('package','history.package_id','=','package.id')
+                ->where('user_id',$value->user_id)
+                ->where('package_id',$value->package_id)
+                ->select('package.name')->first();
+            $q =  DB::table('history')
+                ->leftJoin('product','history.product_id','=','product.id')
+                ->where('user_id',$value->user_id)
+                ->where('product_id',$value->product_id)
+                ->select('product.product_name as name')->first();
+            if ($value->single_video_id != null){
+                $value['video_name'] = $video->name ;
+                $value['cat'] = 'Single Video' ;
+            }
+            if ($value->package_id != null){
+                $value['package_name'] = $package->name ;
+                $value['cat'] = 'Package' ;
+
+            }
+            if($value->product_id != null) {
+                $value['product_name'] = $q->name;
+                $value['cat'] = 'Product' ;
+
+            }
+        }
+
+//        echo $history; die();
+
         return response()->json(['status' => true, 'message' => 'Data Available', 'data' => $history], 200);
     }
 
