@@ -127,7 +127,7 @@
                                                             <a class="btn btn-success crop_image">Crop & Upload
                                                                 Image</a>
                                                         </div>
-                                                        <input type="text" name="image_data"
+                                                        <input type="hidden" name="image_data"
                                                                value="{{old('image_data')}}">
 
                                                     </div>
