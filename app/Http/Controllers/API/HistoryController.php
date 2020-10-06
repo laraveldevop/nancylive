@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\History;
 use App\Http\Controllers\Controller;
 use App\UserPackage;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -32,18 +33,23 @@ class HistoryController extends Controller
                 ->where('product_id',$value->product_id)
                 ->select('product.product_name as name')->first();
             if ($value->single_video_id != null){
+                $yourDate = $value['created_at'];
+                $value['create'] = Carbon::createFromFormat('Y-m-d H:i:s', $yourDate)->format('Y-m-d');
                 $value['video_name'] = $video->name ;
                 $value['cat'] = 'Single Video' ;
+
             }
             if ($value->package_id != null){
+                $yourDate = $value['created_at'];
+                $value['create'] = Carbon::createFromFormat('Y-m-d H:i:s', $yourDate)->format('Y-m-d');
                 $value['package_name'] = $package->name ;
                 $value['cat'] = 'Package' ;
-
             }
             if($value->product_id != null) {
+                $yourDate = $value['created_at'];
+                $value['create'] = Carbon::createFromFormat('Y-m-d H:i:s', $yourDate)->format('Y-m-d');
                 $value['product_name'] = $q->name;
                 $value['cat'] = 'Product' ;
-
             }
         }
 
