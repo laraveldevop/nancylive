@@ -27,6 +27,7 @@ class OrderController extends Controller
                 $order->transaction_id = $seat_id['transaction_id'];
                 $order->status = $seat_id['status'];
                 $order->payment = $seat_id['payment_status'];
+                $order->quantity = $seat_id['quantity'];
                 $order->save();
 
                 $history = new History();
@@ -37,6 +38,7 @@ class OrderController extends Controller
                 $history->transaction_id = $seat_id['transaction_id'];
                 $history->status = $seat_id['status'];
                 $history->payment = $seat_id['payment_status'];
+                $history->quantity = $seat_id['quantity'];
                 $history->save();
                 array_push($d,$order);
             }
@@ -48,6 +50,7 @@ class OrderController extends Controller
                 $history->transaction_id = $seat_id['transaction_id'];
                 $history->status = $seat_id['status'];
                 $history->payment = $seat_id['payment_status'];
+                $history->quantity = $seat_id['quantity'];
                 $history->save();
             }
             else{
@@ -60,7 +63,7 @@ class OrderController extends Controller
 //            $data = Order::all();
 
 
-            return response()->json(['status' => true, 'message' => 'Order Create successfully.', 'data' => $d], 200);
+            return response()->json(['status' => true, 'message' => 'Order Create successfully.', 'data' => $history], 200);
 
 
     }
