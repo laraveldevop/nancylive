@@ -11,6 +11,7 @@
         <!-- END PAGE LEVEL STYLES -->
 
     @endpush
+    <div id="loading"></div>
     <div id="content" class="main-content">
         <div class="container">
             <div class="row layout-top-spacing">
@@ -287,7 +288,7 @@
                                                     </div>
 
                                                     <div class="col-xl-12 text-right">
-                                                        <button class="btn btn-primary"><span>
+                                                        <button class="btn btn-primary" id="submit"><span>
                                                             @if ($action=='INSERT')
                                                                     Add Artist
                                                                 @else
@@ -337,6 +338,10 @@
         <script type="text/javascript">
 
             $(document).ready(function () {
+                $('#submit').on('click', function (){
+                    var spinner = $('#loading');
+                    spinner.show();
+                });
 
                 $('#upload_image').on('change', function () {
                     $('#pre-view').css('display', '');

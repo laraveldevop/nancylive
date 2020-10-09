@@ -10,7 +10,7 @@
     @endpush
 
     <!--  BEGIN CONTENT AREA  -->
-
+    <div id="loading"></div>
     <div id="content" class="main-content">
         <div class="container">
             <div class="row layout-top-spacing">
@@ -158,7 +158,7 @@
 
 
                                             <div class="col-xl-12 text-right">
-                                                <button class="btn btn-primary"><span>
+                                                <button class="btn btn-primary" id="submit"><span>
                                                             @if ($action=='INSERT')
                                                             Create Document
                                                         @else
@@ -181,6 +181,11 @@
         <script src="{{ asset('public/plugins/editors/quill/quill.js') }}"></script>
         <script src="{{ asset('public/plugins/editors/quill/custom-quill.js') }}"></script>
         <script>
+            $('#submit').on('click', function (){
+                var spinner = $('#loading');
+                spinner.show();
+            });
+
             $('.ql-editor').keyup(function () {
                 var item = $(".ql-editor").html();
                 $("#detail").val(item);

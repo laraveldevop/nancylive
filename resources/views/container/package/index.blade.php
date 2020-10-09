@@ -94,7 +94,7 @@
                                                                 <span class="new-control-indicator"></span>
                                                             </label>
                                                         </div>
-{{--                                                        <img width="100px"  src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">--}}
+                                                        <img width="100px"  src="{{ asset(!empty($value->image)?'public/storage/'.$value->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">
 
                                                     </div>
                                                     <div class="user-email">

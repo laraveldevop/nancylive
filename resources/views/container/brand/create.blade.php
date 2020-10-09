@@ -10,7 +10,7 @@
     @endpush
 
     <!--  BEGIN CONTENT AREA  -->
-
+    <div id="loading"></div>
     <div id="content" class="main-content">
         <div class="container">
             <div class="row layout-top-spacing">
@@ -61,7 +61,7 @@
 
                                                     </div>
                                                     @if ($action=='UPDATE')
-                                                        <img id="preview_old_image"
+                                                        <img id="preview_old_image" style="height: 200px; width: 200px;"
                                                              src="{{ ((!empty($brand->image)) ? asset('public/storage/'.$brand->image) :old('image')) }}">
                                                     @endif
                                                     <div  id="pre-view"  class="col-md-6" style="display: none">
@@ -78,7 +78,7 @@
 
 
                                             <div class="col-xl-12 text-right">
-                                                <button class="btn btn-primary"><span>
+                                                <button class="btn btn-primary" id="submit"><span>
                                                             @if ($action=='INSERT')
                                                             Add brand
                                                         @else
@@ -101,6 +101,10 @@
         <script type="text/javascript">
 
             $(document).ready(function () {
+                $('#submit').on('click', function (){
+                    var spinner = $('#loading');
+                    spinner.show();
+                });
 
                 $('#upload_image').on('change', function (){
                     $('#pre-view').css('display','');

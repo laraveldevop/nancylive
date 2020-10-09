@@ -94,7 +94,7 @@
                                                                 <span class="new-control-indicator"></span>
                                                             </label>
                                                         </div>
-                                                        {{--                                                        <img width="100px"  src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">--}}
+                                                        <img width="100px"  src="{{ asset(!empty($value->image)?'public/storage/'.$value->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">
 
                                                     </div>
                                                     <div class="user-email">
@@ -107,13 +107,6 @@
                                                         <p class="usr-email-addr"
                                                            data-email="{{ $value->price }}">{{ $value->price }}</p>
                                                     </div>
-                                                    {{--                                                    @if($value->category_id != null)--}}
-                                                    {{--                                                        <div class="user-email">--}}
-                                                    {{--                                                            <p class="info-title">Category: </p>--}}
-                                                    {{--                                                            <p class="usr-email-addr"--}}
-                                                    {{--                                                               data-email="{{ $value->cat_name }}">{{ $value->cat_name }}</p>--}}
-                                                    {{--                                                        </div>--}}
-                                                    {{--                                                        @endif--}}
 
 
 

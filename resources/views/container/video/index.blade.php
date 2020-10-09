@@ -6,14 +6,9 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/forms/theme-checkbox-radio.css') }}">
         <link href="{{ asset('public/plugins/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('public/assets/css/apps/contacts.css') }}" rel="stylesheet" type="text/css"/>
-        <style>
-            .btn-light {
-                border-color: transparent;
-            }
-        </style>
-
 
     @endpush
+    <div id="loading"></div>
     <!--  BEGIN CONTENT AREA  -->
     <div id="content" class="main-content">
         <div class="layout-px-spacing">
@@ -235,9 +230,11 @@
 
             $('.searchType').on('change', function () {
                 // alert($(this).attr('id'));
+                var spinner = $('#loading');
                 var id = $(this).attr('id');
                 var val = $(this).val();
                 // alert(val);
+                spinner.show();
                 $.ajax({
                     type: "POST",
                     url: '{{ url('/ads') }}',
@@ -253,6 +250,7 @@
                             $('#' + id).val(1);
                         }
                         alert('Update Successfully')
+                        spinner.hide();
                     },
                     error: function () {
                         alert('Something is Problem in Updating');

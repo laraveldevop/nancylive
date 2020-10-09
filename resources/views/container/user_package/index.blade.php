@@ -59,18 +59,8 @@
                                             </div>
                                         </td>
                                         <td>{{$item->mobile}}</td>
-                                        <td>{{$item->created_at}}</td>
-                                        @if(!empty($item->year))
-                                        <td>{{date('Y-m-d', strtotime($item->created_at. '+ '.$item->year.' year'))}}</td>
-                                        @endif
-                                         @if(!empty($item->month))
-                                        <td>{{date('Y-m-d', strtotime($item->created_at. '+ '.$item->month.' month'))}}</td>
-                                        @endif
-                                         @if(!empty($item->day))
-                                        <td>{{date('Y-m-d', strtotime($item->created_at. '+ '.$item->day.' day'))}}</td>
-                                        @endif
-
-
+                                        <td>{{date('Y-m-d',strtotime($item->created_at))}}</td>
+                                        <td>{{$item->expire_date}}</td>
                                         <td>{{$item->name}}</td>
                                     </tr>
                                 @endforeach

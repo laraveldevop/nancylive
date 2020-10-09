@@ -7,10 +7,12 @@
         <link href="{{ asset('public/assets/css/components/tabs-accordian/custom-tabs.css') }}" rel="stylesheet"
               type="text/css"/>
         <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/editors/quill/quill.snow.css') }}">
+        <link rel="stylesheet" href="{{ asset('public/css/croppie.min.css') }}">
+
 
         <!--  END CUSTOM STYLE FILE  -->
     @endpush
-
+    <div id="loading"></div>
     <!--  BEGIN CONTENT AREA  -->
     <div id="content" class="main-content">
         <div class="container">
@@ -88,7 +90,7 @@
                                                                 <div class="form-group">
                                                                     <label
                                                                         for="exampleFormControlInput1">category</label>
-                                                                    <select required
+                                                                    <select
                                                                         class="basic form-control {{ $errors->has('category_id') ? ' is-invalid' : '' }}"
                                                                         name="category_id" id="category_id">
                                                                         <option value="">--Choose Option--</option>
@@ -157,7 +159,33 @@
                                                                     @endif
                                                                 </div>
                                                             </div>
+                                                            <div class="col-md-10">
+                                                                <div class="form-group">
+                                                                    <label for="exampleFormControlInput1">Package Image</label>
+                                                                    <input type="file" id="upload_image"
+                                                                           class="form-control form-control-sm"
+                                                                           name="image">
 
+                                                                    @if ($errors->has('image'))
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                  <strong>{{ $errors->first('image') }}</strong>
+                                                             </span>
+                                                                    @endif
+                                                                </div>
+                                                                @if ($action=='UPDATE')
+                                                                    <img id="preview_old_image" style="height: 200px; width: 400px;"
+                                                                         src="{{ ((!empty($package->image)) ? asset('public/storage/'.$package->image) :old('image')) }}">
+                                                                @endif
+                                                                <div  id="pre-view"  class="col-md-6" style="display: none">
+
+                                                                    <div id="image-preview">
+
+                                                                    </div>
+                                                                    <a class="btn btn-success crop_image">Crop & Upload Image</a>
+                                                                </div>
+                                                                <input type="hidden" name="image_data"   value="{{old('image_data')}}">
+
+                                                            </div>
                                                             <div class="container" id="package_module">
 
                                                                 <div id="basic"
@@ -196,7 +224,7 @@
                                                         </div>
 
                                                         <div class="col-xl-12 text-right">
-                                                            <button class="btn btn-primary">
+                                                            <button class="btn btn-primary" id="submit">
                                                                 <span>
                                                                 @if ($action=='INSERT')
                                                                         Create package
@@ -224,7 +252,14 @@
         <script src="{{ asset('public/plugins/select2/custom-select2.js') }}"></script>
         <script src="{{ asset('public/plugins/editors/quill/quill.js') }}"></script>
         <script src="{{ asset('public/plugins/editors/quill/custom-quill.js') }}"></script>
+        <script src="{{ asset('public/js/croppie.js') }}"></script>
+
         <script>
+            $('#submit').on('click', function (){
+                var spinner = $('#loading');
+                spinner.show();
+            });
+
             $('.ql-editor').keyup(function () {
                 var item = $(".ql-editor").html();
                 $("#detail").val(item);
@@ -240,6 +275,64 @@
         <script>
             $('input[type=radio][name=custom-radio-4]').change(function() {
                 $('#count_duration').attr('readonly',false);
+            });
+        </script>
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+
+                $('#upload_image').on('change', function (){
+                    $('#pre-view').css('display','');
+                    $('#preview_old_image').css('display','none');
+                });
+
+
+                $image_crop = $('#image-preview').croppie({
+                    enableExif: true,
+                    viewport: {
+                        width: 400,
+                        height: 200,
+                        type: 'square'
+                    },
+                    boundary: {
+                        width: 400,
+                        height: 400
+                    }
+                });
+
+                $('#upload_image').change(function () {
+                    var reader = new FileReader();
+
+                    reader.onload = function (event) {
+                        $image_crop.croppie('bind', {
+                            url: event.target.result
+                        }).then(function () {
+                            console.log('jQuery bind complete');
+                        });
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                });
+
+                $('.crop_image').click(function (event) {
+                    $image_crop.croppie('result', {
+                        type: 'canvas',
+                        size: 'original'
+                    }).then(function (response) {
+                        var token = $('meta[name="csrf-token"]').attr('content');
+                        $.ajax({
+                            url: '{{ route("image_crop.uploadPackage") }}',
+                            type: 'post',
+                            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                            data: {"image": response, _token: token},
+                            dataType: "json",
+                            success: function (data) {
+                                $('input[name=image_data]').val(data.path);
+                                $('#pre-view').css('display','none');
+                            }
+                        });
+                    });
+                });
+
             });
         </script>
     @endpush

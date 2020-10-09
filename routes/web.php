@@ -40,6 +40,7 @@ Route::post('image_crop/uploadArtist', 'ImageController@uploadArtist')->name('im
 Route::post('image_crop/uploadVideo', 'ImageController@uploadVideo')->name('image_crop.uploadVideo');
 Route::post('image_crop/uploadBrand', 'ImageController@uploadBrand')->name('image_crop.uploadBrand');
 Route::post('image_crop/uploadSponsor', 'ImageController@uploadSponsor')->name('image_crop.uploadSponsor');
+Route::post('image_crop/uploadPackage', 'ImageController@uploadPackage')->name('image_crop.uploadPackage');
 Route::post('image_crop/deleteImage', 'ImageController@deleteImage')->name('image_crop.deleteImage');
 Route::post('image_crop/deleteProductImage', 'ImageController@deleteProductImage')->name('image_crop.deleteProductImage');
 Route::post('image_crop/deleteSponsorImage', 'ImageController@deleteSponsorImage')->name('image_crop.deleteSponsorImage');

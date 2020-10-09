@@ -50,6 +50,11 @@ class AllPackageController extends Controller
             'detail'=>'required',
             'custom-radio-4'=>'required',
         ]);
+        if ($request->file('image') == null){
+            $request->validate([
+                'image'=> 'required'
+            ]);
+        }
 
         $method =$request->input("custom-radio-4");
         $package=  new Package();
@@ -57,6 +62,7 @@ class AllPackageController extends Controller
         $package->price = $request->input('price');
         $package->count_duration = $request->input('count_duration');
         $package->detail = $request->input('detail');
+        $package->image = $request->input('image_data');
         $package->time_method = $method;
         if ($method == 'day'){
             $package->day = $request->input('count_duration');
@@ -130,7 +136,15 @@ class AllPackageController extends Controller
             $allPackage->year = $request->input('count_duration');
 
         }
-
+        if (!empty($request->input('image_data'))) {
+//            $path =  Storage::disk('public')->put('brand', $request->file('image'));
+            if (!empty($allPackage->image)){
+                $image_path = public_path().'/storage/'.$allPackage->image;
+                unlink($image_path);
+            }
+            //Update Image
+            $allPackage->image = $request->input('image_data');
+        }
         $allPackage->save();
 
 

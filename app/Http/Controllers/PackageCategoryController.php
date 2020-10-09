@@ -62,8 +62,14 @@ class PackageCategoryController extends Controller
             'detail'=>'required',
             'custom-radio-4'=>'required',
             'count_duration'=>'required',
-            'category_id'=>'required'
+            'category_id'=>'required',
+            'image'=>'mimes:jpeg,jpg,png'
         ]);
+        if ($request->file('image') == null){
+            $request->validate([
+                'image'=> 'required'
+            ]);
+        }
         $ct= $request->input('category_id');
         $method =$request->input("custom-radio-4");
 
@@ -78,6 +84,8 @@ class PackageCategoryController extends Controller
         }elseif ($method == 'month'){$package->month = $request->input('count_duration');
         }else{$package->year = $request->input('count_duration');
         }
+        $package->image = $request->input('image_data');
+
         $package->save();
         return redirect('cat-package');
     }
@@ -144,6 +152,15 @@ class PackageCategoryController extends Controller
         if ($method == 'day'){$package->day = $request->input('count_duration');
         }elseif ($method == 'month'){$package->month = $request->input('count_duration');
         }else{$package->year = $request->input('count_duration');
+        }
+        if (!empty($request->input('image_data'))) {
+//            $path =  Storage::disk('public')->put('brand', $request->file('image'));
+            if (!empty($package->image)){
+                $image_path = public_path().'/storage/'.$package->image;
+                unlink($image_path);
+            }
+            //Update Image
+            $package->image = $request->input('image_data');
         }
         $package->save();
         return redirect('cat-package');

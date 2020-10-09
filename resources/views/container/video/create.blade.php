@@ -9,6 +9,7 @@
 
 
     @endpush
+    <div id="loading"></div>
     <div id="content" class="main-content">
         <div class="container">
             <div class="row layout-top-spacing">
@@ -177,7 +178,7 @@
                                                             @endif
                                                         </div>
                                                         @if ($action=='UPDATE')
-                                                            <img id="preview_old_image"
+                                                            <img id="preview_old_image" style="height: 200px; width: 400px;"
                                                                  src="{{ ((!empty($video->image)) ? asset('public/storage/'.$video->image) :old('image')) }}">
                                                         @endif
                                                         <div  id="pre-view"  class="col-md-6" style="display: none">
@@ -263,6 +264,11 @@
         <script src="{{ asset('public/js/jquery.validate.min.js')}}"></script>
         <script src="{{ asset('public/js/additional-methods.min.js')}}"></script>
         <script>
+            $('#insert').on('click', function (){
+                var spinner = $('#loading');
+                spinner.show();
+            });
+
             $('#price_type').change(function () {
                 var type = $("#price_type").val();
 
@@ -352,6 +358,7 @@
             $(document).ready(function () {
                 @if($action == 'INSERT')
                 $('#form').validate({
+
                     rules: {
                         video: {
 
@@ -364,10 +371,12 @@
                         video: {
                             required: "<span class='text-danger'>Please provide a video file</span>",
                             extension: "<span class='text-danger'>only video file allowed</span>"
+
                         },
                     },
 
                 });
+
                 @endif
                 $('#submit').on("click", function () {
                     $('#insert').attr("disabled", false);

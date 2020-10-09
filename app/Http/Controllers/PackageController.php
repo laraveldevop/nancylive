@@ -66,7 +66,14 @@ class PackageController extends Controller
             'detail'=>'required',
             'custom-radio-4'=>'required',
             'count_duration'=>'required',
+            'image'=>'mimes:jpeg,jpg,png'
+
         ]);
+        if ($request->file('image') == null){
+            $request->validate([
+                'image'=> 'required'
+            ]);
+        }
         $method =$request->input("custom-radio-4");
 
         $package=  new Package();
@@ -77,6 +84,7 @@ class PackageController extends Controller
         $package->detail = $request->input('detail');
         $package->time_method = $method;
         $package->count_duration = $request->input('count_duration');
+        $package->image = $request->input('image_data');
         if ($method == 'day'){$package->day = $request->input('count_duration');
         }elseif ($method == 'month'){$package->month = $request->input('count_duration');
         }else{$package->year = $request->input('count_duration');
@@ -146,10 +154,18 @@ class PackageController extends Controller
         }elseif ($method == 'month'){$package->month = $request->input('count_duration');
         }else{$package->year = $request->input('count_duration');
         }
+
+        if (!empty($request->input('image_data'))) {
+//            $path =  Storage::disk('public')->put('brand', $request->file('image'));
+            if (!empty($package->image)){
+                $image_path = public_path().'/storage/'.$package->image;
+                unlink($image_path);
+            }
+            //Update Image
+            $package->image = $request->input('image_data');
+        }
         $package->save();
         return redirect('package');
-
-
     }
 
     /**

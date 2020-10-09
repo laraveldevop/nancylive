@@ -11,7 +11,7 @@
     @endpush
 
     <!--  BEGIN CONTENT AREA  -->
-
+    <div id="loading"></div>
     <div id="content" class="main-content">
         <div class="container">
             <div class="row layout-top-spacing">
@@ -260,10 +260,15 @@
 
                                                                     <label>Upload (Allow Multiple) <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
                                                                     <label class="custom-file-container__custom-file" >
-                                                                        <input type="file" name="files[]" class="custom-file-container__custom-file__custom-file-input" multiple
-                                                                               @if($action == 'INSERT') required @endif>
+                                                                        <input type="file" name="files[]" class="custom-file-container__custom-file__custom-file-input" multiple>
                                                                         <span class="custom-file-container__custom-file__custom-file-control"></span>
+
                                                                     </label>
+                                                                    @if ($errors->has('files'))
+                                                                        <span class="text-danger">
+                                                                    <strong>{{ $errors->first('files') }}</strong>
+                                                                    </span>
+                                                                    @endif
                                                                     <div class="custom-file-container__image-preview"></div>
                                                                     @if($action == 'UPDATE')
                                                                         <div class="custom-file-container__image-preview_extra" id="img_load">
@@ -292,7 +297,7 @@
 
 
                                             <div class="col-xl-12 text-right">
-                                                <button class="btn btn-primary"><span>
+                                                <button class="btn btn-primary" id="submit"><span>
                                                             @if ($action=='INSERT')
                                                             Create Product
                                                         @else
@@ -343,7 +348,14 @@
                 $("#detail").val(item);
 
             });
-
+            $('#submit').on('click', function (){
+                var spinner = $('#loading');
+                spinner.show();
+            });
+            $('#loading').on('click', function (){
+                var spinner = $('#loading');
+                spinner.hide();
+            });
         </script>
 
         @if ($action=='UPDATE')
