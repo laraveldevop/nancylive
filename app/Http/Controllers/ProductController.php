@@ -85,7 +85,7 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'quantity' => 'required|numeric',
             'mobile' => 'required|numeric',
-            'files' => 'required|numeric',
+            'files' => 'required',
 
         ]);
 
