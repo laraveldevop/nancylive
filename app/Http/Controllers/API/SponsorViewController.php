@@ -33,7 +33,7 @@ class SponsorViewController extends Controller
             }
             $v= $br_d;
         }else{
-            $sponsor= Sponsor::where('id',$request['sponsor_id'])->paginate(15);
+            $sponsor= Sponsor::where('id',$request['sponsor_id'])->get();
             $product_view=[];
             $image_view=[];
             foreach ($sponsor as $item) {

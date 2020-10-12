@@ -90,7 +90,7 @@ class CategoryViewController extends Controller
         else {
             if ($request['status'] == 1) {
                 $video = Video::where('cat_id', $request['cat_id'])
-                    ->paginate(15);
+                    ->get();
                 foreach ($video as $item){
                     if ($item->price == null){
                         $item['payment_status'] = 'free';
@@ -106,10 +106,10 @@ class CategoryViewController extends Controller
                 $v = [$video];
             } elseif ($request['status'] == 2) {
                 $pdf = Pdf::where('cat_id', $request['cat_id'])
-                    ->paginate(15);
+                    ->get();
                 $v = [$pdf];
             } elseif ($request['status'] == 3) {
-                $product = Product::where('cat_id', $request['cat_id'])->paginate(15);
+                $product = Product::where('cat_id', $request['cat_id'])->get();
                 $product_view=[];
                 foreach ($product as $item) {
                     $images= DB::table('product_image')

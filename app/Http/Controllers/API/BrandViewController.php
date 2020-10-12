@@ -33,7 +33,7 @@ class BrandViewController extends Controller
             }
             $v= $br_d;
         }else{
-            $brand= Brand::where('id',$request['brand_id'])->paginate(15);
+            $brand= Brand::where('id',$request['brand_id'])->get();
             $product_view=[];
             $image_view=[];
             foreach ($brand as $item) {
