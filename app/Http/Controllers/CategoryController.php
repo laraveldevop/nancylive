@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Category;
+use App\Pdf;
+use App\Product;
+use App\ProductImage;
+use App\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -155,16 +159,82 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Category  $category
+     * @param \App\Category $category
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|Response|\Illuminate\Routing\Redirector
      */
-    public function destroy($category)
+    public function destroy(Category $category)
     {
-        Category::destroy($category);
+        $video = Video::where('cat_id',$category)->get();
+        $pdf = Pdf::where('cat_id',$category)->get();
+        $product = Product::where('cat_id',$category)->get();
 
+
+        //delete category
+        $cat = Category::where('cat_id',$category)->first();
+        if ($cat['cat_image'] != null) {
+            $image_path = public_path() . '/storage/' . $cat['cat_image'];
+            unlink($image_path);
+        }
+        Category::destroy($category);
+        DB::table('package')->where('category_id',$category)->delete();
+
+        //delete video
+        if (!empty($video)) {
+            foreach ($video as $value) {
+                DB::table('advertise')
+                    ->where('video_id', $value->id)
+                    ->delete();
+                if ($value->image != null) {
+                    $image_path = public_path() . '/storage/' . $value->image;
+                    unlink($image_path);
+                }
+                if ($value->video != null) {
+                    $image_path = public_path() . '/storage/' . $value->video;
+                    unlink($image_path);
+                }
+            }
+        }
         DB::table('video')->where('cat_id',$category)->delete();
+
+
+        //delete pdf
+        if (!empty($pdf)) {
+            foreach ($pdf as $value) {
+                DB::table('advertise')
+                    ->where('pdf_id',$value->id)
+                    ->delete();
+                if ($value->file != null) {
+                    $image_path = public_path() . '/storage/' . $value->file;
+                    unlink($image_path);
+                }
+            }
+        }
         DB::table('pdf')->where('cat_id',$category)->delete();
+
+
+        //delete product
+        if (!empty($product)) {
+            foreach ($product as $value) {
+                DB::table('advertise')
+                    ->where('product_id', $value->id)
+                    ->delete();
+                $product_image = ProductImage::where('product_id', $value->id)->get();
+                if (!empty($product_image)) {
+                    foreach ($product_image as $item) {
+                        $image_path = public_path() . '/storage/' . $item->image;
+                        unlink($image_path);
+                    }
+                }
+                if ($value->video != null) {
+                    $image_path = public_path() . '/storage/' . $value->video;
+                    unlink($image_path);
+                }
+                DB::table('product_image')->where('product_id', $value->id)->delete();
+            }
+        }
         DB::table('product')->where('cat_id',$category)->delete();
+
+
         return redirect('category');
 
     }

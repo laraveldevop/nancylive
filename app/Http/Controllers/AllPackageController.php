@@ -157,8 +157,14 @@ class AllPackageController extends Controller
      * @param  \App\AllPackage  $allPackage
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AllPackage $allPackage)
+    public function destroy($allPackage)
     {
-        //
+        $pack = Package::where('id',$allPackage)->first();
+        if ($pack['image'] != null) {
+            $image_path = public_path() . '/storage/' . $pack['image'];
+            unlink($image_path);
+        }
+        Package::destroy($allPackage);
+        return redirect('all-package');
     }
 }

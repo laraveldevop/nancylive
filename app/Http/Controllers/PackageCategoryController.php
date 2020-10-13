@@ -169,11 +169,17 @@ class PackageCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Package  $package
-     * @return \Illuminate\Http\Response
+     * @param \App\Package $package
+     * @return void
      */
-    public function destroy(Package $package)
+    public function destroy($package)
     {
-        //
+        $pack = Package::where('id',$package)->first();
+        if ($pack['image'] != null) {
+            $image_path = public_path() . '/storage/' . $pack['image'];
+            unlink($image_path);
+        }
+        Package::destroy($package);
+        return redirect('cat-package');
     }
 }
