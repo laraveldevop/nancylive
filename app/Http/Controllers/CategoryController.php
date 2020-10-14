@@ -162,7 +162,7 @@ class CategoryController extends Controller
      * @param \App\Category $category
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|Response|\Illuminate\Routing\Redirector
      */
-    public function destroy(Category $category)
+    public function destroy($category)
     {
         $video = Video::where('cat_id',$category)->get();
         $pdf = Pdf::where('cat_id',$category)->get();

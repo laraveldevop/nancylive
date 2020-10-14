@@ -183,6 +183,11 @@ class PdfController extends Controller
      */
     public function destroy($pdf)
     {
+        $value = Pdf::where('id',$pdf)->first();
+        if ($value['file'] != null) {
+            $image_path = public_path() . '/storage/' . $value['file'];
+            unlink($image_path);
+        }
         Pdf::destroy($pdf);
         DB::table('advertise')->where('pdf_id',$pdf)->delete();
         return redirect('pdf');

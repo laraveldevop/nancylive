@@ -309,7 +309,7 @@
                             <br><div class="progress br-30">\n' +
                         '                                                <div class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">0%</div>\n' +
                         '                                            </div>\n' +
-                        ' <div class="msg"></div><br><a id="submit" class="btn btn-sm btn-success">Upload</a>');
+                        ' <div class="msg"></div><br> <a class="btn btn-success video_submit">Upload</a>');
                 } else {
                     $('#video_file_name').val('');
                     $('#video_local_display').html(' <label for="exampleFormControlInput1">Video URL</label>\n' +
@@ -355,8 +355,8 @@
             }
         </script>
         <script>
+            @if ($action == 'INSERT')
             $(document).ready(function () {
-                @if($action == 'INSERT')
                 $('#form').validate({
 
                     rules: {
@@ -376,9 +376,9 @@
                     },
 
                 });
-
-                @endif
-                $('#submit').on("click", function () {
+            });
+            @endif
+            $(document).on('click','.video_submit',function(e) {
                     $('#insert').attr("disabled", false);
                     $('.progress-bar').css('width', '0');
                     $('.msg').text('');
@@ -394,7 +394,7 @@
                     }
                     var formData = new FormData();
                     formData.append('video_local', $('#video')[0].files[0])
-                    $('#submit').css("pointer-events", 'none',"cursor",'default');
+                    $('.video_submit').css("pointer-events", 'none',"cursor",'default');
                     $('.msg').text('Uploading in progress...');
                     $.ajax({
                         url: '{{ url('/video_upload') }}',
@@ -427,7 +427,6 @@
                         },
                     });
                 });
-            });
 
         </script>
         <script src="{{ asset('public/plugins/editors/quill/quill.js') }}"></script>

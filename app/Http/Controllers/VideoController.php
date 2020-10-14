@@ -138,7 +138,7 @@ class VideoController extends Controller
             $fileName = $file->getClientOriginalExtension();
             $request->video_local->getMimeType();
 //            $request->video->move('storage/'.$fileName);
-            $path = str_replace('public/', 'videos/', $request->video_local->store('public'));
+            $path = str_replace('public/', '', $request->video_local->store('public'));
             echo  $path;
     }
     /**
@@ -201,9 +201,9 @@ class VideoController extends Controller
             $request->validate([
                 'video'=> 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
             ]);
-            $v_path =  Storage::disk('public')->put('videos', $request->file('video'));
+            $v_path =  Storage::disk('public')->put('', $request->file('video'));
             if (!empty($video->video)){
-                $image_path = public_path().'/storage/videos/'.$video->video;
+                $image_path = public_path().'/storage/'.$video->video;
                 unlink($image_path);
             }
             //Update Image
@@ -244,6 +244,16 @@ class VideoController extends Controller
      */
     public function destroy($video)
     {
+        $art = Video::where('id',$video)->first();
+
+        if ($art['image'] != null) {
+            $image_path = public_path() . '/storage/' . $art['image'];
+            unlink($image_path);
+        }
+        if ($art['video'] != null) {
+            $image_path = public_path() . '/storage/' . $art['video'];
+            unlink($image_path);
+        }
         Video::destroy($video);
         DB::table('advertise')
             ->where('video_id',$video)

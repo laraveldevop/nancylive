@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Artist;
 use App\Image;
+use App\Product;
+use App\ProductImage;
 use App\Sponsor;
 use App\SponsorImage;
 use Illuminate\Http\Request;
@@ -230,9 +232,49 @@ class SponsorController extends Controller
      */
     public function destroy($sponsor)
     {
+        $product = Product::where('sponsor_id',$sponsor)->get();
+
+        $cat = Sponsor::where('id',$sponsor)->first();
+        if ($cat['image'] != null) {
+            $image_path = public_path() . '/storage/' . $cat['image'];
+            unlink($image_path);
+        }
+        if ($cat['video'] != null) {
+            $image_path = public_path() . '/storage/' . $cat['video'];
+            unlink($image_path);
+        }
         Sponsor::destroy($sponsor);
+
+        if (!empty($product)) {
+            foreach ($product as $value) {
+                DB::table('advertise')
+                    ->where('product_id', $value->id)
+                    ->delete();
+                $product_image = ProductImage::where('product_id', $value->id)->get();
+                if (!empty($product_image)) {
+                    foreach ($product_image as $item) {
+                        $image_path = public_path() . '/storage/' . $item->image;
+                        unlink($image_path);
+                    }
+                }
+                if ($value->video != null) {
+                    $image_path = public_path() . '/storage/' . $value->video;
+                    unlink($image_path);
+                }
+                DB::table('product_image')->where('product_id', $value->id)->delete();
+            }
+        }
         DB::table('product')->where('sponsor_id',$sponsor)->delete();
-        DB::table('sponsor_image')->where('sponsor_id',$sponsor)->delete();
+
+        $image = SponsorImage::where('sponsor_id', $sponsor)->get();
+        if (!empty($image)) {
+            foreach ($image as $item) {
+                $image_path = public_path() . '/storage/' . $item->image;
+                unlink($image_path);
+            }
+            DB::table('sponsor_image')->where('sponsor_id',$sponsor)->delete();
+        }
+
         return redirect('sponsor');
     }
 }
