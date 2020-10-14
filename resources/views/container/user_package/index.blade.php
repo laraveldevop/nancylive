@@ -61,7 +61,7 @@
                                         <td>{{$item->mobile}}</td>
                                         <td>{{date('Y-m-d',strtotime($item->created_at))}}</td>
                                         <td>{{$item->expire_date}}</td>
-                                        <td>@if(!empty($item->name)){{$item->name}}@else {{$item->video_name}} @endif</td>
+                                        <td>{{$item->name}}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
