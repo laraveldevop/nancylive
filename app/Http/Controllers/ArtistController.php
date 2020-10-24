@@ -63,8 +63,6 @@ class ArtistController extends Controller
             'youtube' => 'required',
             'image_data' => 'required',
             'video'=> 'required|mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
-
-
         ]);
 
         $artist = new  Artist();

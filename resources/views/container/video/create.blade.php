@@ -397,7 +397,7 @@
                     $('.video_submit').css("pointer-events", 'none',"cursor",'default');
                     $('.msg').text('Uploading in progress...');
                     $.ajax({
-                        url: '{{ url('/video_upload') }}',
+                        url: '{{ url('/videoDownload') }}',
                         data: formData,
                         headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
                         processData: false,

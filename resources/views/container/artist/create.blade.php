@@ -140,6 +140,11 @@
                                                                 class="form-control form-control-sm {{ $errors->has('video') ? ' is-invalid' : '' }}"
                                                                 type="file" name="video" id="video"
                                                                 value="{{ ((!empty($artist->video)) ? $artist->video :old('video')) }}">
+                                                            @if ($errors->has('video'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                  <strong>{{ $errors->first('video') }}</strong>
+                                                             </span>
+                                                            @endif
                                                         </div>
                                                         @if ($action=='UPDATE')
                                                             <div class="video" id="preview_old_video">

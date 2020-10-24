@@ -53,5 +53,5 @@ Route::post('add_status/Update_status', 'OrderController@updateStatus')->name('a
 Route::post('/ads','VideoController@ads');
 Route::post('/pdf_ads','PdfController@ads');
 Route::post('/product_ads','ProductController@ads');
-Route::post('/video_upload','VideoController@video');
+Route::post('/videoDownload','VideoController@videoDownload');
 Route::POST('send-notification', 'NotificationController@sendOfferNotification');

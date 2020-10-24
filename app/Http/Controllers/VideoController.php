@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Pawlox\VideoThumbnail\VideoThumbnail;
 
 class VideoController extends Controller
 {
@@ -79,11 +80,6 @@ class VideoController extends Controller
         ]);
         if ($request->hasFile('image') == null){
             $request->validate([
-            'image' => 'required'
-                ]);
-        }
-        else{
-            $request->validate([
                 'image' => 'image|mimes:jpeg,png,jpg,gif,svg'
             ]);
         }
@@ -111,6 +107,7 @@ class VideoController extends Controller
 //
 //        }
 
+
         $video->save();
         if ($request->has('token') == 1)
         {
@@ -133,13 +130,16 @@ class VideoController extends Controller
     }
 
 
-    public function video(Request $request) {
+    public function videoDownload(Request $request) {
             $file = $request->video_local;
             $fileName = $file->getClientOriginalExtension();
             $request->video_local->getMimeType();
 //            $request->video->move('storage/'.$fileName);
             $path = str_replace('public/', '', $request->video_local->store('public'));
-            echo  $path;
+//        (new \Pawlox\VideoThumbnail\VideoThumbnail)->createThumbnail(storage_path($path), storage_path(), 'file.jpg', 2, 1920, 1080);
+
+//        $cmd = 'C:/xampp/htdocs/ffmpeg -i '. storage_path($path) .' -vf fps=1/60 '.asset('public/thumbnail//').'output.png';
+        echo  $path;
     }
     /**
      * Show the form for editing the specified resource.
