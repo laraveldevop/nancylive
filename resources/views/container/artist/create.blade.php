@@ -129,7 +129,7 @@
                                                                 Image</a>
                                                         </div>
                                                         <input type="hidden" name="image_data"
-                                                               value="{{old('image_data')}}">
+                                                                value="{{old('image_data')}}">
 
                                                     </div>
 
