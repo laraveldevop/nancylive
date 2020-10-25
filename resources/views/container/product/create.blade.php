@@ -142,7 +142,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">Video</label>
-                                                            <input type="file" id="video"
+                                                            <input type="file" id="video" accept="video/mp4,video/x-m4v,video/avi,video/mpvge"
                                                                    class="form-control form-control-sm {{ $errors->has('video') ? ' is-invalid' : '' }}"
                                                                    name="video">
                                                             @if ($errors->has('video'))
@@ -260,7 +260,7 @@
 
                                                                     <label>Upload (Allow Multiple) <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
                                                                     <label class="custom-file-container__custom-file" >
-                                                                        <input type="file" name="files[]" class="custom-file-container__custom-file__custom-file-input" multiple>
+                                                                        <input type="file" name="files[]" class="custom-file-container__custom-file__custom-file-input" accept="image/png,image/jpg,image/jpeg" multiple>
                                                                         <span class="custom-file-container__custom-file__custom-file-control"></span>
 
                                                                     </label>

@@ -29,8 +29,8 @@
                                     <a href="{{ url('artist/create') }}"> <svg  id="btn-add-contact" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg></a>
 
                                     <div class="switch align-self-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list view-list active-view"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid view-grid"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+{{--                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list view-list active-view"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg>--}}
+{{--                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid view-grid"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>--}}
                                     </div>
                                 </div>
 
@@ -38,7 +38,7 @@
                             </div>
                         </div>
 
-                        <div class="searchable-items list">
+                        <div class="searchable-items grid">
                             <div class="items items-header-section">
                                 <div class="item-content">
                                     <div class="">
@@ -75,7 +75,7 @@
                                                 <span class="new-control-indicator"></span>
                                             </label>
                                         </div>
-                                        <img width="100px"  height="100px" src="{{ asset(!empty($value->image)?'public/storage/'.$value->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">
+                                        <img width="100px"  height="100px" src="{{ asset(!empty($value->image)?'public/storage/'.$value->image:'public/assets/img/placeholder.png')}}" alt="avatar">
                                         <div class="user-meta-info">
                                             <p class="user-name" data-name="{{ $value->artist_name }}">{{ $value->artist_name }}</p>
                                             <p class="user-work" data-occupation="{{ $value->about }}">{{ $value->about }}</p>
@@ -90,9 +90,7 @@
                                         <p class="usr-location" data-location="{{ $value->city }}">{{ $value->city }}</p>
                                     </div>
                                     <div class="user-location">
-                                        <a class="btn btn-dark mb-2 mr-2 rounded-circle" href="{{ asset(!empty($value->video)?'public/storage/'.$value->video:'')}}" target="_blank ">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play"><polygon points="5 3 19 12 5 21 5 20"></polygon></svg>
-                                        </a>
+
                                         {{--                                            <p class="info-title">Video: </p>--}}
 {{--                                        <video width="200px" controls >--}}
 {{--                                            <source src="{{ asset(!empty($value->video)?'public/storage/'.$value->video:'')}}" type="video/mp4">--}}
@@ -120,6 +118,10 @@
                                                     <line x1="14" y1="11" x2="14" y2="17"></line>
                                                 </svg>
                                             </button>
+
+                                            <a class="btn btn-dark rounded-circle" href="{{ asset(!empty($value->video)?'public/storage/'.$value->video:'')}}" target="_blank ">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play"><polygon points="5 3 19 12 5 21 5 20"></polygon></svg>
+                                            </a>
                                         </form>
                                     </div>
                                 </div>

@@ -42,7 +42,7 @@
                                                             <select
                                                                 class="basic form-control {{ $errors->has('category_id') ? ' is-invalid' : '' }}"
                                                                 name="category_id" id="category_id">
-                                                                <option >Choose Category</option>
+                                                                <option value="">Choose Category</option>
                                                                 @foreach($category as $key => $value)
                                                                     <option value="{{ $value->cat_id }}"
                                                                         {{ (!empty(old('category_id')) && old('category_id')==$value->cat_id)?'selected':'' }}
@@ -95,7 +95,7 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">Attach File</label>
-                                                            <input type="file"
+                                                            <input type="file" accept="application/pdf,application/docx"
                                                                    class="form-control form-control-sm {{ $errors->has('file') ? ' is-invalid' : '' }}"
                                                                    name="file">
                                                             @if ($errors->has('file'))

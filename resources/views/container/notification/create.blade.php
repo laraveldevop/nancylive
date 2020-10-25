@@ -61,7 +61,7 @@
                                     <div class="col-md-10">
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1">Image</label>
-                                            <input type="file"
+                                            <input type="file" accept="image/png,image/jpg,image/jpeg"
                                                    class="form-control form-control-sm"
                                                    name="image">
 
@@ -70,7 +70,7 @@
                                     <div class="col-md-10">
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1">Video</label>
-                                            <input type="file"
+                                            <input type="file" accept="video/mp4,video/x-m4v,video/avi,video/mpvge"
                                                    class="form-control form-control-sm"
                                                    name="video">
 

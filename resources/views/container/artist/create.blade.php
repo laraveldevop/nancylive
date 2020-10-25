@@ -108,7 +108,7 @@
                                                             <label for="exampleFormControlInput1">artist Image</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('image_data') ? ' is-invalid' : '' }}"
-                                                                type="file" name="image" id="upload_image"
+                                                                type="file" name="image" id="upload_image" accept="image/png,image/jpg,image/jpeg"
                                                                 value="">
                                                             @if ($errors->has('image_data'))
                                                                 <span class="invalid-feedback" role="alert">
@@ -138,7 +138,7 @@
                                                             <label for="exampleFormControlInput1">Upload Video</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('video') ? ' is-invalid' : '' }}"
-                                                                type="file" name="video" id="video"
+                                                                type="file" name="video" id="video"  accept="video/mp4,video/x-m4v,video/avi,video/mpvge"
                                                                 value="{{ ((!empty($artist->video)) ? $artist->video :old('video')) }}">
                                                             @if ($errors->has('video'))
                                                                 <span class="invalid-feedback" role="alert">
@@ -263,7 +263,7 @@
                                                                             class="custom-file-container__image-clear"
                                                                             title="Clear Image">x</a></label>
                                                                     <label class="custom-file-container__custom-file">
-                                                                        <input type="file" name="files[]" id="files"
+                                                                        <input type="file" name="files[]" id="files" accept="image/png,image/jpg,image/jpeg"
                                                                                class="custom-file-container__custom-file__custom-file-input"
                                                                                multiple>
                                                                         <span

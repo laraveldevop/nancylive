@@ -31,18 +31,18 @@ class NotificationController extends Controller
 //        $user = User::first();
 //        $user->notify(new TaskComplete($title));
         $playerIds = 'fa68eeb7-e4b3-49d9-a3db-997045cce38b';
-        $key = ''; // add one single key
+        $key = 'MzE2YmQ2NjYtZTI2OS00MmUwLWI2YzEtZWYzNWFkM2M5ZjRk'; // add one single key
         $message = $title;
 
         $title = '';
         $ids = array($playerIds);
         $content = array(
-            "en" => $message,
+            "en" => 'English Message',
             "title" => $title,
             "message" => $body,
         );
         $fields = array(
-            'app_id' => "", // add one single app_id
+            'app_id' => "5bee468b-1748-4717-a7f6-e0afb7e451d7", // add one single app_id
             // 'included_segments' => array('All'),
             'large_icon' => "ic_launcher.png",
             'small_icon' => "ic_launcher_small.png",

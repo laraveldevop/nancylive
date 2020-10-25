@@ -71,16 +71,17 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
             'cat_id'=> 'required',
             'video_name' => 'required',
             'detail'=>'required',
             "price" => 'numeric',
+            "video_type" => 'required',
+            "price_type" => 'required',
         ]);
         if ($request->hasFile('image') == null){
             $request->validate([
-                'image' => 'image|mimes:jpeg,png,jpg,gif,svg'
+                'image' => 'image|mimes:jpeg,png,jpg'
             ]);
         }
         if ($request->input('url') != null){
@@ -178,7 +179,9 @@ class VideoController extends Controller
             'cat_id'=> 'required',
             'video_name' => 'required',
             'detail'=>'required',
-            "price" => 'numeric'
+            "price" => 'numeric',
+            "video_type" => 'required',
+            "price_type" => 'required',
         ]);
         if ($request->input('url') != null){
             $request->validate([

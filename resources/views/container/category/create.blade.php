@@ -2,8 +2,6 @@
 @section('content')
     @push('artist_style')
         <!--  BEGIN CUSTOM STYLE FILE  -->
-
-        <link rel="stylesheet" type="text/css" href="{{ asset('public/plugins/select2/select2.min.css')}}">
         <link rel="stylesheet" href="{{ asset('public/css/croppie.min.css') }}">
         <!--  END CUSTOM STYLE FILE  -->
     @endpush
@@ -23,7 +21,7 @@
                             </div>
                         </div>
                         @if ($action=='INSERT')
-                            <form class="mb-4" method="POST" action="{{ url('category') }}"
+                            <form class="mb-4" method="POST" action="{{ url('category') }}" id="myform"
                                   enctype="multipart/form-data">
                                 @else
                                     <form class="mb-4" method="POST" enctype="multipart/form-data"
@@ -75,9 +73,18 @@
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Category Image</label>
                                                         <input type="file" id="upload_image" disabled
-                                                               class="form-control form-control-sm"
+                                                               class="form-control form-control-sm {{ $errors->has('image_data') ? ' is-invalid' : '' }}" accept="image/png,image/jpg,image/jpeg"
                                                                name="cat_image">
+                                                        <input type="hidden" name="image_data"
+                                                               value="{{old('image_data')}}">
+                                                        @if ($errors->has('image_data'))
+                                                            <span class="invalid-feedback" role="alert">
+                                                                  <strong>{{ $errors->first('image_data') }}</strong>
+                                                             </span>
+                                                        @endif
+
                                                     </div>
+
                                                     @if ($action=='UPDATE')
 
                                                         <img id="preview_old_image" style="height: 200px; width: 400px;"
@@ -91,8 +98,7 @@
                                                         </div>
                                                         <a class="btn btn-success crop_image">Crop & Upload Image</a>
                                                     </div>
-                                                    <input type="hidden" name="image_data"
-                                                           value="{{old('image_data')}}">
+
 
                                                 </div>
                                             </div>
@@ -117,12 +123,13 @@
         </div>
     </div>
     @push('artist_script')
-        <script src="{{ asset('public/plugins/select2/select2.min.js') }}"></script>
-        <script src="{{ asset('public/plugins/select2/custom-select2.js') }}"></script>
         <script src="{{ asset('public/js/croppie.js') }}"></script>
         <script type="text/javascript">
 
             $(document).ready(function () {
+
+
+
                 $('#submit').on('click', function (){
                     var spinner = $('#loading');
                     spinner.show();

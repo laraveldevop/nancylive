@@ -40,8 +40,7 @@
                                                             <label for="exampleFormControlInput1">Category</label>
                                                             <select
                                                                 class="basic form-control {{ $errors->has('cat_id') ? ' is-invalid' : '' }}"
-                                                                name="cat_id" id="cat_id"
-                                                                @if ($action=='INSERT') required @endif>
+                                                                name="cat_id" id="cat_id">
                                                                 <option value="">--Select Option--</option>
                                                                 @foreach($category as $key => $value)
                                                                     <option value="{{ $value->cat_id }}"
@@ -102,9 +101,8 @@
                                                             <label for="exampleFormControlInput1">Video Upload
                                                                 Option</label>
                                                             <select name="video_type" id="video_type"
-                                                                    class="form-control"
-                                                                    @if ($action=='INSERT') required @endif>
-                                                                <option value="">--Select Option--</option>
+                                                                    class="form-control {{ $errors->has('video_type') ? ' is-invalid' : '' }}">
+                                                                <option value="">Select Option</option>
                                                                 <option
                                                                     value="server_url" {{ (!empty($video->url) && $video->url != null)?'selected':'' }} {{ (!empty(old('video_type')) && old('video_type')=='server_url')?'selected':'' }}>
                                                                     Server URL
@@ -114,9 +112,17 @@
                                                                     Browse From Computer
                                                                 </option>
                                                             </select>
+                                                            @if ($errors->has('video_type'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                  <strong>{{ $errors->first('video_type') }}</strong>
+                                                             </span>
+                                                            @endif
+
                                                         </div>
+
                                                     </div>
                                                 </div>
+
                                                 <div class="row col-md-12">
                                                     <div class="col-md-12">
                                                         <div class="form-group" id="video_local_display">
@@ -142,9 +148,8 @@
                                                             <label for="exampleFormControlInput1">Video Is Free OR
                                                                 Payable</label>
                                                             <select name="price_type" id="price_type"
-                                                                    class="form-control"
-                                                                    @if ($action=='INSERT') required @endif>
-                                                                <option value="">--Select Option--</option>
+                                                                    class="form-control {{ $errors->has('price_type') ? ' is-invalid' : '' }}">
+                                                                <option value="">Select Option</option>
                                                                 <option
                                                                     value="free" @if($action=='UPDATE') {{ (empty($video->price) && $video->price == null)?'selected':'' }} @endif {{ (!empty(old('price_type')) && old('price_type')=='free')?'selected':'' }}>
                                                                     It's Free
@@ -154,7 +159,14 @@
                                                                     It's Payable
                                                                 </option>
                                                             </select>
+                                                            @if ($errors->has('price_type'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                                  <strong>{{ $errors->first('price_type') }}</strong>
+                                                             </span>
+                                                            @endif
+
                                                         </div>
+
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group" id="price">
@@ -169,7 +181,7 @@
                                                                 Image</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('image') ? ' is-invalid' : '' }}"
-                                                                type="file" name="image" id="upload_image"
+                                                                type="file" name="image" id="upload_image" accept="image/png,image/jpg,image/jpeg"
                                                                 value="{{ ((!empty($video->image)) ? $video->image :old('image')) }}">
                                                             @if ($errors->has('image'))
                                                                 <span class="invalid-feedback" role="alert">
@@ -299,7 +311,7 @@
                     $("#video_local_display").html(' <label for="exampleFormControlInput1">Add Video</label>\n' +
                         '                                                            <input\n' +
                         '                                                                class="form-control form-control-sm {{ $errors->has('video') ? ' is-invalid' : '' }}"\n' +
-                        '                                                                type="file" name="video" id="video" onchange="handleFileSelect(event)" \n' +
+                        '                                                                type="file" name="video" id="video" accept="video/mp4,video/x-m4v,video/avi,video/mpvge" onchange="handleFileSelect(event)" \n' +
                         '                                                                value="{{ ((!empty($video->video)) ? $video->video :old('video')) }}">\n' +
                         '                                                            @if ($errors->has('video'))\n' +
                         '                                                                <span class="invalid-feedback" role="alert">\n' +

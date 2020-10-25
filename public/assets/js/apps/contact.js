@@ -261,59 +261,59 @@ editContact();
 
 
 // Validation Process
+//
+// var $_getValidationField = document.getElementsByClassName('validation-text');
+// var reg = /^.+@[^\.].*\.[a-z]{2,}$/;
+// var phoneReg = /^\d{10}$/;
 
-var $_getValidationField = document.getElementsByClassName('validation-text');
-var reg = /^.+@[^\.].*\.[a-z]{2,}$/;
-var phoneReg = /^\d{10}$/;
-
-getNameInput = document.getElementById('c-name');
-
-getNameInput.addEventListener('input', function() {
-
-  getNameInputValue = this.value;
-
-  if (getNameInputValue == "") {
-    $_getValidationField[0].innerHTML = 'Name Required';
-    $_getValidationField[0].style.display = 'block';
-  } else {
-    $_getValidationField[0].style.display = 'none';
-  }
-
-})
-
-
-getEmailInput = document.getElementById('c-email');
-
-getEmailInput.addEventListener('input', function() {
-
-    getEmailInputValue = this.value;
-
-    if (getEmailInputValue == "") {
-      $_getValidationField[1].innerHTML = 'Email Required';
-      $_getValidationField[1].style.display = 'block';
-    } else if((reg.test(getEmailInputValue) == false)) {
-      $_getValidationField[1].innerHTML = 'Invalid Email';
-      $_getValidationField[1].style.display = 'block';
-    } else {
-      $_getValidationField[1].style.display = 'none';
-    }
-
-})
-
-getPhoneInput = document.getElementById('c-phone');
-
-getPhoneInput.addEventListener('input', function() {
-
-  getPhoneInputValue = this.value;
-
-  if (getPhoneInputValue == "") {
-    $_getValidationField[2].innerHTML = 'Phone Number Required';
-    $_getValidationField[2].style.display = 'block';
-  } else if((phoneReg.test(getPhoneInputValue) == false)) {
-    $_getValidationField[2].innerHTML = 'Invalid (Enter 10 Digits)';
-    $_getValidationField[2].style.display = 'block';
-  } else {
-    $_getValidationField[2].style.display = 'none';
-  }
-
-})
+// getNameInput = document.getElementById('c-name');
+//
+// getNameInput.addEventListener('input', function() {
+//
+//   getNameInputValue = this.value;
+//
+//   if (getNameInputValue == "") {
+//     $_getValidationField[0].innerHTML = 'Name Required';
+//     $_getValidationField[0].style.display = 'block';
+//   } else {
+//     $_getValidationField[0].style.display = 'none';
+//   }
+//
+// })
+//
+//
+// getEmailInput = document.getElementById('c-email');
+//
+// getEmailInput.addEventListener('input', function() {
+//
+//     getEmailInputValue = this.value;
+//
+//     if (getEmailInputValue == "") {
+//       $_getValidationField[1].innerHTML = 'Email Required';
+//       $_getValidationField[1].style.display = 'block';
+//     } else if((reg.test(getEmailInputValue) == false)) {
+//       $_getValidationField[1].innerHTML = 'Invalid Email';
+//       $_getValidationField[1].style.display = 'block';
+//     } else {
+//       $_getValidationField[1].style.display = 'none';
+//     }
+//
+// })
+//
+// getPhoneInput = document.getElementById('c-phone');
+//
+// getPhoneInput.addEventListener('input', function() {
+//
+//   getPhoneInputValue = this.value;
+//
+//   if (getPhoneInputValue == "") {
+//     $_getValidationField[2].innerHTML = 'Phone Number Required';
+//     $_getValidationField[2].style.display = 'block';
+//   } else if((phoneReg.test(getPhoneInputValue) == false)) {
+//     $_getValidationField[2].innerHTML = 'Invalid (Enter 10 Digits)';
+//     $_getValidationField[2].style.display = 'block';
+//   } else {
+//     $_getValidationField[2].style.display = 'none';
+//   }
+//
+// })

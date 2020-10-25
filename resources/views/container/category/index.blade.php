@@ -96,26 +96,26 @@
                                         </a>
 
                                         <div class="switch align-self-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                 class="feather feather-list view-list">
-                                                <line x1="8" y1="6" x2="21" y2="6"></line>
-                                                <line x1="8" y1="12" x2="21" y2="12"></line>
-                                                <line x1="8" y1="18" x2="21" y2="18"></line>
-                                                <line x1="3" y1="6" x2="3" y2="6"></line>
-                                                <line x1="3" y1="12" x2="3" y2="12"></line>
-                                                <line x1="3" y1="18" x2="3" y2="18"></line>
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                 class="feather feather-grid view-grid active-view">
-                                                <rect x="3" y="3" width="7" height="7"></rect>
-                                                <rect x="14" y="3" width="7" height="7"></rect>
-                                                <rect x="14" y="14" width="7" height="7"></rect>
-                                                <rect x="3" y="14" width="7" height="7"></rect>
-                                            </svg>
+                                            {{--                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"--}}
+                                            {{--                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"--}}
+                                            {{--                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"--}}
+                                            {{--                                                 class="feather feather-list view-list">--}}
+                                            {{--                                                <line x1="8" y1="6" x2="21" y2="6"></line>--}}
+                                            {{--                                                <line x1="8" y1="12" x2="21" y2="12"></line>--}}
+                                            {{--                                                <line x1="8" y1="18" x2="21" y2="18"></line>--}}
+                                            {{--                                                <line x1="3" y1="6" x2="3" y2="6"></line>--}}
+                                            {{--                                                <line x1="3" y1="12" x2="3" y2="12"></line>--}}
+                                            {{--                                                <line x1="3" y1="18" x2="3" y2="18"></line>--}}
+                                            {{--                                            </svg>--}}
+                                            {{--                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"--}}
+                                            {{--                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"--}}
+                                            {{--                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"--}}
+                                            {{--                                                 class="feather feather-grid view-grid active-view">--}}
+                                            {{--                                                <rect x="3" y="3" width="7" height="7"></rect>--}}
+                                            {{--                                                <rect x="14" y="3" width="7" height="7"></rect>--}}
+                                            {{--                                                <rect x="14" y="14" width="7" height="7"></rect>--}}
+                                            {{--                                                <rect x="3" y="14" width="7" height="7"></rect>--}}
+                                            {{--                                            </svg>--}}
                                         </div>
                                     </div>
 
@@ -173,7 +173,7 @@
                                                             </label>
                                                         </div>
                                                         <img width="100px"
-                                                             src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'')}}"
+                                                             src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'public/assets/img/placeholder.png')}}"
                                                              alt="avatar">
 
                                                     </div>
@@ -200,27 +200,42 @@
                                                                     d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
                                                             </svg>
                                                         </a>
+                                                        <button type="button" class="btn btn-dark  rounded-circle" data-toggle="modal" data-target="#standardModal{{$value->cat_id}}" >
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                 height="24"
+                                                                 viewBox="0 0 24 24" fill="none"
+                                                                 stroke="currentColor"
+                                                                 stroke-width="2" stroke-linecap="round"
+                                                                 stroke-linejoin="round"
+                                                                 class="feather feather-trash-2">
+                                                                <polyline points="3 6 5 6 21 6"></polyline>
+                                                                <path
+                                                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                            </svg>
+                                                        </button>
 
-                                                        <form method="POST" style="display:inline;"
-                                                              action="{{ route('category.destroy',$value->cat_id) }}">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-dark  rounded-circle">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                     height="24"
-                                                                     viewBox="0 0 24 24" fill="none"
-                                                                     stroke="currentColor"
-                                                                     stroke-width="2" stroke-linecap="round"
-                                                                     stroke-linejoin="round"
-                                                                     class="feather feather-trash-2">
-                                                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                                                    <path
-                                                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                                                </svg>
-                                                            </button>
-                                                        </form>
+                                                        {{--                                                        <form method="POST" style="display:inline;"--}}
+                                                        {{--                                                              action="{{ route('category.destroy',$value->cat_id) }}">--}}
+                                                        {{--                                                            @csrf--}}
+                                                        {{--                                                            @method('DELETE')--}}
+                                                        {{--                                                            <button type="submit" class="btn btn-dark  rounded-circle">--}}
+                                                        {{--                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"--}}
+                                                        {{--                                                                     height="24"--}}
+                                                        {{--                                                                     viewBox="0 0 24 24" fill="none"--}}
+                                                        {{--                                                                     stroke="currentColor"--}}
+                                                        {{--                                                                     stroke-width="2" stroke-linecap="round"--}}
+                                                        {{--                                                                     stroke-linejoin="round"--}}
+                                                        {{--                                                                     class="feather feather-trash-2">--}}
+                                                        {{--                                                                    <polyline points="3 6 5 6 21 6"></polyline>--}}
+                                                        {{--                                                                    <path--}}
+                                                        {{--                                                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>--}}
+                                                        {{--                                                                    <line x1="10" y1="11" x2="10" y2="17"></line>--}}
+                                                        {{--                                                                    <line x1="14" y1="11" x2="14" y2="17"></line>--}}
+                                                        {{--                                                                </svg>--}}
+                                                        {{--                                                            </button>--}}
+                                                        {{--                                                        </form>--}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -279,7 +294,7 @@
                                                             </label>
                                                         </div>
                                                         <img width="100px"
-                                                             src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'')}}"
+                                                             src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'public/assets/img/placeholder.png')}}"
                                                              alt="avatar">
 
                                                     </div>
@@ -384,7 +399,7 @@
                                                             </label>
                                                         </div>
                                                         <img width="100px"
-                                                             src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'')}}"
+                                                             src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'public/assets/img/placeholder.png')}}"
                                                              alt="avatar">
 
                                                     </div>
@@ -450,9 +465,45 @@
         </div>
 
     </div>
+    @foreach($category as $key=>$value)
+    <!-- Modal -->
+    <div class="modal fade modal-notification" id="standardModal{{$value->cat_id}}" tabindex="-1" role="dialog" aria-labelledby="standardModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" id="standardModalLabel">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="icon-content">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    </div>
+                    <p class="modal-text">Are You Sure!</p>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Not Sure</button>
+
+                    <form method="POST" style="display:inline;"
+                          action="{{ route('category.destroy',$value->cat_id) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-primary">
+                            Yes
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @endforeach
     <!--  END CONTENT AREA  -->
     @push('artist_script')
         <script src="{{ asset('public/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('public/assets/js/apps/contact.js') }}"></script>
+        <script>
+            $('#delete').on('click', function (){
+               alert(this.name);
+
+            });
+        </script>
     @endpush
+
+
 @endsection

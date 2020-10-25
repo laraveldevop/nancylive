@@ -82,6 +82,7 @@ class CategoryController extends Controller
         $request->validate([
             'module_id'=> 'required',
             'cat_name' => ['required','unique:category'],
+            'image_data'=> 'required',
 
         ]);
 

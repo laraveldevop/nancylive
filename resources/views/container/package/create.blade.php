@@ -175,7 +175,7 @@
                                                             <div class="col-md-10">
                                                                 <div class="form-group">
                                                                     <label for="exampleFormControlInput1">Package Image</label>
-                                                                    <input type="file" id="upload_image"
+                                                                    <input type="file" id="upload_image" accept="image/png,image/jpg,image/jpeg"
                                                                            class="form-control form-control-sm"
                                                                            name="image">
 

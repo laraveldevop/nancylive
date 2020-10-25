@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>Sales Admin | CORK - Multipurpose Bootstrap Dashboard Template </title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('public/assets/img/favicon.ico') }}"/>
+    <title>Nency Beauty</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('public/assets/img/nency-beauty.png') }}"/>
     <link href="{{ asset('public/assets/css/loader.css') }}" rel="stylesheet" type="text/css"/>
     <script src="{{ asset('public/assets/js/loader.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/forms/switches.css') }}">
@@ -62,7 +62,7 @@
         <ul class="navbar-item theme-brand flex-row  text-center">
             <li class="nav-item theme-logo">
                 <a href="{{url('/')}}">
-                    <img src="{{ asset('public/assets/img/logo.svg') }}" class="navbar-logo" alt="logo">
+                    <img src="{{ asset('public/assets/img/nency-beauty.png') }}" class="navbar-logo" alt="logo">
                 </a>
             </li>
             <li class="nav-item theme-text">
@@ -80,14 +80,14 @@
                 <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
                     <div class="">
                         <div class="dropdown-item">
-                            <a href="user_profile.html">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                     stroke-linejoin="round" class="feather feather-user">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                                My Profile</a>
+{{--                            <a href="user_profile.html">--}}
+{{--                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"--}}
+{{--                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"--}}
+{{--                                     stroke-linejoin="round" class="feather feather-user">--}}
+{{--                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>--}}
+{{--                                    <circle cx="12" cy="7" r="4"></circle>--}}
+{{--                                </svg>--}}
+{{--                                My Profile</a>--}}
                         </div>
 {{--                        <div class="dropdown-item">--}}
 {{--                            <a href="apps_mailbox.html">--}}
@@ -166,7 +166,8 @@
                                     @if(request()->is('notification')) Notification @endif
                                     @if(request()->is('package')) Package @endif
                                     @if(request()->is('order')) Order @endif
-                                    @if(request()->is('user-package')) Order @endif
+                                    @if(request()->is('user-package')) Customers @endif
+                                    @if(request()->is('sponsor')) Sponsor @endif
                                 </span></li>
                         </ol>
                     </nav>
@@ -174,17 +175,17 @@
                 </div>
             </li>
         </ul>
-        <ul class="navbar-nav flex-row ml-auto ">
-            <li class="nav-item more-dropdown">
-                <div class="dropdown  custom-dropdown-icon">
-                    <a class="dropdown-toggle btn" href="#" role="button" id="customDropdown" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false"><span>Settings</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                             class="feather feather-chevron-down">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </a>
+{{--        <ul class="navbar-nav flex-row ml-auto ">--}}
+{{--            <li class="nav-item more-dropdown">--}}
+{{--                <div class="dropdown  custom-dropdown-icon">--}}
+{{--                    <a class="dropdown-toggle btn" href="#" role="button" id="customDropdown" data-toggle="dropdown"--}}
+{{--                       aria-haspopup="true" aria-expanded="false"><span>Settings</span>--}}
+{{--                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"--}}
+{{--                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"--}}
+{{--                             class="feather feather-chevron-down">--}}
+{{--                            <polyline points="6 9 12 15 18 9"></polyline>--}}
+{{--                        </svg>--}}
+{{--                    </a>--}}
 
 {{--                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="customDropdown">--}}
 {{--                        <a class="dropdown-item" data-value="Settings" href="javascript:void(0);">Settings</a>--}}
@@ -193,9 +194,9 @@
 {{--                        <a class="dropdown-item" data-value="Download" href="javascript:void(0);">Download</a>--}}
 {{--                        <a class="dropdown-item" data-value="Share" href="javascript:void(0);">Share</a>--}}
 {{--                    </div>--}}
-                </div>
-            </li>
-        </ul>
+{{--                </div>--}}
+{{--            </li>--}}
+{{--        </ul>--}}
     </header>
 </div>
 <!--  END NAVBAR  -->

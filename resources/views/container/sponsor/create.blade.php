@@ -105,7 +105,7 @@
                                                             <label for="exampleFormControlInput1">sponsor Image</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('image_data') ? ' is-invalid' : '' }}"
-                                                                type="file" name="image" id="upload_image"
+                                                                type="file" name="image" id="upload_image" accept="image/png,image/jpg,image/jpeg"
                                                                 value="{{ ((!empty($sponsor->image)) ? $sponsor->image :old('image')) }}">
                                                             @if ($errors->has('image_data'))
                                                                 <span class="invalid-feedback" role="alert">
@@ -133,7 +133,7 @@
                                                             <label for="exampleFormControlInput1">Upload Video</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('video') ? ' is-invalid' : '' }}"
-                                                                type="file" name="video"
+                                                                type="file" name="video" accept="video/mp4,video/x-m4v,video/avi,video/mpvge"
                                                                 value="{{ ((!empty($sponsor->video)) ? $sponsor->video :old('video')) }}">
                                                         </div>
                                                         @if ($action=='UPDATE')
@@ -240,7 +240,7 @@
                                                                 <div class="custom-file-container" data-upload-id="mySecondImage">
                                                                     <label>Upload (Allow Multiple) <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
                                                                     <label class="custom-file-container__custom-file" >
-                                                                        <input type="file" name="files[]" class="custom-file-container__custom-file__custom-file-input" multiple>
+                                                                        <input type="file" name="files[]" accept="image/png,image/jpg,image/jpeg" class="custom-file-container__custom-file__custom-file-input" multiple>
                                                                         <span class="custom-file-container__custom-file__custom-file-control"></span>
                                                                     </label>
                                                                     <div class="custom-file-container__image-preview"></div>

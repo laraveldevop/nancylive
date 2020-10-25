@@ -50,26 +50,26 @@
                                     </a>
 
                                     <div class="switch align-self-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                             stroke-linecap="round" stroke-linejoin="round"
-                                             class="feather feather-list view-list ">
-                                            <line x1="8" y1="6" x2="21" y2="6"></line>
-                                            <line x1="8" y1="12" x2="21" y2="12"></line>
-                                            <line x1="8" y1="18" x2="21" y2="18"></line>
-                                            <line x1="3" y1="6" x2="3" y2="6"></line>
-                                            <line x1="3" y1="12" x2="3" y2="12"></line>
-                                            <line x1="3" y1="18" x2="3" y2="18"></line>
-                                        </svg>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                             stroke-linecap="round" stroke-linejoin="round"
-                                             class="feather feather-grid view-grid active-view">
-                                            <rect x="3" y="3" width="7" height="7"></rect>
-                                            <rect x="14" y="3" width="7" height="7"></rect>
-                                            <rect x="14" y="14" width="7" height="7"></rect>
-                                            <rect x="3" y="14" width="7" height="7"></rect>
-                                        </svg>
+{{--                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"--}}
+{{--                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"--}}
+{{--                                             stroke-linecap="round" stroke-linejoin="round"--}}
+{{--                                             class="feather feather-list view-list ">--}}
+{{--                                            <line x1="8" y1="6" x2="21" y2="6"></line>--}}
+{{--                                            <line x1="8" y1="12" x2="21" y2="12"></line>--}}
+{{--                                            <line x1="8" y1="18" x2="21" y2="18"></line>--}}
+{{--                                            <line x1="3" y1="6" x2="3" y2="6"></line>--}}
+{{--                                            <line x1="3" y1="12" x2="3" y2="12"></line>--}}
+{{--                                            <line x1="3" y1="18" x2="3" y2="18"></line>--}}
+{{--                                        </svg>--}}
+{{--                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"--}}
+{{--                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"--}}
+{{--                                             stroke-linecap="round" stroke-linejoin="round"--}}
+{{--                                             class="feather feather-grid view-grid active-view">--}}
+{{--                                            <rect x="3" y="3" width="7" height="7"></rect>--}}
+{{--                                            <rect x="14" y="3" width="7" height="7"></rect>--}}
+{{--                                            <rect x="14" y="14" width="7" height="7"></rect>--}}
+{{--                                            <rect x="3" y="14" width="7" height="7"></rect>--}}
+{{--                                        </svg>--}}
                                     </div>
                                 </div>
 
@@ -126,7 +126,7 @@
                                                 </label>
                                             </div>
                                             <img width="50px" height="50px"
-                                                 src="{{ asset(!empty($value->image)?'public/storage/'.$value->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}"
+                                                 src="{{ asset(!empty($value->image)?'public/storage/'.$value->image:'public/assets/img/placeholder.png')}}"
                                                  alt="avatar">
                                             <div class="user-meta-info">
                                                 <p class="user-name"
@@ -154,7 +154,7 @@
                                                             <div id="style1" class="carousel slide style-custom-1" data-ride="carousel">
                                                                 <div class="carousel-inner">
                                                                     <div class="carousel-item active">
-                                                                        <img class="d-block w-100 slide-image" src="{{ asset(!empty($value->v_image)?'public/storage/'.$value->v_image:'')}}" alt="First slide">
+                                                                        <img class="d-block w-100 slide-image" src="{{ asset(!empty($value->v_image)?'public/storage/'.$value->v_image:'public/assets/img/logo.png')}}" alt="First slide">
                                                                         <div class="carousel-caption">
                                                                             <a class="btn btn-outline-dark rounded-circle" href="{{ asset(!empty($value->video)?'public/storage/'.$value->video:'')}}" target="_blank ">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play"><polygon points="5 3 19 12 5 21 5 20"></polygon></svg>
@@ -169,7 +169,7 @@
                                                 </div>
                                             @endif
                                                 @if(!empty($value->url))
-                                                    <a href="{{ $value->url }}" target="_blank"><img alt="url Link" title="URL Link" src="{{ asset(!empty($value->v_image)?'public/storage/'.$value->v_image:'')}}"  width="200px"></a>
+                                                    <a href="{{ $value->url }}" target="_blank"><img alt="url Link" title="URL Link" src="{{ asset(!empty($value->v_image)?'public/storage/'.$value->v_image:'public/assets/img/logo.png')}}"  width="200px"></a>
                                                 @endif
                                         </div>
 
