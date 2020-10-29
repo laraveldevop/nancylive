@@ -28,6 +28,13 @@
     <link href="{{ asset('public/assets/css/components/custom-modal.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/forms/theme-checkbox-radio.css') }}">
 
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/css/elements/alert.css') }}">
+    <style>
+        .btn-light {
+            border-color: transparent;
+        }
+    </style>
+
     @stack('artist_style')
     @stack('video_style')
     <style type="text/css">

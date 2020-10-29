@@ -36,6 +36,7 @@ Route::resource('user-package', 'UserPackageController');
 
 
 
+
 Route::post('image_crop/uploadCategory', 'ImageController@uploadCategory')->name('image_crop.uploadCategory');
 Route::post('image_crop/uploadArtist', 'ImageController@uploadArtist')->name('image_crop.uploadArtist');
 Route::post('image_crop/uploadVideo', 'ImageController@uploadVideo')->name('image_crop.uploadVideo');
@@ -56,3 +57,6 @@ Route::post('/pdf_ads','PdfController@ads');
 Route::post('/product_ads','ProductController@ads');
 Route::post('/videoDownload','VideoController@videoDownload');
 Route::POST('send-notification', 'NotificationController@sendOfferNotification');
+
+// delete
+Route::POST('check-password', 'CategoryController@CheckPassword');
