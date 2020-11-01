@@ -40,8 +40,8 @@
     border-left: 1px solid #25d5e4;
 }
 #content > .container {
-    /*display: flex;*/
-    /*max-width: 58.333333%!important;*/
+    display: flex;
+    max-width: 58.333333%!important;
     margin-left: 80px;
     margin-left: 2px;
     padding: 0 16px!important;

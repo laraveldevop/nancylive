@@ -96,7 +96,7 @@
     position: absolute;
     font-size: 14px;
     padding: 9px 20px;
-    border: none;
+    border: none; 
     color: #191e3a;
     bottom: 32px;
     left: 17%;
@@ -444,8 +444,8 @@
     padding: 10px 25px;
 }
 .modal-backdrop { background-color: #515365; }
-.compose-box .compose-content form .editor-container h1 { color: #3b3f5c; }
-.compose-box .compose-content form .editor-container p { color: #3b3f5c; }
+.compose-box .compose-content form #editor-container h1 { color: #3b3f5c; }
+.compose-box .compose-content form #editor-container p { color: #3b3f5c; }
 @media (max-width: 767px) {
     .todo-inbox { display: block; }
     .todo-inbox .message-box {
@@ -502,7 +502,7 @@
 
 /*
 =====================
-    Mozilla Support
+    Mozilla Support 
 =====================
 */
 
