@@ -8,7 +8,9 @@ use App\Product;
 use App\ProductImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
@@ -30,7 +32,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brand= Brand::all();
+        $brand= Brand::paginate(10);
         return view('container.brand.index')->with(compact('brand'));
     }
 
@@ -134,41 +136,48 @@ class BrandController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Brand  $brand
+     * @param \App\Brand $brand
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($brand)
+    public function destroy($brand, Request $request)
     {
-        $product = Product::where('brand',$brand)->get();
+        $password = $request->input('password');
+        $user_password = Auth::user()->getAuthPassword();
+        if(Hash::check($password, $user_password)) {
+            $product = Product::where('brand', $brand)->get();
 
-        $cat = Brand::where('id',$brand)->first();
-        if ($cat['image'] != null) {
-            $image_path = public_path() . '/storage/' . $cat['image'];
-            unlink($image_path);
-        }
-        Brand::destroy($brand);
+            $cat = Brand::where('id', $brand)->first();
+            if ($cat['image'] != null) {
+                $image_path = public_path() . '/storage/' . $cat['image'];
+                unlink($image_path);
+            }
+            Brand::destroy($brand);
 
-        //delete product
-        if (!empty($product)) {
-            foreach ($product as $value) {
-                DB::table('advertise')
-                    ->where('product_id', $value->id)
-                    ->delete();
-                $product_image = ProductImage::where('product_id', $value->id)->get();
-                if (!empty($product_image)) {
-                    foreach ($product_image as $item) {
-                        $image_path = public_path() . '/storage/' . $item->image;
+            //delete product
+            if (!empty($product)) {
+                foreach ($product as $value) {
+                    DB::table('advertise')
+                        ->where('product_id', $value->id)
+                        ->delete();
+                    $product_image = ProductImage::where('product_id', $value->id)->get();
+                    if (!empty($product_image)) {
+                        foreach ($product_image as $item) {
+                            $image_path = public_path() . '/storage/' . $item->image;
+                            unlink($image_path);
+                        }
+                    }
+                    if ($value->video != null) {
+                        $image_path = public_path() . '/storage/' . $value->video;
                         unlink($image_path);
                     }
+                    DB::table('product_image')->where('product_id', $value->id)->delete();
                 }
-                if ($value->video != null) {
-                    $image_path = public_path() . '/storage/' . $value->video;
-                    unlink($image_path);
-                }
-                DB::table('product_image')->where('product_id', $value->id)->delete();
             }
+            DB::table('product')->where('brand', $brand)->delete();
+            return redirect('brand')->with('message', 'Delete Successfully');
         }
-        DB::table('product')->where('brand',$brand)->delete();
-        return redirect('brand');
+        return redirect('brand')->with('delete', 'Password Not Valid');
+
     }
 }

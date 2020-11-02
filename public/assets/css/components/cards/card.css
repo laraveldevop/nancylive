@@ -1,17 +1,13 @@
-[class*="component-card_"] {
-    background-color: #191e3a;
-}
-
-
 /*
 	Component Card 1
 */
 
 .component-card_1 {
-    border: 1px solid #1b2e4b;
+    border: 1px solid #e0e6ed;
     border-radius: 6px;
     width: 19rem;
     margin: 0 auto;
+    box-shadow: 4px 6px 10px -3px #bfc9d4;
 }
 .component-card_1 .card-body { padding: 28px 25px; }
 .component-card_1 .icon-svg {
@@ -39,10 +35,11 @@
 */
 
 .component-card_2 {
-    border: 1px solid #1b2e4b;
+    border: 1px solid #e0e6ed;
     border-radius: 6px;
     width: 18rem;
     margin: 0 auto;
+    box-shadow: 4px 6px 10px -3px #bfc9d4;
 }
 .component-card_2 .card-body { padding: 22px 20px; }
 .component-card_2 .card-title {
@@ -72,6 +69,7 @@
     background: #3b3f5c;
     width: 18rem;
     margin: 0 auto;
+    box-shadow: 4px 6px 10px -3px #bfc9d4;
 }
 .component-card_3 .card-body {
     padding: 22px 20px;
@@ -115,8 +113,10 @@
    width: 30rem;
     margin: 0 auto;
     border: none; 
-    border: 1px solid #1b2e4b;
+    border: 1px solid #e0e6ed;
     border-radius: 8px;
+    -webkit-box-shadow: 4px 6px 10px -3px #bfc9d4;
+    box-shadow: 4px 6px 10px -3px #bfc9d4;
 }
 .component-card_4 .card-body {
     padding: 0;
@@ -149,7 +149,7 @@
     vertical-align: bottom;
 }
 .component-card_4 .card-text {
-    color: #bfc9d4;
+    color: #515365;
     font-size: 14px;
     letter-spacing: 1px;
     font-weight: 600;
@@ -165,7 +165,9 @@
     margin: 0 auto;
      border: none; 
     border-radius: 8px;
-    background: rgba(92, 26, 195, 0.26);
+    background: #5c1ac3;
+    -webkit-box-shadow: 4px 6px 10px -3px #bfc9d4;
+    box-shadow: 4px 6px 10px -3px #bfc9d4;
 }
 .component-card_5 .card-body { padding: 30px 30px; }
 .component-card_5 .card-body .user-info {
@@ -206,9 +208,12 @@
 
 .component-card_6 {
     border-radius: 8px;
-    border: 1px solid #1b2e4b;
+    background: #fff;
+    border: 1px solid #e0e6ed;
     width: 19rem;
     margin: 0 auto;
+    -webkit-box-shadow: 4px 6px 10px -3px #bfc9d4;
+    box-shadow: 4px 6px 10px -3px #bfc9d4;
 }
 .component-card_6 .card-body { padding: 30px 30px; }
 .component-card_6 .card-body .user-info {
@@ -226,7 +231,7 @@
 }
 .component-card_6 .card-body h5.card-user_name {
     font-size: 16px;
-    color: #bfc9d4;
+    color: #3b3f5c;
     letter-spacing: 1px;
     font-weight: 700;
     margin-bottom: 3px;
@@ -238,7 +243,7 @@
     margin-bottom: 0;
 }
 .component-card_6 .card-body .card-text {
-    color: #888ea8;
+    color: #515365;
     font-style: italic;
     font-size: 14px;
     letter-spacing: 1px;
@@ -257,11 +262,13 @@
 */
 
 .component-card_7 {
-    background-color: rgba(27, 85, 226, 0.3803921568627451);
+    background-color: #1b55e2;
     color: #fff;
     border: none;
     width: 18rem;
     margin: 0 auto;
+    -webkit-box-shadow: 4px 6px 10px -3px #bfc9d4;
+    box-shadow: 4px 6px 10px -3px #bfc9d4;
 }
 .component-card_7 .card-body {
     padding: 23px 10px;
@@ -286,20 +293,24 @@
 */
 
 .component-card_8 {
-    border: 1px solid #1b2e4b;
+    background: #fff;
+    border: 1px solid #e0e6ed;
     width: 24rem;
     margin: 0 auto;
+    -webkit-box-shadow: 4px 6px 10px -3px #bfc9d4;
+    box-shadow: 4px 6px 10px -3px #bfc9d4;
 }
+.component-card_8 .progress-order {}
 .component-card_8 .progress-order .progress-order-header h6 {
-	color:#bfc9d4;
+	color:#0e1726;
 	font-weight:600;
 	font-size:16px
 }
 .component-card_8 .progress-order .progress-order-header span.badge { 
 	font-size:12px;
 	padding:6px 10px;
-	color:#c2d5ff;
-	background-color:#1b55e2;
+	color:#1b55e2;
+	background-color:#c2d5ff
 }
 .component-card_8 .progress-order .progress-order-body ul li img {
 	width:40px;
@@ -314,20 +325,18 @@
 	right:-34px
 }
 .component-card_8 .progress-order .progress-order-body ul li.badge-notify .notification span.badge {
-	background-color: #0e1726;
-    color: #e0e6ed;
-    font-size: 12px;
-    padding: 4px 7px;
-    font-weight: 500;
+	background-color:#fff;
+	color:#1b55e2;
+	box-shadow:0 0 20px 0 #d0d0d0;
+	font-size:12px;padding:4px 7px
 }
 .component-card_8 .progress-order .progress-order-body .p-o-percentage {
 	font-size:14px;
-	color:#e0e6ed
+	color:#1b55e2
 }
 .component-card_8 .progress-order .progress-order-body .progress { 
 	height:6px;
-	border-radius: 30px;
-    background-color: #0e1726;
+	border-radius:30px
 }
 .component-card_8 .progress-order .progress-order-body .progress .p-o-progress { 
 	border-radius:30px
@@ -339,10 +348,12 @@
 */
 
 .component-card_9 {
-    border: 1px solid #1b2e4b;
+    border: 1px solid #e0e6ed;
     border-radius: 6px;
     width: 22rem;
     margin: 0 auto;
+    -webkit-box-shadow: 4px 6px 10px -3px #bfc9d4;
+    box-shadow: 4px 6px 10px -3px #bfc9d4;
 }
 .component-card_9 .card-body {
     padding: 22px 20px;
@@ -351,7 +362,7 @@
     margin-bottom: 5px;
     font-size: 12px;
     font-weight: 600;
-    color: #009688;
+    color: #1b55e2;
 }
 .component-card_9 .card-title {
     font-size: 15px;
@@ -375,7 +386,7 @@
     position: absolute;
     height: 1px;
     width: 215px;
-    background: #1b2e4b;
+    background: #e0e6ed;
     top: 0;
     right: 0;
     left: 0;
@@ -403,29 +414,29 @@
 }
 .component-card_9 .user-name {
     align-self: center;
-    color: #25d5e4;
+    color: #515365;
     font-weight: 600;
 }
 .component-card_9 .meta-action { display: flex; }
 .component-card_9 .meta-likes {
     align-self: center;
     margin-right: 13px;
-    color: #009688;
+    color: #1b55e2;
 }
 .component-card_9 .meta-likes svg {
     width: 16px;
     vertical-align: sub;
-    color: #009688;
+    color: #1b55e2;
     fill: rgba(27, 85, 226, 0.23921568627450981);
 }
 .component-card_9 .meta-view {
     align-self: center;
-    color: #009688;
+    color: #1b55e2;
 }
 .component-card_9 .meta-view svg {
     width: 16px;
     vertical-align: sub;
-    color: #009688;
+    color: #1b55e2;
     fill: rgba(27, 85, 226, 0.23921568627450981);
 }
 

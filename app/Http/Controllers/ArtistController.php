@@ -8,7 +8,9 @@ use App\Image;
 use App\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class ArtistController extends Controller
@@ -30,7 +32,7 @@ class ArtistController extends Controller
      */
     public function index()
     {
-        $artist = Artist::all();
+        $artist = Artist::paginate(10);
         return view('container.artist.index')->with(compact('artist'));
     }
 
@@ -220,50 +222,56 @@ class ArtistController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Artist  $artist
+     * @param \App\Artist $artist
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($artist)
+    public function destroy($artist, Request $request)
     {
-        $video = Video::where('artist_id',$artist)->get();
-        $art = Artist::where('id',$artist)->first();
+        $password = $request->input('password');
+        $user_password = Auth::user()->getAuthPassword();
+        if(Hash::check($password, $user_password)) {
+            $video = Video::where('artist_id', $artist)->get();
+            $art = Artist::where('id', $artist)->first();
 
-        if ($art['image'] != null) {
-            $image_path = public_path() . '/storage/' . $art['image'];
-            unlink($image_path);
-        }
-        if ($art['video'] != null) {
-            $image_path = public_path() . '/storage/' . $art['video'];
-            unlink($image_path);
-        }
-        Artist::destroy($artist);
-
-        if (!empty($video)) {
-            foreach ($video as $value) {
-                DB::table('advertise')
-                    ->where('video_id', $value->id)
-                    ->delete();
-                if ($value->image != null) {
-                    $image_path = public_path() . '/storage/' . $value->image;
-                    unlink($image_path);
-                }
-                if ($value->video != null) {
-                    $image_path = public_path() . '/storage/' . $value->video;
-                    unlink($image_path);
-                }
-            }
-        }
-        DB::table('video')->where('artist_id',$artist)->delete();
-
-        $image = Image::where('artist_id', $artist)->get();
-        if (!empty($image)) {
-            foreach ($image as $item) {
-                $image_path = public_path() . '/storage/' . $item->image;
+            if ($art['image'] != null) {
+                $image_path = public_path() . '/storage/' . $art['image'];
                 unlink($image_path);
             }
-            DB::table('image')->where('artist_id',$artist)->delete();
-        }
+            if ($art['video'] != null) {
+                $image_path = public_path() . '/storage/' . $art['video'];
+                unlink($image_path);
+            }
+            Artist::destroy($artist);
 
-        return redirect('artist');
+            if (!empty($video)) {
+                foreach ($video as $value) {
+                    DB::table('advertise')
+                        ->where('video_id', $value->id)
+                        ->delete();
+                    if ($value->image != null) {
+                        $image_path = public_path() . '/storage/' . $value->image;
+                        unlink($image_path);
+                    }
+                    if ($value->video != null) {
+                        $image_path = public_path() . '/storage/' . $value->video;
+                        unlink($image_path);
+                    }
+                }
+            }
+            DB::table('video')->where('artist_id', $artist)->delete();
+
+            $image = Image::where('artist_id', $artist)->get();
+            if (!empty($image)) {
+                foreach ($image as $item) {
+                    $image_path = public_path() . '/storage/' . $item->image;
+                    unlink($image_path);
+                }
+                DB::table('image')->where('artist_id', $artist)->delete();
+            }
+            return redirect('artist')->with('message', 'Delete Successfully');
+
+        }
+        return redirect('artist')->with('delete', 'Password Not Valid');
     }
 }

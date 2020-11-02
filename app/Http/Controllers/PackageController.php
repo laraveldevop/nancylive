@@ -26,7 +26,7 @@ class PackageController extends Controller
      */
     public function index()
     {
-        $package = Package::where('module_type','!=', null)->get();
+        $package = Package::where('module_type','!=', null)->paginate('10');
         return view('container.package.index')->with('package',$package);
     }
 

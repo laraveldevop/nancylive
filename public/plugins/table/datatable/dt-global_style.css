@@ -95,7 +95,6 @@ div.dataTables_wrapper div.dataTables_filter svg {
 }
 .dataTables_wrapper .form-control {
     background: #fff;
-    border: none;
     margin-top: 5px;
     -webkit-box-shadow: 2px 5px 17px 0 rgba(31,45,61,.1);
     box-shadow: 2px 5px 17px 0 rgba(31,45,61,.1);
@@ -104,7 +103,6 @@ div.dataTables_wrapper div.dataTables_filter svg {
     border: 1px solid #1b2e4b;
     color: #009688;
     font-size: 15px;
-    background: #1b2e4b;
 }
 div.dataTables_wrapper div.dataTables_filter input {
     width: 400px;
@@ -114,7 +112,7 @@ div.dataTables_wrapper div.dataTables_filter input {
     -moz-appearance:none; /* Firefox */
     -webkit-appearance:none; /* Safari and Chrome */
     appearance:none;
-    background: #1b2e4b url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23bfc9d4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-down'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") 49px 12px no-repeat;
+    background: #ffffff url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23bfc9d4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-down'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") 49px 12px no-repeat;
     border: 1px solid #1b2e4b;
     color: #009688;
     border-radius: 6px;

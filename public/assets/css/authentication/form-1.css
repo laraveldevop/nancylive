@@ -3,7 +3,7 @@ body {
     overflow: auto;
     margin: 0;
     padding: 0;
-    background: #060818;
+    background: #fff;
 }
 .form-container {
     display: flex;
@@ -31,9 +31,6 @@ body {
     width: 100%;
     min-height: 100%;
 }
-.form-form .form-container h1 {
-    color: #bfc9d4;
-}
 .form-form .form-container .form-content {
     display: block;
     width: 100%;
@@ -44,25 +41,26 @@ body {
     height: 52px;
     border-radius: 50%;
     margin-right: 15px;
-    border: 4px solid rgba(59, 63, 92, 0.25);
+    border: 4px solid #e0e6ed;
 }
 .form-form .form-form-wrap .user-meta div { align-self: center; }
 .form-form .form-form-wrap .user-meta p {
     font-size: 31px;
-    color: #bfc9d4;
+    color: #3b3f5c;
     margin-bottom: 0;
 }
 .form-form .form-form-wrap h1 .brand-name {
-    color: #009688;
+    color: #1b55e2;
     font-weight: 600;
 }
 .form-form .form-form-wrap p.signup-link {
     font-size: 14px;
-    color: #e0e6ed;
+    color: #3b3f5c;
+    font-weight: 700;
     margin-bottom: 50px;
 }
 .form-form .form-form-wrap p.signup-link a {
-    color: #009688;
+    color: #1b55e2;
     border-bottom: 1px solid;
 }
 .form-form .form-form-wrap form .field-wrapper.input {
@@ -73,18 +71,18 @@ body {
 .form-form .form-form-wrap form .field-wrapper.input:focus { border: 1px solid #000; }
 .form-form .form-form-wrap form .field-wrapper.toggle-pass p {
     font-weight: 600;
-    color: #bfc9d4;
+    color: #3b3f5c;
     margin-bottom: 0;
 }
 .form-form .form-form-wrap form .field-wrapper .logged-in-user-name {
     font-size: 37px;
-    color: #bfc9d4;
+    color: #3b3f5c;
 }
 .form-form .form-form-wrap form .field-wrapper svg {
     position: absolute;
-    top: 13px;
-    color: #009688;
-    fill: rgba(33, 150, 243, 0.10980392156862745);
+    top: 16px;
+    color: #1b55e2;
+    fill: rgba(27, 85, 226, 0.23921568627450981);
 }
 .form-form .form-form-wrap form .field-wrapper.terms_condition { margin-bottom: 20px; }
 .form-form .form-form-wrap form .field-wrapper.terms_condition label {
@@ -93,7 +91,7 @@ body {
     padding-left: 31px;
     font-weight: 100;
 }
-.form-form .form-form-wrap form .field-wrapper.terms_condition a { color: #009688; }
+.form-form .form-form-wrap form .field-wrapper.terms_condition a { color: #1b55e2; }
 .form-form .form-form-wrap form .field-wrapper input {
     display: inline-block;
     vertical-align: middle;
@@ -102,13 +100,14 @@ body {
     max-width: 635px;
     width: 100%;
     min-height: 36px;
-    background-color: transparent;
+    background-color: #ffffff;
     border: none;
     -ms-transition: all 0.2s ease-in-out 0s;
     transition: all 0.2s ease-in-out 0s;
-    color: #009688;
+    color: #3b3f5c;
+    font-weight: 700;
     font-size: 16px;
-    border-bottom: 1px solid #191e3a;
+    border-bottom: 1px solid #e0e6ed;
     padding: 0px 0 10px 35px;
 }
 .form-form .form-form-wrap form .field-wrapper input::-webkit-input-placeholder {
@@ -123,7 +122,8 @@ body {
     color: #d3d3d3;
     font-size: 14px;
 }
-.form-form .form-form-wrap form .field-wrapper input:focus { border-bottom: 1px solid #009688; box-shadow: none; }
+.form-form .form-form-wrap form .field-wrapper input:focus { border-bottom: 1px solid #1b55e2; box-shadow: none; }
+.form-form .form-form-wrap form .field-wrapper {}
 .form-form .form-form-wrap form .field-wrapper.toggle-pass {
     align-self: center;
     text-align: left;
@@ -132,14 +132,15 @@ body {
 .form-form .form-form-wrap form .field-wrapper button.btn { align-self: center; }
 .form-form .form-form-wrap form .field-wrapper a.forgot-pass-link {
     width: 100%;
-    color: #009688;
+    font-weight: 700;
+    color: #1b55e2;
     text-align: center;
     display: block;
     letter-spacing: 2px;
     font-size: 15px;
     margin-top: 15px;
 }
-.form-form .form-form-wrap form .field-wrapper .n-chk .new-control-indicator { top: 1px; border: 1px solid #515365; background-color: #515365; }
+.form-form .form-form-wrap form .field-wrapper .n-chk .new-control-indicator { top: 1px; border: 1px solid #bfc9d4; background-color: #f1f2f3; }
 .form-form .form-form-wrap form .field-wrapper .n-chk .new-control-indicator:after { top: 52%; }
 .form-form .form-form-wrap form .field-wrapper.keep-logged-in { margin-top: 60px; }
 .form-form .form-form-wrap form .field-wrapper.keep-logged-in label {
@@ -150,12 +151,13 @@ body {
 .form-form .terms-conditions {
     max-width: 480px;
     margin: 0 auto;
-    color: #888ea8;
+    color: #3b3f5c;
     font-weight: 600;
     margin-top: 90px;
 }
 .form-form .terms-conditions a {
-    color: #009688;
+    color: #1b55e2;
+    font-weight: 700;
 }
 .form-image {
     display: -webkit-box;

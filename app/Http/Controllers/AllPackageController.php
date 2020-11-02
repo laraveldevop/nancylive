@@ -10,6 +10,15 @@ use Illuminate\Support\Facades\DB;
 class AllPackageController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -20,7 +29,7 @@ class AllPackageController extends Controller
             ['module_type', '=', null],
             ['content_count', '=', null],
             ['category_id','=',null]
-        ])->get();
+        ])->paginate('10');
         return view('container.package.all_index')->with('package',$package);
     }
 

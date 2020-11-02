@@ -33,8 +33,7 @@ class VideoController extends Controller
         ->select(DB::raw('video.id,video.video_name,video.video,video.detail,video.token,video.url,video.image as v_image,category.cat_name,artist.artist_name,artist.image,artist.about'))
         ->leftJoin('category', 'video.cat_id', '=', 'category.cat_id')
             ->leftjoin('artist','video.artist_id','=','artist.id')
-            ->get()
-            ->toArray();
+            ->paginate(10);
 
 
         return view('container.video.index')->with(compact('video'));

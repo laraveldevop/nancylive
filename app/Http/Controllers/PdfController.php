@@ -31,8 +31,7 @@ class PdfController extends Controller
             ->select(DB::raw('pdf.id,pdf.pdf_name,pdf.file,pdf.detail,pdf.price,pdf.token,category.cat_name'))
             ->leftJoin('category', 'pdf.cat_id', '=', 'category.cat_id')
             ->orderBy('pdf_name','ASC')
-            ->get()
-            ->toArray();
+            ->paginate('10');
         return view('container.pdf.index')->with(compact('pdf'));
 
 

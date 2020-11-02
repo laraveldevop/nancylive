@@ -13,24 +13,32 @@
     <div id="content" class="main-content">
         @if(session()->has('delete'))
             <div class="col-md-10">
-                <div  class="alert alert-outline-danger mt-lg-2 mb-4" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert">
+                <div class="alert alert-outline-danger mt-lg-2 mb-4" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-x close" data-dismiss="alert">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
                             <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg></button>
+                        </svg>
+                    </button>
                     <strong>{{ session()->get('delete') }}</strong>
                 </div>
             </div>
         @endif
         @if(session()->has('message'))
             <div class="col-md-10">
-            <div  class="alert alert-outline-primary mt-lg-2 mb-4" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg></button>
-                <strong>{{ session()->get('message') }}</strong>
-            </div>
+                <div class="alert alert-outline-primary mt-lg-2 mb-4" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-x close" data-dismiss="alert">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                    <strong>{{ session()->get('message') }}</strong>
+                </div>
             </div>
         @endif
         <div class="layout-px-spacing">
@@ -184,7 +192,7 @@
                                         </div>
                                         @foreach($category as $key=>$value)
                                             <div class="items">
-                                                <div class="item-content">
+                                                <div class="item-content" style="background-color: #f1f2f3;">
                                                     <div class="user-profile">
                                                         <div class="n-chk align-self-center text-center">
                                                             <label class="new-control new-checkbox checkbox-primary">
@@ -221,7 +229,9 @@
                                                                     d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
                                                             </svg>
                                                         </a>
-                                                        <button type="button" class="btn btn-dark  rounded-circle" data-toggle="modal" data-target="#standardModal{{$value->cat_id}}" >
+                                                        <button type="button" class="btn btn-dark  rounded-circle"
+                                                                data-toggle="modal"
+                                                                data-target="#standardModal{{$value->cat_id}}">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                  height="24"
                                                                  viewBox="0 0 24 24" fill="none"
@@ -239,9 +249,15 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endforeach
 
+                                        @endforeach
                                     </div>
+
+                                    <div class="col-lg-8">
+                                        {!! $category->render() !!}
+                                    </div>
+
+
                                 </div>
 
 
@@ -284,7 +300,7 @@
                                         </div>
                                         @foreach($product_category as $key=>$value)
                                             <div class="items">
-                                                <div class="item-content">
+                                                <div class="item-content" style="background-color: #f1f2f3;">
                                                     <div class="user-profile">
                                                         <div class="n-chk align-self-center text-center">
                                                             <label class="new-control new-checkbox checkbox-primary">
@@ -322,7 +338,9 @@
                                                             </svg>
                                                         </a>
 
-                                                        <button type="button" class="btn btn-dark  rounded-circle" data-toggle="modal" data-target="#standardModal{{$value->cat_id}}" >
+                                                        <button type="button" class="btn btn-dark  rounded-circle"
+                                                                data-toggle="modal"
+                                                                data-target="#standardModal{{$value->cat_id}}">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                  height="24"
                                                                  viewBox="0 0 24 24" fill="none"
@@ -342,6 +360,9 @@
                                             </div>
                                         @endforeach
 
+                                    </div>
+                                    <div class="col-lg-8">
+                                        {!! $product_category->render() !!}
                                     </div>
                                 </div>
 
@@ -384,7 +405,7 @@
                                         </div>
                                         @foreach($pdf_category as $key=>$value)
                                             <div class="items">
-                                                <div class="item-content">
+                                                <div class="item-content" style="background-color: #f1f2f3;">
                                                     <div class="user-profile">
                                                         <div class="n-chk align-self-center text-center">
                                                             <label class="new-control new-checkbox checkbox-primary">
@@ -422,7 +443,9 @@
                                                             </svg>
                                                         </a>
 
-                                                        <button type="button" class="btn btn-dark  rounded-circle" data-toggle="modal" data-target="#standardModal{{$value->cat_id}}" >
+                                                        <button type="button" class="btn btn-dark  rounded-circle"
+                                                                data-toggle="modal"
+                                                                data-target="#standardModal{{$value->cat_id}}">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                  height="24"
                                                                  viewBox="0 0 24 24" fill="none"
@@ -443,6 +466,9 @@
                                         @endforeach
 
                                     </div>
+                                    <div class="col-lg-8">
+                                        {!! $pdf_category->render() !!}
+                                    </div>
                                 </div>
                             </div>
 
@@ -456,141 +482,186 @@
 
     </div>
     @foreach($category as $key=>$value)
-    <!-- Modal -->
-    <div class="modal fade modal-notification" id="standardModal{{$value->cat_id}}" tabindex="-1" role="dialog" aria-labelledby="standardModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document" id="standardModalLabel">
-            <div class="modal-content">
-                <div class="modal-body text-center">
-                    <div class="icon-content">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                    </div>
-                    <p class="modal-text">Are You Sure!</p>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Not Sure</button>
-                    <button type="submit" id="delete" class="btn btn-primary" data-toggle="modal" data-dismiss="modal" data-target="#loginModal{{$value->cat_id}}">Yes</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade login-modal" id="loginModal{{$value->cat_id}}" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-
-                <div class="modal-header" id="loginModalLabel">
-                    <h4 class="modal-title">Give me Password!</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="mt-0" action="{{url('check-password')}}" method="post" id="form">
-                        @csrf
-                        <input type="hidden"  value="{{$value->cat_id}}" name="id">
-                        <div class="form-group">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                            <input name="password" type="password" class="form-control mb-4 "  id="exampleInputPassword1" placeholder="Password">
+        <!-- Modal -->
+        <div class="modal fade modal-notification" id="standardModal{{$value->cat_id}}" tabindex="-1" role="dialog"
+             aria-labelledby="standardModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" id="standardModalLabel">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <div class="icon-content">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-bell">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            </svg>
                         </div>
+                        <p class="modal-text">Are You Sure!</p>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Not Sure</button>
+                        <button type="submit" id="delete" class="btn btn-primary" data-toggle="modal"
+                                data-dismiss="modal" data-target="#loginModal{{$value->cat_id}}">Yes
+                        </button>
 
-                        <button type="submit" id="delete" class="btn btn-primary mt-2 mb-2 btn-block">OK</button>
-                    </form>
-
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- Modal -->
+        <div class="modal fade login-modal" id="loginModal{{$value->cat_id}}" tabindex="-1" role="dialog"
+             aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header" id="loginModalLabel">
+                        <h4 class="modal-title">Give me Password!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="mt-0" action="{{url('check-password')}}" method="post" id="form">
+                            @csrf
+                            <input type="hidden" value="{{$value->cat_id}}" name="id">
+                            <div class="form-group">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="feather feather-lock">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                                <input name="password" type="password" class="form-control mb-4 "
+                                       id="exampleInputPassword1" placeholder="Password">
+                            </div>
+
+                            <button type="submit" id="delete" class="btn btn-primary mt-2 mb-2 btn-block">OK</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
     @endforeach
     @foreach($product_category as $key=>$value)
-    <!-- Modal -->
-    <div class="modal fade modal-notification" id="standardModal{{$value->cat_id}}" tabindex="-1" role="dialog" aria-labelledby="standardModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document" id="standardModalLabel">
-            <div class="modal-content">
-                <div class="modal-body text-center">
-                    <div class="icon-content">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                    </div>
-                    <p class="modal-text">Are You Sure!</p>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Not Sure</button>
-                    <button type="submit" id="delete" class="btn btn-primary" data-toggle="modal" data-dismiss="modal" data-target="#loginModal{{$value->cat_id}}">Yes</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade login-modal" id="loginModal{{$value->cat_id}}" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-
-                <div class="modal-header" id="loginModalLabel">
-                    <h4 class="modal-title">Give me Password!</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="mt-0" action="{{url('check-password')}}" method="post" id="form">
-                        @csrf
-                        <input type="hidden"  value="{{$value->cat_id}}" name="id">
-                        <div class="form-group">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                            <input name="password" type="password" class="form-control mb-4 "  id="exampleInputPassword1" placeholder="Password">
+        <!-- Modal -->
+        <div class="modal fade modal-notification" id="standardModal{{$value->cat_id}}" tabindex="-1" role="dialog"
+             aria-labelledby="standardModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" id="standardModalLabel">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <div class="icon-content">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-bell">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            </svg>
                         </div>
+                        <p class="modal-text">Are You Sure!</p>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Not Sure</button>
+                        <button type="submit" id="delete" class="btn btn-primary" data-toggle="modal"
+                                data-dismiss="modal" data-target="#loginModal{{$value->cat_id}}">Yes
+                        </button>
 
-                        <button type="submit" id="delete" class="btn btn-primary mt-2 mb-2 btn-block">OK</button>
-                    </form>
-
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- Modal -->
+        <div class="modal fade login-modal" id="loginModal{{$value->cat_id}}" tabindex="-1" role="dialog"
+             aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header" id="loginModalLabel">
+                        <h4 class="modal-title">Give me Password!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="mt-0" action="{{url('check-password')}}" method="post" id="form">
+                            @csrf
+                            <input type="hidden" value="{{$value->cat_id}}" name="id">
+                            <div class="form-group">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="feather feather-lock">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                                <input name="password" type="password" class="form-control mb-4 "
+                                       id="exampleInputPassword1" placeholder="Password">
+                            </div>
+
+                            <button type="submit" id="delete" class="btn btn-primary mt-2 mb-2 btn-block">OK</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
     @endforeach
     @foreach($pdf_category as $key=>$value)
-    <!-- Modal -->
-    <div class="modal fade modal-notification" id="standardModal{{$value->cat_id}}" tabindex="-1" role="dialog" aria-labelledby="standardModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document" id="standardModalLabel">
-            <div class="modal-content">
-                <div class="modal-body text-center">
-                    <div class="icon-content">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                    </div>
-                    <p class="modal-text">Are You Sure!</p>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Not Sure</button>
-                    <button type="submit" id="delete" class="btn btn-primary" data-toggle="modal" data-dismiss="modal" data-target="#loginModal{{$value->cat_id}}">Yes</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade login-modal" id="loginModal{{$value->cat_id}}" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-
-                <div class="modal-header" id="loginModalLabel">
-                    <h4 class="modal-title">Give me Password!</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="mt-0" action="{{url('check-password')}}" method="post" id="form">
-                        @csrf
-                        <input type="hidden"  value="{{$value->cat_id}}" name="id">
-                        <div class="form-group">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                            <input name="password" type="password" class="form-control mb-4 "  id="exampleInputPassword1" placeholder="Password">
+        <!-- Modal -->
+        <div class="modal fade modal-notification" id="standardModal{{$value->cat_id}}" tabindex="-1" role="dialog"
+             aria-labelledby="standardModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" id="standardModalLabel">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <div class="icon-content">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-bell">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            </svg>
                         </div>
+                        <p class="modal-text">Are You Sure!</p>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Not Sure</button>
+                        <button type="submit" id="delete" class="btn btn-primary" data-toggle="modal"
+                                data-dismiss="modal" data-target="#loginModal{{$value->cat_id}}">Yes
+                        </button>
 
-                        <button type="submit" id="delete" class="btn btn-primary mt-2 mb-2 btn-block">OK</button>
-                    </form>
-
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- Modal -->
+        <div class="modal fade login-modal" id="loginModal{{$value->cat_id}}" tabindex="-1" role="dialog"
+             aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header" id="loginModalLabel">
+                        <h4 class="modal-title">Give me Password!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="mt-0" action="{{url('check-password')}}" method="post" id="form">
+                            @csrf
+                            <input type="hidden" value="{{$value->cat_id}}" name="id">
+                            <div class="form-group">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="feather feather-lock">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                                <input name="password" type="password" class="form-control mb-4 "
+                                       id="exampleInputPassword1" placeholder="Password">
+                            </div>
+
+                            <button type="submit" id="delete" class="btn btn-primary mt-2 mb-2 btn-block">OK</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
     @endforeach
 

@@ -10,7 +10,15 @@ use Illuminate\Support\Facades\DB;
 
 class ImageController extends Controller
 {
-
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     function uploadArtist(Request $request)
     {
         if ($request->ajax()) {

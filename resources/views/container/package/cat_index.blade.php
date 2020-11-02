@@ -50,8 +50,6 @@
                                                 <a href="{{url('cat-package/create')}}"> <svg  id="btn-add-contact" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg></a>
 
                                                 <div class="switch align-self-center">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list view-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid view-grid active-view"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                                                 </div>
                                             </div>
 
@@ -86,7 +84,7 @@
                                         </div>
                                         @foreach($package as $key=>$value)
                                             <div class="items">
-                                                <div class="item-content">
+                                                <div class="item-content" style="background-color: #f1f2f3;">
                                                     <div class="user-profile">
                                                         <div class="n-chk align-self-center text-center">
                                                             <label class="new-control new-checkbox checkbox-primary">
@@ -94,7 +92,7 @@
                                                                 <span class="new-control-indicator"></span>
                                                             </label>
                                                         </div>
-                                                        <img width="100px"  src="{{ asset(!empty($value->image)?'public/storage/'.$value->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}" alt="avatar">
+                                                        <img width="100px"  src="{{ asset(!empty($value->image)?'public/storage/'.$value->image:'public/assets/img/squer_placeholder.png')}}" alt="avatar">
 
                                                     </div>
                                                     <div class="user-email">
@@ -140,6 +138,11 @@
                                     </div>
 
                                 </div>
+                            </div>
+                            <div class="col-lg-4"></div>
+                            <div class="col-lg-8">
+                                {!! $package->render() !!}
+
                             </div>
                         </div>
                     </div>

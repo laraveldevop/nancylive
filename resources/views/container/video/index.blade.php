@@ -219,6 +219,11 @@
 
                     </div>
                 </div>
+                <div class="col-lg-4"></div>
+                <div class="col-lg-8">
+                    {!! $video->render() !!}
+
+                </div>
             </div>
         </div>
 

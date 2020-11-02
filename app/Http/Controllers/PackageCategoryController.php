@@ -26,7 +26,7 @@ class PackageCategoryController extends Controller
      */
     public function index()
     {
-        $package = Package::where('category_id','!=', null)->get();
+        $package = Package::where('category_id','!=', null)->paginate('10');
         return view('container.package.cat_index')->with('package',$package);
     }
 

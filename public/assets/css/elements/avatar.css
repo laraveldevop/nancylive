@@ -21,13 +21,13 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    background-color: #506690;
+    background-color: #bfc9d4;
     color: #fff;
 }
 .avatar--group .avatar-xl { margin-left: -1.28125rem; }
 .avatar--group .avatar { margin-left: -.75rem; }
 .avatar--group img,
-.avatar--group .avatar .avatar-title { border: 2px solid #888ea8; }
+.avatar--group .avatar .avatar-title { border: 2px solid #ffffff; }
 .avatar-xl {
     width: 5.125rem;
     height: 5.125rem;
@@ -56,9 +56,9 @@
     width: 28%;
     height: 28%;
     border-radius: 50%;
-    border: 3px solid rgba(191, 201, 212, 0.611764705882353);
+    border: 3px solid #fff;
 }
-.avatar-offline:before { background-color: #506690; }
+.avatar-offline:before { background-color: #bfc9d4; }
 .avatar-online:before { background-color: #009688; }
 .avatar.translateY-axis img, .avatar.translateY-axis .avatar-title {
     -webkit-transition: all 0.35s ease;

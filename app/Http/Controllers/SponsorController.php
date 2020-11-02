@@ -31,7 +31,7 @@ class SponsorController extends Controller
      */
     public function index()
     {
-        $sponsor = Sponsor::all();
+        $sponsor = Sponsor::paginate(10);
         return view('container.sponsor.index')->with(compact('sponsor'));
 
     }

@@ -33,7 +33,7 @@ class ProductController extends Controller
             ->leftJoin('brand', 'product.brand', '=', 'brand.id')
             ->leftJoin('sponsor', 'product.sponsor_id', '=', 'sponsor.id')
 //            ->leftJoin('product_image','product.id','=','product_image.product_id')
-            ->get();
+            ->paginate('10');
         return view('container.product.index')->with(compact('product'));
 
 

@@ -53,7 +53,7 @@
                                             <div class="d-flex">
                                                 <div class="usr-img-frame mr-2 rounded-circle">
                                                     <img alt="avatar" class="img-fluid rounded-circle"
-                                                         src="{{ asset(!empty($item->image)?'public/storage/'.$item->image:'')}}">
+                                                         src="{{ asset(!empty($item->image)?'public/storage/'.$item->image:'public/assets/img/squer_placeholder.png')}}">
                                                 </div>
                                                 <p class="align-self-center mb-0 admin-name"> {{$item->u_name}} </p>
                                             </div>
