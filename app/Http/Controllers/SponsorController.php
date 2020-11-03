@@ -9,7 +9,9 @@ use App\ProductImage;
 use App\Sponsor;
 use App\SponsorImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class SponsorController extends Controller
@@ -230,8 +232,11 @@ class SponsorController extends Controller
      * @param  \App\Sponsor  $sponsor
      * @return \Illuminate\Http\Response
      */
-    public function destroy($sponsor)
+    public function destroy($sponsor, Request $request)
     {
+        $password = $request->input('password');
+        $user_password = Auth::user()->getAuthPassword();
+        if(Hash::check($password, $user_password)) {
         $product = Product::where('sponsor_id',$sponsor)->get();
 
         $cat = Sponsor::where('id',$sponsor)->first();
@@ -274,7 +279,8 @@ class SponsorController extends Controller
             }
             DB::table('sponsor_image')->where('sponsor_id',$sponsor)->delete();
         }
-
-        return redirect('sponsor');
+            return redirect('sponsor')->with('message', 'Delete Successfully');
+        }
+        return redirect('sponsor')->with('delete', 'Password Not Valid');
     }
 }

@@ -12,6 +12,28 @@
     <div id="loading"></div>
     <!--  BEGIN CONTENT AREA  -->
     <div id="content" class="main-content">
+        @if(session()->has('delete'))
+            <div class="col-md-10">
+                <div  class="alert alert-outline-danger mt-lg-2 mb-4" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg></button>
+                    <strong>{{ session()->get('delete') }}</strong>
+                </div>
+            </div>
+        @endif
+        @if(session()->has('message'))
+            <div class="col-md-10">
+                <div  class="alert alert-outline-primary mt-lg-2 mb-4" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg></button>
+                    <strong>{{ session()->get('message') }}</strong>
+                </div>
+            </div>
+        @endif
         <div class="layout-px-spacing">
             <div class="row layout-spacing layout-top-spacing" id="cancel-row">
                 <div class="col-lg-12">
@@ -119,23 +141,21 @@
                                                 </svg>
                                             </a>
 
-                                            <form method="POST" style="display:inline;"
-                                                  action="{{ route('pdf.destroy',$value->id) }}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-dark  rounded-circle">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                         class="feather feather-trash-2">
-                                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                                        <path
-                                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                                        <line x1="10" y1="11" x2="10" y2="17"></line>
-                                                        <line x1="14" y1="11" x2="14" y2="17"></line>
-                                                    </svg>
-                                                </button>
-                                            </form>
+                                            <button type="button" class="btn btn-dark  rounded-circle" data-toggle="modal" data-target="#standardModal" >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                     height="24"
+                                                     viewBox="0 0 24 24" fill="none"
+                                                     stroke="currentColor"
+                                                     stroke-width="2" stroke-linecap="round"
+                                                     stroke-linejoin="round"
+                                                     class="feather feather-trash-2">
+                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                    <path
+                                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                </svg>
+                                            </button>
                                             <span class="sub-switch">
                                             <label class="switch s-outline s-outline-primary">
                                                 <input class="searchType" type="checkbox"
@@ -162,6 +182,53 @@
         </div>
 
     </div>
+    <!-- Modal -->
+    <div class="modal fade modal-notification" id="standardModal" tabindex="-1" role="dialog" aria-labelledby="standardModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" id="standardModalLabel">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="icon-content">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    </div>
+                    <p class="modal-text">Are You Sure!</p>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Not Sure</button>
+                    <button type="submit" id="delete" class="btn btn-primary" data-toggle="modal" data-dismiss="modal" data-target="#loginModal">Yes</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @foreach($pdf as $key=>$value)
+
+
+        <!-- Modal -->
+        <div class="modal fade login-modal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header" id="loginModalLabel">
+                        <h4 class="modal-title">Give me Password!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="mt-0" action="{{ route('pdf.destroy',$value->id) }}" method="post" >
+                            @csrf
+                            @method('DELETE')
+                            <div class="form-group">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                <input name="password" type="password" class="form-control mb-4 "   placeholder="Password">
+                            </div>
+
+                            <button type="submit"  class="btn btn-primary mt-2 mb-2 btn-block">OK</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    @endforeach
     <!--  END CONTENT AREA  -->
     @push('artist_script')
         <script>

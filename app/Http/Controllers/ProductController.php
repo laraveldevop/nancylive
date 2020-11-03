@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Product;
 use App\ProductImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -255,16 +257,21 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Product  $product
+     * @param \App\Product $product
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($product)
+    public function destroy($product, Request $request)
     {
+        $password = $request->input('password');
+        $user_password = Auth::user()->getAuthPassword();
+        if(Hash::check($password, $user_password)) {
         Product::destroy($product);
         DB::table('product_image')->where('product_id',$product)->delete();
         DB::table('advertise')->where('product_id',$product)->delete();
-
-        return redirect('product');
+            return redirect('product')->with('message', 'Delete Successfully');
+        }
+        return redirect('product')->with('delete', 'Password Not Valid');
     }
 
     public function ads(Request $request)

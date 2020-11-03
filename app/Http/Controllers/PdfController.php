@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class PdfController extends Controller
@@ -177,11 +179,15 @@ class PdfController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Pdf  $pdf
+     * @param \App\Pdf $pdf
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($pdf)
+    public function destroy($pdf, Request $request)
     {
+        $password = $request->input('password');
+        $user_password = Auth::user()->getAuthPassword();
+        if(Hash::check($password, $user_password)) {
         $value = Pdf::where('id',$pdf)->first();
         if ($value['file'] != null) {
             $image_path = public_path() . '/storage/' . $value['file'];
@@ -189,7 +195,9 @@ class PdfController extends Controller
         }
         Pdf::destroy($pdf);
         DB::table('advertise')->where('pdf_id',$pdf)->delete();
-        return redirect('pdf');
+            return redirect('pdf')->with('message', 'Delete Successfully');
+        }
+        return redirect('pdf')->with('delete', 'Password Not Valid');
     }
 
     public function ads(Request $request)

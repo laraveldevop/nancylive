@@ -253,9 +253,9 @@
                                         @endforeach
                                     </div>
 
-                                    <div class="col-lg-8">
-                                        {!! $category->render() !!}
-                                    </div>
+{{--                                    <div class="col-lg-8">--}}
+{{--                                        {!! $category->render() !!}--}}
+{{--                                    </div>--}}
 
 
                                 </div>
@@ -361,9 +361,9 @@
                                         @endforeach
 
                                     </div>
-                                    <div class="col-lg-8">
-                                        {!! $product_category->render() !!}
-                                    </div>
+{{--                                    <div class="col-lg-8">--}}
+{{--                                        {!! $product_category->render() !!}--}}
+{{--                                    </div>--}}
                                 </div>
 
                                 <div class="tab-pane fade" id="icon-pills-contact" role="tabpanel"
@@ -466,9 +466,9 @@
                                         @endforeach
 
                                     </div>
-                                    <div class="col-lg-8">
-                                        {!! $pdf_category->render() !!}
-                                    </div>
+{{--                                    <div class="col-lg-8">--}}
+{{--                                        {!! $pdf_category->render() !!}--}}
+{{--                                    </div>--}}
                                 </div>
                             </div>
 

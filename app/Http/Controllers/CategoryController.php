@@ -38,17 +38,20 @@ class CategoryController extends Controller
             ->select(DB::raw('category.cat_id,category.cat_name,cat_image,module.module_name'))
             ->leftJoin('module', 'category.module_id', '=', 'module.id')
             ->where('module.module_name','=','video')
-            ->paginate(10);
+            ->get()
+            ->toArray();
         $pdf_category=  DB::table('category')
             ->select(DB::raw('category.cat_id,category.cat_name,cat_image,module.module_name'))
             ->leftJoin('module', 'category.module_id', '=', 'module.id')
             ->where('module.module_name','=','pdf')
-            ->paginate(10);
+            ->get()
+            ->toArray();
         $product_category=  DB::table('category')
             ->select(DB::raw('category.cat_id,category.cat_name,cat_image,module.module_name'))
             ->leftJoin('module', 'category.module_id', '=', 'module.id')
             ->where('module.module_name','=','product')
-            ->paginate(10);
+            ->get()
+            ->toArray();
 
         return view('container.category.index')->with(compact('category','pdf_category','product_category'));
     }

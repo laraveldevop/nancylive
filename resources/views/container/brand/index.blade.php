@@ -170,15 +170,15 @@
                         <h4 class="modal-title">Give me Password!</h4>
                     </div>
                     <div class="modal-body">
-                        <form class="mt-0" action="{{ route('brand.destroy',$value->id) }}" method="post" id="form">
+                        <form class="mt-0" action="{{ route('brand.destroy',$value->id) }}" method="post" >
                             @csrf
                             @method('DELETE')
                             <div class="form-group">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                                <input name="password" type="password" class="form-control mb-4 "  id="exampleInputPassword1" placeholder="Password">
+                                <input name="password" type="password" class="form-control mb-4 "   placeholder="Password">
                             </div>
 
-                            <button type="submit" id="delete" class="btn btn-primary mt-2 mb-2 btn-block">OK</button>
+                            <button type="submit"  class="btn btn-primary mt-2 mb-2 btn-block">OK</button>
                         </form>
 
                     </div>

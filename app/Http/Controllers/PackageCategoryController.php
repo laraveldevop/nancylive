@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 
 use App\Package;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class PackageCategoryController extends Controller
 {
@@ -170,16 +172,23 @@ class PackageCategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Package $package
+     * @param Request $request
      * @return void
      */
-    public function destroy($package)
+    public function destroy($package, Request $request)
     {
-        $pack = Package::where('id',$package)->first();
-        if ($pack['image'] != null) {
-            $image_path = public_path() . '/storage/' . $pack['image'];
-            unlink($image_path);
+        $password = $request->input('password');
+        $user_password = Auth::user()->getAuthPassword();
+        if(Hash::check($password, $user_password)) {
+            $pack = Package::where('id', $package)->first();
+            if ($pack['image'] != null) {
+                $image_path = public_path() . '/storage/' . $pack['image'];
+                unlink($image_path);
+            }
+            Package::destroy($package);
+            return redirect('cat-package')->with('message', 'Delete Successfully');
+
         }
-        Package::destroy($package);
-        return redirect('cat-package');
+        return redirect('cat-package')->with('delete', 'Password Not Valid');
     }
 }

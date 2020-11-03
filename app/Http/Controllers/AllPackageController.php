@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\AllPackage;
 use App\Package;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AllPackageController extends Controller
 {
@@ -163,17 +165,23 @@ class AllPackageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\AllPackage  $allPackage
+     * @param \App\AllPackage $allPackage
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($allPackage)
+    public function destroy($allPackage, Request $request)
     {
+        $password = $request->input('password');
+        $user_password = Auth::user()->getAuthPassword();
+        if(Hash::check($password, $user_password)) {
         $pack = Package::where('id',$allPackage)->first();
         if ($pack['image'] != null) {
             $image_path = public_path() . '/storage/' . $pack['image'];
             unlink($image_path);
         }
         Package::destroy($allPackage);
-        return redirect('all-package');
+            return redirect('all-package')->with('message', 'Delete Successfully');
+        }
+        return redirect('all-package')->with('delete', 'Password Not Valid');
     }
 }
