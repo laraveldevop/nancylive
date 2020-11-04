@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
@@ -123,6 +124,12 @@ class ProductController extends Controller
 
                 $path = Storage::disk('public')->put('product_images', $item);
                 $arr[] = $path;
+                $thumbnailpath = public_path('storage/'.$path);
+                $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+                $img->save($thumbnailpath);
                 ProductImage::insert([
                     'product_id'=> $product->id,
                     'image'=>  $path,
@@ -239,6 +246,12 @@ class ProductController extends Controller
 
                 $path = Storage::disk('public')->put('product_images', $item);
                 $arr[] = $path;
+                $thumbnailpath = public_path('storage/'.$path);
+                $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+                $img->save($thumbnailpath);
                 ProductImage::insert([
                     'product_id'=> $product->id,
                     'image'=>  $path,

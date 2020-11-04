@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Artist;
-use App\Image;
+use App\Images;
 use App\Product;
 use App\ProductImage;
 use App\Sponsor;
@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class SponsorController extends Controller
 {
@@ -106,6 +107,12 @@ class SponsorController extends Controller
 
                 $path = Storage::disk('public')->put('sponsor_images', $item);
                 $arr[] = $path;
+                $thumbnailpath = public_path('storage/'.$path);
+                $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+                $img->save($thumbnailpath);
                 SponsorImage::insert( [
                     'sponsor_id'=> $sponsor->id,
                     'image'=>  $path,
@@ -210,6 +217,12 @@ class SponsorController extends Controller
 
                 $path = Storage::disk('public')->put('sponsor_images', $item);
                 $arr[] = $path;
+                $thumbnailpath = public_path('storage/'.$path);
+                $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+                $img->save($thumbnailpath);
                 SponsorImage::insert([
                     'sponsor_id'=> $sponsor->id,
                     'image'=>  $path,

@@ -7,7 +7,7 @@ use App\Artist;
 use App\Brand;
 use App\Category;
 use App\Http\Controllers\Controller;
-use App\Image;
+use App\Images;
 use App\Order;
 use App\Package;
 use App\ProductImage;
@@ -169,7 +169,7 @@ class HomeController extends Controller
         $v=[];
         $video=[];
         foreach ($results as $item) {
-            $images = Image::where('artist_id',$item->id)->get();
+            $images = Images::where('artist_id',$item->id)->get();
             $item['images']=$images;
 
             $qu= Video::where('artist_id',$item->id)

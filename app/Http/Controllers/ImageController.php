@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Image;
+use App\Images;
 use App\ProductImage;
 use App\SponsorImage;
 use Illuminate\Http\Request;
@@ -106,7 +106,7 @@ class ImageController extends Controller
     {
         if ($request->ajax()) {
             $image= $request->image;
-            $artist = Image::where('id',$image)->first();
+            $artist = Images::where('id',$image)->first();
             $image_path = public_path().'/storage/'.$artist['image'];
             unlink($image_path);
             DB::table('image')->where('id',$image)->delete();

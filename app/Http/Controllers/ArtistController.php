@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Artist;
-use App\Image;
+use App\Images;
 use App\Video;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class ArtistController extends Controller
 {
@@ -97,17 +97,26 @@ class ArtistController extends Controller
         $images = $request->file('files');
         if ($request->hasFile('files')) :
             foreach ($images as $item):
+                $path= Storage::disk('public')->put('images', $item);
 
-                $path = Storage::disk('public')->put('images', $item);
-                $arr[] = $path;
-                Image::insert( [
+                $thumbnailpath = public_path('storage/'.$path);
+                $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+                $img->save($thumbnailpath);
+
+                Images::insert( [
                     'artist_id'=> $artist->id,
                     'image'=>  $path,
                     'created_at'=>now()
                     //you can put other insertion here
                 ]);
+
+
             endforeach;
-            $image = implode(",", $arr);
+
+//            $image = implode(",", $arr);
         else:
             $image = '';
         endif;
@@ -203,7 +212,13 @@ class ArtistController extends Controller
 
                 $path = Storage::disk('public')->put('images', $item);
                 $arr[] = $path;
-                Image::insert([
+                $thumbnailpath = public_path('storage/'.$path);
+                $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+                $img->save($thumbnailpath);
+                Images::insert([
                     'artist_id'=> $artist->id,
                     'image'=>  $path,
                     'updated_at'=>now()
