@@ -64,7 +64,7 @@ class ArtistController extends Controller
             'facebook' => 'required',
             'youtube' => 'required',
             'image_data' => 'required',
-            'video'=> 'required|mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
+            'video'=> 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
         ]);
 
         $artist = new  Artist();
@@ -165,9 +165,7 @@ class ArtistController extends Controller
             'instagram' => 'required',
             'facebook' => 'required',
             'youtube' => 'required',
-
-
-
+            'video'=> 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
         ]);
         $artist->artist_name = $request->input('artist_name');
         $artist->email = $request->input('email');
