@@ -43,7 +43,7 @@
                                                             <select
                                                                 class="basic form-control {{ $errors->has('category_id') ? ' is-invalid' : '' }}"
                                                                 name="category_id" id="category_id">
-                                                                <option >Choose Category</option>
+                                                                <option value="">Choose Category</option>
                                                                 @foreach($category as $key => $value)
                                                                     <option value="{{ $value->cat_id }}"
                                                                         {{ (!empty(old('category_id')) && old('category_id')==$value->cat_id)?'selected':'' }}
@@ -65,7 +65,7 @@
                                                             <select
                                                                 class="basic form-control {{ $errors->has('brand') ? ' is-invalid' : '' }}"
                                                                 name="brand" id="brand">
-                                                                <option >Choose Brand</option>
+                                                                <option value="">Choose Brand</option>
                                                                 @foreach($brand as $key => $value)
                                                                     <option value="{{ $value->id }}"
                                                                         {{ (!empty(old('brand')) && old('brand')==$value->id)?'selected':'' }}
@@ -88,9 +88,9 @@
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">Sponsor</label>
                                                             <select
-                                                                class="basic form-control {{ $errors->has('sponsor') ? ' is-invalid' : '' }}"
+                                                                class="basic form-control {{ $errors->has('sponsor_id') ? ' is-invalid' : '' }}"
                                                                 name="sponsor_id" id="sponsor_id">
-                                                                <option >Choose sponsor</option>
+                                                                <option value="">Choose sponsor</option>
                                                                 @foreach($sponsor as $key => $value)
                                                                     <option value="{{ $value->id }}"
                                                                         {{ (!empty(old('sponsor_id')) && old('sponsor_id')==$value->id)?'selected':'' }}

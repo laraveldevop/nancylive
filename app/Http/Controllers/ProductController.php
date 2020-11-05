@@ -89,6 +89,8 @@ class ProductController extends Controller
             'quantity' => 'required|numeric',
             'mobile' => 'required|numeric',
             'files' => 'required',
+            'video'=> 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
+
 
         ]);
 
@@ -104,9 +106,7 @@ class ProductController extends Controller
         $product->quantity = $request->input('quantity');
         $product->token = $request->has('token');
         if ($request->hasFile('video') != null){
-            $request->validate([
-                'video'=> 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
-            ]);
+
             $path = Storage::disk('public')->put('product', $request->file('video'));
             $product->video = $path;
         }
