@@ -81,7 +81,6 @@ class ProductController extends Controller
     {
         $request->validate([
             'category_id' => 'required',
-            'sponsor_id' => 'required',
             'brand' => 'required',
             'product_name' => 'required',
             'detail' => 'required',
@@ -199,7 +198,6 @@ class ProductController extends Controller
     {
         $request->validate([
             'category_id' => 'required',
-            'sponsor_id' => 'required',
             'brand' => 'required',
             'product_name' => 'required',
             'detail' => 'required',
