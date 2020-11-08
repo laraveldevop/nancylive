@@ -201,7 +201,7 @@
                                                                 <span class="new-control-indicator"></span>
                                                             </label>
                                                         </div>
-                                                        <img style="height: 100px; width: auto"
+                                                        <img style="height: 100px; width: 100px"
                                                              src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'public/assets/img/placeholder.png')}}"
                                                              alt="avatar">
 
