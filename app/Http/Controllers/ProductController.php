@@ -239,6 +239,7 @@ class ProductController extends Controller
         }
         $images = $request->file('files');
         if ($request->hasFile('files')) :
+            $request->validate(['files'=>'mimes:jpg,jpeg,png']);
             foreach ($images as $item):
 
                 $path = Storage::disk('public')->put('product_images', $item);
