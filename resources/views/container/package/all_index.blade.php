@@ -106,7 +106,7 @@
                                         </div>
                                         @foreach($package as $key=>$value)
                                             <div class="items">
-                                                <div class="item-content" style="background-color: #f1f2f3;">
+                                                <div class="item-content" >
                                                     <div class="user-profile">
                                                         <div class="n-chk align-self-center text-center">
                                                             <label class="new-control new-checkbox checkbox-primary">

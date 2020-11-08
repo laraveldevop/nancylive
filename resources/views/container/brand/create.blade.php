@@ -40,7 +40,7 @@
                                                         <label for="exampleFormControlInput1">brand</label>
                                                         <input
                                                             class="form-control form-control-sm {{ $errors->has('brand_name') ? ' is-invalid' : '' }}"
-                                                            type="text" name="brand_name"
+                                                            type="text" name="brand_name" id="brand_name"
                                                             value="{{ ((!empty($brand->brand_name)) ? $brand->brand_name :old('brand_name')) }}"
                                                             placeholder="Enter brand Name">
                                                         @if ($errors->has('brand_name'))
@@ -56,8 +56,18 @@
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">brand Image</label>
                                                         <input type="file" id="upload_image" accept="image/png,image/jpg,image/jpeg"
-                                                               class="form-control form-control-sm"
+                                                               class="form-control form-control-sm {{ $errors->has('image_data') ? ' is-invalid' : '' }}"
                                                                name="image">
+                                                        @if ($errors->has('image_data'))
+                                                            <span class="invalid-feedback" role="alert">
+                                                                  <strong>{{ $errors->first('image_data') }}</strong>
+                                                             </span>
+                                                        @endif
+                                                        @if ($errors->has('image'))
+                                                            <span class="invalid-feedback" role="alert">
+                                                                  <strong>{{ $errors->first('image_data') }}</strong>
+                                                             </span>
+                                                        @endif
 
                                                     </div>
                                                     @if ($action=='UPDATE')
@@ -101,6 +111,18 @@
         <script type="text/javascript">
 
             $(document).ready(function () {
+
+                // validation
+                $('#brand_name').on('input', function() {
+                    var input=$(this);
+                    var is_name=input.val();
+                    if(is_name){input.removeClass("is-invalid").addClass("is-valid");}
+                    else{input.removeClass("is-valid").addClass("is-invalid");}
+                });
+                $('#upload_image').change(function (){
+                    $('#upload_image').removeClass("is-invalid").addClass("is-valid");
+                });
+
                 $('#submit').on('click', function (){
                     var spinner = $('#loading');
                     spinner.show();

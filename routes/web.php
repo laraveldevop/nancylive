@@ -33,6 +33,7 @@ Route::resource('all-package', 'AllPackageController');
 Route::resource('cat-package', 'PackageCategoryController');
 Route::resource('order', 'OrderController');
 Route::resource('user-package', 'UserPackageController');
+Route::resource('users', 'UserController');
 
 
 

@@ -152,7 +152,7 @@ code { color: #e7515a; }
 .widget-content-area {
     padding: 20px;
     position: relative;
-    background-color: #fff;
+    /*background-color: #fff;*/
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
 }
@@ -162,7 +162,7 @@ code { color: #e7515a; }
 }
 
 
-/* 
+/*
 =====================
     Navigation Bar
 =====================
@@ -585,7 +585,7 @@ code { color: #e7515a; }
     fill: rgba(0, 23, 55, 0.08);
 }
 
-/* 
+/*
 ===============
     Sidebar
 ===============
@@ -625,7 +625,7 @@ code { color: #e7515a; }
     display: flex;
     padding: 0 0;
 }
-.sub-header-container .breadcrumb-one { 
+.sub-header-container .breadcrumb-one {
     display: inline-block;
 }
 .sub-header-container .breadcrumb-one .breadcrumb {
@@ -720,7 +720,7 @@ code { color: #e7515a; }
     color: #2196f3;
 }
 
-/* 
+/*
 ===============
     Sidebar
 ===============
@@ -988,7 +988,7 @@ code { color: #e7515a; }
 }
 
 
-/*  
+/*
     ======================
         Footer-wrapper
     ======================
@@ -1025,7 +1025,7 @@ code { color: #e7515a; }
     vertical-align: text-top;
 }
 
-/*  
+/*
     ======================
         MEDIA QUERIES
     ======================

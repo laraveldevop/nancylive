@@ -86,7 +86,7 @@
                                                             <label for="exampleFormControlInput1">Title</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('video_name') ? ' is-invalid' : '' }}"
-                                                                type="text" name="video_name"
+                                                                type="text" name="video_name" id="video_name"
                                                                 value="{{ ((!empty($video->video_name)) ? $video->video_name :old('video_name')) }}"
                                                                 placeholder="Enter video Name">
                                                             @if ($errors->has('video_name'))
@@ -288,7 +288,7 @@
                     $("#price").html('<label for="exampleFormControlInput1">Price</label>\n' +
                         '                                                        <input\n' +
                         '                                                            class="form-control form-control-sm {{ $errors->has('price') ? ' is-invalid' : '' }}"\n' +
-                        '                                                            type="text" name="price" \n' +
+                        '                                                            type="text" id="price" name="price" \n' +
                         '                                                            value="{{ ((!empty($video->price)) ? $video->price :old('price')) }}"\n' +
                         '                                                            placeholder="Enter Your Price">\n' +
                         '                                                        @if ($errors->has('price'))\n' +
@@ -327,7 +327,7 @@
                     $('#video_local_display').html(' <label for="exampleFormControlInput1">Video URL</label>\n' +
                         '                                                            <input\n' +
                         '                                                                class="form-control form-control-sm {{ $errors->has('url') ? ' is-invalid' : '' }}"\n' +
-                        '                                                                type="text" name="url" required placeholder="Enter Video URL"\n' +
+                        '                                                                type="text" name="url" id="url" required placeholder="Enter Video URL"\n' +
                         '                                                                value="{{ ((!empty($video->url)) ? $video->url :old('url')) }}">\n' +
                         '                                                            @if ($errors->has('url'))\n' +
                         '                                                                <span class="invalid-feedback" role="alert">\n' +
@@ -350,6 +350,35 @@
         <script src="{{ asset('public/plugins/select2/select2.min.js') }}"></script>
         <script src="{{ asset('public/plugins/select2/custom-select2.js') }}"></script>
         <script>
+
+            // validation
+            $('#video_name').on('input', function() {
+                var input=$(this);
+                var is_name=input.val();
+                if(is_name){input.removeClass("is-invalid").addClass("is-valid");}
+                else{input.removeClass("is-valid").addClass("is-invalid");}
+            });
+
+
+            $('#url').on('input', function() {
+                var input=$(this);
+                var re = /^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+/;
+                var is_email=re.test(input.val());
+                if(is_email){input.removeClass("is-invalid").addClass("is-valid");}
+                else{input.removeClass("is-valid").addClass("is-invalid");}
+            });
+
+
+            $('#video').change(function (){
+                $('#video').removeClass("is-invalid").addClass("is-valid");
+            });
+            $('#upload_image').change(function (){
+                $('#upload_image').removeClass("is-invalid").addClass("is-valid");
+            });
+
+            // end-validation
+
+
             var figure = $(".video");
             var vid = $("video");
 

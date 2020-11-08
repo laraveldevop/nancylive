@@ -39,7 +39,7 @@
                                                             <label for="exampleFormControlInput1">sponsor</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('sponsor_name') ? ' is-invalid' : '' }}"
-                                                                type="text" name="sponsor_name"
+                                                                type="text" name="sponsor_name" id="name"
                                                                 value="{{ ((!empty($sponsor->sponsor_name)) ? $sponsor->sponsor_name :old('sponsor_name')) }}"
                                                                 placeholder="Enter sponsor Name">
                                                             @if ($errors->has('sponsor_name'))
@@ -54,7 +54,7 @@
                                                             <label for="exampleFormControlInput1">About</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('about') ? ' is-invalid' : '' }}"
-                                                                type="text" name="about"
+                                                                type="text" name="about" id="about"
                                                                 value="{{ ((!empty($sponsor->about)) ? $sponsor->about :old('about')) }}"
                                                                 placeholder="Enter about">
                                                             @if ($errors->has('about'))
@@ -71,7 +71,7 @@
                                                             <label for="exampleFormControlInput1">Email</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                                                type="email" name="email"
+                                                                type="email" name="email" id="email"
                                                                 value="{{ ((!empty($sponsor->email)) ? $sponsor->email :old('email')) }}"
                                                                 placeholder="Enter Email">
                                                             @if ($errors->has('email'))
@@ -86,7 +86,7 @@
                                                             <label for="exampleFormControlInput1">Phone</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('phone') ? ' is-invalid' : '' }}"
-                                                                type="tel" name="phone"
+                                                                type="tel" name="phone" id="phone"
                                                                 value="{{ ((!empty($sponsor->phone)) ? $sponsor->phone :old('phone')) }}"
                                                                 placeholder="Enter Phone">
                                                             @if ($errors->has('phone'))
@@ -131,7 +131,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">Upload Video</label>
-                                                            <input
+                                                            <input id="video"
                                                                 class="form-control form-control-sm {{ $errors->has('video') ? ' is-invalid' : '' }}"
                                                                 type="file" name="video" accept="video/mp4,video/x-m4v,video/avi,video/mpvge"
                                                                 value="{{ ((!empty($sponsor->video)) ? $sponsor->video :old('video')) }}">
@@ -155,7 +155,7 @@
                                                             <label for="exampleFormControlInput1">City</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('city') ? ' is-invalid' : '' }}"
-                                                                type="text" name="city"
+                                                                type="text" name="city" id="city"
                                                                 value="{{ ((!empty($sponsor->city)) ? $sponsor->city :old('city')) }}"
                                                                 placeholder="Enter Loaction">
                                                             @if ($errors->has('city'))
@@ -170,7 +170,7 @@
                                                             <label for="exampleFormControlInput1">Firm Address</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('firm_address') ? ' is-invalid' : '' }}"
-                                                                type="text" name="firm_address"
+                                                                type="text" name="firm_address" id="address"
                                                                 value="{{ ((!empty($sponsor->firm_address)) ? $sponsor->firm_address :old('firm_address')) }}"
                                                                 placeholder="Enter Firm Address">
                                                             @if ($errors->has('firm_address'))
@@ -187,7 +187,7 @@
                                                             <label for="exampleFormControlInput1">Facebook Link</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('facebook') ? ' is-invalid' : '' }}"
-                                                                type="text" name="facebook"
+                                                                type="text" name="facebook" id="fb"
                                                                 value="{{ ((!empty($sponsor->facebook)) ? $sponsor->facebook :old('facebook')) }}"
                                                                 placeholder="Enter Facebook Link">
                                                             @if ($errors->has('facebook'))
@@ -202,7 +202,7 @@
                                                             <label for="exampleFormControlInput1">Instagram Link</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('instagram') ? ' is-invalid' : '' }}"
-                                                                type="text" name="instagram"
+                                                                type="text" name="instagram" id="insta"
                                                                 value="{{ ((!empty($sponsor->instagram)) ? $sponsor->instagram :old('instagram')) }}"
                                                                 placeholder="Enter Instagram Link">
                                                             @if ($errors->has('instagram'))
@@ -217,7 +217,7 @@
                                                             <label for="exampleFormControlInput1">Youtube Link</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('youtube') ? ' is-invalid' : '' }}"
-                                                                type="text" name="youtube"
+                                                                type="text" name="youtube" id="yt"
                                                                 value="{{ ((!empty($sponsor->youtube)) ? $sponsor->youtube :old('youtube')) }}"
                                                                 placeholder="Enter Youtube Link">
                                                             @if ($errors->has('youtube'))
@@ -263,7 +263,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
+                                                </div>
                                                     <div class="col-xl-12 text-right">
                                                         <button class="btn btn-primary" id="submit"><span>
                                                             @if ($action=='INSERT')
@@ -276,7 +276,7 @@
                                                     </div>
 
 
-                                                </div>
+
                                     </form>
                             </form>
                     </div>
@@ -314,6 +314,77 @@
         <script type="text/javascript">
 
             $(document).ready(function () {
+
+                // validation
+                $('#name').on('input', function() {
+                    var input=$(this);
+                    var is_name=input.val();
+                    if(is_name){input.removeClass("is-invalid").addClass("is-valid");}
+                    else{input.removeClass("is-valid").addClass("is-invalid");}
+                });
+                $('#about').on('input', function() {
+                    var input=$(this);
+                    var is_name=input.val();
+                    if(is_name){input.removeClass("is-invalid").addClass("is-valid");}
+                    else{input.removeClass("is-valid").addClass("is-invalid");}
+                });
+                $('#city').on('input', function() {
+                    var input=$(this);
+                    var is_name=input.val();
+                    if(is_name){input.removeClass("is-invalid").addClass("is-valid");}
+                    else{input.removeClass("is-valid").addClass("is-invalid");}
+                });
+                $('#address').on('input', function() {
+                    var input=$(this);
+                    var is_name=input.val();
+                    if(is_name){input.removeClass("is-invalid").addClass("is-valid");}
+                    else{input.removeClass("is-valid").addClass("is-invalid");}
+                });
+                $('#email').on('input', function() {
+                    var input=$(this);
+                    var re = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+                    var is_email=re.test(input.val());
+                    if(is_email){input.removeClass("is-invalid").addClass("is-valid");}
+                    else{input.removeClass("is-valid").addClass("is-invalid");}
+                });
+                $('#phone').on('input', function() {
+                    var input=$(this);
+                    var re = /^(\+?1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/;
+                    var is_email=re.test(input.val());
+                    if(is_email){input.removeClass("is-invalid").addClass("is-valid");}
+                    else{input.removeClass("is-valid").addClass("is-invalid");}
+                });
+                $('#fb').on('input', function() {
+                    var input=$(this);
+                    var re = /^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/;
+                    var is_email=re.test(input.val());
+                    if(is_email){input.removeClass("is-invalid").addClass("is-valid");}
+                    else{input.removeClass("is-valid").addClass("is-invalid");}
+                });
+                $('#insta').on('input', function() {
+                    var input=$(this);
+                    var re = /^(https?:\/\/)?(www\.)?instagram.com\/[a-zA-Z0-9(\.\?)?]/;
+                    var is_email=re.test(input.val());
+                    if(is_email){input.removeClass("is-invalid").addClass("is-valid");}
+                    else{input.removeClass("is-valid").addClass("is-invalid");}
+                });
+                $('#yt').on('input', function() {
+                    var input=$(this);
+                    var re = /^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+/;
+                    var is_email=re.test(input.val());
+                    if(is_email){input.removeClass("is-invalid").addClass("is-valid");}
+                    else{input.removeClass("is-valid").addClass("is-invalid");}
+                });
+
+                $('#video').change(function (){
+                    $('#video').removeClass("is-invalid").addClass("is-valid");
+                });
+                $('#upload_image').change(function (){
+                    $('#upload_image').removeClass("is-invalid").addClass("is-valid");
+                });
+
+                // end-validation
+
                 $('#submit').on('click', function (){
                     var spinner = $('#loading');
                     spinner.show();

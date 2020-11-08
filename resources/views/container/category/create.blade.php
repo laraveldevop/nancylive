@@ -56,8 +56,8 @@
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Category</label>
                                                         <input
-                                                            class="form-control form-control-sm {{ $errors->has('cat_name') ? ' is-invalid' : '' }}"
-                                                            type="text" name="cat_name"
+                                                            class="form-control form-control-sm  {{ $errors->has('cat_name') ? ' is-invalid' : '' }}"
+                                                            type="text" name="cat_name" id="cat_name"
                                                             value="{{ ((!empty($category->cat_name)) ? $category->cat_name :old('cat_name')) }}"
                                                             placeholder="Enter Category Name">
                                                         @if ($errors->has('cat_name'))
@@ -127,6 +127,16 @@
         <script type="text/javascript">
 
             $(document).ready(function () {
+
+                $('#cat_name').on('input', function() {
+                    var input=$(this);
+                    var is_name=input.val();
+                    if(is_name){input.addClass("is-valid");}
+                    else{input.addClass("is-invalid");}
+                });
+                $('#upload_image').change(function (){
+                    $('#upload_image').removeClass("is-invalid").addClass("is-valid");
+                });
 
 
 

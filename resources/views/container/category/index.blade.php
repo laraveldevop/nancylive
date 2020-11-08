@@ -192,7 +192,7 @@
                                         </div>
                                         @foreach($category as $key=>$value)
                                             <div class="items">
-                                                <div class="item-content" style="background-color: #f1f2f3;">
+                                                <div class="item-content" >
                                                     <div class="user-profile">
                                                         <div class="n-chk align-self-center text-center">
                                                             <label class="new-control new-checkbox checkbox-primary">
@@ -201,7 +201,7 @@
                                                                 <span class="new-control-indicator"></span>
                                                             </label>
                                                         </div>
-                                                        <img width="100px"
+                                                        <img style="height: 100px; width: auto"
                                                              src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'public/assets/img/placeholder.png')}}"
                                                              alt="avatar">
 
@@ -300,7 +300,7 @@
                                         </div>
                                         @foreach($product_category as $key=>$value)
                                             <div class="items">
-                                                <div class="item-content" style="background-color: #f1f2f3;">
+                                                <div class="item-content" >
                                                     <div class="user-profile">
                                                         <div class="n-chk align-self-center text-center">
                                                             <label class="new-control new-checkbox checkbox-primary">
@@ -309,7 +309,7 @@
                                                                 <span class="new-control-indicator"></span>
                                                             </label>
                                                         </div>
-                                                        <img width="100px"
+                                                        <img style="height: 200px; width: auto"
                                                              src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'public/assets/img/placeholder.png')}}"
                                                              alt="avatar">
 
@@ -405,7 +405,7 @@
                                         </div>
                                         @foreach($pdf_category as $key=>$value)
                                             <div class="items">
-                                                <div class="item-content" style="background-color: #f1f2f3;">
+                                                <div class="item-content" >
                                                     <div class="user-profile">
                                                         <div class="n-chk align-self-center text-center">
                                                             <label class="new-control new-checkbox checkbox-primary">
@@ -414,7 +414,7 @@
                                                                 <span class="new-control-indicator"></span>
                                                             </label>
                                                         </div>
-                                                        <img width="100px"
+                                                        <img style="height: 200px; width: auto"
                                                              src="{{ asset(!empty($value->cat_image)?'public/storage/'.$value->cat_image:'public/assets/img/placeholder.png')}}"
                                                              alt="avatar">
 

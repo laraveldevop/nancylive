@@ -63,7 +63,7 @@
                                                             <label for="exampleFormControlInput1">Name</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('pdf_name') ? ' is-invalid' : '' }}"
-                                                                type="text" name="pdf_name"
+                                                                type="text" name="pdf_name" id="pdf_name"
                                                                 value="{{ ((!empty($pdf->pdf_name)) ? $pdf->pdf_name :old('pdf_name')) }}"
                                                                 placeholder="Enter Name">
                                                             @if ($errors->has('pdf_name'))
@@ -82,7 +82,7 @@
                                                             <label for="exampleFormControlInput1">Price</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('price') ? ' is-invalid' : '' }}"
-                                                                type="text" name="price"
+                                                                type="text" name="price" id="price"
                                                                 value="{{ ((!empty($pdf->price)) ? $pdf->price :old('price')) }}"
                                                                 placeholder="Enter price">
                                                             @if ($errors->has('price'))
@@ -95,7 +95,7 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="exampleFormControlInput1">Attach File</label>
-                                                            <input type="file" accept="application/pdf,application/docx"
+                                                            <input type="file" accept="application/pdf,application/docx" id="file"
                                                                    class="form-control form-control-sm {{ $errors->has('file') ? ' is-invalid' : '' }}"
                                                                    name="file">
                                                             @if ($errors->has('file'))
@@ -111,7 +111,7 @@
                                                     <div class="col-md-2" style="margin-top: 45px;">
                                                         <span class="sub-switch">
                                                             <label class="switch s-outline s-outline-primary  mb-4 mr-2">
-                                                                <input type="checkbox"
+                                                                <input type="checkbox" id="token"
                                                                        {{ ((!empty($pdf->token)) ? 'checked' :old('token')) }}  name="token">
                                                                     <span class="slider round"></span>
                                                             </label>
@@ -181,6 +181,32 @@
         <script src="{{ asset('public/plugins/editors/quill/quill.js') }}"></script>
         <script src="{{ asset('public/plugins/editors/quill/custom-quill.js') }}"></script>
         <script>
+
+            // validation
+
+            $(document).ready(function () {
+
+            $('#pdf_name').on('input', function() {
+                var input=$(this);
+                var is_name=input.val();
+                if(is_name){input.removeClass("is-invalid").addClass("is-valid");}
+                else{input.removeClass("is-valid").addClass("is-invalid");}
+            });
+            $('#price').on('input', function() {
+                var input=$(this);
+                var re = /^[0-9]+$/;
+                var is_email=re.test(input.val());
+                if(is_email){input.removeClass("is-invalid").addClass("is-valid");}
+                else{input.removeClass("is-valid").addClass("is-invalid");}
+            });
+            $('#file').change(function (){
+                $('#file').removeClass("is-invalid").addClass("is-valid");
+            });
+
+            // end-validation
+
+            });
+
             $('#submit').on('click', function (){
                 var spinner = $('#loading');
                 spinner.show();

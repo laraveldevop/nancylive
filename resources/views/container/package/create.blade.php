@@ -61,7 +61,7 @@
                                                                         Name</label>
                                                                     <input
                                                                         class="form-control form-control-sm {{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                                                        type="text" name="name"
+                                                                        type="text" name="name" id="name"
                                                                         value="{{ ((!empty($package->name)) ? $package->name :old('name')) }}"
                                                                         placeholder="Enter package Name">
                                                                     @if ($errors->has('name'))
@@ -77,7 +77,7 @@
                                                                         Price</label>
                                                                     <input
                                                                         class="form-control form-control-sm {{ $errors->has('price') ? ' is-invalid' : '' }}"
-                                                                        type="text" name="price"
+                                                                        type="text" name="price" id="price"
                                                                         value="{{ ((!empty($package->price)) ? $package->price :old('price')) }}"
                                                                         placeholder="Enter package price">
                                                                     @if ($errors->has('price'))
@@ -286,6 +286,25 @@
         <script type="text/javascript">
 
             $(document).ready(function () {
+                // validation
+                $('#name').on('input', function() {
+                    var input=$(this);
+                    var is_name=input.val();
+                    if(is_name){input.removeClass("is-invalid").addClass("is-valid");}
+                    else{input.removeClass("is-valid").addClass("is-invalid");}
+                });
+                $('#price').on('input', function() {
+                    var input=$(this);
+                    var re = /^[0-9]+$/;
+                    var is_email=re.test(input.val());
+                    if(is_email){input.removeClass("is-invalid").addClass("is-valid");}
+                    else{input.removeClass("is-valid").addClass("is-invalid");}
+                });
+                $('#upload_image').change(function (){
+                    $('#upload_image').removeClass("is-invalid").addClass("is-valid");
+                });
+
+                // end-validation
                 $('#submit').on('click', function (){
                     var spinner = $('#loading');
                     spinner.show();

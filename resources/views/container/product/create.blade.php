@@ -111,7 +111,7 @@
                                                             <label for="exampleFormControlInput1">Name</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('product_name') ? ' is-invalid' : '' }}"
-                                                                type="text" name="product_name"
+                                                                type="text" name="product_name" id="product_name"
                                                                 value="{{ ((!empty($product->product_name)) ? $product->product_name :old('product_name')) }}"
                                                                 placeholder="Enter Name">
                                                             @if ($errors->has('product_name'))
@@ -128,7 +128,7 @@
                                                             <label for="exampleFormControlInput1">Mobile</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('mobile') ? ' is-invalid' : '' }}"
-                                                                type="text" name="mobile"
+                                                                type="text" name="mobile" id="mobile"
                                                                 value="{{ ((!empty($product->mobile)) ? $product->mobile :old('mobile')) }}"
                                                                 placeholder="Enter mobile Number">
                                                             @if ($errors->has('mobile'))
@@ -170,7 +170,7 @@
                                                             <label for="exampleFormControlInput1">Price</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('price') ? ' is-invalid' : '' }}"
-                                                                type="text" name="price"
+                                                                type="text" name="price" id="price"
                                                                 value="{{ ((!empty($product->price)) ? $product->price :old('price')) }}"
                                                                 placeholder="Enter price">
                                                             @if ($errors->has('price'))
@@ -185,7 +185,7 @@
                                                             <label for="exampleFormControlInput1">Quantity</label>
                                                             <input
                                                                 class="form-control form-control-sm {{ $errors->has('quantity') ? ' is-invalid' : '' }}"
-                                                                type="text" name="quantity"
+                                                                type="text" name="quantity" id="quantity"
                                                                 value="{{ ((!empty($product->quantity)) ? $product->quantity :old('quantity')) }}"
                                                                 placeholder="Enter quantity">
                                                             @if ($errors->has('quantity'))
@@ -321,6 +321,41 @@
         <script src="{{ asset('public/plugins/editors/quill/quill.js') }}"></script>
         <script src="{{ asset('public/plugins/editors/quill/custom-quill.js') }}"></script>
         <script>
+
+            // validation
+            $('#product_name').on('input', function() {
+                var input=$(this);
+                var is_name=input.val();
+                if(is_name){input.removeClass("is-invalid").addClass("is-valid");}
+                else{input.removeClass("is-valid").addClass("is-invalid");}
+            });
+            $('#price').on('input', function() {
+                var input=$(this);
+                var re = /^[0-9]+$/;
+                var is_email=re.test(input.val());
+                if(is_email){input.removeClass("is-invalid").addClass("is-valid");}
+                else{input.removeClass("is-valid").addClass("is-invalid");}
+            });
+            $('#quantity').on('input', function() {
+                var input=$(this);
+                var re = /^[0-9]+$/;
+                var is_email=re.test(input.val());
+                if(is_email){input.removeClass("is-invalid").addClass("is-valid");}
+                else{input.removeClass("is-valid").addClass("is-invalid");}
+            });
+            $('#mobile').on('input', function() {
+                var input=$(this);
+                var re = /^(\+?1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/;
+                var is_email=re.test(input.val());
+                if(is_email){input.removeClass("is-invalid").addClass("is-valid");}
+                else{input.removeClass("is-valid").addClass("is-invalid");}
+            });
+            $('#video').change(function (){
+                $('#video').removeClass("is-invalid").addClass("is-valid");
+            });
+
+            // end-validation
+
             var figure = $(".video");
             var vid = $("video");
 
