@@ -218,6 +218,7 @@
 
         <nav id="sidebar">
             <div class="shadow-bottom"></div>
+
             <ul class="list-unstyled menu-categories" id="accordionExample">
                 <li class="menu">
                     <a href="{{url('home')}}" data-active="{{ ((request()->is('home')) ? 'true' : 'false') }}"
@@ -250,6 +251,7 @@
 {{--                        </div>--}}
 {{--                    </a>--}}
 {{--                </li>--}}
+                @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Category'))
                 <li class="menu">
                     <a href="{{ url('category') }}" data-active="{{ ((request()->is('category')) ? 'true' : 'false') }}"
                        aria-expanded="{{ ((request()->is('category')) ? 'true' : 'false') }}" class="dropdown-toggle">
@@ -265,7 +267,9 @@
                         </div>
                     </a>
                 </li>
+                @endif
 
+                @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Artist'))
                 <li class="menu">
                     <a href="#dashboard"
                        data-active="{{  ((request()->is('artist')) || (request()->is('video')) ? 'true' : 'false') }}"
@@ -307,7 +311,9 @@
                         </li>
                     </ul>
                 </li>
+                @endif
 
+                @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Magazine'))
                 <li class="menu">
                     <a href="#app" data-toggle="collapse"
                        aria-expanded="{{ ( (request()->is('pdf')) ? 'true' : 'false') }}"
@@ -339,7 +345,9 @@
 
                     </ul>
                 </li>
+                @endif
 
+                @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Product'))
                 <li class="menu">
                     <a href="#elements" data-toggle="collapse"
                        aria-expanded="{{ ((request()->is('product')) || (request()->is('brand')) || (request()->is('sponsor')) ? 'true' : 'false') }}"
@@ -380,7 +388,9 @@
 
                     </ul>
                 </li>
+                @endif
 
+                @if(auth()->user()->hasRole('Admin'))
                 <li class="menu">
                     <a href="{{ url('notification') }}" data-active="{{ ((request()->is('notification')) ? 'true' : 'false') }}"
                        aria-expanded="{{ ((request()->is('notification')) ? 'true' : 'false') }}" class="dropdown-toggle">
@@ -417,7 +427,17 @@
                         </div>
                     </a>
                 </li>
+                    <li class="menu">
+                    <a href="{{ url('user-role') }}" data-active="{{ ((request()->is('user-role')) ? 'true' : 'false') }}"
+                       aria-expanded="{{ ((request()->is('user-role')) ? 'true' : 'false') }}" class="dropdown-toggle">
+                        <div class="">
+                            <i class="far fa-bell"></i>
+                            <span>Users</span>
+                        </div>
+                    </a>
+                </li>
 
+                @endif
 
             </ul>
 {{--            <div class="shadow-bottom"></div>--}}

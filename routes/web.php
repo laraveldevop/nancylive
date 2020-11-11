@@ -23,7 +23,7 @@ Route::resource('category', 'CategoryController');
 Route::resource('artist', 'ArtistController');
 Route::resource('sponsor', 'SponsorController');
 Route::resource('video', 'VideoController');
-Route::resource('module', 'ModuleController');
+//Route::resource('module', 'ModuleController');
 Route::resource('pdf', 'PdfController');
 Route::resource('product', 'ProductController');
 Route::resource('brand', 'BrandController');
@@ -34,6 +34,8 @@ Route::resource('cat-package', 'PackageCategoryController');
 Route::resource('order', 'OrderController');
 Route::resource('user-package', 'UserPackageController');
 Route::resource('users', 'UserController');
+Route::resource('dashboard', 'DashboardController');
+Route::resource('user-role', 'UsersController');
 
 
 
@@ -51,6 +53,7 @@ Route::post('package_user/packageList', 'UserPackageController@packageList')->na
 
 
 Route::post('add_status/Update_status', 'OrderController@updateStatus')->name('add_status.Update_status');
+Route::post('add_role/Update_role', 'UsersController@updateRole')->name('add_role.Update_role');
 
 
 Route::post('/ads','VideoController@ads');

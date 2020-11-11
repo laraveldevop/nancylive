@@ -13,6 +13,16 @@ use Intervention\Image\Facades\Image;
 class UserController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -64,8 +74,12 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-//        echo 'hi';die();
+        $auth= Auth::user()->getAuthIdentifier();
+        if ($auth == $user->id)
         return view('container.user.create')->with(compact('user'))->with('action','UPDATE');
+        else
+            return redirect('users');
+
     }
 
     /**
