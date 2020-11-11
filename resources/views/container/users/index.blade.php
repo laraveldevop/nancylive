@@ -39,9 +39,9 @@
 
                                         <td>
                                             <div class="btn-group">
-                                                <button type="button" class="btn @if($value['name'] == 'Admin')btn-outline-success @elseif('Disabled') btn-outline-danger @else btn-outline-primary @endif">{{!empty($value['name'])?$value['name']:'Disabled'}}</button>
+                                                <button type="button" class="btn {{isset($value['name']) == 'Admin'? 'btn-outline-success' : 'btn-outline-primary'}}">{{isset($value['name'])?$value['name']:'Disabled'}}</button>
                                                 <button type="button"
-                                                        class="btn @if($value['name'] == 'Admin')btn-outline-success @elseif('Disabled') btn-outline-danger @else btn-outline-primary @endif dropdown-toggle dropdown-toggle-split"
+                                                        class="btn {{isset($value['name']) == 'Admin'? 'btn-outline-success' : 'btn-outline-primary'}}"
                                                         data-toggle="dropdown" aria-haspopup="true"
                                                         aria-expanded="false">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
