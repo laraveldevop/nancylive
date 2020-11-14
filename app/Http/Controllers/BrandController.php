@@ -24,7 +24,7 @@ class BrandController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('role:Product Manager');
+        $this->middleware('role:Product');
     }
     /**
      * Display a listing of the resource.

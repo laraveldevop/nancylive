@@ -24,6 +24,9 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>User Name</th>
+                                    <th>Business Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
                                     <th>Role</th>
 {{--                                    <th>status</th>--}}
                                 </tr>
@@ -35,7 +38,9 @@
                                     <tr>
                                         <td>{{$item->id}}</td>
                                         <td>{{$item->name}}</td>
-{{--                                        <td>{{ $value['name']}}</td>--}}
+                                        <td>{{$item->business_name}}</td>
+                                        <td>{{$item->email}}</td>
+                                        <td>{{$item->mobile}}</td>
 
                                         <td>
                                             <div class="btn-group">
@@ -125,14 +130,14 @@
                     data: {"data": data,'user_id': user_id},
                     dataType: "json",
                     success: function (data) {
-                        // location.reload();
+                        location.reload();
                     }
                 });
             });
             $('#product_{{$item->id}}').on('click', function (){
                 var data = $(this).data('seq');
                 var user_id = ({{$item->id}});
-                // alert(order_id);
+                alert(order_id);
                 $.ajax({
                     url: '{{ route("add_role.Update_role") }}',
                     type: 'post',
@@ -140,7 +145,7 @@
                     data: {"data": data,'user_id': user_id},
                     dataType: "json",
                     success: function (data) {
-                        // location.reload();
+                        location.reload();
                     }
                 });
             });
@@ -155,7 +160,7 @@
                     data: {"data": data,'user_id': user_id},
                     dataType: "json",
                     success: function (data) {
-                        // location.reload();
+                        location.reload();
                     }
                 });
             });

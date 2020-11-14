@@ -25,7 +25,7 @@ class SponsorController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('role:Product Manager');
+        $this->middleware('role:Product');
     }
 
     /**
