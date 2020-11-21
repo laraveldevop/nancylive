@@ -37,6 +37,10 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('/password/reset', 'Api\ResetPasswordController@reset');
 
 
+    Route::post('add-category', 'API\CategoryViewController@addCategory')->middleware('checkUser');
+
+
+
     Route::post('category-detail', 'API\CategoryViewController@categoryDetail')->middleware('checkUser');
     Route::post('brand-detail', 'API\BrandViewController@brandDetail')->middleware('checkUser');
     Route::post('sponsor-detail', 'API\SponsorViewController@sponsorDetail')->middleware('checkUser');

@@ -11,7 +11,9 @@ use App\Product;
 use App\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image;
 
 class CategoryViewController extends Controller
 {
@@ -127,6 +129,36 @@ class CategoryViewController extends Controller
             }
         }
         return response()->json(['status' => true, 'message' => 'Available Data', 'data' =>$v]);
+    }
+
+
+    public function addCategory(Request $request){
+        $validator = Validator::make($request->all(),[
+            'module_id'=> 'required',
+            'cat_name' => ['required','unique:category'],
+            'image'=> 'required',
+        ]);
+        if ($validator->fails())
+        {
+            return response()->json([
+                'status'=> false,
+                'message'=>$validator->errors()], 422);
+        }
+        $category = new  Category();
+        $category->cat_name = $request->input('cat_name');
+        $category->module_id = $request->input('module_id');
+
+            $path = Storage::disk('public')->put('category', $request->file('image'));
+        $thumbnailpath = public_path('storage/'.$path);
+        $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        });
+        $img->save($thumbnailpath);
+            $category->cat_image = $path;
+        $category->save();
+        return response()->json(['status' => true, 'message' => 'Add Successfully', 'data' =>$category]);
+
     }
 
 
