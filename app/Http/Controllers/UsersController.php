@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\SubRole;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,11 +26,12 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $user=  User::with('roles')->get();
+        $user=  User::with('roles')->leftJoin('sub_role','users.sub_role_id','=','sub_role.role_id')->get();
 
 //         $value =$user->roles->first();
-//       echo $value->name;die();
-        return view('container.users.index')->with(compact('user'));
+//       echo $user;die();
+        $sub_role= SubRole::all();
+        return view('container.users.index')->with(compact('user','sub_role'));
 
     }
 

@@ -40,7 +40,7 @@
     border-left: 1px solid #5c1ac3;
 }
 #content > .container {
-    display: flex;
+    /*display: flex;*/
     margin-left: 2px;
     padding: 0 16px!important;
 }

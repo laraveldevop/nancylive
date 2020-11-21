@@ -36,6 +36,7 @@ Route::resource('user-package', 'UserPackageController');
 Route::resource('users', 'UserController');
 Route::resource('dashboard', 'DashboardController');
 Route::resource('user-role', 'UsersController');
+Route::resource('sub-role', 'SubRoleController');
 
 
 
@@ -54,6 +55,7 @@ Route::post('package_user/packageList', 'UserPackageController@packageList')->na
 
 Route::post('add_status/Update_status', 'OrderController@updateStatus')->name('add_status.Update_status');
 Route::post('add_role/Update_role', 'UsersController@updateRole')->name('add_role.Update_role');
+Route::post('add_sub_role/Update_role', 'SubRoleController@updateRole')->name('add_sub_role.Update_role');
 
 
 Route::post('/ads','VideoController@ads');

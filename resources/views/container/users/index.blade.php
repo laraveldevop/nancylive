@@ -28,7 +28,7 @@
                                     <th>Email</th>
                                     <th>Mobile</th>
                                     <th>Role</th>
-{{--                                    <th>status</th>--}}
+                                    <th>Sub Role</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -44,9 +44,9 @@
 
                                         <td>
                                             <div class="btn-group">
-                                                <button type="button" class="btn {{isset($value['name']) == 'Admin'? 'btn-outline-success' : 'btn-outline-primary'}}">{{isset($value['name'])?$value['name']:'Disabled'}}</button>
+                                                <button type="button" class="btn {{isset($value['name'])? 'btn-outline-success' : 'btn-outline-danger'}}">{{isset($value['name'])?$value['name']:'Disabled'}}</button>
                                                 <button type="button"
-                                                        class="btn {{isset($value['name']) == 'Admin'? 'btn-outline-success' : 'btn-outline-primary'}}"
+                                                        class="btn {{isset($value['name'])? 'btn-outline-success' : 'btn-outline-danger'}}"
                                                         data-toggle="dropdown" aria-haspopup="true"
                                                         aria-expanded="false">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -65,6 +65,29 @@
                                                 </div>
                                             </div>
 
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+
+                                                <button type="button" class="btn {{isset($item['role'])? 'btn-outline-secondary': 'btn-outline-danger' }}" id="sub_role">{{isset($item['role'])?$item['role']:'Disabled'}}</button>
+                                                <button type="button"
+                                                        class="btn {{isset($item['role'])? 'btn-outline-secondary': 'btn-outline-danger' }}"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                         class="feather feather-chevron-down">
+                                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                                    </svg>
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    @foreach($sub_role as $role)
+                                                    <a class="dropdown-item" id="{{$role->role_id}}"   data-seq='{{$item->id}}' href="javascript:void(0);">{{$role->role}}</a>
+                                                    @endforeach
+                                                </div>
+                                            </div>
                                         </td>
 
                                     </tr>
@@ -103,6 +126,27 @@
         </script>
 
         <script>
+            // $('a.dropdown-item').on('click', function (){
+            //     var role= $(this).html();
+            //    $('#sub_role').html(role);
+            // });
+
+            $('a.dropdown-item').on('click', function (){
+                var sub_role_id = $(this).attr('id');
+                var user_id = $(this).data('seq');
+                $.ajax({
+                    url: '{{ route("add_sub_role.Update_role") }}',
+                    type: 'post',
+                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                    data: {"user_id": user_id,'role_id': sub_role_id},
+                    dataType: "json",
+                    success: function (data) {
+                        location.reload();
+                    }
+                });
+            });
+
+
             @foreach($user as $item)
             $('#admin_{{$item->id}}').on('click', function (){
                 var data = $(this).data('seq');
@@ -115,7 +159,7 @@
                     data: {"data": data,'user_id': user_id},
                     dataType: "json",
                     success: function (data) {
-                        // location.reload();
+                        location.reload();
                     }
                 });
             });
@@ -137,7 +181,7 @@
             $('#product_{{$item->id}}').on('click', function (){
                 var data = $(this).data('seq');
                 var user_id = ({{$item->id}});
-                alert(order_id);
+                // alert(order_id);
                 $.ajax({
                     url: '{{ route("add_role.Update_role") }}',
                     type: 'post',

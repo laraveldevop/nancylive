@@ -428,6 +428,15 @@
                     </a>
                 </li>
                     <li class="menu">
+                        <a href="{{ url('sub-role') }}" data-active="{{ ((request()->is('sub-role')) ? 'true' : 'false') }}"
+                           aria-expanded="{{ ((request()->is('sub-role')) ? 'true' : 'false') }}" class="dropdown-toggle">
+                            <div class="">
+                                <i class="far fa-bell"></i>
+                                <span>Sub Roles</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="menu">
                     <a href="{{ url('user-role') }}" data-active="{{ ((request()->is('user-role')) ? 'true' : 'false') }}"
                        aria-expanded="{{ ((request()->is('user-role')) ? 'true' : 'false') }}" class="dropdown-toggle">
                         <div class="">
