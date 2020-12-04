@@ -32,12 +32,12 @@ class ProductController extends Controller
     public function index()
     {
         $product = DB::table('product')
-            ->select(DB::raw('product.id,product.product_name,product.video,product.detail,product.price,product.quantity,product.token,category.cat_name,brand.brand_name,sponsor.sponsor_name'))
+            ->select(DB::raw('product.id,product.product_name,product.video,product.detail,product.mobile,product.price,product.quantity,product.token,category.cat_name,brand.brand_name,sponsor.sponsor_name'))
             ->leftJoin('category', 'product.cat_id', '=', 'category.cat_id')
             ->leftJoin('brand', 'product.brand', '=', 'brand.id')
             ->leftJoin('sponsor', 'product.sponsor_id', '=', 'sponsor.id')
 //            ->leftJoin('product_image','product.id','=','product_image.product_id')
-            ->paginate('10');
+            ->get();
         return view('container.product.index')->with(compact('product'));
 
 
