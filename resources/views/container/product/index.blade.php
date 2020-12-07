@@ -122,7 +122,6 @@
                                 </div>
                             </div>
                             @foreach($product as $key=>$value)
-
                                 <div class="items old_one">
                                     <div class="item-content">
                                         <div class="user-profile">
@@ -195,7 +194,7 @@
                                     </div>
                                 </div>
                             @endforeach
-                            <div class="col-lg-4"></div>
+                            <div class="col-lg-4 old_one"></div>
                             <div class="col-lg-8 old_one">
                                 {!! $product->render() !!}
 
@@ -212,10 +211,8 @@
                                             </div>
                                             <span
                                                 hidden>{{$product_im=\App\ProductImage::where('product_id',$value->id)->first()}}</span>
-                                            <img style="height: 100px; width: auto"
-                                                 src="{{ asset(!empty($product_im->image)?'public/storage/'.$product_im->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}"
-                                                 alt="avatar">
-
+                                            <div class="img_span">
+                                            </div>
                                             <div class="user-meta-info">
                                                 <p class="user-name"
                                                    data-name="{{ $value->brand_name }}">{{ $value->brand_name }}</p>
@@ -355,6 +352,9 @@
             $('#input-search').on('click', function () {
                 $('.new_one').removeAttr("style");
                 $('.old_one').css("display", 'none');
+                $('.img_span').html("<img style=\"height: 100px; width: auto\"\n" +
+                    "                                                 src=\"{{ asset(!empty($product_im->image)?'public/storage/'.$product_im->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}\"\n" +
+                    "                                                 alt=\"avatar\">");
             });
             $('#input-search').blur(function () {
                var item = $('#input-search').val();
