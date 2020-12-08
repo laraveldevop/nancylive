@@ -134,7 +134,7 @@
                                             <span
                                                 hidden>{{$product_im=\App\ProductImage::where('product_id',$value->id)->first()}}</span>
                                             <img style="height: 100px; width: auto"
-                                                 src="{{ asset(!empty($product_im->image)?'public/storage/'.$product_im->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}"
+                                                 src="{{ asset(!empty($product_im->image)?'public/storage/'.$product_im->image:'public/assets/img/nency-beauty.png')}}"
                                                  alt="avatar">
                                             <div class="user-meta-info">
                                                 <p class="user-name"
@@ -199,7 +199,8 @@
                                 {!! $product->render() !!}
 
                             </div>
-                            @foreach($product_all as $key=>$value)
+
+                            @foreach($product_all as $key=>$pro)
                                 <div class="items new_one" style="display: none" >
                                     <div class="item-content">
                                         <div class="user-profile">
@@ -209,31 +210,33 @@
                                                     <span class="new-control-indicator"></span>
                                                 </label>
                                             </div>
+
                                             <span
-                                                hidden>{{$product_im=\App\ProductImage::where('product_id',$value->id)->first()}}</span>
-                                            <div class="img_span">
-                                            </div>
+                                                hidden>{{$product_im=\App\ProductImage::where('product_id',$pro->id)->first()}}</span>
+                                            <img style="height: 100px; width: auto"
+                                                 src="{{ asset(!empty($product_im->image)?'public/storage/'.$product_im->image:'public/assets/img/nency-beauty.png')}}"
+                                                 alt="avatar">
                                             <div class="user-meta-info">
                                                 <p class="user-name"
-                                                   data-name="{{ $value->brand_name }}">{{ $value->brand_name }}</p>
-                                                {{--                                                <p class="user-work" data-occupation="{{ $value->about }}">{{ $value->about }}</p>--}}
+                                                   data-name="{{ $pro->brand_name }}">{{ $pro->brand_name }}</p>
+                                                {{--                                                <p class="user-work" data-occupation="{{ $pro->about }}">{{ $pro->about }}</p>--}}
                                             </div>
                                         </div>
                                         <div class="user-email">
                                             <p class="info-title">Product Name: </p>
                                             <p class="usr-email-addr"
-                                               data-email="{{ $value->product_name }}">{{ $value->product_name }}</p>
+                                               data-email="{{ $pro->product_name }}">{{ $pro->product_name }}</p>
                                         </div>
 
                                         <div class="user-email">
                                             <p class="info-title">Category Name: </p>
                                             <p class="usr-email-addr"
-                                               data-email="{{ $value->cat_name }}">{{ $value->cat_name }}</p>
+                                               data-email="{{ $pro->cat_name }}">{{ $pro->cat_name }}</p>
                                         </div>
 
 
                                         <div class="action-btn">
-                                            <a href="{{ url('product/'.$value->id. '/edit')}}">
+                                            <a href="{{ url('product/'.$pro->id. '/edit')}}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                      viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -262,14 +265,15 @@
                                             <span class="sub-switch">
                                             <label class="switch s-outline s-outline-primary">
                                                 <input class="searchType" type="checkbox"
-                                                       {{ ($value->token == 0)? '':  'checked' }}  name="token"
-                                                       id="{{$value->id}}" value="{{ $value->token}}">
+                                                       {{ ($pro->token == 0)? '':  'checked' }}  name="token"
+                                                       id="{{$pro->id}}" value="{{ $pro->token}}">
                                                 <span class="slider round"></span>
                                             </label>
                                             </span>
                                         </div>
                                     </div>
                                 </div>
+
                             @endforeach
 
                         </div>
@@ -352,10 +356,13 @@
             $('#input-search').on('click', function () {
                 $('.new_one').removeAttr("style");
                 $('.old_one').css("display", 'none');
-                $('.img_span').html("<img style=\"height: 100px; width: auto\"\n" +
-                    "                                                 src=\"{{ asset(!empty($product_im->image)?'public/storage/'.$product_im->image:'backend/assets/img/avatars/profiles/avatar-1.jpg')}}\"\n" +
-                    "                                                 alt=\"avatar\">");
+
             });
+            var item = $('#input-search').val();
+            if (item === '') {
+                $('.old_one').removeAttr("style");
+                $('.new_one').css("display", 'none');
+            }
             $('#input-search').blur(function () {
                var item = $('#input-search').val();
                 if (item === '') {
