@@ -86,43 +86,10 @@
                             </div>
                         </div>
 
-                        <div class="searchable-items grid">
-                            <div class="items items-header-section">
-                                <div class="item-content">
-                                    <div class="">
-                                        <div class="n-chk align-self-center text-center">
-                                            <label class="new-control new-checkbox checkbox-primary">
-                                                <input type="checkbox" class="new-control-input" id="contact-check-all">
-                                                <span class="new-control-indicator"></span>
-                                            </label>
-                                        </div>
-                                        <h4>Brand</h4>
-                                    </div>
-                                    <div class="user-email">
-                                        <h4>Sponsor Name</h4>
-                                    </div>
+                        <div class="searchable-items grid old_one">
 
-                                    <div class="user-email">
-                                        <h4>Product</h4>
-                                    </div>
-
-
-                                    <div class="action-btn">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                             stroke-linecap="round" stroke-linejoin="round"
-                                             class="feather feather-trash-2  delete-multiple">
-                                            <polyline points="3 6 5 6 21 6"></polyline>
-                                            <path
-                                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                            <line x1="10" y1="11" x2="10" y2="17"></line>
-                                            <line x1="14" y1="11" x2="14" y2="17"></line>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
                             @foreach($product as $key=>$value)
-                                <div class="items old_one">
+                                <div class="items">
                                     <div class="item-content">
                                         <div class="user-profile">
                                             <div class="n-chk align-self-center text-center">
@@ -194,91 +161,16 @@
                                     </div>
                                 </div>
                             @endforeach
+
                             <div class="col-lg-4 old_one"></div>
                             <div class="col-lg-8 old_one">
                                 {!! $product->render() !!}
 
                             </div>
-
-                            @foreach($product_all as $key=>$pro)
-                                <div class="items new_one" style="display: none" >
-                                    <div class="item-content">
-                                        <div class="user-profile">
-                                            <div class="n-chk align-self-center text-center">
-                                                <label class="new-control new-checkbox checkbox-primary">
-                                                    <input type="checkbox" class="new-control-input contact-chkbox">
-                                                    <span class="new-control-indicator"></span>
-                                                </label>
-                                            </div>
-
-                                            <span
-                                                hidden>{{$product_im=\App\ProductImage::where('product_id',$pro->id)->first()}}</span>
-                                            <img style="height: 100px; width: auto"
-                                                 src="{{ asset(!empty($product_im->image)?'public/storage/'.$product_im->image:'public/assets/img/nency-beauty.png')}}"
-                                                 alt="avatar">
-                                            <div class="user-meta-info">
-                                                <p class="user-name"
-                                                   data-name="{{ $pro->brand_name }}">{{ $pro->brand_name }}</p>
-                                                {{--                                                <p class="user-work" data-occupation="{{ $pro->about }}">{{ $pro->about }}</p>--}}
-                                            </div>
-                                        </div>
-                                        <div class="user-email">
-                                            <p class="info-title">Product Name: </p>
-                                            <p class="usr-email-addr"
-                                               data-email="{{ $pro->product_name }}">{{ $pro->product_name }}</p>
-                                        </div>
-
-                                        <div class="user-email">
-                                            <p class="info-title">Category Name: </p>
-                                            <p class="usr-email-addr"
-                                               data-email="{{ $pro->cat_name }}">{{ $pro->cat_name }}</p>
-                                        </div>
-
-
-                                        <div class="action-btn">
-                                            <a href="{{ url('product/'.$pro->id. '/edit')}}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                     class="feather feather-edit-2 edit">
-                                                    <path
-                                                        d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-                                                </svg>
-                                            </a>
-
-                                            <button type="button" class="btn btn-dark  rounded-circle"
-                                                    data-toggle="modal" data-target="#standardModal">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                     height="24"
-                                                     viewBox="0 0 24 24" fill="none"
-                                                     stroke="currentColor"
-                                                     stroke-width="2" stroke-linecap="round"
-                                                     stroke-linejoin="round"
-                                                     class="feather feather-trash-2">
-                                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                                    <path
-                                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                                </svg>
-                                            </button>
-                                            <span class="sub-switch">
-                                            <label class="switch s-outline s-outline-primary">
-                                                <input class="searchType" type="checkbox"
-                                                       {{ ($pro->token == 0)? '':  'checked' }}  name="token"
-                                                       id="{{$pro->id}}" value="{{ $pro->token}}">
-                                                <span class="slider round"></span>
-                                            </label>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            @endforeach
-
+                         </div>
+                        <div class="searchable-items grid new_one">
                         </div>
 
-                    </div>
                 </div>
 
             </div>
@@ -356,12 +248,87 @@
             $('#input-search').on('click', function () {
                 $('.new_one').removeAttr("style");
                 $('.old_one').css("display", 'none');
+                $('.searchable-items.new_one').html("@foreach($product_all as $key=>$pro)\n" +
+                    "                                <div class=\"items new_one\" style=\"display: none\" >\n" +
+                    "                                    <div class=\"item-content\">\n" +
+                    "                                        <div class=\"user-profile\">\n" +
+                    "                                            <div class=\"n-chk align-self-center text-center\">\n" +
+                    "                                                <label class=\"new-control new-checkbox checkbox-primary\">\n" +
+                    "                                                    <input type=\"checkbox\" class=\"new-control-input contact-chkbox\">\n" +
+                    "                                                    <span class=\"new-control-indicator\"></span>\n" +
+                    "                                                </label>\n" +
+                    "                                            </div>\n" +
+                    "\n" +
+                    "                                            <span\n" +
+                    "                                                hidden>{{$product_im=\App\ProductImage::where('product_id',$pro->id)->first()}}</span>\n" +
+                    "                                            <img style=\"height: 100px; width: auto\"\n" +
+                    "                                                 src=\"{{ asset(!empty($product_im->image)?'public/storage/'.$product_im->image:'public/assets/img/nency-beauty.png')}}\"\n" +
+                    "                                                 alt=\"avatar\">\n" +
+                    "                                            <div class=\"user-meta-info\">\n" +
+                    "                                                <p class=\"user-name\"\n" +
+                    "                                                   data-name=\"{{ $pro->brand_name }}\">{{ $pro->brand_name }}</p>\n" +
+                    "                                                                                                <p class=\"user-work\" data-occupation=\"{{ $pro->brand_name }}\">{{ $pro->brand_name }}</p>\n" +
+                    "                                            </div>\n" +
+                    "                                        </div>\n" +
+                    "                                        <div class=\"user-email\">\n" +
+                    "                                            <p class=\"info-title\">Product Name: </p>\n" +
+                    "                                            <p class=\"usr-email-addr\"\n" +
+                    "                                               data-email=\"{{ $pro->product_name }}\">{{ $pro->product_name }}</p>\n" +
+                    "                                        </div>\n" +
+                    "\n" +
+                    "                                        <div class=\"user-email\">\n" +
+                    "                                            <p class=\"info-title\">Category Name: </p>\n" +
+                    "                                            <p class=\"usr-email-addr\"\n" +
+                    "                                               data-email=\"{{ $pro->cat_name }}\">{{ $pro->cat_name }}</p>\n" +
+                    "                                        </div>\n" +
+                    "\n" +
+                    "\n" +
+                    "                                        <div class=\"action-btn\">\n" +
+                    "                                            <a href=\"{{ url('product/'.$pro->id. '/edit')}}\">\n" +
+                    "                                                <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"\n" +
+                    "                                                     viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\"\n" +
+                    "                                                     stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"\n" +
+                    "                                                     class=\"feather feather-edit-2 edit\">\n" +
+                    "                                                    <path\n" +
+                    "                                                        d=\"M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z\"></path>\n" +
+                    "                                                </svg>\n" +
+                    "                                            </a>\n" +
+                    "\n" +
+                    "                                            <button type=\"button\" class=\"btn btn-dark  rounded-circle\"\n" +
+                    "                                                    data-toggle=\"modal\" data-target=\"#standardModal\">\n" +
+                    "                                                <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\"\n" +
+                    "                                                     height=\"24\"\n" +
+                    "                                                     viewBox=\"0 0 24 24\" fill=\"none\"\n" +
+                    "                                                     stroke=\"currentColor\"\n" +
+                    "                                                     stroke-width=\"2\" stroke-linecap=\"round\"\n" +
+                    "                                                     stroke-linejoin=\"round\"\n" +
+                    "                                                     class=\"feather feather-trash-2\">\n" +
+                    "                                                    <polyline points=\"3 6 5 6 21 6\"></polyline>\n" +
+                    "                                                    <path\n" +
+                    "                                                        d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path>\n" +
+                    "                                                    <line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line>\n" +
+                    "                                                    <line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line>\n" +
+                    "                                                </svg>\n" +
+                    "                                            </button>\n" +
+                    "                                            <span class=\"sub-switch\">\n" +
+                    "                                            <label class=\"switch s-outline s-outline-primary\">\n" +
+                    "                                                <input class=\"searchType\" type=\"checkbox\"\n" +
+                    "                                                       {{ ($pro->token == 0)? '':  'checked' }}  name=\"token\"\n" +
+                    "                                                       id=\"{{$pro->id}}\" value=\"{{ $pro->token}}\">\n" +
+                    "                                                <span class=\"slider round\"></span>\n" +
+                    "                                            </label>\n" +
+                    "                                            </span>\n" +
+                    "                                        </div>\n" +
+                    "                                    </div>\n" +
+                    "                                </div>\n" +
+                    "                            @endforeach")
 
             });
             var item = $('#input-search').val();
             if (item === '') {
                 $('.old_one').removeAttr("style");
                 $('.new_one').css("display", 'none');
+
             }
             $('#input-search').blur(function () {
                var item = $('#input-search').val();
