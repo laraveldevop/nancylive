@@ -52,9 +52,9 @@
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" id="pending_{{$item->id}}" data-seq='pending' href="javascript:void(0);">Pending</a>
-                                                    <a class="dropdown-item" id="shipping_{{$item->id}}" data-seq='shipping' href="javascript:void(0);">Shipping</a>
-                                                    <a class="dropdown-item" id="complete_{{$item->id}}" data-seq='complete' href="javascript:void(0);">Complete</a>
+                                                    <a class="dropdown-item pending" id="{{$item->user_id}}" data-seq='pending' href="javascript:void(0);">Pending</a>
+                                                    <a class="dropdown-item shipping" id="{{$item->user_id}}" data-seq='shipping' href="javascript:void(0);">Shipping</a>
+                                                    <a class="dropdown-item complete" id="{{$item->user_id}}" data-seq='complete' href="javascript:void(0);">Complete</a>
                                                 </div>
                                             </div>
 
@@ -157,7 +157,54 @@
 
     <!--  END CONTENT AREA  -->
     @push('artist_script')
+        <script>
+            $('a.pending').on('click', function (){
+                var data = $(this).data('seq');
+                var user_id = $(this).attr('id');
+                // alert(order_id);
+                $.ajax({
+                    url: '{{ route("add_status.Update_status") }}',
+                    type: 'post',
+                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                    data: {"data": data,'user_id': user_id},
+                    dataType: "json",
+                    success: function (data) {
+                        location.reload();
+                    }
+                });
+            });
+            $('a.shipping').on('click', function (){
+                var data = $(this).data('seq');
+                var user_id = $(this).attr('id');
+                // alert(order_id);
+                $.ajax({
+                    url: '{{ route("add_status.Update_status") }}',
+                    type: 'post',
+                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                    data: {"data": data,'user_id': user_id},
+                    dataType: "json",
+                    success: function (data) {
+                        location.reload();
+                    }
+                });
+            });
+            $('a.complete').on('click', function (){
+                var data = $(this).data('seq');
+                var user_id = $(this).attr('id');
+                // alert(order_id);
+                $.ajax({
+                    url: '{{ route("add_status.Update_status") }}',
+                    type: 'post',
+                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                    data: {"data": data,'user_id': user_id},
+                    dataType: "json",
+                    success: function (data) {
+                        location.reload();
+                    }
+                });
+            });
 
+        </script>
         <script src="{{ asset('public/plugins/table/datatable/datatables.js') }}"></script>
         <script>
             $('#zero-config').DataTable({
@@ -172,60 +219,11 @@
                     "sLengthMenu": "Results :  _MENU_",
                 },
                 "stripeClasses": [],
-                "lengthMenu": [7, 10, 20, 50],
-                "pageLength": 7
+                "lengthMenu": [5, 10, 20, 50],
+                "pageLength": 5
             });
         </script>
 
-        <script>
-            @foreach($order as $item)
-            $('#pending_{{$item->id}}').on('click', function (){
-                var data = $(this).data('seq');
-                var user_id = ({{$item->user_id}});
-                // alert(order_id);
-                $.ajax({
-                    url: '{{ route("add_status.Update_status") }}',
-                    type: 'post',
-                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-                    data: {"data": data,'user_id': user_id},
-                    dataType: "json",
-                    success: function (data) {
-                        location.reload();
-                    }
-                });
-            });
-            $('#shipping_{{$item->id}}').on('click', function (){
-                var data = $(this).data('seq');
-                var user_id = ({{$item->user_id}});
-                // alert(order_id);
-                $.ajax({
-                    url: '{{ route("add_status.Update_status") }}',
-                    type: 'post',
-                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-                    data: {"data": data,'user_id': user_id},
-                    dataType: "json",
-                    success: function (data) {
-                        location.reload();
-                    }
-                });
-            });
-            $('#complete_{{$item->id}}').on('click', function (){
-                var data = $(this).data('seq');
-                var user_id = ({{$item->user_id}});
-                // alert(order_id);
-                $.ajax({
-                    url: '{{ route("add_status.Update_status") }}',
-                    type: 'post',
-                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-                    data: {"data": data,'user_id': user_id},
-                    dataType: "json",
-                    success: function (data) {
-                        location.reload();
-                    }
-                });
-            });
 
-            @endforeach
-        </script>
     @endpush
 @endsection

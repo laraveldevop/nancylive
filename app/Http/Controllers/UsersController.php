@@ -83,7 +83,7 @@ class UsersController extends Controller
                         );
                 }
             }
-            return response()->json($array);
+            return response()->json($role_id);
         }
     }
 

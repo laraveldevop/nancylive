@@ -59,13 +59,13 @@
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" id="admin_{{$item->id}}" data-seq='1'
+                                                    <a class="dropdown-item admin" id="{{$item->id}}" data-seq='1'
                                                        href="javascript:void(0);">Admin</a>
-                                                    <a class="dropdown-item" id="artist_{{$item->id}}" data-seq='2'
+                                                    <a class="dropdown-item artist" id="{{$item->id}}" data-seq='2'
                                                        href="javascript:void(0);">Artist</a>
-                                                    <a class="dropdown-item" id="product_{{$item->id}}" data-seq='3'
+                                                    <a class="dropdown-item product" id="{{$item->id}}" data-seq='3'
                                                        href="javascript:void(0);">Product</a>
-                                                    <a class="dropdown-item" id="magazine_{{$item->id}}" data-seq='4'
+                                                    <a class="dropdown-item magazine" id="{{$item->id}}" data-seq='4'
                                                        href="javascript:void(0);">Magazine</a>
                                                 </div>
                                             </div>
@@ -86,7 +86,7 @@
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="btnDropUpOutline">
                                                     @foreach($sub_role as $role)
-                                                        <a class="dropdown-item" id="{{$role->role_id}}"
+                                                        <a class="dropdown-item sub-role-id" id="{{$role->role_id}}"
                                                            data-seq='{{$item->id}}'
                                                            href="javascript:void(0);">{{$role->role}}</a>
                                                     @endforeach
@@ -110,7 +110,83 @@
 
     <!--  END CONTENT AREA  -->
     @push('artist_script')
+        <script>
+            $('a.sub-role-id').on('click', function (){
+                var sub_role_id = $(this).attr('id');
+                    var user_id = $(this).data('seq');
+                        $.ajax({
+                            url: '{{ route("add_sub_role.Update_role") }}',
+                            type: 'post',
+                            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                            data: {"user_id": user_id, 'role_id': sub_role_id},
+                            dataType: "json",
+                            success: function (data) {
+                                location.reload();
+                            }
+                        });
+            });
 
+                $('a.dropdown-item.admin').on('click', function () {
+                    var data = $(this).data('seq');
+                    var user_id = $(this).attr('id');
+                    // alert(data);
+                    $.ajax({
+                        url: '{{ route("add_role.Update_role") }}',
+                        type: 'post',
+                        headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                        data: {"data": data, 'user_id': user_id},
+                        dataType: "json",
+                        success: function () {
+                            location.reload();
+                        }
+                    });
+                });
+                $('a.dropdown-item.artist').on('click', function () {
+                    var data = $(this).data('seq');
+                    var user_id = $(this).attr('id');
+                    // alert(data);
+                    $.ajax({
+                        url: '{{ route("add_role.Update_role") }}',
+                        type: 'post',
+                        headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                        data: {"data": data, 'user_id': user_id},
+                        dataType: "json",
+                        success: function () {
+                            location.reload();
+                        }
+                    });
+                });
+                $('a.dropdown-item.product').on('click', function () {
+                    var data = $(this).data('seq');
+                    var user_id = $(this).attr('id');
+                    // alert(data);
+                    $.ajax({
+                        url: '{{ route("add_role.Update_role") }}',
+                        type: 'post',
+                        headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                        data: {"data": data, 'user_id': user_id},
+                        dataType: "json",
+                        success: function () {
+                            location.reload();
+                        }
+                    });
+                });
+                $('a.dropdown-item.magazine').on('click', function () {
+                    var data = $(this).data('seq');
+                    var user_id = $(this).attr('id');
+                    // alert(data);
+                    $.ajax({
+                        url: '{{ route("add_role.Update_role") }}',
+                        type: 'post',
+                        headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                        data: {"data": data, 'user_id': user_id},
+                        dataType: "json",
+                        success: function () {
+                            location.reload();
+                        }
+                    });
+                });
+        </script>
         <script src="{{ asset('public/plugins/table/datatable/datatables.js') }}"></script>
         <script>
             $('#zero-config').DataTable({
@@ -130,91 +206,6 @@
             });
         </script>
 
-        <script>
-            // $('a.dropdown-item').on('click', function (){
-            //     var role= $(this).html();
-            //    $('#sub_role').html(role);
-            // });
 
-            $('a.dropdown-item').on('click', function () {
-                var sub_role_id = $(this).attr('id');
-                var user_id = $(this).data('seq');
-                $.ajax({
-                    url: '{{ route("add_sub_role.Update_role") }}',
-                    type: 'post',
-                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-                    data: {"user_id": user_id, 'role_id': sub_role_id},
-                    dataType: "json",
-                    success: function (data) {
-                        location.reload();
-                    }
-                });
-            });
-
-
-            @foreach($user as $item)
-            $('#admin_{{$item->id}}').on('click', function () {
-                var data = $(this).data('seq');
-                var user_id = ({{$item->id}});
-                // alert(order_id);
-                $.ajax({
-                    url: '{{ route("add_role.Update_role") }}',
-                    type: 'post',
-                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-                    data: {"data": data, 'user_id': user_id},
-                    dataType: "json",
-                    success: function (data) {
-                        location.reload();
-                    }
-                });
-            });
-            $('#artist_{{$item->id}}').on('click', function () {
-                var data = $(this).data('seq');
-                var user_id = ({{$item->id}});
-                // alert(order_id);
-                $.ajax({
-                    url: '{{ route("add_role.Update_role") }}',
-                    type: 'post',
-                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-                    data: {"data": data, 'user_id': user_id},
-                    dataType: "json",
-                    success: function (data) {
-                        location.reload();
-                    }
-                });
-            });
-            $('#product_{{$item->id}}').on('click', function () {
-                var data = $(this).data('seq');
-                var user_id = ({{$item->id}});
-                // alert(order_id);
-                $.ajax({
-                    url: '{{ route("add_role.Update_role") }}',
-                    type: 'post',
-                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-                    data: {"data": data, 'user_id': user_id},
-                    dataType: "json",
-                    success: function (data) {
-                        location.reload();
-                    }
-                });
-            });
-            $('#magazine_{{$item->id}}').on('click', function () {
-                var data = $(this).data('seq');
-                var user_id = ({{$item->id}});
-                // alert(order_id);
-                $.ajax({
-                    url: '{{ route("add_role.Update_role") }}',
-                    type: 'post',
-                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-                    data: {"data": data, 'user_id': user_id},
-                    dataType: "json",
-                    success: function (data) {
-                        location.reload();
-                    }
-                });
-            });
-
-            @endforeach
-        </script>
     @endpush
 @endsection
