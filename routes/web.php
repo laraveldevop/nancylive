@@ -37,6 +37,9 @@ Route::resource('users', 'UserController');
 Route::resource('dashboard', 'DashboardController');
 Route::resource('user-role', 'UsersController');
 Route::resource('sub-role', 'SubRoleController');
+Route::resource('download', 'DownloadController');
+Route::resource('referral-product', 'ReferralProductController');
+Route::resource('referral-magazine', 'ReferralMagazineController');
 
 
 

@@ -389,6 +389,49 @@
                     </ul>
                 </li>
                 @endif
+                @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Admin'))
+                <li class="menu">
+                    <a href="#referral" data-toggle="collapse"
+                       aria-expanded="{{ ((request()->is('product')) ? 'true' : 'false') }}"
+                       data-active="{{ ((request()->is('product'))  ? 'true' : 'false') }}"
+                       class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-shopping-bag">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                            <span>Referral</span>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-chevron-right">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                    </a>
+                    <ul class="collapse submenu list-unstyled {{ ((request()->is('download')) || (request()->is('referral-product')) || (request()->is('referral-magazine'))  ? 'show' : '') }}"
+                        id="referral" data-parent="#accordionExample">
+                        <li class="{{ ((request()->is('download')) ? 'active' : '') }}">
+                            <a href="{{url('download')}}"> Download </a>
+                        </li>
+                        <li class="{{ ((request()->is('referral-product')) ? 'active' : '') }}">
+                            <a href="{{url('referral-product')}}"> Product </a>
+                        </li>
+
+                        <li class="{{ ((request()->is('referral-magazine')) ? 'active' : '') }}">
+                            <a href="{{url('referral-magazine')}}"> Magazine </a>
+                        </li>
+                        <li class="{{ ((request()->is('setting')) ? 'active' : '') }}">
+                            <a href="{{url('setting')}}"> Setting </a>
+                        </li>
+
+                    </ul>
+                </li>
+                @endif
 
                 @if(auth()->user()->hasRole('Admin'))
                 <li class="menu">
