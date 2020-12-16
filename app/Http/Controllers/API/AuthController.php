@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\OauthAccessToken;
+use App\Referral;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -47,13 +48,20 @@ class AuthController extends Controller
         $user->business_name = $request['business_name'];
         $user->device_id = $request['device_id'];
         $user->password = Hash::make($request['password']);
+        $user->referral_code= str_random(6);
         $user->email_verified_at = now();
         if ($request->file('image')) {
             $path = Storage::disk('public')->put('user', $request->file('image'));
             $user->image = $path;
-
         }
         $user->save();
+        if ($request->input('referral_code') != null){
+            $referral = new Referral();
+            $referral->stat = 1;
+            $referral->user_id = $user->id;
+            $referral->referral_code = $request->input('referral_code');
+            $referral->save();
+        }
         $token = $user->createToken('MyApp')->accessToken;
         DB::table('oauth_access_tokens')
             ->where('user_id', $user->id)

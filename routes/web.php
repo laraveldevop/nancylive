@@ -59,6 +59,7 @@ Route::post('package_user/packageList', 'UserPackageController@packageList')->na
 Route::post('add_status/Update_status', 'OrderController@updateStatus')->name('add_status.Update_status');
 Route::post('add_role/Update_role', 'UsersController@updateRole')->name('add_role.Update_role');
 Route::post('add_sub_role/Update_role', 'SubRoleController@updateRole')->name('add_sub_role.Update_role');
+Route::post('view_data/view_referral_code', 'DownloadController@viewReferral')->name('view_data.view_referral_code');
 
 
 Route::post('/ads','VideoController@ads');

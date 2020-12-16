@@ -45,7 +45,7 @@
                                     <th>Package Name</th>
                                 </tr>
                                 </thead>
-                                <tbody >
+                                <tbody>
 
                                 @foreach($userPackage as $item)
                                     <tr>

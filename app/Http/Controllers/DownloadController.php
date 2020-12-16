@@ -26,10 +26,32 @@ class DownloadController extends Controller
      */
     public function index()
     {
-        $user= Referral::where('stat',1)->join('users','referral.referral_code','=','users.referral_code')->get();
-
+        $user_all= Referral::where('stat',1)->leftJoin('users','referral.referral_code','=','users.referral_code')->orderBy('referral.id','desc')->get();
+        $user = $user_all->unique('id');
+        $user->all();
         return view('container.download.index')->with(compact('user'));
 
+    }
+
+    public function viewReferral(Request $request){
+        if ($request->ajax()) {
+            $data= $request->data;
+            $order = Referral::where('referral.referral_code',$data)->join('users','referral.user_id','=','users.id')->get();
+            $output = '';
+            $output .= '';
+            foreach ($order as $item) {
+                $output .= '<tr>';
+                $output .= '<td>' . $item->name . '</td>';
+                $output .= '<td>' . $item->business_name . '</td>';
+                $output .= '<td>' . $item->mobile . '</td>';
+                $output .= '<td>' . $item->email . '</td>';
+                $output .= '<td>' . $item->address . '</td>';
+                $output .= '<td>' . $item->city . '</td>';
+//                $output .= '<td>' . $item->referral_code . '</td>';
+                $output .= '</tr>';
+            }
+            return response()->json($output);
+        }
     }
 
     /**
