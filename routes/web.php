@@ -40,6 +40,7 @@ Route::resource('sub-role', 'SubRoleController');
 Route::resource('download', 'DownloadController');
 Route::resource('referral-product', 'ReferralProductController');
 Route::resource('referral-magazine', 'ReferralMagazineController');
+Route::resource('setting', 'SettingController');
 
 
 

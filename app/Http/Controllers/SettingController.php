@@ -3,10 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Setting;
+use App\User;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('role:Admin');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +26,9 @@ class SettingController extends Controller
      */
     public function index()
     {
-        return view('container.setting.index');
+        $user= Setting::first();
+//        echo $user; die();
+        return view('container.setting.index')->with(compact('user'));
     }
 
     /**
@@ -69,7 +83,17 @@ class SettingController extends Controller
      */
     public function update(Request $request, Setting $setting)
     {
-        //
+        $request->validate([
+            'download'=>['required'],
+            'product'=>['required'],
+            'magazine'=>['required'],
+
+        ]);
+        $setting->download = $request->input('download');
+        $setting->product = $request->input('product');
+        $setting->magazine = $request->input('magazine');
+        $setting->save();
+        return redirect('setting');
     }
 
     /**
