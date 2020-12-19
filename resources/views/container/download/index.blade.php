@@ -27,6 +27,7 @@
                                     <th>Business Name</th>
                                     <th>Email</th>
                                     <th>Mobile</th>
+                                    <th>Total profit</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -39,6 +40,7 @@
                                         <td>{{$item->business_name}}</td>
                                         <td>{{$item->email}}</td>
                                         <td>{{$item->mobile}}</td>
+                                        <td>{{$item->mobile}}</td>  
                                         <td>
                                             <a  name="{{$item->referral_code}}" class="btn btn-sm btn-outline-secondary rounded-circle-vertical-pills-icon model_{{$item->referral_code}}"
                                                 data-toggle="modal" data-target=".open_model">

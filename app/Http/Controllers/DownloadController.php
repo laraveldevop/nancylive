@@ -29,6 +29,7 @@ class DownloadController extends Controller
         $user_all= Referral::where('stat',1)->leftJoin('users','referral.referral_code','=','users.referral_code')->orderBy('referral.id','desc')->get();
         $user = $user_all->unique('id');
         $user->all();
+        
         return view('container.download.index')->with(compact('user'));
 
     }

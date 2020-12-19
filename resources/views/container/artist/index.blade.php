@@ -125,7 +125,7 @@
                                         <a href="{{ url('artist/'.$value->id. '/edit')}}"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 edit"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
 
 
-                                        <button type="button" class="btn btn-dark  rounded-circle" data-toggle="modal" data-target="#standardModal" >
+                                        <button type="button" class="btn btn-dark  rounded-circle" data-toggle="modal" data-target="#standardModal_{{$value->id}}" >
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                  height="24"
                                                  viewBox="0 0 24 24" fill="none"
@@ -158,8 +158,9 @@
         </div>
 
     </div>
+    @foreach($artist as $key=>$value)
     <!-- Modal -->
-    <div class="modal fade modal-notification" id="standardModal" tabindex="-1" role="dialog" aria-labelledby="standardModalLabel" aria-hidden="true">
+    <div class="modal fade modal-notification" id="standardModal_{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="standardModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document" id="standardModalLabel">
             <div class="modal-content">
                 <div class="modal-body text-center">
@@ -170,17 +171,17 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Not Sure</button>
-                    <button type="submit" id="delete" class="btn btn-primary" data-toggle="modal" data-dismiss="modal" data-target="#loginModal">Yes</button>
+                    <button type="submit" id="delete" class="btn btn-primary" data-toggle="modal" data-dismiss="modal" data-target="#loginModal{{$value->id}}">Yes</button>
 
                 </div>
             </div>
         </div>
     </div>
-    @foreach($artist as $key=>$value)
+
 
 
         <!-- Modal -->
-        <div class="modal fade login-modal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal fade login-modal" id="loginModal{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
 
@@ -191,9 +192,10 @@
                         <form class="mt-0" action="{{ route('artist.destroy',$value->id) }}" method="post" >
                             @csrf
                             @method('DELETE')
+                            <input type="hidden" value="{{$value->id}}" name="id">
                             <div class="form-group">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                                <input name="password" type="password" class="form-control mb-4 "   placeholder="Password">
+                                <input name="password" type="password" class="form-control mb-4"   placeholder="Password">
                             </div>
 
                             <button type="submit"  class="btn btn-primary mt-2 mb-2 btn-block">OK</button>
