@@ -141,7 +141,7 @@
                                                 </svg>
                                             </a>
 
-                                            <button type="button" class="btn btn-dark  rounded-circle" data-toggle="modal" data-target="#standardModal" >
+                                            <button type="button" class="btn btn-dark  rounded-circle" data-toggle="modal" data-target="#standardModal_{{$value->id}}" >
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                      height="24"
                                                      viewBox="0 0 24 24" fill="none"
@@ -182,8 +182,10 @@
         </div>
 
     </div>
-    <!-- Modal -->
-    <div class="modal fade modal-notification" id="standardModal" tabindex="-1" role="dialog" aria-labelledby="standardModalLabel" aria-hidden="true">
+    @foreach($pdf as $key=>$value)
+
+        <!-- Modal -->
+    <div class="modal fade modal-notification" id="standardModal_{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="standardModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document" id="standardModalLabel">
             <div class="modal-content">
                 <div class="modal-body text-center">
@@ -194,17 +196,16 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Not Sure</button>
-                    <button type="submit" id="delete" class="btn btn-primary" data-toggle="modal" data-dismiss="modal" data-target="#loginModal">Yes</button>
+                    <button type="submit" id="delete" class="btn btn-primary" data-toggle="modal" data-dismiss="modal" data-target="#loginModal{{$value->id}}">Yes</button>
 
                 </div>
             </div>
         </div>
     </div>
-    @foreach($pdf as $key=>$value)
 
 
         <!-- Modal -->
-        <div class="modal fade login-modal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal fade login-modal" id="loginModal{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
 
