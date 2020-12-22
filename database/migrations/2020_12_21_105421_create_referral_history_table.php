@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReferralTable extends Migration
+class CreateReferralHistoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateReferralTable extends Migration
      */
     public function up()
     {
-        Schema::create('referral', function (Blueprint $table) {
+        Schema::create('referral_history', function (Blueprint $table) {
             $table->increments('id');
             $table->string('stat');
             $table->enum('status',['paid','unpaid'])->default('unpaid');
@@ -32,6 +32,6 @@ class CreateReferralTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('referral');
+        Schema::dropIfExists('referral_history');
     }
 }

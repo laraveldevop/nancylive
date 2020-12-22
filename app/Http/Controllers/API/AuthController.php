@@ -58,6 +58,7 @@ class AuthController extends Controller
         if ($request->input('referral_code') != null){
             $referral = new Referral();
             $referral->stat = 1;
+            $referral->status = 'unpaid';
             $referral->user_id = $user->id;
             $referral->referral_code = $request->input('referral_code');
             $referral->save();

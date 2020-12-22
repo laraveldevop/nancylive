@@ -27,7 +27,7 @@
                                     <th>Business Name</th>
                                     <th>Email</th>
                                     <th>Mobile</th>
-                                    <th>Total profit</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -40,10 +40,22 @@
                                         <td>{{$item->business_name}}</td>
                                         <td>{{$item->email}}</td>
                                         <td>{{$item->mobile}}</td>
-                                        <td>{{$item->mobile}}</td>  
                                         <td>
-                                            <a  name="{{$item->referral_code}}" class="btn btn-sm btn-outline-secondary rounded-circle-vertical-pills-icon model_{{$item->referral_code}}"
-                                                data-toggle="modal" data-target=".open_model">
+{{--                                            <div class="btn-group dropup" role="group">--}}
+{{--                                                <button id="btnDropUpOutline" type="button"--}}
+{{--                                                        class="btn {{isset($item->status)? 'btn-outline-success': 'btn-outline-danger' }}  dropdown-toggle"--}}
+{{--                                                        data-toggle="dropdown" aria-haspopup="true"--}}
+{{--                                                        aria-expanded="false">{{isset($item->status)?$item->status:'un-paid'}}--}}
+{{--                                                </button>--}}
+{{--                                            </div>--}}
+                                            <a class="checkout" id="{{$item->referral_code}}" data-seq="paid"> <span class="badge outline-badge-info shadow-none">{{$item->status}}</span></a>
+
+                                        </td>
+
+                                        <td>
+                                            <a name="{{$item->referral_code}}"
+                                               class="btn btn-sm btn-outline-secondary rounded-circle-vertical-pills-icon model_{{$item->referral_code}}"
+                                               data-toggle="modal" data-target=".open_model">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                      viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -67,7 +79,7 @@
     </div>
 
 
-{{--    Model --}}
+    {{--    Model --}}
     <div class="modal fade open_model" tabindex="-1" role="dialog"
          aria-labelledby="myExtraLargeModalLabel"
          aria-hidden="true">
@@ -95,7 +107,7 @@
                                 <th>Email</th>
                                 <th>Address</th>
                                 <th>City</th>
-{{--                                <th>Referral Code</th>--}}
+                                <th>Total profit</th>
                             </tr>
                             </thead>
                             <tbody id="view_data">
@@ -116,10 +128,26 @@
     {{--  End   Model --}}
     <!--  END CONTENT AREA  -->
     @push('artist_script')
+        <script>
+            $('a.checkout').on('click', function (){
+                var referral_code = $(this).attr('id');
+                var status = $(this).data('seq');
 
+                $.ajax({
+                    url: '{{ route("referral_code.Update_status") }}',
+                    type: 'post',
+                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                    data: {"referral_code": referral_code,'status': status},
+                    dataType: "json",
+                    success: function (data) {
+                        // location.reload();
+                    }
+                });
+            });
+            </script>
         <script>
             @foreach($user as $item)
-                $('.model_{{$item->referral_code}}').on('click',function (){
+            $('.model_{{$item->referral_code}}').on('click', function () {
                 var referral_code = $(this).attr('name');
                 // alert(order_id);
                 $.ajax({
@@ -149,8 +177,8 @@
                     "sLengthMenu": "Results :  _MENU_",
                 },
                 "stripeClasses": [],
-                "lengthMenu": [7, 10, 20, 50],
-                "pageLength": 7
+                "lengthMenu": [2, 10, 20, 50],
+                "pageLength": 2
             });
         </script>
 
