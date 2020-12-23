@@ -33,8 +33,10 @@ class DownloadController extends Controller
         $user_all= Referral::where('stat',1)->leftJoin('users','referral.referral_code','=','users.referral_code')->orderBy('referral.id','desc')->get();
         $user = $user_all->unique('id');
         $user->all();
-
-        return view('container.download.index')->with(compact('user'));
+        $history_all = ReferralHistory::where('stat',1)->leftJoin('users','referral_history.referral_code','=','users.referral_code')->orderBy('referral_history.id','desc')->get();
+        $history = $history_all->unique('id');
+        $history->all();
+        return view('container.download.index')->with(compact('user','history'));
 
     }
 
@@ -42,6 +44,35 @@ class DownloadController extends Controller
         if ($request->ajax()) {
             $data= $request->data;
             $order = Referral::where('referral.referral_code',$data)->join('users','referral.user_id','=','users.id')->get();
+            $setting= Setting::first();
+            $tot = 0;
+
+            $output = '';
+            $output .= '';
+
+            foreach ($order as $item) {
+                $output .= '<tr>';
+                $output .= '<td>' . $item->name . '</td>';
+                $output .= '<td>' . $item->business_name . '</td>';
+                $output .= '<td>' . $item->mobile . '</td>';
+                $output .= '<td>' . $item->email . '</td>';
+                $output .= '<td>' . $item->address . '</td>';
+                $output .= '<td>' . $item->city . '</td>';
+                $output .= '<td>' . $setting->download . '</td>';
+                $output .= '</tr>';
+                $tot += $setting->download;
+            }
+            $output .= '<tr>';
+            $output .= ' <td colspan="6">total</td>';
+            $output .= '<td>' . $tot . '</td>';
+            $output .= '</tr>';
+            return response()->json($output);
+        }
+    }
+    public function viewReferralHistory(Request $request){
+        if ($request->ajax()) {
+            $data= $request->data;
+            $order = ReferralHistory::where('referral_history.referral_code',$data)->join('users','referral_history.user_id','=','users.id')->get();
             $setting= Setting::first();
             $tot = 0;
 

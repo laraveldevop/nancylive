@@ -61,6 +61,7 @@ Route::post('add_status/Update_status', 'OrderController@updateStatus')->name('a
 Route::post('add_role/Update_role', 'UsersController@updateRole')->name('add_role.Update_role');
 Route::post('add_sub_role/Update_role', 'SubRoleController@updateRole')->name('add_sub_role.Update_role');
 Route::post('view_data/view_referral_code', 'DownloadController@viewReferral')->name('view_data.view_referral_code');
+Route::post('view_data/view_referral_history_code', 'DownloadController@viewReferralHistory')->name('view_data.view_referral_history_code');
 Route::post('referral_code/Update_status', 'DownloadController@UpdateReferralStatus')->name('referral_code.Update_status');
 
 
