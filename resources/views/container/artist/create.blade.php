@@ -146,16 +146,16 @@
                                                              </span>
                                                             @endif
                                                         </div>
-                                                        @if ($action=='UPDATE')
-                                                            <div class="video" id="preview_old_video">
-                                                                <video class="thevideo" width="300px" loop>
-                                                                    <source
-                                                                        src="{{ ((!empty($artist->video)) ?asset('public/storage/'. $artist->video) :old('video')) }}"
-                                                                        type="video/ogg">
-                                                                    Your browser does not support the video tag.
-                                                                </video>
-                                                            </div>
-                                                        @endif
+{{--                                                        @if ($action=='UPDATE')--}}
+{{--                                                            <div class="video" id="preview_old_video">--}}
+{{--                                                                <video class="thevideo" width="300px" loop>--}}
+{{--                                                                    <source--}}
+{{--                                                                        src="{{ ((!empty($artist->video)) ?asset('public/storage/'. $artist->video) :old('video')) }}"--}}
+{{--                                                                        type="video/ogg">--}}
+{{--                                                                    Your browser does not support the video tag.--}}
+{{--                                                                </video>--}}
+{{--                                                            </div>--}}
+{{--                                                        @endif--}}
                                                     </div>
                                                 </div>
 
@@ -454,6 +454,8 @@
                 });
 
                 $('.crop_image').click(function (event) {
+                    var spinner = $('#loading');
+                    spinner.show();
                     $image_crop.croppie('result', {
                         type: 'canvas',
                         size: 'original'
@@ -468,6 +470,7 @@
                             success: function (data) {
                                 $('input[name=image_data]').val(data.path);
                                 $('#pre-view').css('display', 'none');
+                                spinner.hide();
                             }
                         });
                     });

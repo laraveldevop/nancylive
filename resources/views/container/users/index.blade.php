@@ -25,6 +25,7 @@
                                     <th>ID</th>
                                     <th>User Name</th>
                                     <th>Business Name</th>
+                                    <th>City Name</th>
                                     <th>Email</th>
                                     <th>Mobile</th>
                                     <th>Role</th>
@@ -39,9 +40,9 @@
                                         <td>{{$item->id}}</td>
                                         <td>{{$item->name}}</td>
                                         <td>{{$item->business_name}}</td>
+                                        <td>{{$item->city}}</td>
                                         <td>{{$item->email}}</td>
                                         <td>{{$item->mobile}}</td>
-
                                         <td>
                                             <div class="btn-group">
                                                 <button type="button"

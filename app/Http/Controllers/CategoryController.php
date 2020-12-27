@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Category;
+use App\Images;
 use App\Pdf;
 use App\Product;
 use App\ProductImage;
@@ -14,6 +15,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class CategoryController extends Controller
 {
@@ -92,11 +95,11 @@ class CategoryController extends Controller
         $category = new  Category();
         $category->cat_name = $request->input('cat_name');
         $category->module_id = $request->input('module_id');
+        $images = $request->file('cat_image');
 
         if (!empty($request->input('image_data'))) {
 //            $path = Storage::disk('public')->put('category', $request->file('cat_image'));
             $category->cat_image = $request->input('image_data');
-
         }
 
         $category->save();

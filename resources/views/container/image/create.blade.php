@@ -94,6 +94,8 @@
                 });
 
                 $('.crop_image').click(function (event) {
+                    var spinner = $('#loading');
+                    spinner.show();
                     $image_crop.croppie('result', {
                         type: 'canvas',
                         size: 'original'
@@ -105,7 +107,7 @@
                             data: {"image": response, _token: _token},
                             dataType: "json",
                             success: function (data) {
-
+                                spinner.hide();
                             }
                         });
                     });

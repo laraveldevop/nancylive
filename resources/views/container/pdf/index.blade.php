@@ -122,11 +122,17 @@
                                                 </label>
                                             </div>
                                            <a href="{{ asset(!empty($value->file)?'public/storage/'.$value->file:'')}}" target="_blank"><img src="{{asset('public/assets/img/pdf.png')}}" height="100px" width="100px"></a>
+                                            <div class="user-meta-info">
+                                                <p class="user-name"
+                                                   data-name="{{ $value->pdf_name }}">{{ $value->pdf_name }}</p>
+                                                <p class="user-work"
+                                                   data-occupation="{{ $value->cat_name }}">{{ $value->cat_name }}</p>
+                                            </div>
                                         </div>
                                         <div class="user-email">
-                                            <p class="info-title"> Name: </p>
+                                            <p class="info-title"> Detail: </p>
                                             <p class="usr-email-addr"
-                                               data-email="{{ $value->pdf_name }}">{{ $value->pdf_name }}</p>
+                                               data-email="{{ $value->detail }}">{!! $value->detail !!} </p>
                                         </div>
 
 

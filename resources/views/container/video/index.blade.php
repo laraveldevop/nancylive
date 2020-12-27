@@ -152,20 +152,20 @@
                                                  alt="avatar">
                                             <div class="user-meta-info">
                                                 <p class="user-name"
-                                                   data-name="{{ $value->artist_name }}">{{ $value->artist_name }}</p>
+                                                   data-name="{{ $value->video_name }}">{{ $value->video_name }}</p>
                                                 <p class="user-work"
-                                                   data-occupation="{{ $value->about }}">{{ $value->about }}</p>
+                                                   data-occupation="{{ $value->cat_name }}">{{ $value->cat_name }}</p>
                                             </div>
                                         </div>
                                         <div class="user-location">
-                                            <p class="info-title">Category: </p>
+                                            <p class="info-title">Artist: </p>
                                             <p class="usr-location"
-                                               data-location="{{ $value->cat_name}}">{{ $value->cat_name }}</p>
+                                               data-location="{{ $value->artist_name}}">{{ $value->artist_name }}</p>
                                         </div>
                                         <div class="user-location">
-                                            <p class="info-title">Title: </p>
+                                            <p class="info-title">About Artist: </p>
                                             <p class="usr-location"
-                                               data-location="{{ $value->video_name }}">{{ $value->video_name }}</p>
+                                               data-location="{{ $value->about }}">{{ $value->about }}</p>
                                         </div>
 
                                         <div class="user-location">

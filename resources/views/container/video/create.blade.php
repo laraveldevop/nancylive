@@ -527,6 +527,8 @@
                 });
 
                 $('.crop_image').on('click',function (event) {
+                    var spinner = $('#loading');
+                    spinner.show();
                     $image_crop.croppie('result', {
                         type: 'canvas',
                         size: 'original'
@@ -541,6 +543,7 @@
                             success: function (data) {
                                 $('input[name=image_data]').val(data.path);
                                 $('#pre-view').css('display','none');
+                                spinner.hide();
                             }
                         });
                     });
