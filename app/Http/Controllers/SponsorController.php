@@ -85,6 +85,8 @@ class SponsorController extends Controller
         $sponsor->instagram = $request->input('instagram');
         $sponsor->youtube = $request->input('youtube');
         $sponsor->image = $request->input('image_data');
+        $sponsor->CreatedBy = Auth::user()->getAuthIdentifier();
+
 
 //        if ($request->file('image')) {
 //            $path = Storage::disk('public')->put('sponsor', $request->file('image'));

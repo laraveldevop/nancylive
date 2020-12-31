@@ -70,6 +70,7 @@ class BrandController extends Controller
         $brand = new  Brand();
         $brand->brand_name = $request->input('brand_name');
         $brand->image = $request->input('image_data');
+        $brand->CreatedBy = Auth::user()->getAuthIdentifier();
 
 
 //        if ($request->file('image')) {

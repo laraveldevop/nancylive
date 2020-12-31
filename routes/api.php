@@ -39,11 +39,13 @@ Route::group(['middleware' => ['json.response']], function () {
 
     Route::post('add-category', 'API\CategoryViewController@addCategory')->middleware('checkUser');
     Route::post('add-artist', 'API\ArtistController@store')->middleware('checkUser');
+    Route::post('add-brand', 'API\BrandViewController@store')->middleware('checkUser');
 
 
 
     Route::post('category-detail', 'API\CategoryViewController@categoryDetail')->middleware('checkUser');
     Route::post('brand-detail', 'API\BrandViewController@brandDetail')->middleware('checkUser');
+    Route::post('brand-view', 'API\BrandViewController@brandView')->middleware('checkUser');
     Route::post('sponsor-detail', 'API\SponsorViewController@sponsorDetail')->middleware('checkUser');
     Route::post('artist-detail', 'API\HomeController@artist')->middleware('checkUser');
     Route::post('product', 'API\ProductController@index')->middleware('checkUser');

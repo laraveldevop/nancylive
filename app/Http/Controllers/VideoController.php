@@ -138,10 +138,10 @@ class VideoController extends Controller
             $request->video_local->getMimeType();
 //            $request->video->move('storage/'.$fileName);
             $path = str_replace('public/', '', $request->video_local->store('public'));
-//        (new \Pawlox\VideoThumbnail\VideoThumbnail)->createThumbnail(storage_path($path), storage_path(), 'file.jpg', 2, 1920, 1080);
+//        (new \Pawlox\VideoThumbnail\VideoThumbnail)->createThumbnail(storage_path($path), storage_path('videos/'), 'file.jpg', 2, 1920, 1080);
 
 //        $cmd = 'C:/xampp/htdocs/ffmpeg -i '. storage_path($path) .' -vf fps=1/60 '.asset('public/thumbnail//').'output.png';
-        echo  $path;
+        echo  storage_path($path);
     }
     /**
      * Show the form for editing the specified resource.
