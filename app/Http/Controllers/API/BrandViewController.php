@@ -118,6 +118,7 @@ class BrandViewController extends Controller
         $brand = new  Brand();
         $brand->brand_name = $request->input('brand_name');
         $brand->CreatedBy = $id;
+        $brand->to_approve = 0;
 
         if ($request->file('image')) {
             $path = Storage::disk('public')->put('brand', $request->file('image'));

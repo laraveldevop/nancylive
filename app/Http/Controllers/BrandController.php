@@ -33,10 +33,24 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brand= Brand::paginate(10);
-        return view('container.brand.index')->with(compact('brand'));
+        $brand= Brand::where('to_approve',1)->paginate(10);
+        $brand_approve= Brand::where('to_approve',0)->paginate(10);
+        return view('container.brand.index')->with(compact('brand','brand_approve'));
     }
 
+    public function UpdateToApprove(Request $request)
+    {
+        if ($request->ajax()) {
+            $data= $request->approve;
+
+            $brand = Brand::find($data);
+
+
+            $brand->to_approve = 1;
+            $brand->save();
+            return response()->json($brand);
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -71,6 +85,7 @@ class BrandController extends Controller
         $brand->brand_name = $request->input('brand_name');
         $brand->image = $request->input('image_data');
         $brand->CreatedBy = Auth::user()->getAuthIdentifier();
+        $brand->to_approve = 1;
 
 
 //        if ($request->file('image')) {

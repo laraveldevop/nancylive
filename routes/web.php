@@ -65,6 +65,11 @@ Route::post('view_data/view_referral_history_code', 'DownloadController@viewRefe
 Route::post('referral_code/Update_status', 'DownloadController@UpdateReferralStatus')->name('referral_code.Update_status');
 
 
+Route::post('approve_brand/Update_to_approve', 'BrandController@UpdateToApprove')->name('approve_brand.Update_to_approve');
+
+
+
+
 Route::post('/ads','VideoController@ads');
 Route::post('/pdf_ads','PdfController@ads');
 Route::post('/product_ads','ProductController@ads');
