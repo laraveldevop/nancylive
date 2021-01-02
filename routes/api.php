@@ -40,6 +40,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('add-category', 'API\CategoryViewController@addCategory')->middleware('checkUser');
     Route::post('add-artist', 'API\ArtistController@store')->middleware('checkUser');
     Route::post('add-brand', 'API\BrandViewController@store')->middleware('checkUser');
+    Route::post('add-product', 'API\ProductController@store')->middleware('checkUser');
 
 
 

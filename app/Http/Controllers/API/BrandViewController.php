@@ -17,10 +17,11 @@ class BrandViewController extends Controller
     {
         $v = [];
         $br_d = [];
-        if ($request['brand_id'] == null) {
+        if ($request['brand_id'] == null && $request['user_id'] == null) {
 
             $brand = DB::table('brand')
                 ->select(array('id', 'brand_name', 'image'))
+                ->where('to_approve',1)
                 ->get()
                 ->toArray();
 
@@ -34,12 +35,31 @@ class BrandViewController extends Controller
                 array_push($br_d, ['Brand_id' => $item->id, 'Brand' => $item->brand_name, 'Brand_image' => $item->image, 'item_count' => $pd]);
             }
             $v = $br_d;
-        } else {
+        } elseif ($request['brand_id'] != null) {
             $brand = Brand::where('id', $request['brand_id'])->get();
             $product_view = [];
             $image_view = [];
             foreach ($brand as $item) {
                 $product = Product::where('brand', $item->id)->get();
+                $item['product'] = $product;
+                array_push($product_view, ['product' => $item]);
+                foreach ($product as $value) {
+                    $images = DB::table('product_image')
+                        ->select('image')
+                        ->where('product_id', $value->id)
+                        ->get();
+                    $value['image'] = $images;
+                    array_push($image_view, ['product_name' => $item]);
+                }
+            }
+            $v = $brand;
+        }
+        elseif ($request['user_id'] != null){
+            $brand = Brand::where('CreatedBy', $request['user_id'])->get();
+            $product_view = [];
+            $image_view = [];
+            foreach ($brand as $item) {
+                $product = Product::where('id', $item->id)->get();
                 $item['product'] = $product;
                 array_push($product_view, ['product' => $item]);
                 foreach ($product as $value) {
