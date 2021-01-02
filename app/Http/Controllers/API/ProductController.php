@@ -75,6 +75,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $id= $request->header('USER_ID');
         $request->validate([
             'category_id' => 'required',
             'brand' => 'required',
@@ -97,6 +98,7 @@ class ProductController extends Controller
         $product->quantity = $request->input('quantity');
         $product->token = $request->has('token');
         $product->to_approve = 0;
+        $product->CreatedBy = $id;
         if ($request->hasFile('video') != null){
             $path = Storage::disk('public')->put('product', $request->file('video'));
             $product->video = $path;

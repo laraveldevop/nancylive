@@ -109,6 +109,8 @@ class ProductController extends Controller
         $product->price = $request->input('price');
         $product->quantity = $request->input('quantity');
         $product->token = $request->has('token');
+        $product->to_approve = 1;
+        $product->CreatedBy = Auth::user()->getAuthIdentifier();
         if ($request->hasFile('video') != null){
             $path = Storage::disk('public')->put('product', $request->file('video'));
             $product->video = $path;
