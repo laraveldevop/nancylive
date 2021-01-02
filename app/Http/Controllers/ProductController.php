@@ -33,6 +33,7 @@ class ProductController extends Controller
     {
         $product = DB::table('product')
             ->select(DB::raw('product.id,product.product_name,product.video,product.detail,product.mobile,product.price,product.quantity,product.token,category.cat_name,brand.brand_name,sponsor.sponsor_name'))
+            ->where('product.to_approve', 1)
             ->leftJoin('category', 'product.cat_id', '=', 'category.cat_id')
             ->leftJoin('brand', 'product.brand', '=', 'brand.id')
             ->leftJoin('sponsor', 'product.sponsor_id', '=', 'sponsor.id')
@@ -40,15 +41,38 @@ class ProductController extends Controller
             ->paginate('10');
         $product_all = DB::table('product')
             ->select(DB::raw('product.id,product.product_name,product.video,product.detail,product.mobile,product.price,product.quantity,product.token,category.cat_name,brand.brand_name,sponsor.sponsor_name'))
+            ->where('product.to_approve', 1)
             ->leftJoin('category', 'product.cat_id', '=', 'category.cat_id')
             ->leftJoin('brand', 'product.brand', '=', 'brand.id')
             ->leftJoin('sponsor', 'product.sponsor_id', '=', 'sponsor.id')
 //            ->leftJoin('product_image','product.id','=','product_image.product_id')
             ->get();
 
-        return view('container.product.index')->with(compact('product','product_all'));
+        $product_approve =DB::table('product')
+            ->select(DB::raw('product.id,product.product_name,product.video,product.detail,product.mobile,product.price,product.quantity,product.token,category.cat_name,brand.brand_name,sponsor.sponsor_name'))
+            ->where('product.to_approve', 0)
+            ->leftJoin('category', 'product.cat_id', '=', 'category.cat_id')
+            ->leftJoin('brand', 'product.brand', '=', 'brand.id')
+            ->leftJoin('sponsor', 'product.sponsor_id', '=', 'sponsor.id')
+//            ->leftJoin('product_image','product.id','=','product_image.product_id')
+            ->paginate('10');
+
+        return view('container.product.index')->with(compact('product','product_all','product_approve'));
 
 
+    }
+
+    public function UpdateToApprove(Request $request)
+    {
+        if ($request->ajax()) {
+            $data= $request->approve;
+
+            $brand = Product::find($data);
+            
+            $brand->to_approve = 1;
+            $brand->save();
+            return response()->json($brand);
+        }
     }
 
     /**

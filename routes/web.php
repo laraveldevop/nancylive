@@ -66,6 +66,7 @@ Route::post('referral_code/Update_status', 'DownloadController@UpdateReferralSta
 
 
 Route::post('approve_brand/Update_to_approve', 'BrandController@UpdateToApprove')->name('approve_brand.Update_to_approve');
+Route::post('approve_product/Update_to_approve', 'ProductController@UpdateToApprove')->name('approve_product.Update_to_approve');
 
 
 
