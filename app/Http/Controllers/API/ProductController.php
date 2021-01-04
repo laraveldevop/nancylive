@@ -96,7 +96,7 @@ class ProductController extends Controller
         $product->mobile = $request->input('mobile');
         $product->price = $request->input('price');
         $product->quantity = $request->input('quantity');
-        $product->token = $request->has('token');
+        $product->token = 0;
         $product->to_approve = 0;
         $product->CreatedBy = $id;
         if ($request->hasFile('video') != null){
