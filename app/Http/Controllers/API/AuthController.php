@@ -198,6 +198,7 @@ class AuthController extends Controller
                 $users->forgot_password_stat = 1;
                 $users->otp = null;
                 $users->password =  Hash::make($request['otp']);
+                $users->device_id = null;
                 $users->save();
                 return response()->json(['status' => true, 'message' => 'OTP Verified','data'=>$users]);
             }
