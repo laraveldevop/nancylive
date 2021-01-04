@@ -55,7 +55,7 @@ class HomeController extends Controller
             elseif ($item->status == 3){
                 $id= $item->product_id;
                 $title= $item->product_name;
-                $image= $product_image['image'];
+                $image= $product_image->image;
             }
             else{
                 $id= null;
