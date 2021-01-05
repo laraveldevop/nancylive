@@ -90,10 +90,13 @@ class AuthController extends Controller
 
             if (Hash::check($request->password, $user->password)) {
                 $data=User::where('email', '=', $request['email'])->first();
+
                 $data->device_id = $request['device_id'];
                 $data->save();
                 $token = $user->createToken('MyApp')->accessToken;
-//
+                $role = User::with('roles')->where('id',$data['id'])->first();
+                $value =$role->roles->first();
+                $data['role']=$value['id'];
                 DB::table('oauth_access_tokens')
                     ->where('user_id', $data->id)
                     ->update(['remember_token'=>$token]);
@@ -108,7 +111,9 @@ class AuthController extends Controller
             if (Hash::check($request->password, $user->password)) {
                 $data=User::where('email', '=', $request['email'])->first();
                 $token =OauthAccessToken::where('user_id',$data->id)->first();
-
+                $role = User::with('roles')->where('id',$data['id'])->first();
+                $value =$role->roles->first();
+                $data['role']=$value['id'];
             return response()->json(['status' => true, 'message' => 'Login SuccessFull', 'data' =>$data,'token'=>$token['remember_token']],200);
             } else {
                 $response = "Password miss match";
