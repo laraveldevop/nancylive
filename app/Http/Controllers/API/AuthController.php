@@ -122,7 +122,7 @@ class AuthController extends Controller
             }
         }
         else {
-            $response = 'User does not exist';
+            $response = 'User Already Login';
             return response()->json([
                 'status' => false,'message'=>$response,'data'=>''],422);
         }

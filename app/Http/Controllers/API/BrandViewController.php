@@ -5,9 +5,11 @@ namespace App\Http\Controllers\API;
 use App\Brand;
 use App\Http\Controllers\Controller;
 use App\Product;
+use App\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -149,5 +151,48 @@ class BrandViewController extends Controller
         $brand->save();
         return response()->json(['status' => true, 'message' => 'Available Data', 'data' => $brand]);
 
+    }
+
+    public function destroy(Request $request)
+    {
+        $brand = $request->input('id');
+        $br = Brand::where('id',$brand)->first();
+        if (isset($br)){
+            $product = Product::where('brand', $brand)->get();
+
+            $cat = Brand::where('id', $brand)->first();
+            if ($cat['image'] != null) {
+                $image_path = public_path() . '/storage/' . $cat['image'];
+                unlink($image_path);
+            }
+            Brand::destroy($brand);
+
+            //delete product
+            if (!empty($product)) {
+                foreach ($product as $value) {
+                    DB::table('advertise')
+                        ->where('product_id', $value->id)
+                        ->delete();
+                    $product_image = ProductImage::where('product_id', $value->id)->get();
+                    if (!empty($product_image)) {
+                        foreach ($product_image as $item) {
+                            $image_path = public_path() . '/storage/' . $item->image;
+                            unlink($image_path);
+                        }
+                    }
+                    if ($value->video != null) {
+                        $image_path = public_path() . '/storage/' . $value->video;
+                        unlink($image_path);
+                    }
+                    DB::table('product_image')->where('product_id', $value->id)->delete();
+                }
+            }
+            DB::table('product')->where('brand', $brand)->delete();
+            return response()->json(['status' => true, 'message' => 'Delete successfully.'], 200);
+
+        }
+        else {
+            return response()->json(['status' => false, 'message' => 'Data Not Found.'], 422);
+        }
     }
 }

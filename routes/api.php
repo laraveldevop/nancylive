@@ -42,6 +42,11 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('add-brand', 'API\BrandViewController@store')->middleware('checkUser');
     Route::post('add-product', 'API\ProductController@store')->middleware('checkUser');
 
+    //delete
+
+    Route::post('delete-product', 'API\ProductController@destroy')->middleware('checkUser');
+    Route::post('delete-brand', 'API\BrandViewController@destroy')->middleware('checkUser');
+
 
 
     Route::post('category-detail', 'API\CategoryViewController@categoryDetail')->middleware('checkUser');
