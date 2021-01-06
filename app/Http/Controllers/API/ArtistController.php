@@ -40,18 +40,7 @@ class ArtistController extends Controller
      */
     public function store(Request $request)
     {
-        $data = [];
-        if($request->hasfile('images'))
-        {
-            foreach($request->file('images') as $key=>$file)
-
-            {
-                $name=$file->getClientOriginalName();
-                $file->move(public_path().'/files/', $name);
-                $data[$key] = $name;
-            }
-        }
-        echo json_encode($data); die();
+        $id = $request->header('USER_ID');
         $validator = Validator::make($request->all(),[
             'artist_name' => 'required',
             'about' => 'required',
@@ -61,8 +50,7 @@ class ArtistController extends Controller
             'facebook' => 'required',
             'youtube' => 'required',
             'image' => 'mimes:jpg,jpeg,png|required',
-            'images' => 'mimes:jpg,jpeg,png|required',
-            'video'=> 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
+            'images' => 'required',
         ]);
         if ($validator->fails())
         {
@@ -81,14 +69,8 @@ class ArtistController extends Controller
         $artist->instagram = $request->input('instagram');
         $artist->youtube = $request->input('youtube');
         $artist->rate = $request->input('rate');
-        if ($request->hasFile('video')) {
-            $file=$request->file('video');
-            $fileName= $file->getClientOriginalExtension();
-            $request->file('video')->getMimeType();
-            $path = Storage::disk('public')->put('artist-video', $request->file('video'));
-            $artist->video = $path;
-
-        }
+        $artist->to_approve = 0;
+        $artist->CreatedBy = $id;
         $image_path = Storage::disk('public')->put('artist', $request->file('image'));
         $thumbnailpath = public_path('storage/'.$image_path);
         $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {

@@ -86,7 +86,6 @@ class ProductController extends Controller
             'quantity' => 'required|numeric',
             'mobile' => 'required|numeric',
             'files' => 'required',
-            'video' => 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000',
         ]);
         $product = new  Product();
         $product->cat_id = $request->input('category_id');
@@ -100,10 +99,6 @@ class ProductController extends Controller
         $product->token = 0;
         $product->to_approve = 0;
         $product->CreatedBy = $id;
-        if ($request->hasFile('video') != null) {
-            $path = Storage::disk('public')->put('product', $request->file('video'));
-            $product->video = $path;
-        }
 
         $product->save();
         if ($request->has('token') == 1) {

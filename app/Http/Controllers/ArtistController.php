@@ -81,6 +81,8 @@ class ArtistController extends Controller
         $artist->youtube = $request->input('youtube');
         $artist->rate = $request->input('demo_vertical');
         $artist->image = $request->input('image_data');
+        $artist->to_approve = 1;
+        $artist->CreatedBy = Auth::user()->getAuthIdentifier();
 //        if ($request->file('image')) {
 //            $path = Storage::disk('public')->put('artist', $request->file('image'));
 //        }
