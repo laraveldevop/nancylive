@@ -5,7 +5,11 @@ namespace App\Http\Controllers\API;
 use App\Artist;
 use App\Http\Controllers\Controller;
 use App\Images;
+use App\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
@@ -153,8 +157,54 @@ class ArtistController extends Controller
      * @param  \App\Artist  $artist
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Artist $artist)
+    public function destroy(Request $request)
     {
-        //
+        $artist = $request->input('id');
+        $br = Artist::where('id',$artist)->first();
+        if (isset($br)) {
+            $video = Video::where('artist_id', $artist)->get();
+            $art = Artist::where('id', $artist)->first();
+
+            if ($art['image'] != null) {
+                $image_path = public_path() . '/storage/' . $art['image'];
+                unlink($image_path);
+            }
+            if ($art['video'] != null) {
+                $image_path = public_path() . '/storage/' . $art['video'];
+                unlink($image_path);
+            }
+            Artist::destroy($artist);
+
+            if (!empty($video)) {
+                foreach ($video as $value) {
+                    DB::table('advertise')
+                        ->where('video_id', $value->id)
+                        ->delete();
+                    if ($value->image != null) {
+                        $image_path = public_path() . '/storage/' . $value->image;
+                        unlink($image_path);
+                    }
+                    if ($value->video != null) {
+                        $image_path = public_path() . '/storage/' . $value->video;
+                        unlink($image_path);
+                    }
+                }
+            }
+            DB::table('video')->where('artist_id', $artist)->delete();
+
+            $image = Images::where('artist_id', $artist)->get();
+            if (!empty($image)) {
+                foreach ($image as $item) {
+                    $image_path = public_path() . '/storage/' . $item->image;
+                    unlink($image_path);
+                }
+                DB::table('image')->where('artist_id', $artist)->delete();
+            }
+            return response()->json(['status' => true, 'message' => 'Delete successfully.'], 200);
+        }
+        else{
+            return response()->json(['status' => false, 'message' => 'Data Not Found.'], 422);
+
+        }
     }
 }

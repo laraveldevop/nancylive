@@ -277,7 +277,7 @@ class ArtistController extends Controller
             }
             DB::table('video')->where('artist_id', $artist)->delete();
 
-            $image = Image::where('artist_id', $artist)->get();
+            $image = Images::where('artist_id', $artist)->get();
             if (!empty($image)) {
                 foreach ($image as $item) {
                     $image_path = public_path() . '/storage/' . $item->image;
