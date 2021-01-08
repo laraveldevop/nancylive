@@ -88,6 +88,7 @@ class AllVideosController extends Controller
                 $request->video_local->getMimeType();
                 $path = str_replace('public/', '', $request->video_local->store('public'));
                 $video->video = $path;
+                $video->url = null;
                 $video->save();
                 return response()->json(['status' => true, 'message' => 'Add Successfully', 'data' => $video], 200);
             }
