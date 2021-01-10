@@ -157,43 +157,103 @@ class HomeController extends Controller
 
 
     public function artist(Request  $request) {
-        $validator = Validator::make($request->all(), [
-            'id' => 'required|numeric',
-        ]);
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => $validator->errors()], 401);
-        }
-        $results = Artist::where('id',$request['id'])->orderBy('rate','desc')->get();
-        $v=[];
-        $video=[];
-        foreach ($results as $item) {
-            $images = Images::where('artist_id',$item->id)->get();
-            $item['images']=$images;
+//       echo $request['id']; die();
+        if ($request['id'] == null && $request['user_id'] == null) {
+           $art = Artist::all();
+            $v=[];
+            $video=[];
+            foreach ($art as $item) {
+                $images = Images::where('artist_id',$item->id)->get();
+                $item['images']=$images;
 
-            $qu= Video::where('artist_id',$item->id)
-                ->get();
-            foreach ($qu as $value) {
-                if ($value->price == null){
-                    $value['payment_status']= 'free';
+                $qu= Video::where('artist_id',$item->id)
+                    ->get();
+                foreach ($qu as $value) {
+                    if ($value->price == null){
+                        $value['payment_status']= 'free';
+                    }
+                    else{
+                        $value['payment_status']= 'payable';
+                    }
+                    if ($value->url == null){
+                        $value['video_status'] = 1;
+                    }
+                    else{
+                        $value['video_status'] = 2;
+                    }
                 }
-                else{
-                    $value['payment_status']= 'payable';
-                }
-                if ($value->url == null){
-                    $value['video_status'] = 1;
-                }
-                else{
-                    $value['video_status'] = 2;
-                }
+//                $item['videos']=$qu;
             }
-            $item['videos']=$qu;
+
+
+            $v = $art;
+            return response()->json(['status' => true, 'message' => 'Available Data', 'data' => $v]);
+
+        }
+        elseif ($request['id'] != null){
+            $results = Artist::where('id',$request['id'])->orderBy('rate','desc')->get();
+            $v=[];
+            $video=[];
+            foreach ($results as $item) {
+                $images = Images::where('artist_id',$item->id)->get();
+                $item['images']=$images;
+
+                $qu= Video::where('artist_id',$item->id)
+                    ->get();
+                foreach ($qu as $value) {
+                    if ($value->price == null){
+                        $value['payment_status']= 'free';
+                    }
+                    else{
+                        $value['payment_status']= 'payable';
+                    }
+                    if ($value->url == null){
+                        $value['video_status'] = 1;
+                    }
+                    else{
+                        $value['video_status'] = 2;
+                    }
+                }
+//                $item['videos']=$qu;
+            }
+
+
+            $v = $results;
+            return response()->json(['status' => true, 'message' => 'Available Data', 'data' => $v]);
+        }
+        elseif ($request['user_id'] != null){
+            $results = Artist::where('id',$request['user_id'])->orderBy('rate','desc')->get();
+            $v=[];
+            $video=[];
+            foreach ($results as $item) {
+                $images = Images::where('artist_id',$item->id)->get();
+                $item['images']=$images;
+
+                $qu= Video::where('artist_id',$item->id)
+                    ->get();
+                foreach ($qu as $value) {
+                    if ($value->price == null){
+                        $value['payment_status']= 'free';
+                    }
+                    else{
+                        $value['payment_status']= 'payable';
+                    }
+                    if ($value->url == null){
+                        $value['video_status'] = 1;
+                    }
+                    else{
+                        $value['video_status'] = 2;
+                    }
+                }
+//                $item['videos']=$qu;
+            }
+
+
+            $v = $results;
+            return response()->json(['status' => true, 'message' => 'Available Data', 'data' => $v]);
         }
 
 
-        $v = $results;
-        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => $v]);
 
 
     }

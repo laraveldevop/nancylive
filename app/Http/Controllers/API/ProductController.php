@@ -77,59 +77,107 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $id = $request->header('USER_ID');
-        $request->validate([
-            'category_id' => 'required',
-            'brand' => 'required',
-            'product_name' => 'required',
-            'detail' => 'required',
-            'price' => 'required|numeric',
-            'quantity' => 'required|numeric',
-            'mobile' => 'required|numeric',
-            'files' => 'required',
-        ]);
-        $product = new  Product();
-        $product->cat_id = $request->input('category_id');
-        $product->sponsor_id = $request->input('sponsor_id');
-        $product->brand = $request->input('brand');
-        $product->product_name = $request->input('product_name');
-        $product->detail = $request->input('detail');
-        $product->mobile = $request->input('mobile');
-        $product->price = $request->input('price');
-        $product->quantity = $request->input('quantity');
-        $product->token = 0;
-        $product->to_approve = 0;
-        $product->CreatedBy = $id;
+        $product_id =$request->input('id');
+//        echo $product_id; die();
+        if ($product_id == null) {
+            $request->validate([
+                'category_id' => 'required',
+                'brand' => 'required',
+                'product_name' => 'required',
+                'detail' => 'required',
+                'price' => 'required|numeric',
+                'quantity' => 'required|numeric',
+                'mobile' => 'required|numeric',
+                'files' => 'required',
+            ]);
+            $product = new  Product();
+            $product->cat_id = $request->input('category_id');
+            $product->sponsor_id = $request->input('sponsor_id');
+            $product->brand = $request->input('brand');
+            $product->product_name = $request->input('product_name');
+            $product->detail = $request->input('detail');
+            $product->mobile = $request->input('mobile');
+            $product->price = $request->input('price');
+            $product->quantity = $request->input('quantity');
+            $product->token = 0;
+            $product->to_approve = 0;
+            $product->CreatedBy = $id;
 
-        $product->save();
-        if ($request->has('token') == 1) {
-            DB::table('advertise')->insert(
-                ['product_id' => $product->id, 'status' => 3, 'created_at' => now()]
-            );
-        }
-        $images = $request->file('files');
-        if ($request->hasFile('files')) :
-            foreach ($images as $item):
-                $path = Storage::disk('public')->put('product_images', $item);
-                $arr[] = $path;
-                $thumbnailpath = public_path('storage/' . $path);
-                $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                });
-                $img->save($thumbnailpath);
-                ProductImage::insert([
-                    'product_id' => $product->id,
-                    'image' => $path,
-                    'created_at' => now()
-                    //you can put other insertion here
-                ]);
-            endforeach;
+            $product->save();
+
+            $images = $request->file('files');
+            if ($request->hasFile('files')) :
+                foreach ($images as $item):
+                    $path = Storage::disk('public')->put('product_images', $item);
+                    $arr[] = $path;
+                    $thumbnailpath = public_path('storage/' . $path);
+                    $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    });
+                    $img->save($thumbnailpath);
+                    ProductImage::insert([
+                        'product_id' => $product->id,
+                        'image' => $path,
+                        'created_at' => now()
+                        //you can put other insertion here
+                    ]);
+                endforeach;
 //            $image = implode(",", $path);
-        else:
-            $image = '';
-        endif;
-        return response()->json(['status' => true, 'message' => 'Products retrieved successfully.', 'data' => $product], 200);
+            else:
+                $image = '';
+            endif;
+            return response()->json(['status' => true, 'message' => 'add successfully.', 'data' => $product], 200);
+        }
+        else{
+            $request->validate([
+                'category_id' => 'required',
+                'brand' => 'required',
+                'product_name' => 'required',
+                'detail' => 'required',
+                'price' => 'required|numeric',
+                'quantity' => 'required|numeric',
+                'mobile' => 'required|numeric',
 
+            ]);
+            $product = Product::find($product_id);
+            $product->cat_id = $request->input('category_id');
+            $product->sponsor_id = $request->input('sponsor_id');
+            $product->brand = $request->input('brand');
+            $product->product_name = $request->input('product_name');
+            $product->detail = $request->input('detail');
+            $product->mobile = $request->input('mobile');
+            $product->price = $request->input('price');
+            $product->quantity = $request->input('quantity');
+            $product->save();
+
+            $images = $request->file('files');
+            if ($request->hasFile('files')) :
+//            $request->validate(['files'=>'mimes:jpg,jpeg,png']);
+                foreach ($images as $item):
+
+                    $path = Storage::disk('public')->put('product_images', $item);
+                    $arr[] = $path;
+                    $thumbnailpath = public_path('storage/'.$path);
+                    $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    });
+                    $img->save($thumbnailpath);
+                    ProductImage::insert([
+                        'product_id'=> $product->id,
+                        'image'=>  $path,
+                        'updated_at'=>now()
+                        //you can put other insertion here
+                    ]);
+                endforeach;
+                $image = implode(",", $arr);
+            else:
+                $image = '';
+            endif;
+            return response()->json(['status' => true, 'message' => 'update successfully.', 'data' => $product], 200);
+
+        }
     }
 
     /**

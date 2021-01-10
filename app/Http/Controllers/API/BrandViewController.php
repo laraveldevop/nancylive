@@ -126,31 +126,54 @@ class BrandViewController extends Controller
     public function store(Request $request)
     {
         $id= $request->header('USER_ID');
-        $request->validate([
-            'brand_name'=> 'required',
-            'image'=>'required'
-
-        ]);
-        if ($request->file('image') == null){
+        $brand_id = $request->input('id');
+        if ($brand_id == null) {
             $request->validate([
-                'image'=> 'mimes:jpeg,jpg,png'
+                'brand_name' => 'required',
+                'image' => 'required'
+
             ]);
+            if ($request->file('image') == null) {
+                $request->validate([
+                    'image' => 'mimes:jpeg,jpg,png'
+                ]);
+            }
+
+            $brand = new  Brand();
+            $brand->brand_name = $request->input('brand_name');
+            $brand->CreatedBy = $id;
+            $brand->to_approve = 0;
+
+            if ($request->file('image')) {
+                $path = Storage::disk('public')->put('brand', $request->file('image'));
+                $brand->image = $path;
+
+            }
+
+            $brand->save();
+            return response()->json(['status' => true, 'message' => 'Add Successfully', 'data' => $brand]);
         }
+        else{
+            $request->validate([
+                'brand_name'=>['required']
+            ]);
+            $brand = Brand::find($brand_id);
+            $brand->brand_name=$request->input('brand_name');
 
-        $brand = new  Brand();
-        $brand->brand_name = $request->input('brand_name');
-        $brand->CreatedBy = $id;
-        $brand->to_approve = 0;
 
-        if ($request->file('image')) {
-            $path = Storage::disk('public')->put('brand', $request->file('image'));
-            $brand->image = $path;
+            if (!empty($request->input('image_data'))) {
+//            $path =  Storage::disk('public')->put('brand', $request->file('image'));
+                if (!empty($brand->image)){
+                    $image_path = public_path().'/storage/'.$brand->image;
+                    unlink($image_path);
+                }
+                //Update Image
+                $brand->image = $request->input('image_data');
+            }
+            $brand->save();
+            return response()->json(['status' => true, 'message' => 'Update Successfully', 'data' => $brand]);
 
         }
-
-        $brand->save();
-        return response()->json(['status' => true, 'message' => 'Available Data', 'data' => $brand]);
-
     }
 
     public function destroy(Request $request)

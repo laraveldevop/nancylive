@@ -69,7 +69,7 @@ Route::group(['middleware' => ['json.response']], function () {
 
     Route::get('home', 'API\HomeController@advertise')->middleware('checkUser');
     Route::get('order-detail', 'API\HomeController@order')->middleware('checkUser');
-    Route::get('artist', 'API\HomeController@index')->middleware('checkUser');
+    Route::post('artist', 'API\HomeController@artist')->middleware('checkUser');
     Route::get('document', 'API\PdfController@index')->middleware('checkUser');
     Route::get('history', 'API\HistoryController@index')->middleware('checkUser');
     Route::get('package', 'API\PackageController@index')->middleware('checkUser');

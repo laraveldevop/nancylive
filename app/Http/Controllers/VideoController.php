@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -102,7 +103,8 @@ class VideoController extends Controller
         $video->url =$request->input('url');
         $video->video = $request->input('video_file_name');
         $video->image = $request->input('image_data');
-
+        $video->to_approve = 1;
+        $video->CreatedBy = Auth::user()->getAuthIdentifier();
 //        if ($request->file('image')) {
 //            $path = Storage::disk('public')->put('thumbnail', $request->file('image'));
 //            $video->image = $path;

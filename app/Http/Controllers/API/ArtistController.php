@@ -50,11 +50,6 @@ class ArtistController extends Controller
             'about' => 'required',
             'city' => 'required',
             'firm_address' => 'required',
-            'instagram' => 'required',
-            'facebook' => 'required',
-            'youtube' => 'required',
-            'image' => 'mimes:jpg,jpeg,png|required',
-            'images' => 'required',
         ]);
         if ($validator->fails())
         {
@@ -62,57 +57,126 @@ class ArtistController extends Controller
                 'status'=> false,
                 'message'=>$validator->errors()], 422);
         }
-        $artist = new  Artist();
-        $artist->artist_name = $request->input('artist_name');
-        $artist->email = $request->input('email');
-        $artist->city = $request->input('city');
-        $artist->firm_address = $request->input('firm_address');
-        $artist->phone = $request->input('phone');
-        $artist->about = $request->input('about');
-        $artist->facebook = $request->input('facebook');
-        $artist->instagram = $request->input('instagram');
-        $artist->youtube = $request->input('youtube');
-        $artist->rate = $request->input('rate');
-        $artist->to_approve = 0;
-        $artist->CreatedBy = $id;
-        $image_path = Storage::disk('public')->put('artist', $request->file('image'));
-        $thumbnailpath = public_path('storage/'.$image_path);
-        $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        });
-        $img->save($thumbnailpath);
-        $artist->image = $image_path;
-        $artist->save();
-        $images = $request->file('images');
-        if ($request->hasFile('images')) :
-            foreach ($images as $item):
-                $path= Storage::disk('public')->put('images', $item);
+        $artist_id = $request->input('id');
+        if ($artist_id == null) {
+            $request->validate([
+                'image' => 'mimes:jpg,jpeg,png|required',
+                'images' => 'required',
+            ]);
+            $artist = new  Artist();
+            $artist->artist_name = $request->input('artist_name');
+            $artist->email = $request->input('email');
+            $artist->city = $request->input('city');
+            $artist->firm_address = $request->input('firm_address');
+            $artist->phone = $request->input('phone');
+            $artist->about = $request->input('about');
+            $artist->facebook = $request->input('facebook');
+            $artist->instagram = $request->input('instagram');
+            $artist->youtube = $request->input('youtube');
+            $artist->rate = $request->input('rate');
+            $artist->to_approve = 0;
+            $artist->CreatedBy = $id;
+            $image_path = Storage::disk('public')->put('artist', $request->file('image'));
+            $thumbnailpath = public_path('storage/' . $image_path);
+            $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $img->save($thumbnailpath);
+            $artist->image = $image_path;
+            $artist->save();
+            $images = $request->file('images');
+            if ($request->hasFile('images')) :
+                foreach ($images as $item):
+                    $path = Storage::disk('public')->put('images', $item);
 
-                $thumbnailpath = public_path('storage/'.$path);
+                    $thumbnailpath = public_path('storage/' . $path);
+                    $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    });
+                    $img->save($thumbnailpath);
+
+                    Images::insert([
+                        'artist_id' => $artist->id,
+                        'image' => $path,
+                        'created_at' => now()
+                        //you can put other insertion here
+                    ]);
+
+
+                endforeach;
+
+//            $image = implode(",", $arr);
+            else:
+                $image = '';
+            endif;
+
+            return response()->json(['status' => true, 'message' => 'Add Successfully', 'data' => $artist]);
+        }
+        else{
+
+            $artist= Artist::find($artist_id);
+            $artist->artist_name = $request->input('artist_name');
+            $artist->email = $request->input('email');
+            $artist->city = $request->input('city');
+            $artist->firm_address = $request->input('firm_address');
+            $artist->phone = $request->input('phone');
+            $artist->about = $request->input('about');
+            $artist->facebook = $request->input('facebook');
+            $artist->instagram = $request->input('instagram');
+            $artist->youtube = $request->input('youtube');
+            $artist->rate = $request->input('rate');
+
+            if (!empty($request->file('image'))) {
+                $request->validate([
+                    'image' => 'mimes:jpg,jpeg,png',
+                ]);
+//            $path =  Storage::disk('public')->put('artist', $request->file('image'));
+                if (!empty($artist->image)){
+                    $image_path = public_path().'/storage/'.$artist->image;
+                    unlink($image_path);
+                }
+                //Update Image
+                $image_path = Storage::disk('public')->put('artist', $request->file('image'));
+                $thumbnailpath = public_path('storage/' . $image_path);
                 $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 });
                 $img->save($thumbnailpath);
+                $artist->image = $image_path;
+            }
 
-                Images::insert( [
-                    'artist_id'=> $artist->id,
-                    'image'=>  $path,
-                    'created_at'=>now()
-                    //you can put other insertion here
-                ]);
+            $artist->save();
+            $images = $request->file('images');
+            if ($request->hasFile('images')) :
+                foreach ($images as $item):
+
+                    $path = Storage::disk('public')->put('images', $item);
+                    $arr[] = $path;
+                    $thumbnailpath = public_path('storage/'.$path);
+                    $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    });
+                    $img->save($thumbnailpath);
+                    Images::insert([
+                        'artist_id'=> $artist->id,
+                        'image'=>  $path,
+                        'updated_at'=>now()
+                        //you can put other insertion here
+                    ]);
+                endforeach;
+                $image = implode(",", $arr);
+            else:
+                $image = '';
+            endif;
 
 
-            endforeach;
+            return response()->json(['status' => true, 'message' => 'Update Successfully', 'data' => $artist]);
 
-//            $image = implode(",", $arr);
-        else:
-            $image = '';
-        endif;
-
-        return response()->json(['status' => true, 'message' => 'Add Successfully', 'data' =>$artist]);
-
+        }
 
 
     }
