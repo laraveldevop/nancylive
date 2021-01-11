@@ -83,9 +83,10 @@ class AllVideosController extends Controller
         elseif ($product_id == null && $artist_id == null && $video_id != null){
             $video = Video::find($video_id);
             if (isset($video)) {
-                $file = $request->video_local;
-                $request->video_local->getMimeType();
-                $path = str_replace('public/', '', $request->video_local->store('public'));
+                $file = $request->video;
+                $fileName = $file->getClientOriginalExtension();
+                $request->video->getMimeType();
+                $path = str_replace('public/', '', $request->video->store('public'));
                 $video->video = $path;
                 $video->url = null;
                 $video->save();
