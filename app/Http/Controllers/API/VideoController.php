@@ -71,7 +71,6 @@ class VideoController extends Controller
                 'video_name' => 'required',
                 'detail' => 'required',
                 "price" => 'numeric',
-                "image" => 'numeric',
             ]);
             $video = new Video();
             $video->cat_id = $request->input('category_id');
