@@ -84,7 +84,6 @@ class AllVideosController extends Controller
             $video = Video::find($video_id);
             if (isset($video)) {
                 $file = $request->video_local;
-                $fileName = $file->getClientOriginalExtension();
                 $request->video_local->getMimeType();
                 $path = str_replace('public/', '', $request->video_local->store('public'));
                 $video->video = $path;
