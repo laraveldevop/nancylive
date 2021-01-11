@@ -38,7 +38,7 @@ class VideoController extends Controller
             return response()->json(['status' => true, 'message' => 'Video retrieved successfully.', 'data' => $video,], 200);
         }
         elseif ($request['user_id'] != null){
-            $video = Video::where('id', $request['user_id'])->get();
+            $video = Video::where('CreatedBy', $request['user_id'])->get();
             foreach ($video as $item) {
                 $vcat = Category::select('cat_name')->where('cat_id', $item->cat_id)->first();
                 $item['cat_name'] = $vcat->cat_name;

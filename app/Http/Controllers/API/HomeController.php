@@ -182,7 +182,7 @@ class HomeController extends Controller
                         $value['video_status'] = 2;
                     }
                 }
-//                $item['videos']=$qu;
+                $item['videos']=$qu;
             }
 
 
@@ -214,7 +214,7 @@ class HomeController extends Controller
                         $value['video_status'] = 2;
                     }
                 }
-//                $item['videos']=$qu;
+                $item['videos']=$qu;
             }
 
 
@@ -222,7 +222,7 @@ class HomeController extends Controller
             return response()->json(['status' => true, 'message' => 'Available Data', 'data' => $v]);
         }
         elseif ($request['user_id'] != null){
-            $results = Artist::where('id',$request['user_id'])->orderBy('rate','desc')->get();
+            $results = Artist::where('CreatedBy',$request['user_id'])->orderBy('rate','desc')->get();
             $v=[];
             $video=[];
             foreach ($results as $item) {
@@ -245,7 +245,7 @@ class HomeController extends Controller
                         $value['video_status'] = 2;
                     }
                 }
-//                $item['videos']=$qu;
+                $item['videos']=$qu;
             }
 
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Brand;
+use App\Category;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\ProductImage;
@@ -27,6 +29,11 @@ class ProductController extends Controller
         if ($request['id'] == null && $request['user_id'] == null) {
             $products = Product::where('to_approve', 1)->get();
             foreach ($products as $item) {
+                $category = Category::where('cat_id',$item->cat_id)->first();
+                $brand = Brand::where('id',$item->brand)->first();
+                $item['category_name'] = $category['cat_name'];
+                $item['brand_name'] = $brand['brand_name'];
+
                 $qu = DB::table('product_image')
                     ->select(array('id', 'image'))
                     ->where('product_id', $item->id)
@@ -38,6 +45,10 @@ class ProductController extends Controller
         } elseif ($request['id'] != null) {
             $products = Product::where('id', $request['id'])->get();
             foreach ($products as $item) {
+                $category = Category::where('cat_id',$item->cat_id)->first();
+                $brand = Brand::where('id',$item->brand)->first();
+                $item['category_name'] = $category['cat_name'];
+                $item['brand_name'] = $brand['brand_name'];
                 $qu = DB::table('product_image')
                     ->select(array('id', 'image'))
                     ->where('product_id', $item->id)
@@ -48,6 +59,10 @@ class ProductController extends Controller
         } elseif ($request['user_id'] != null) {
             $products = Product::where('CreatedBy', $request['user_id'])->get();
             foreach ($products as $item) {
+                $category = Category::where('cat_id',$item->cat_id)->first();
+                $brand = Brand::where('id',$item->brand)->first();
+                $item['category_name'] = $category['cat_name'];
+                $item['brand_name'] = $brand['brand_name'];
                 $qu = DB::table('product_image')
                     ->select(array('id', 'image'))
                     ->where('product_id', $item->id)
