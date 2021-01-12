@@ -14,7 +14,7 @@ class UserController extends Controller
         $user=  User::all();
         foreach($user as $item){
             $value =$item->roles->first();
-            $item['role'] = $value['name'];
+            $item['role'] = isset($value['name']);
             $item['roles'] =null;
             array_push($v , $item);
         }
