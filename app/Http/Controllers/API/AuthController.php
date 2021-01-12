@@ -87,7 +87,7 @@ class AuthController extends Controller
         $device_id = User::where([['device_id', null], ['email', $request['email']]])->first();
 
 
-        if (isset($device_id)) {
+//        if (isset($device_id)) {
             if (Hash::check($request->password, $user->password)) {
                 $data=User::where('email', '=', $request['email'])->first();
                 $data->device_id = $request['device_id'];
@@ -108,27 +108,27 @@ class AuthController extends Controller
                     'status' => false,'message'=>$response,'data'=>''],422);
             }
 
-        }  elseif ($request['device_id'] == $user['device_id']) {
-            if (Hash::check($request->password, $user->password)) {
-                $data=User::where('email', '=', $request['email'])->first();
-                $token =OauthAccessToken::where('user_id',$data->id)->first();
-                $role = User::with('roles')->where('id',$data['id'])->first();
-                $value =$role->roles->first();
-                if (isset($value)) {
-                    $data['role'] = $value['id'];
-                }
-            return response()->json(['status' => true, 'message' => 'Login SuccessFull', 'data' =>$data,'token'=>$token['remember_token']],200);
-            } else {
-                $response = "Password miss match";
-                return response()->json([
-                    'status' => false,'message'=>$response,'data'=>''],422);
-            }
-        }
-        else {
-            $response = 'User Already Login';
-            return response()->json([
-                'status' => false,'message'=>$response,'data'=>''],422);
-        }
+//        }  elseif ($request['device_id'] == $user['device_id']) {
+//            if (Hash::check($request->password, $user->password)) {
+//                $data=User::where('email', '=', $request['email'])->first();
+//                $token =OauthAccessToken::where('user_id',$data->id)->first();
+//                $role = User::with('roles')->where('id',$data['id'])->first();
+//                $value =$role->roles->first();
+//                if (isset($value)) {
+//                    $data['role'] = $value['id'];
+//                }
+//            return response()->json(['status' => true, 'message' => 'Login SuccessFull', 'data' =>$data,'token'=>$token['remember_token']],200);
+//            } else {
+//                $response = "Password miss match";
+//                return response()->json([
+//                    'status' => false,'message'=>$response,'data'=>''],422);
+//            }
+//        }
+//        else {
+//            $response = 'User Already Login';
+//            return response()->json([
+//                'status' => false,'message'=>$response,'data'=>''],422);
+//        }
 
     }
     public function logout (Request $request) {
