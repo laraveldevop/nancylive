@@ -212,7 +212,13 @@
                                     <thead>
                                     <tr>
                                         <th>Product</th>
-                                        <th>product Name</th>
+                                        <th>Product Name</th>
+                                        <th>Category Name</th>
+                                        <th>Detail</th>
+                                        <th>Mobile</th>
+                                        <th>Price</th>
+                                        <th>Brand</th>
+                                        <th>Sponsor</th>
                                         <th>Approve</th>
                                     </tr>
                                     </thead>
@@ -227,6 +233,12 @@
                                                      alt="avatar">
                                             </td>
                                             <td>{{$value->product_name}}</td>
+                                            <td>{{$value->cat_name}}</td>
+                                            <td>{{$value->detail}}</td>
+                                            <td>{{$value->mobile}}</td>
+                                            <td>{{$value->price}}</td>
+                                            <td>{{$value->brand_name}}</td>
+                                            <td>{!! $value->sponsor_name !!}</td>
                                             <td class="text-center">
                                                 <a href="javascript:void(0);" id="{{$value->id}}" class="approve">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
