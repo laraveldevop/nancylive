@@ -146,20 +146,25 @@ class VideoController extends Controller
     {
         $video = $request->input('id');
         $art = Video::where('id',$video)->first();
+        if (isset($art)) {
+            if ($art['image'] != null) {
+                $image_path = public_path() . '/storage/' . $art['image'];
+                unlink($image_path);
+            }
+            if ($art['video'] != null) {
+                $image_path = public_path() . '/storage/' . $art['video'];
+                unlink($image_path);
+            }
+            Video::destroy($video);
+            DB::table('advertise')
+                ->where('video_id', $video)
+                ->delete();
+            return response()->json(['status' => true, 'message' => 'Delete successfully.'], 200);
 
-        if ($art['image'] != null) {
-            $image_path = public_path() . '/storage/' . $art['image'];
-            unlink($image_path);
         }
-        if ($art['video'] != null) {
-            $image_path = public_path() . '/storage/' . $art['video'];
-            unlink($image_path);
+        else{
+            return response()->json(['status' => false, 'message' => 'Data Not Found.'], 422);
         }
-        Video::destroy($video);
-        DB::table('advertise')
-            ->where('video_id',$video)
-            ->delete();
-        return redirect('video');
     }
 
 

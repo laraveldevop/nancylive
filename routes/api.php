@@ -49,6 +49,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('delete-product', 'API\ProductController@destroy')->middleware('checkUser');
     Route::post('delete-brand', 'API\BrandViewController@destroy')->middleware('checkUser');
     Route::post('delete-artist', 'API\ArtistController@destroy')->middleware('checkUser');
+    Route::post('delete-video', 'API\VideoController@destroy')->middleware('checkUser');
 
 
 
