@@ -14,8 +14,7 @@ class UserController extends Controller
         $user=  User::all();
         foreach($user as $item){
             $value =$item->roles->first();
-            $item['role'] = isset($value['name']);
-            $item['roles'] =null;
+            $item['role'] = isset($value['name'])?$value['name']: null;
             array_push($v , $item);
         }
         return response()->json(['status' => true, 'message' => 'Data retrieved successfully.', 'data' => $v,], 200);
