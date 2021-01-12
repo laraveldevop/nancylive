@@ -86,9 +86,11 @@ class AuthController extends Controller
         $user = User::where('email', '=', $request['email'])->first();
         $device_id = User::where([['device_id', null], ['email', $request['email']]])->first();
 
+
         if (isset($device_id)) {
             if (Hash::check($request->password, $user->password)) {
                 $data=User::where('email', '=', $request['email'])->first();
+                $data->device_id = $request['device_id'];
                 $data->save();
                 $token = $user->createToken('MyApp')->accessToken;
                 $role = User::with('roles')->where('id',$data['id'])->first();
@@ -109,7 +111,6 @@ class AuthController extends Controller
         }  elseif ($request['device_id'] == $user['device_id']) {
             if (Hash::check($request->password, $user->password)) {
                 $data=User::where('email', '=', $request['email'])->first();
-
                 $token =OauthAccessToken::where('user_id',$data->id)->first();
                 $role = User::with('roles')->where('id',$data['id'])->first();
                 $value =$role->roles->first();

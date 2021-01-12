@@ -68,10 +68,21 @@ class ProductController extends Controller
             $data= $request->approve;
 
             $brand = Product::find($data);
-            
+
             $brand->to_approve = 1;
             $brand->save();
             return response()->json($brand);
+        }
+    }
+
+    public function UpdateToReject(Request $request)
+    {
+        if ($request->ajax()) {
+            $product= $request->reject;
+            Product::destroy($product);
+            DB::table('product_image')->where('product_id',$product)->delete();
+            DB::table('advertise')->where('product_id',$product)->delete();
+            return response()->json($product);
         }
     }
 
