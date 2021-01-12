@@ -172,6 +172,7 @@ class AuthController extends Controller
             // die;
             if (!empty($response)) {
                 $user->otp = $otp;
+                $user->device_id = null;
                 $user->save();
                 return response()->json(['status' => true, 'message' => 'Send SuccessFull','data'=>$OPT_SMS,'otp'=>$otp,'user_id'=>$user->id]);
 
