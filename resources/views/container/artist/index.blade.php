@@ -49,6 +49,14 @@
                             <div class="col-xl-8 col-lg-7 col-md-7 col-sm-5 text-sm-right text-center layout-spacing align-self-center">
                                 <div class="d-flex justify-content-sm-end justify-content-center">
                                     <a href="{{ url('artist/create') }}"> <svg  id="btn-add-contact" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg></a>
+                                    <a href="#" data-toggle="modal" data-target="#open_mo">
+                                        <svg id="btn-add-contact" xmlns="http://www.w3.org/2000/svg" width="24"
+                                             height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                             class="feather feather-check">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </a>
 
                                     <div class="switch align-self-center">
 {{--                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list view-list active-view"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg>--}}
@@ -158,6 +166,77 @@
         </div>
 
     </div>
+    {{--    Model --}}
+    <div class="modal fade open_model" tabindex="-1" role="dialog" id="open_mo"
+         aria-labelledby="myExtraLargeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myExtraLargeModalLabel">Approve Brand</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped mb-4">
+                            <thead>
+                            <tr>
+                                <th>Brand</th>
+                                <th>brand Name</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody id="view_data">
+                            @foreach($artist_approve as $key=>$value)
+
+                                <tr>
+                                    <td><img width="50px" height="50px"
+                                             src="{{ asset(!empty($value->image)?'public/storage/'.$value->image:'public/assets/img/nency-beauty.png')}}"
+                                             alt="avatar">
+                                    </td>
+                                    <td>{{$value->brand_name}}</td>
+                                    <td class="text-center">
+                                        <a href="javascript:void(0);" id="{{$value->id}}" class="approve">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                 class="feather feather-check">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </a>
+                                        <a href="javascript:void(0);" id="{{$value->id}}" class="reject text-danger">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                 class="feather feather-x">
+                                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                                            </svg>
+                                        </a>
+
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @foreach($artist as $key=>$value)
     <!-- Modal -->
     <div class="modal fade modal-notification" id="standardModal_{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="standardModalLabel" aria-hidden="true">

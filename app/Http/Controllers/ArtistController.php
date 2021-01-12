@@ -33,7 +33,8 @@ class ArtistController extends Controller
      */
     public function index()
     {
-        $artist = Artist::paginate(10);
+        $artist = Artist::where('to_approve',1)->paginate(10);
+        $artist_approve = Artist::where('to_approve',0)->get();
         return view('container.artist.index')->with(compact('artist'));
     }
 

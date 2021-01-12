@@ -34,7 +34,7 @@ class BrandController extends Controller
     public function index()
     {
         $brand= Brand::where('to_approve',1)->paginate(10);
-        $brand_approve= Brand::where('to_approve',0)->paginate(10);
+        $brand_approve= Brand::where('to_approve',0)->get();
         return view('container.brand.index')->with(compact('brand','brand_approve'));
     }
 

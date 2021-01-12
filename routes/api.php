@@ -74,6 +74,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('document', 'API\PdfController@index')->middleware('checkUser');
     Route::get('history', 'API\HistoryController@index')->middleware('checkUser');
     Route::get('package', 'API\PackageController@index')->middleware('checkUser');
+    Route::get('user', 'API\UserController@index')->middleware('checkUser');
 
     // private routes
     Route::middleware('auth:api')->group(function () {
