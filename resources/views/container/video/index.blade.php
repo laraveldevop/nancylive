@@ -70,6 +70,14 @@
                                             <line x1="23" y1="11" x2="17" y2="11"></line>
                                         </svg>
                                     </a>
+                                    <a href="#" data-toggle="modal" data-target="#open_mo">
+                                        <svg id="btn-add-contact" xmlns="http://www.w3.org/2000/svg" width="24"
+                                             height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                             class="feather feather-check">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </a>
 
                                     <div class="switch align-self-center">
 {{--                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"--}}
@@ -248,6 +256,86 @@
         </div>
 
     </div>
+    {{--    Model --}}
+    <div class="modal fade open_model" tabindex="-1" role="dialog" id="open_mo"
+         aria-labelledby="myExtraLargeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myExtraLargeModalLabel">Approve Brand</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped mb-4">
+                            <thead>
+                            <tr>
+                                <th>Artist</th>
+                                <th>Video Name</th>
+                                <th>Artist Name</th>
+                                <th>Category</th>
+                                <th>detail</th>
+                                <th>price</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody id="view_data">
+                            @foreach($video_approve as $key=>$value)
+
+                                <tr>
+                                    <td><img width="50px" height="50px"
+                                             src="{{ asset(!empty($value->image)?'public/storage/'.$value->image:'public/assets/img/nency-beauty.png')}}"
+                                             alt="avatar">
+                                    </td>
+                                    <td>{{$value->video_name}}</td>
+                                    <td>{{$value->artist_name}}</td>
+                                    <td>{{$value->cat_name}}</td>
+                                    <td>{{$value->detail}}</td>
+                                    <td>{{$value->price}}</td>
+                                    <td class="text-center">
+                                        <a href="javascript:void(0);" id="{{$value->id}}" class="approve">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                 class="feather feather-check">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </a>
+                                        <a href="javascript:void(0);" id="{{$value->id}}" class="reject text-danger">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                 class="feather feather-x">
+                                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                                            </svg>
+                                        </a>
+
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{--  End   Model --}}
     @foreach($video as $key=>$value)
 
         <!-- Modal -->
@@ -333,6 +421,37 @@
                 });
             });
         </script>
+
+        <script>
+            $('.approve').on('click', function () {
+                var approve = $(this).attr('id');
+                $.ajax({
+                    url: '{{ route("approve_video.Update_to_approve") }}',
+                    type: 'post',
+                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                    data: {"approve": approve},
+                    dataType: "json",
+                    success: function (data) {
+                        location.reload();
+                    }
+                });
+            });
+            $('.reject').on('click', function () {
+                var reject = $(this).attr('id');
+                $.ajax({
+                    url: '{{ route("reject_video.Update_to_reject") }}',
+                    type: 'post',
+                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                    data: {"reject": reject},
+                    dataType: "json",
+                    success: function (data) {
+                        location.reload();
+                    }
+                });
+            });
+
+        </script>
+
         <script src="{{ asset('public/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('public/assets/js/apps/contact.js') }}"></script>
     @endpush

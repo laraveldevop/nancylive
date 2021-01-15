@@ -71,6 +71,8 @@ Route::post('approve_artist/Update_to_approve', 'ArtistController@UpdateToApprov
 Route::post('reject_artist/Update_to_reject', 'ArtistController@UpdateToReject')->name('reject_artist.Update_to_reject');
 Route::post('approve_product/Update_to_approve', 'ProductController@UpdateToApprove')->name('approve_product.Update_to_approve');
 Route::post('reject_product/Update_to_reject', 'ProductController@UpdateToReject')->name('reject_product.Update_to_reject');
+Route::post('approve_video/Update_to_approve', 'VideoController@UpdateToApprove')->name('approve_video.Update_to_approve');
+Route::post('reject_video/Update_to_reject', 'VideoController@UpdateToReject')->name('reject_video.Update_to_reject');
 
 
 

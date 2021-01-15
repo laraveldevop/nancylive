@@ -34,14 +34,58 @@ class VideoController extends Controller
     {
         $video = DB::table('video')
         ->select(DB::raw('video.id,video.video_name,video.video,video.detail,video.token,video.url,video.image as v_image,category.cat_name,artist.artist_name,artist.image,artist.about'))
+            ->where('video.to_approve','=',1)
         ->leftJoin('category', 'video.cat_id', '=', 'category.cat_id')
             ->leftjoin('artist','video.artist_id','=','artist.id')
             ->paginate(10);
+        $video_approve = DB::table('video')
+            ->select(DB::raw('video.id,video.video_name,video.video,video.detail,video.token,video.price,video.image as v_image,category.cat_name,artist.artist_name,artist.image,artist.about'))
+            ->where('video.to_approve','=',0)
+            ->leftJoin('category', 'video.cat_id', '=', 'category.cat_id')
+            ->leftjoin('artist','video.artist_id','=','artist.id')
+            ->get();
 
 
-        return view('container.video.index')->with(compact('video'));
+        return view('container.video.index')->with(compact('video','video_approve'));
     }
 
+    public function UpdateToApprove(Request $request)
+    {
+        if ($request->ajax()) {
+            $data= $request->approve;
+
+            $video = Video::find($data);
+
+
+            $video->to_approve = 1;
+            $video->save();
+            return response()->json($video);
+        }
+    }
+
+    public function UpdateToReject(Request $request)
+    {
+        if ($request->ajax()) {
+            $video = $request->reject;
+
+            $art = Video::where('id',$video)->first();
+
+//            if ($art['image'] != null) {
+//                $image_path = public_path() . '/storage/' . $art['image'];
+////                unlink($image_path);
+//            }
+//            if ($art['video'] != null) {
+//                $image_path = public_path() . '/storage/' . $art['video'];
+////                unlink($image_path);
+//            }
+            Video::destroy($video);
+            DB::table('advertise')
+                ->where('video_id',$video)
+                ->delete();
+
+            return response()->json($video);
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
