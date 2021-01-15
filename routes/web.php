@@ -67,6 +67,8 @@ Route::post('referral_code/Update_status', 'DownloadController@UpdateReferralSta
 
 Route::post('approve_brand/Update_to_approve', 'BrandController@UpdateToApprove')->name('approve_brand.Update_to_approve');
 Route::post('reject_brand/Update_to_reject', 'BrandController@UpdateToReject')->name('reject_brand.Update_to_reject');
+Route::post('approve_artist/Update_to_approve', 'ArtistController@UpdateToApprove')->name('approve_artist.Update_to_approve');
+Route::post('reject_artist/Update_to_reject', 'ArtistController@UpdateToReject')->name('reject_artist.Update_to_reject');
 Route::post('approve_product/Update_to_approve', 'ProductController@UpdateToApprove')->name('approve_product.Update_to_approve');
 Route::post('reject_product/Update_to_reject', 'ProductController@UpdateToReject')->name('reject_product.Update_to_reject');
 

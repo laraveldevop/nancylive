@@ -188,8 +188,14 @@
                         <table class="table table-bordered table-striped mb-4">
                             <thead>
                             <tr>
-                                <th>Brand</th>
-                                <th>brand Name</th>
+                                <th>Artist</th>
+                                <th>Artist Name</th>
+                                <th>email</th>
+                                <th>city</th>
+                                <th>firm_address</th>
+                                <th>phone</th>
+                                <th>about</th>
+                                <th>rate</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -201,7 +207,13 @@
                                              src="{{ asset(!empty($value->image)?'public/storage/'.$value->image:'public/assets/img/nency-beauty.png')}}"
                                              alt="avatar">
                                     </td>
-                                    <td>{{$value->brand_name}}</td>
+                                    <td>{{$value->artist_name}}</td>
+                                    <td>{{$value->email}}</td>
+                                    <td>{{$value->city}}</td>
+                                    <td>{{$value->firm_address}}</td>
+                                    <td>{{$value->phone}}</td>
+                                    <td>{!! $value->about !!}</td>
+                                    <td>{{$value->rate}}</td>
                                     <td class="text-center">
                                         <a href="javascript:void(0);" id="{{$value->id}}" class="approve">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -288,6 +300,35 @@
     @endforeach
     <!--  END CONTENT AREA  -->
     @push('artist_script')
+        <script>
+            $('.approve').on('click', function () {
+                var approve = $(this).attr('id');
+                $.ajax({
+                    url: '{{ route("approve_artist.Update_to_approve") }}',
+                    type: 'post',
+                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                    data: {"approve": approve},
+                    dataType: "json",
+                    success: function (data) {
+                        location.reload();
+                    }
+                });
+            });
+            $('.reject').on('click', function () {
+                var reject = $(this).attr('id');
+                $.ajax({
+                    url: '{{ route("reject_artist.Update_to_reject") }}',
+                    type: 'post',
+                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                    data: {"reject": reject},
+                    dataType: "json",
+                    success: function (data) {
+                        location.reload();
+                    }
+                });
+            });
+
+        </script>
         <script src="{{ asset('public/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('public/assets/js/apps/contact.js') }}"></script>
     @endpush
