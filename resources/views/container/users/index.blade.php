@@ -169,6 +169,7 @@
                         dataType: "json",
                         success: function () {
                             location.reload();
+
                         }
                     });
                 });
