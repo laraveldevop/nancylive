@@ -122,7 +122,7 @@
                             data: {"user_id": user_id, 'role_id': sub_role_id},
                             dataType: "json",
                             success: function (data) {
-                                // location.reload();
+                                location.reload();
                             }
                         });
             });
@@ -138,7 +138,7 @@
                         data: {"data": data, 'user_id': user_id},
                         dataType: "json",
                         success: function () {
-                            // location.reload();
+                            location.reload();
                         }
                     });
                 });
@@ -153,7 +153,7 @@
                         data: {"data": data, 'user_id': user_id},
                         dataType: "json",
                         success: function () {
-                            // location.reload();
+                            location.reload();
                         }
                     });
                 });
@@ -168,7 +168,7 @@
                         data: {"data": data, 'user_id': user_id},
                         dataType: "json",
                         success: function () {
-                            // location.reload();
+                            location.reload();
 
                         }
                     });
@@ -184,7 +184,7 @@
                         data: {"data": data, 'user_id': user_id},
                         dataType: "json",
                         success: function () {
-                            // location.reload();
+                            location.reload();
                         }
                     });
                 });
