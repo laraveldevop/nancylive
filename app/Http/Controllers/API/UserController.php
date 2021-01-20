@@ -12,6 +12,21 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $v=[];
+        $id= $request->header('USER_ID');
+        $user = User::where('id',$id)->get();
+        foreach($user as $item){
+                $value =$item->roles->first();
+                $item['role'] = isset($value['id'])?$value['id']: null;
+                $update = User::find($item->id);
+                $update->role_id = isset($value['id'])?$value['id']: null;
+                $update->save();
+                array_push($v , $item);
+            }
+            return response()->json(['status' => true, 'message' => 'Data retrieved successfully.', 'data' => $v,], 200);
+    }
+    public function userList(Request $request)
+    {
+
         $id= $request->user_id;
         if ($id != null){
 //            $user=  User::where('id',$id)->get();

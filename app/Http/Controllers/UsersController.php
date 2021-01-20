@@ -49,6 +49,9 @@ class UsersController extends Controller
                             ['role_id' => $item, 'user_id' => $id]
                         );
                 }
+                $user = User::find($id);
+                $user->role_id = 1;
+                $user->save();
             }
             if ($role_id == 2){
                 $array = [2,5];
@@ -60,6 +63,9 @@ class UsersController extends Controller
                             ['role_id' => $item, 'user_id' => $id]
                         );
                 }
+                $user = User::find($id);
+                $user->role_id = 2;
+                $user->save();
             }
             if ($role_id == 3){
                 $array = [3,5];
@@ -71,6 +77,9 @@ class UsersController extends Controller
                             ['role_id' => $item, 'user_id' => $id]
                         );
                 }
+                $user = User::find($id);
+                $user->role_id = 3;
+                $user->save();
             }
             if ($role_id == 4){
                 $array = [4,5];
@@ -82,6 +91,9 @@ class UsersController extends Controller
                             ['role_id' => $item, 'user_id' => $id]
                         );
                 }
+                $user = User::find($id);
+                $user->role_id = 4;
+                $user->save();
             }
             return response()->json($role_id);
         }
