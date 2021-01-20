@@ -39,15 +39,15 @@ class UserController extends Controller
             return response()->json(['status' => true, 'message' => 'Data retrieved successfully.', 'data' => $user,], 200);
         }
         else{
-            $user=  User::all();
-            foreach($user as $item){
-                $value =$item->roles->first();
-                $item['role'] = isset($value['id'])?$value['id']: null;
-                $update = User::find($item->id);
-                $update->role_id = isset($value['id'])?$value['id']: null;
-                $update->save();
-//                array_push($v , $item);
-            }
+            $user=  DB::table('users')->get();
+//            foreach($user as $item){
+//                $value =$item->roles->first();
+//                $item['role'] = isset($value['id'])?$value['id']: null;
+//                $update = User::find($item->id);
+//                $update->role_id = isset($value['id'])?$value['id']: null;
+//                $update->save();
+////                array_push($v , $item);
+//            }
             return response()->json(['status' => true, 'message' => 'Data retrieved successfully.', 'data' => $user,], 200);
         }
     }
