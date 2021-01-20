@@ -75,7 +75,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('history', 'API\HistoryController@index')->middleware('checkUser');
     Route::get('package', 'API\PackageController@index')->middleware('checkUser');
     Route::get('user', 'API\UserController@index')->middleware('checkUser');
-    Route::get('user-list', 'API\UserController@userList')->middleware('checkUser');
+    Route::post('user-list', 'API\UserController@userList')->middleware('checkUser');
     Route::post('role', 'API\RoleController@roleUpdate')->middleware('checkUser');
 
     // private routes
