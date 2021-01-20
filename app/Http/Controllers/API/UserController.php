@@ -24,7 +24,7 @@ class UserController extends Controller
             return response()->json(['status' => true, 'message' => 'Data retrieved successfully.', 'data' => $user,], 200);
         }
         else{
-            $user=  DB::table('users')->paginate(5);
+            $user=  DB::table('users')->get();
 //            foreach($user as $item){
 //                $value =$item->roles->first();
 //                $item['role'] = isset($value['id'])?$value['id']: null;
