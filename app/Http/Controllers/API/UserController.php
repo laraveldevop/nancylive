@@ -40,7 +40,7 @@ class UserController extends Controller
             return response()->json(['status' => true, 'message' => 'Data retrieved successfully.', 'data' => $user,], 200);
         }
         else{
-            $user=  DB::table('users')->get();
+            $user=  DB::table('users')->orderBy('id', 'DESC')->get();
 //            foreach($user as $item){
 //                $value =$item->roles->first();
 //                $item['role'] = isset($value['id'])?$value['id']: null;
