@@ -29,6 +29,7 @@ class RoleController extends Controller
             if ($role_id != null && $sub_role_id == null) {
                 if ($role_id == 1) {
                     $array = [1, 2, 3, 4, 5];
+                    DB::table('role_user')->where('user_id', $id)->delete();
                     foreach ($array as $item) {
                         DB::table('role_user')
                             ->updateOrInsert(
