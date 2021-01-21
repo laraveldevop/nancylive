@@ -16,11 +16,12 @@ class UserController extends Controller
         $user = User::where('id',$id)->get();
         foreach($user as $item){
                 $value =$item->roles->first();
-                $item['role'] = isset($value['id'])?$value['id']: null;
                 $update = User::find($item->id);
                 $update->role_id = isset($value['id'])?$value['id']: null;
                 $update->save();
+            $item['role'] = isset($value['id'])?$value['id']: null;
                 array_push($v , $item);
+
             }
             return response()->json(['status' => true, 'message' => 'Data retrieved successfully.', 'data' => $v,], 200);
     }

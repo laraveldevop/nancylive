@@ -42,6 +42,7 @@ class UsersController extends Controller
             $id= $request->user_id;
             if ($role_id == 1) {
                 $array = [1, 2, 3, 4, 5];
+                DB::table('role_user')->where('user_id', $id)->delete();
                 foreach ($array as $item) {
                     DB::table('role_user')
                         ->updateOrInsert(
