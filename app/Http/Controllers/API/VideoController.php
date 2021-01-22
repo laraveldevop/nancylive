@@ -15,27 +15,27 @@ class VideoController extends Controller
 {
     public function videoApprove(Request $request)
     {
-        $validator = Validator::make($request->all(),[
-            'video_id' => 'required',
-            'approve' => 'required',
-        ]);
-        if ($validator->fails())
-        {
-            return response()->json([
-                'status'=> false,
-                'message'=>$validator->errors()], 422);
-        }
+
         $video_approve = $request->approve;
         $video_id = $request->video_id;
+        if ($video_approve == null && $video_id == null){
+            $brand = Video::orderby('id','DESC')->get();
+            return response()->json(['status' => true, 'message' => 'Data Retrieve Successfully', 'data' => $brand],200);
+        }
         $video = Video::find($video_id);
         if (isset($video)) {
+            if ($video_approve == 0){
+                $video->to_approve = 0;
+                $video->save();
+                return response()->json(['status' => true, 'message' => 'Approve Successfully', 'data' => $video],200);
+            }
             if ($video_approve == 1) {
                 $video->to_approve = 1;
                 $video->save();
                 return response()->json(['status' => true, 'message' => 'Approve Successfully', 'data' => $video],200);
             }
             else{
-                $video->to_approve = null;
+                $video->to_approve = 2;
                 $video->save();
                 return response()->json(['status' => true, 'message' => 'Reject Successfully', 'data' => $video],200);
 

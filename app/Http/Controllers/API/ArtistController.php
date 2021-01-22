@@ -183,27 +183,27 @@ class ArtistController extends Controller
 
     public function artistApprove(Request $request)
     {
-        $validator = Validator::make($request->all(),[
-            'artist_id' => 'required',
-            'approve' => 'required',
-        ]);
-        if ($validator->fails())
-        {
-            return response()->json([
-                'status'=> false,
-                'message'=>$validator->errors()], 422);
-        }
+
         $artist_approve= $request->approve;
         $artist_id= $request->artist_id;
+        if ($artist_approve == null && $artist_id == null){
+            $brand = Artist::orderby('id','DESC')->get();
+            return response()->json(['status' => true, 'message' => 'Data Retrieve Successfully', 'data' => $brand],200);
+        }
         $artist = Artist::find($artist_id);
         if (isset($artist)) {
-            if ($artist_approve == 1) {
+            if ($artist_approve == 0){
+                $artist->to_approve = 0;
+                $artist->save();
+                return response()->json(['status' => true, 'message' => 'Not Approved', 'data' => $artist],200);
+            }
+            elseif ($artist_approve == 1) {
                 $artist->to_approve = 1;
                 $artist->save();
                 return response()->json(['status' => true, 'message' => 'Approve Successfully', 'data' => $artist],200);
 
             } else {
-                $artist->to_approve = null;
+                $artist->to_approve = 2;
                 $artist->save();
 //                $video = Video::where('artist_id', $artist_id)->get();
 //                $art = Artist::where('id', $artist_id)->first();

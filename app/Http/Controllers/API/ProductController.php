@@ -75,27 +75,27 @@ class ProductController extends Controller
 
     public function productApprove(Request $request)
     {
-        $validator = Validator::make($request->all(),[
-            'product_id' => 'required',
-            'approve' => 'required',
-        ]);
-        if ($validator->fails())
-        {
-            return response()->json([
-                'status'=> false,
-                'message'=>$validator->errors()], 422);
-        }
+
         $product_approve = $request->approve;
         $product_id = $request->product_id;
+        if ($product_approve == null && $product_id == null){
+            $brand = Product::orderby('id','DESC')->get();
+            return response()->json(['status' => true, 'message' => 'Data Retrieve Successfully', 'data' => $brand],200);
+        }
         $product = Product::find($product_id);
         if (isset($product)) {
-            if ($product_approve == 1) {
+            if ($product_approve == 0){
+                $product->to_approve = 0;
+                $product->save();
+                return response()->json(['status' => true, 'message' => 'Not Approved', 'data' => $product],200);
+            }
+            elseif ($product_approve == 1) {
                 $product->to_approve = 1;
                 $product->save();
                 return response()->json(['status' => true, 'message' => 'Approve Successfully', 'data' => $product],200);
             }
             else{
-                $product->to_approve = null;
+                $product->to_approve = 2;
                 $product->save();
                 return response()->json(['status' => true, 'message' => 'Reject Successfully', 'data' => $product],200);
 
