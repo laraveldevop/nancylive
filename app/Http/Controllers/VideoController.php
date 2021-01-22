@@ -67,22 +67,20 @@ class VideoController extends Controller
     {
         if ($request->ajax()) {
             $video = $request->reject;
-
+//
             $art = Video::where('id',$video)->first();
-
+//
 //            if ($art['image'] != null) {
 //                $image_path = public_path() . '/storage/' . $art['image'];
-////                unlink($image_path);
+//                unlink($image_path);
 //            }
-//            if ($art['video'] != null) {
-//                $image_path = public_path() . '/storage/' . $art['video'];
-////                unlink($image_path);
-//            }
-            Video::destroy($video);
-            DB::table('advertise')
-                ->where('video_id',$video)
-                ->delete();
-
+//
+//            Video::destroy($video);
+//            DB::table('advertise')
+//                ->where('video_id',$video)
+//                ->delete();
+            $art->to_approve = null;
+            $art->save();
             return response()->json($video);
         }
     }
@@ -179,15 +177,12 @@ class VideoController extends Controller
 
 
     public function videoDownload(Request $request) {
-            $file = $request->video_local;
+            $file = $request->file('video_local');
             $fileName = $file->getClientOriginalExtension();
             $request->video_local->getMimeType();
-//            $request->video->move('storage/'.$fileName);
-            $path = str_replace('public/', '', $request->video_local->store('public'));
-//        (new \Pawlox\VideoThumbnail\VideoThumbnail)->createThumbnail(storage_path($path), storage_path('videos/'), 'file.jpg', 2, 1920, 1080);
+        $path = str_replace('public/', '', $request->video_local->store('public'));
 
-//        $cmd = 'C:/xampp/htdocs/ffmpeg -i '. storage_path($path) .' -vf fps=1/60 '.asset('public/thumbnail//').'output.png';
-        echo  storage_path($path);
+        echo  $path;
     }
     /**
      * Show the form for editing the specified resource.
@@ -301,7 +296,7 @@ class VideoController extends Controller
             unlink($image_path);
         }
         if ($art['video'] != null) {
-            $image_path = public_path() . '/storage/' . $art['video'];
+            $image_path =  public_path() . '/storage/' .$art['video'];
             unlink($image_path);
         }
         Video::destroy($video);

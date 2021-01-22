@@ -15,6 +15,38 @@ use Illuminate\Support\Facades\Validator;
 
 class BrandViewController extends Controller
 {
+    public function brandApprove(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'brand_id' => 'required',
+            'approve' => 'required',
+        ]);
+        if ($validator->fails())
+        {
+            return response()->json([
+                'status'=> false,
+                'message'=>$validator->errors()], 422);
+        }
+        $brand_approve = $request->approve;
+        $brand_id = $request->brand_id;
+        $brand = Brand::find($brand_id);
+        if (isset($brand)) {
+            if ($brand_approve == 1) {
+                $brand->to_approve = 1;
+                $brand->save();
+                return response()->json(['status' => true, 'message' => 'Approve Successfully', 'data' => $brand],200);
+            }
+            else{
+                $brand->to_approve = null;
+                $brand->save();
+                return response()->json(['status' => true, 'message' => 'Reject Successfully', 'data' => $brand],200);
+
+            }
+        }
+        else{
+            return response()->json(['status' => false, 'message' => 'Brand Not Found'],422);
+        }
+    }
     public function brandDetail(Request $request)
     {
         $v = [];

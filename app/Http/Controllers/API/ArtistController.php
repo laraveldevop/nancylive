@@ -181,6 +181,76 @@ class ArtistController extends Controller
 
     }
 
+    public function artistApprove(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'artist_id' => 'required',
+            'approve' => 'required',
+        ]);
+        if ($validator->fails())
+        {
+            return response()->json([
+                'status'=> false,
+                'message'=>$validator->errors()], 422);
+        }
+        $artist_approve= $request->approve;
+        $artist_id= $request->artist_id;
+        $artist = Artist::find($artist_id);
+        if (isset($artist)) {
+            if ($artist_approve == 1) {
+                $artist->to_approve = 1;
+                $artist->save();
+                return response()->json(['status' => true, 'message' => 'Approve Successfully', 'data' => $artist],200);
+
+            } else {
+                $artist->to_approve = null;
+                $artist->save();
+//                $video = Video::where('artist_id', $artist_id)->get();
+//                $art = Artist::where('id', $artist_id)->first();
+//
+//                if ($art['image'] != null) {
+//                    $image_path = public_path() . '/storage/' . $art['image'];
+//                    unlink($image_path);
+//                }
+//                if ($art['video'] != null) {
+//                    $image_path =  $art['video'];
+//                    unlink($image_path);
+//                }
+//                Artist::destroy($artist_id);
+//
+//                if (!empty($video)) {
+//                    foreach ($video as $value) {
+//                        DB::table('advertise')
+//                            ->where('video_id', $value->id)
+//                            ->delete();
+//                        if ($value->image != null) {
+//                            $image_path = public_path() . '/storage/' . $value->image;
+//                            unlink($image_path);
+//                        }
+//                        if ($value->video != null) {
+//                            $image_path = public_path() . '/storage/' . $value->video;
+//                            unlink($image_path);
+//                        }
+//                    }
+//                }
+//                DB::table('video')->where('artist_id', $artist_id)->delete();
+//
+//                $image = Images::where('artist_id', $artist_id)->get();
+//                if (!empty($image)) {
+//                    foreach ($image as $item) {
+//                        $image_path = public_path() . '/storage/' . $item->image;
+//                        unlink($image_path);
+//                    }
+//                    DB::table('image')->where('artist_id', $artist_id)->delete();
+//                }
+                return response()->json(['status' => true, 'message' => 'Reject Successfully', 'data' => $artist],200);
+            }
+        }
+        else{
+            return response()->json(['status' => false, 'message' => 'Artist Not Found'],422);
+        }
+    }
+
     /**
      * Display the specified resource.
      *

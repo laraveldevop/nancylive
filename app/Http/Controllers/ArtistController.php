@@ -56,45 +56,47 @@ class ArtistController extends Controller
     {
         if ($request->ajax()) {
             $artist= $request->reject;
-
-            $video = Video::where('artist_id', $artist)->get();
-            $art = Artist::where('id', $artist)->first();
-
-            if ($art['image'] != null) {
-                $image_path = public_path() . '/storage/' . $art['image'];
-                unlink($image_path);
-            }
-            if ($art['video'] != null) {
-                $image_path = public_path() . '/storage/' . $art['video'];
-                unlink($image_path);
-            }
-            Artist::destroy($artist);
-
-            if (!empty($video)) {
-                foreach ($video as $value) {
-                    DB::table('advertise')
-                        ->where('video_id', $value->id)
-                        ->delete();
-                    if ($value->image != null) {
-                        $image_path = public_path() . '/storage/' . $value->image;
-                        unlink($image_path);
-                    }
-                    if ($value->video != null) {
-                        $image_path = public_path() . '/storage/' . $value->video;
-                        unlink($image_path);
-                    }
-                }
-            }
-            DB::table('video')->where('artist_id', $artist)->delete();
-
-            $image = Images::where('artist_id', $artist)->get();
-            if (!empty($image)) {
-                foreach ($image as $item) {
-                    $image_path = public_path() . '/storage/' . $item->image;
-                    unlink($image_path);
-                }
-                DB::table('image')->where('artist_id', $artist)->delete();
-            }
+            $artist=Artist::where('id', $artist)->first();
+            $artist->to_approve = null;
+            $artist->save();
+//            $video = Video::where('artist_id', $artist)->get();
+//            $art = Artist::where('id', $artist)->first();
+//
+//            if ($art['image'] != null) {
+//                $image_path = public_path() . '/storage/' . $art['image'];
+//                unlink($image_path);
+//            }
+//            if ($art['video'] != null) {
+//                $image_path = public_path() . '/storage/' . $art['video'];
+//                unlink($image_path);
+//            }
+//            Artist::destroy($artist);
+//
+//            if (!empty($video)) {
+//                foreach ($video as $value) {
+//                    DB::table('advertise')
+//                        ->where('video_id', $value->id)
+//                        ->delete();
+//                    if ($value->image != null) {
+//                        $image_path = public_path() . '/storage/' . $value->image;
+//                        unlink($image_path);
+//                    }
+//                    if ($value->video != null) {
+//                        $image_path = public_path() . '/storage/' . $value->video;
+//                        unlink($image_path);
+//                    }
+//                }
+//            }
+//            DB::table('video')->where('artist_id', $artist)->delete();
+//
+//            $image = Images::where('artist_id', $artist)->get();
+//            if (!empty($image)) {
+//                foreach ($image as $item) {
+//                    $image_path = public_path() . '/storage/' . $item->image;
+//                    unlink($image_path);
+//                }
+//                DB::table('image')->where('artist_id', $artist)->delete();
+//            }
             return response()->json($artist);
         }
     }

@@ -13,6 +13,39 @@ use Illuminate\Support\Facades\Validator;
 
 class VideoController extends Controller
 {
+    public function videoApprove(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'video_id' => 'required',
+            'approve' => 'required',
+        ]);
+        if ($validator->fails())
+        {
+            return response()->json([
+                'status'=> false,
+                'message'=>$validator->errors()], 422);
+        }
+        $video_approve = $request->approve;
+        $video_id = $request->video_id;
+        $video = Video::find($video_id);
+        if (isset($video)) {
+            if ($video_approve == 1) {
+                $video->to_approve = 1;
+                $video->save();
+                return response()->json(['status' => true, 'message' => 'Approve Successfully', 'data' => $video],200);
+            }
+            else{
+                $video->to_approve = null;
+                $video->save();
+                return response()->json(['status' => true, 'message' => 'Reject Successfully', 'data' => $video],200);
+
+            }
+        }
+        else{
+            return response()->json(['status' => false, 'message' => 'video Not Found'],422);
+        }
+    }
+
     public function index(Request $request)
     {
         if ($request['id'] == null && $request['user_id'] == null) {
@@ -88,7 +121,7 @@ class VideoController extends Controller
                 $video->url = $request->input('url');
             }
 
-            if ($request->hasFile('image') == null) {
+            if ($request->hasFile('image') != null) {
                 $request->validate([
                     'image' => 'image|mimes:jpeg,png,jpg'
                 ]);
@@ -126,7 +159,7 @@ class VideoController extends Controller
                 $video->video = null;
             }
 
-            if ($request->hasFile('image') == null) {
+            if ($request->hasFile('image') != null) {
                 $request->validate([
                     'image' => 'image|mimes:jpeg,png,jpg'
                 ]);

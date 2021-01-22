@@ -73,6 +73,40 @@ class ProductController extends Controller
         }
     }
 
+    public function productApprove(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'product_id' => 'required',
+            'approve' => 'required',
+        ]);
+        if ($validator->fails())
+        {
+            return response()->json([
+                'status'=> false,
+                'message'=>$validator->errors()], 422);
+        }
+        $product_approve = $request->approve;
+        $product_id = $request->product_id;
+        $product = Product::find($product_id);
+        if (isset($product)) {
+            if ($product_approve == 1) {
+                $product->to_approve = 1;
+                $product->save();
+                return response()->json(['status' => true, 'message' => 'Approve Successfully', 'data' => $product],200);
+            }
+            else{
+                $product->to_approve = null;
+                $product->save();
+                return response()->json(['status' => true, 'message' => 'Reject Successfully', 'data' => $product],200);
+
+            }
+        }
+        else{
+            return response()->json(['status' => false, 'message' => 'Product Not Found'],422);
+        }
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *

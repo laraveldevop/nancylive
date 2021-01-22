@@ -424,7 +424,6 @@
                     $('.progress-bar').css('width', '0');
                     $('.msg').text('');
                     var video_local = $('#video_local').val();
-                    console.log(video_local);
                     var fileInput = document.getElementById('video');
                     var filePath = fileInput.value;
                     var allowedExtensions = /(\.mp4)$/i;

@@ -44,6 +44,14 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('add-video', 'API\VideoController@store')->middleware('checkUser');
     Route::post('video-updates', 'API\AllVideosController@store')->middleware('checkUser');
 
+    //approve or Reject
+    Route::post('approve-artist', 'API\ArtistController@artistApprove')->middleware('checkUser');
+    Route::post('approve-brand', 'API\BrandViewController@brandApprove')->middleware('checkUser');
+    Route::post('approve-product', 'API\ProductController@productApprove')->middleware('checkUser');
+    Route::post('approve-video', 'API\VideoController@videoApprove')->middleware('checkUser');
+
+
+
     //delete
 
     Route::post('delete-product', 'API\ProductController@destroy')->middleware('checkUser');
