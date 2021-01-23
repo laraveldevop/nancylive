@@ -187,8 +187,30 @@ class ArtistController extends Controller
         $artist_approve= $request->approve;
         $artist_id= $request->artist_id;
         if ($artist_approve == null && $artist_id == null){
-            $brand = Artist::orderby('id','DESC')->get();
-            return response()->json(['status' => true, 'message' => 'Data Retrieve Successfully', 'data' => $brand],200);
+            $art = Artist::select(DB::raw('artist.*,users.name,users.mobile as user_mobile'))->orderby('artist.id','DESC')->leftjoin('users','artist.CreatedBy', '=','users.id')->get();
+            foreach ($art as $item) {
+                $images = Images::where('artist_id',$item->id)->get();
+                $item['images']=$images;
+
+                $qu= Video::where('artist_id',$item->id)
+                    ->get();
+                foreach ($qu as $value) {
+                    if ($value->price == null){
+                        $value['payment_status']= 'free';
+                    }
+                    else{
+                        $value['payment_status']= 'payable';
+                    }
+                    if ($value->url == null){
+                        $value['video_status'] = 1;
+                    }
+                    else{
+                        $value['video_status'] = 2;
+                    }
+                }
+                $item['videos']=$qu;
+            }
+            return response()->json(['status' => true, 'message' => 'Data Retrieve Successfully', 'data' => $art],200);
         }
         $artist = Artist::find($artist_id);
         if (isset($artist)) {

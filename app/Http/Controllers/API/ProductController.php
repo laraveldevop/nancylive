@@ -79,8 +79,20 @@ class ProductController extends Controller
         $product_approve = $request->approve;
         $product_id = $request->product_id;
         if ($product_approve == null && $product_id == null){
-            $brand = Product::orderby('id','DESC')->get();
-            return response()->json(['status' => true, 'message' => 'Data Retrieve Successfully', 'data' => $brand],200);
+            $products = Product::select(DB::raw('product.*,users.name,users.mobile as user_mobile'))->orderby('product.id','DESC')->leftjoin('users','product.CreatedBy', '=','users.id')->get();
+            foreach ($products as $item) {
+                $category = Category::where('cat_id',$item->cat_id)->first();
+                $brand = Brand::where('id',$item->brand)->first();
+                $item['category_name'] = $category['cat_name'];
+                $item['brand_name'] = $brand['brand_name'];
+
+                $qu = DB::table('product_image')
+                    ->select(array('id', 'image'))
+                    ->where('product_id', $item->id)
+                    ->get();
+                $item['images'] = $qu;
+            }
+            return response()->json(['status' => true, 'message' => 'Data Retrieve Successfully', 'data' => $products],200);
         }
         $product = Product::find($product_id);
         if (isset($product)) {

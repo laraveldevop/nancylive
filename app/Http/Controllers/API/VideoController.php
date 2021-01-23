@@ -19,7 +19,7 @@ class VideoController extends Controller
         $video_approve = $request->approve;
         $video_id = $request->video_id;
         if ($video_approve == null && $video_id == null){
-            $brand = Video::orderby('id','DESC')->get();
+            $brand = Video::select(DB::raw('video.*,users.name,users.mobile as user_mobile'))->orderby('video.id','DESC')->leftjoin('users','video.CreatedBy', '=','users.id')->get();
             return response()->json(['status' => true, 'message' => 'Data Retrieve Successfully', 'data' => $brand],200);
         }
         $video = Video::find($video_id);

@@ -21,7 +21,14 @@ class BrandViewController extends Controller
         $brand_approve = $request->approve;
         $brand_id = $request->brand_id;
         if ($brand_approve == null && $brand_id == null){
-            $brand = Brand::orderby('id','DESC')->get();
+            $brand = Brand::select(DB::raw('brand.*,users.name,users.mobile as user_mobile'))->orderby('brand.id','DESC')->leftjoin('users','brand.CreatedBy', '=','users.id')->get();
+            foreach ($brand as $item) {
+                $qu = DB::table('product')
+                    ->where('brand', $item->id)
+                    ->get()
+                    ->toArray();
+                $item['product'] = $qu;
+            }
             return response()->json(['status' => true, 'message' => 'Data Retrieve Successfully', 'data' => $brand],200);
         }
         $brand = Brand::find($brand_id);
