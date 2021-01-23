@@ -362,38 +362,25 @@ class HomeController extends Controller
 
     public function count(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-        ]);
 
-        $name = $request->input('name');
-        if ($name == 'user'){
             $user = User::all();
-            return response()->json(['status'=>true,'message'=>'Data Retrieve Successfully' ,'data'=>count($user)],200);
-        }
-        elseif ($name == 'artist'){
             $artist = Artist::all();
-            return response()->json(['status'=>true,'message'=>'Data Retrieve Successfully' ,'data'=>count($artist)],200);
-        }
-        elseif ($name == 'video'){
             $video = Video::all();
-            return response()->json(['status'=>true,'message'=>'Data Retrieve Successfully' ,'data'=>count($video)],200);
-        }
-        elseif ($name == 'brand'){
             $brand = Brand::all();
-            return response()->json(['status'=>true,'message'=>'Data Retrieve Successfully' ,'data'=>count($brand) ],200);
-        }
-        elseif ($name == 'product'){
             $product = Product::all();
-            return response()->json(['status'=>true,'message'=>'Data Retrieve Successfully' ,'data'=>count($product)],200);
-        }
-        elseif ($name == 'magazine'){
             $magazine = Pdf::all();
-            return response()->json(['status'=>true,'message'=>'Data Retrieve Successfully' ,'data'=>count($magazine)],200);
-        }
-        else{
-            return response()->json(['status'=>false,'message'=>'Data Not Retrieve' ,'data'=>'' ],200);
-        }
+            $arr = [];
+            $arr['user'] = count($user);
+            $arr['artist'] = count($artist);
+            $arr['video'] = count($video);
+            $arr['brand'] = count($brand);
+            $arr['product'] = count($product);
+            $arr['magazine'] = count($magazine);
+
+            return response()->json(['status'=>true,'message'=>'Data Retrieve Successfully' ,'data'=>$arr],200);
+
+
+
     }
 
 

@@ -51,7 +51,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('approve-video', 'API\VideoController@videoApprove')->middleware('checkUser');
 
 
-    Route::post('count', 'API\HomeController@count')->middleware('checkUser');
+    Route::get('count', 'API\HomeController@count')->middleware('checkUser');
 
 
 
