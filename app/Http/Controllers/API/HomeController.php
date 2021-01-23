@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 use App\Images;
 use App\Order;
 use App\Package;
+use App\Pdf;
+use App\Product;
 use App\ProductImage;
 use App\User;
 use App\Video;
@@ -350,12 +352,48 @@ class HomeController extends Controller
             }
 
             else{
-                return response()->json(['status'=>true,'message'=>'Please Check Your Password' ,'data'=>[], ],200);
+                return response()->json(['status'=>false,'message'=>'Please Check Your Password' ,'data'=>[], ],422);
 
             }
         }
-        return response()->json(['status'=>true,'message'=>'Please Check Your Password' ,'data'=>[], ],200);
+        return response()->json(['status'=>false,'message'=>'Please Check Your Password' ,'data'=>[], ],422);
 
+    }
+
+    public function count(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $name = $request->input('name');
+        if ($name == 'user'){
+            $user = User::all();
+            return response()->json(['status'=>true,'message'=>'Data Retrieve Successfully' ,'data'=>count($user)],200);
+        }
+        elseif ($name == 'artist'){
+            $artist = Artist::all();
+            return response()->json(['status'=>true,'message'=>'Data Retrieve Successfully' ,'data'=>count($artist)],200);
+        }
+        elseif ($name == 'video'){
+            $video = Video::all();
+            return response()->json(['status'=>true,'message'=>'Data Retrieve Successfully' ,'data'=>count($video)],200);
+        }
+        elseif ($name == 'brand'){
+            $brand = Brand::all();
+            return response()->json(['status'=>true,'message'=>'Data Retrieve Successfully' ,'data'=>count($brand) ],200);
+        }
+        elseif ($name == 'product'){
+            $product = Product::all();
+            return response()->json(['status'=>true,'message'=>'Data Retrieve Successfully' ,'data'=>count($product)],200);
+        }
+        elseif ($name == 'magazine'){
+            $magazine = Pdf::all();
+            return response()->json(['status'=>true,'message'=>'Data Retrieve Successfully' ,'data'=>count($magazine)],200);
+        }
+        else{
+            return response()->json(['status'=>false,'message'=>'Data Not Retrieve' ,'data'=>'' ],200);
+        }
     }
 
 
