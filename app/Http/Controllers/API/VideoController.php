@@ -19,8 +19,21 @@ class VideoController extends Controller
         $video_approve = $request->approve;
         $video_id = $request->video_id;
         if ($video_approve == null && $video_id == null){
-            $brand = Video::select(DB::raw('video.*,users.name,users.mobile as user_mobile'))->orderby('video.id','DESC')->leftjoin('users','video.CreatedBy', '=','users.id')->get();
-            return response()->json(['status' => true, 'message' => 'Data Retrieve Successfully', 'data' => $brand],200);
+            $video = Video::select(DB::raw('video.*,users.name,users.mobile as user_mobile'))->orderby('video.id','DESC')->leftjoin('users','video.CreatedBy', '=','users.id')->get();
+            foreach ($video as $item) {
+                $vcat = Category::select('cat_name')->where('cat_id', $item->cat_id)->first();
+                $item['cat_name'] = $vcat->cat_name;
+                if ($item->price == null) {
+                    $item['payment_status'] = 'free';
+                } else {
+                    $item['payment_status'] = 'payable';
+                }
+                $artist = Artist::where('id', $item->artist_id)->get();
+                $item['artist'] = $artist;
+
+            }
+
+            return response()->json(['status' => true, 'message' => 'Data Retrieve Successfully', 'data' => $video],200);
         }
         $video = Video::find($video_id);
         if (isset($video)) {
