@@ -135,8 +135,7 @@ class CategoryViewController extends Controller
     public function addCategory(Request $request){
         $validator = Validator::make($request->all(),[
             'module_id'=> 'required',
-            'cat_name' => ['required','unique:category'],
-            'image'=> 'required',
+            'cat_name' => ['required'],
         ]);
         if ($validator->fails())
         {
@@ -144,20 +143,53 @@ class CategoryViewController extends Controller
                 'status'=> false,
                 'message'=>$validator->errors()], 422);
         }
-        $category = new  Category();
-        $category->cat_name = $request->input('cat_name');
-        $category->module_id = $request->input('module_id');
+        $category_id= $request->input('id');
+        if ($category_id == null){
+            $request->validate([
+                'image' => 'mimes:jpg,jpeg,png|required',
+                'cat_name' => ['unique:category'],
+
+            ]);
+            $category = new  Category();
+            $category->cat_name = $request->input('cat_name');
+            $category->module_id = $request->input('module_id');
 
             $path = Storage::disk('public')->put('category', $request->file('image'));
-        $thumbnailpath = public_path('storage/'.$path);
-        $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        });
-        $img->save($thumbnailpath);
+            $thumbnailpath = public_path('storage/'.$path);
+            $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $img->save($thumbnailpath);
             $category->cat_image = $path;
-        $category->save();
-        return response()->json(['status' => true, 'message' => 'Add Successfully', 'data' =>$category]);
+            $category->save();
+            return response()->json(['status' => true, 'message' => 'Add Successfully', 'data' =>$category]);
+        }
+        else{
+            $category = Category::find($category_id);
+            $category->cat_name=$request->input('cat_name');
+            $category->module_id=$request->input('module_id');
+
+            if (!empty($request->file('image'))) {
+                $path = Storage::disk('public')->put('category', $request->file('image'));
+                $thumbnailpath = public_path('storage/'.$path);
+                $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+                $img->save($thumbnailpath);
+                if (!empty($category->cat_image)){
+                    $image_path = public_path().'/storage/'.$category->cat_image;
+                    unlink($image_path);
+                }
+                //Update Image
+                $category->cat_image = $path;
+            }
+            $category->save();
+            return response()->json(['status' => true, 'message' => 'Update Successfully', 'data' =>$category]);
+
+        }
+
 
     }
 

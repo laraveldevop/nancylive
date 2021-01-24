@@ -12,6 +12,27 @@ use phpDocumentor\Reflection\Types\False_;
 
 class OrderController extends Controller
 {
+
+    public function index()
+    {
+        $order =Order::
+            Select(DB::raw('order.id,order.user_id,order.product_id,users.name,order.total,order.status,order.created_at'))
+            ->leftJoin('users', 'order.user_id', '=', 'users.id')
+            ->orderBy('order.id', 'desc')
+            ->get();
+        foreach ($order as $item){
+            $products = DB::table('product')
+               ->where('id','=',$item->product_id)
+                ->get();
+            $item['products']=$products;
+            }
+
+
+
+        return response()->json(['status' => true, 'message' => 'Order Retrieve successfully.', 'data' => $order], 200);
+
+
+    }
     public function orderPost(Request $request)
     {
         $userData = json_decode($request->getContent(), true);

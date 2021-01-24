@@ -53,6 +53,7 @@ Route::group(['middleware' => ['json.response']], function () {
 
     Route::get('count', 'API\HomeController@count')->middleware('checkUser');
     Route::get('referral-detail', 'API\ReferralController@referral')->middleware('checkUser');
+    Route::get('order', 'API\OrderController@index')->middleware('checkUser');
 
 
 
