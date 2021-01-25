@@ -17,7 +17,7 @@ class ReferralController extends Controller
         $user = $referral->unique('referral_code');
         $user->all();
         foreach ($referral as $item){
-          $users =   User::select('id')->where('id', $item->user_id)->get();
+          $users =   User::where('id', $item->user_id)->get();
             array_push($v,$users);
             $user['users'] = $v;
         }

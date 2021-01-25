@@ -113,7 +113,6 @@ class VideoController extends Controller
         if ($video_id == null) {
             $request->validate([
                 'category_id' => 'required',
-                'artist_id' => 'required',
                 'video_name' => 'required',
                 'detail' => 'required',
                 "price" => 'numeric',
@@ -151,7 +150,6 @@ class VideoController extends Controller
         else{
             $request->validate([
                 'category_id' => 'required',
-                'artist_id' => 'required',
                 'video_name' => 'required',
                 'detail' => 'required',
                 "price" => 'numeric',
