@@ -12,14 +12,13 @@ class ReferralController extends Controller
 {
     public function referral()
     {
-        $v = [];
-        $referral = Referral::select(DB::raw('users.*,referral.status,referral.user_id'))->leftjoin('users','referral.referral_code','=','users.referral_code')->get();
+        $v=[];
+        $referral = Referral::select(DB::raw('users.*,referral.status'))->leftjoin('users','referral.referral_code','=','users.referral_code')->get();
         $user = $referral->unique('referral_code');
         $user->all();
-        foreach ($referral as $item){
-          $users =   User::where('id', $item->user_id)->get();
-            array_push($v,$users);
-            $user['users'] = $v;
+        foreach ($user as $value) {
+            $ref = DB::table('referral')->select(DB::raw('users.*'))->leftjoin('users','referral.user_id','=','users.id')->get();
+            $value['user'] = $ref;
         }
 
         return response()->json(['status' => true, 'message' => 'Data Retrieve Successfully', 'data' => $user],200);
