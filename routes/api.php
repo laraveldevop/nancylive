@@ -42,6 +42,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('add-brand', 'API\BrandViewController@store')->middleware('checkUser');
     Route::post('add-product', 'API\ProductController@store')->middleware('checkUser');
     Route::post('add-video', 'API\VideoController@store')->middleware('checkUser');
+    Route::post('add-sub-role', 'API\SubRoleController@store')->middleware('checkUser');
     Route::post('video-updates', 'API\AllVideosController@store')->middleware('checkUser');
 
     //approve or Reject
@@ -63,6 +64,8 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('delete-brand', 'API\BrandViewController@destroy')->middleware('checkUser');
     Route::post('delete-artist', 'API\ArtistController@destroy')->middleware('checkUser');
     Route::post('delete-video', 'API\VideoController@destroy')->middleware('checkUser');
+    Route::post('delete-sub-role', 'API\SubRoleController@destroy')->middleware('checkUser');
+    Route::post('delete-category', 'API\CategoryViewController@destroy')->middleware('checkUser');
 
 
 

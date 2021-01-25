@@ -30,7 +30,7 @@ class SubRoleController extends Controller
         }
     }
 
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
         $id = $request->input('id');
         User::where('sub_role_id', $id)->update(['sub_role_id' => null]);
