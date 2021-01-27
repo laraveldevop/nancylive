@@ -77,7 +77,7 @@ class ProductController extends Controller
     {
 
         $product_approve = $request->approve;
-        $product_id = $request->product_id;
+        $product_id = $request->artist_id;
         if ($product_approve == null && $product_id == null){
             $products = Product::select(DB::raw('product.*,users.name,users.mobile as user_mobile'))->orderby('product.id','DESC')->leftjoin('users','product.CreatedBy', '=','users.id')->get();
             foreach ($products as $item) {
