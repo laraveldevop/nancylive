@@ -62,7 +62,7 @@ class VideoController extends Controller
     public function index(Request $request)
     {
         if ($request['id'] == null && $request['user_id'] == null) {
-            $video = Video::all();
+            $video = Video::where('to_approve',1)->get();
             return response()->json(['status' => true, 'message' => 'Video retrieved successfully.', 'data' => $video->toArray(),], 200);
 
         }
