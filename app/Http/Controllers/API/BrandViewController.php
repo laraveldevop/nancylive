@@ -126,6 +126,7 @@ class BrandViewController extends Controller
 
             $brand = DB::table('brand')
                 ->select(array('id', 'brand_name', 'image'))
+                ->where('to_approve','=',1)
                 ->get()
                 ->toArray();
 
