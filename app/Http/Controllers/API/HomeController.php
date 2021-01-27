@@ -122,6 +122,7 @@ class HomeController extends Controller
         $br_d=[];
         $brand= DB::table('brand')
             ->select(array('id','brand_name','image'))
+            ->where('to_approve','=',1)
             ->get()
             ->toArray();
 
@@ -149,7 +150,7 @@ class HomeController extends Controller
             array_push($spo, ['sponsor_id'=>$item->id,'sponsor'=>$item->sponsor_name,'sponsor_image'=>$item->image,'item_count'=>$pd]);
         }
 
-        $results = DB::table('artist')->orderBy('rate','desc')->get();
+        $results = DB::table('artist')->where('to_approve','=',1)->orderBy('rate','desc')->get();
 
         $package = Package::all();
 
@@ -161,7 +162,7 @@ class HomeController extends Controller
     public function artist(Request  $request) {
 //       echo $request['id']; die();
         if ($request['id'] == null && $request['user_id'] == null) {
-           $art = Artist::all();
+           $art = Artist::where('to_approve',1)->get();
             $v=[];
             $video=[];
             foreach ($art as $item) {
@@ -262,7 +263,7 @@ class HomeController extends Controller
     public function index()
     {
 
-        $results = Artist::orderBy('rate','desc')->get();
+        $results = Artist::where('to_approve',1)->orderBy('rate','desc')->get();
         $v=[];
         foreach ($results as $item) {
             $qu= DB::table('image')

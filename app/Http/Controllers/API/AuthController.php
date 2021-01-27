@@ -88,7 +88,7 @@ class AuthController extends Controller
 
 
 //        if (isset($device_id)) {
-            if (Hash::check($request->password, $user->password)) {
+            if (Hash::check($request->password, $user['password'])) {
                 $data=User::where('email', '=', $request['email'])->first();
                 $data->device_id = $request['device_id'];
                 $data->save();
