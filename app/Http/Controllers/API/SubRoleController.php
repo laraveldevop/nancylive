@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 
 class SubRoleController extends Controller
 {
+
+    public function index()
+    {
+        $subRole = SubRole::all();
+        return response()->json(['status' => true, 'message' => 'Data Get Successfully', 'data' => $subRole]);
+
+    }
+
     public function store(Request $request)
     {
         $request->validate([

@@ -85,6 +85,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('check_user', 'API\AuthController@check_user');
 
     Route::get('home', 'API\HomeController@advertise')->middleware('checkUser');
+    Route::get('sub-role', 'API\SubRoleController@index')->middleware('checkUser');
     Route::get('order-detail', 'API\HomeController@order')->middleware('checkUser');
     Route::post('artist', 'API\HomeController@artist')->middleware('checkUser');
     Route::get('document', 'API\PdfController@index')->middleware('checkUser');
