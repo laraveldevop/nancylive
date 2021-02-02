@@ -180,8 +180,9 @@ class ArtistController extends Controller
                         foreach ($image as $value) {
                             $image_path = public_path() . '/storage/' . $value->image;
                             unlink($image_path);
+                            DB::table('image')->where('id', $value->id)->delete();
                         }
-                        DB::table('image')->where('id', $item)->delete();
+
                     }
                 }
             }

@@ -17,15 +17,7 @@ use \Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
-    public function generateReferral()
-    {
-        $gg= User::where('referral_code',null)->get();
-        foreach ($gg as $value){
-            $user = User::find($value->id);
-            $user->referral_code = str_random(6);
-            $user->save();
-        }
-    }
+
     public function userRegister(Request $request) {
         $validator = Validator::make($request->all(),[
             'name' => ['required', 'string', 'max:255'],
