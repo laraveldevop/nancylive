@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Brand;
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Images;
 use App\Product;
 use App\ProductImage;
 use App\Video;
@@ -236,6 +237,21 @@ class ProductController extends Controller
             else:
                 $image = '';
             endif;
+
+            $remove_image = $request->input('remove_images');
+            $myArray = explode(',', $remove_image);
+            if (isset($myArray)) {
+                foreach ($myArray as $item) {
+                    $image = ProductImage::where('id', $item)->get();
+                    if (!empty($image)) {
+                        foreach ($image as $value) {
+                            $image_path = public_path() . '/storage/' . $value->image;
+                            unlink($image_path);
+                        }
+                        DB::table('product_image')->where('id', $item)->delete();
+                    }
+                }
+            }
             return response()->json(['status' => true, 'message' => 'update successfully.', 'data' => $product], 200);
 
         }

@@ -172,8 +172,9 @@ class ArtistController extends Controller
             endif;
 
             $remove_image = $request->input('remove_images');
-//            if ($remove_image) {
-                foreach ($remove_image as $item) {
+            $myArray = explode(',', $remove_image);
+            if (isset($myArray)) {
+                foreach ($myArray as $item) {
                     $image = Images::where('id', $item)->get();
                     if (!empty($image)) {
                         foreach ($image as $value) {
@@ -183,7 +184,7 @@ class ArtistController extends Controller
                         DB::table('image')->where('id', $item)->delete();
                     }
                 }
-//            }
+            }
 
             return response()->json(['status' => true, 'message' => 'Update Successfully', 'data' => $artist]);
 
