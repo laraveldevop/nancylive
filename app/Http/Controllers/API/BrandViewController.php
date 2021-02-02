@@ -169,8 +169,8 @@ class BrandViewController extends Controller
         $brand_id = $request->input('id');
         if ($brand_id == null) {
             $request->validate([
-                'brand_name' => 'required',
-                'mobile' => 'required',
+                'brand_name'=>'required',
+                'mobile'=>'required|numeric|digits:10',
                 'image' => 'required'
 
             ]);
@@ -197,8 +197,8 @@ class BrandViewController extends Controller
         }
         else{
             $request->validate([
-                'brand_name'=>['required'],
-                'mobile'=>['required'],
+                'brand_name'=>'required',
+                'mobile'=>'required|numeric|digits:10',
             ]);
             $brand = Brand::find($brand_id);
             $brand->brand_name=$request->input('brand_name');
