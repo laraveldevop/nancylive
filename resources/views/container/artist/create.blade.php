@@ -244,6 +244,7 @@
                                                             <div class="row col-md-12">
                                                                 <div class="col-md-6" style="margin-top: 24px">
                                                                     <h4>Multiple Image Upload</h4>
+
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
@@ -252,6 +253,7 @@
                                                                         <input id="demo_vertical" type="text"
                                                                                value="{{ ((!empty($artist->rate)) ? $artist->rate :old('demo_vertical')) }}"
                                                                                readonly name="demo_vertical">
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -269,7 +271,11 @@
                                                                         <span
                                                                             class="custom-file-container__custom-file__custom-file-control"></span>
                                                                     </label>
-
+                                                                    @if ($errors->has('files'))
+                                                                        <span class="text-danger">
+                                                                    <strong>{{ $errors->first('files') }}</strong>
+                                                                    </span>
+                                                                    @endif
                                                                     <div class="custom-file-container__image-preview">
                                                                     </div>
                                                                     @if($action == 'UPDATE')

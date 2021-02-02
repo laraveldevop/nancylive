@@ -50,7 +50,21 @@
                                                         @endif
                                                     </div>
                                                 </div>
-
+                                                <div class="col-md-10">
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlInput1">mobile</label>
+                                                        <input
+                                                            class="form-control form-control-sm {{ $errors->has('mobile') ? ' is-invalid' : '' }}"
+                                                            type="text" name="mobile" id="mobile"
+                                                            value="{{ ((!empty($brand->mobile)) ? $brand->mobile :old('mobile')) }}"
+                                                            placeholder="Enter mobile Number">
+                                                        @if ($errors->has('mobile'))
+                                                            <span class="invalid-feedback" role="alert">
+                                                                  <strong>{{ $errors->first('mobile') }}</strong>
+                                                             </span>
+                                                        @endif
+                                                    </div>
+                                                </div>
 
                                                 <div class="col-md-10">
                                                     <div class="form-group">

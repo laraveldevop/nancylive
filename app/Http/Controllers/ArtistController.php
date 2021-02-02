@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 
 class ArtistController extends Controller
@@ -33,15 +34,15 @@ class ArtistController extends Controller
      */
     public function index()
     {
-        $artist = Artist::where('to_approve',1)->paginate(10);
-        $artist_approve = Artist::where('to_approve',0)->get();
-        return view('container.artist.index')->with(compact('artist','artist_approve'));
+        $artist = Artist::where('to_approve', 1)->paginate(10);
+        $artist_approve = Artist::where('to_approve', 0)->get();
+        return view('container.artist.index')->with(compact('artist', 'artist_approve'));
     }
 
     public function UpdateToApprove(Request $request)
     {
         if ($request->ajax()) {
-            $data= $request->approve;
+            $data = $request->approve;
 
             $artist = Artist::find($data);
 
@@ -55,8 +56,8 @@ class ArtistController extends Controller
     public function UpdateToReject(Request $request)
     {
         if ($request->ajax()) {
-            $artist= $request->reject;
-            $artist=Artist::where('id', $artist)->first();
+            $artist = $request->reject;
+            $artist = Artist::where('id', $artist)->first();
             $artist->to_approve = null;
             $artist->save();
 //            $video = Video::where('artist_id', $artist)->get();
@@ -100,6 +101,7 @@ class ArtistController extends Controller
             return response()->json($artist);
         }
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -114,7 +116,7 @@ class ArtistController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -161,39 +163,54 @@ class ArtistController extends Controller
 
 
         $images = $request->file('files');
-        if ($request->hasFile('files')) :
-            foreach ($images as $item):
-                $path= Storage::disk('public')->put('images', $item);
+//        $count = count($images);
+//        if ($count > 2) {
+//            $validator = Validator::make($request->all(),[
+//                'files' => 'required',
+//            ]);
+//            if ($validator->fails())
+//            {
+//                return response()->json([
+//                    'status'=> false,
+//                    'message'=>$validator->errors()], 422);
+//            }
+////            echo $count; die();
+//        }
+//        else {
+            if ($request->hasFile('files')) :
+                foreach ($images as $item):
+                    $path = Storage::disk('public')->put('images', $item);
 
-                $thumbnailpath = public_path('storage/'.$path);
-                $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                });
-                $img->save($thumbnailpath);
+                    $thumbnailpath = public_path('storage/' . $path);
+                    $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    });
+                    $img->save($thumbnailpath);
 
-                Images::insert( [
-                    'artist_id'=> $artist->id,
-                    'image'=>  $path,
-                    'created_at'=>now()
+                Images::insert([
+                    'artist_id' => $artist->id,
+                    'image' => $path,
+                    'created_at' => now()
                     //you can put other insertion here
                 ]);
 
 
-            endforeach;
+                endforeach;
 
 //            $image = implode(",", $arr);
-        else:
-            $image = '';
-        endif;
-
+            else:
+                $image = '';
+            endif;
+//            return redirect('artist');
+//        }
         return redirect('artist');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Artist  $artist
+     * @param \App\Artist $artist
      * @return \Illuminate\Http\Response
      */
     public function show(Artist $artist)
@@ -204,21 +221,21 @@ class ArtistController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Artist  $artist
+     * @param \App\Artist $artist
      * @return \Illuminate\Http\Response
      */
     public function edit(Artist $artist)
     {
-        $image= DB::table('image')->where('artist_id',$artist->id)->get();
-        return view('container.artist.create')->with(compact('artist','image'))->with('action','UPDATE');
+        $image = DB::table('image')->where('artist_id', $artist->id)->get();
+        return view('container.artist.create')->with(compact('artist', 'image'))->with('action', 'UPDATE');
 
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Artist  $artist
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Artist $artist
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Artist $artist)
@@ -231,7 +248,7 @@ class ArtistController extends Controller
             'instagram' => 'required',
             'facebook' => 'required',
             'youtube' => 'required',
-            'video'=> 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
+            'video' => 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
         ]);
         $artist->artist_name = $request->input('artist_name');
         $artist->email = $request->input('email');
@@ -247,10 +264,10 @@ class ArtistController extends Controller
         if (!empty($request->input('image_data'))) {
             $request->validate([
                 'image' => 'mimes:jpg,jpeg,png',
-                ]);
+            ]);
 //            $path =  Storage::disk('public')->put('artist', $request->file('image'));
-            if (!empty($artist->image)){
-                $image_path = public_path().'/storage/'.$artist->image;
+            if (!empty($artist->image)) {
+                $image_path = public_path() . '/storage/' . $artist->image;
                 unlink($image_path);
             }
             //Update Image
@@ -258,11 +275,11 @@ class ArtistController extends Controller
         }
         if (!empty($request->hasFile('video'))) {
             $request->validate([
-                'video'=> 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
-                ]);
-            $v_path =  Storage::disk('public')->put('artist-video', $request->file('video'));
-            if (!empty($artist->video)){
-                $image_path = public_path().'/storage/'.$artist->video;
+                'video' => 'mimes:mp4,mov,ogg,qt,webm|min:1|max:500000'
+            ]);
+            $v_path = Storage::disk('public')->put('artist-video', $request->file('video'));
+            if (!empty($artist->video)) {
+                $image_path = public_path() . '/storage/' . $artist->video;
                 unlink($image_path);
             }
             //Update Image
@@ -276,16 +293,16 @@ class ArtistController extends Controller
 
                 $path = Storage::disk('public')->put('images', $item);
                 $arr[] = $path;
-                $thumbnailpath = public_path('storage/'.$path);
+                $thumbnailpath = public_path('storage/' . $path);
                 $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 });
                 $img->save($thumbnailpath);
                 Images::insert([
-                    'artist_id'=> $artist->id,
-                    'image'=>  $path,
-                    'updated_at'=>now()
+                    'artist_id' => $artist->id,
+                    'image' => $path,
+                    'updated_at' => now()
                     //you can put other insertion here
                 ]);
             endforeach;
@@ -309,7 +326,7 @@ class ArtistController extends Controller
     {
         $password = $request->input('password');
         $user_password = Auth::user()->getAuthPassword();
-        if(Hash::check($password, $user_password)) {
+        if (Hash::check($password, $user_password)) {
             $video = Video::where('artist_id', $artist)->get();
             $art = Artist::where('id', $artist)->first();
 

@@ -146,6 +146,11 @@
                                             <p class="usr-email-addr"
                                                data-email="{{ $value->brand_name }}">{{ $value->brand_name }}</p>
                                         </div>
+                                        <div class="user-email">
+                                            <p class="info-title">Mobile Number: </p>
+                                            <p class="usr-email-addr"
+                                               data-email="{{ $value->mobile }}">{{ $value->mobile }}</p>
+                                        </div>
 
 
                                         <div class="action-btn">

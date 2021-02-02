@@ -39,23 +39,22 @@ class ArtistController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
         $id = $request->header('USER_ID');
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'artist_name' => 'required',
             'about' => 'required',
             'city' => 'required',
             'firm_address' => 'required',
         ]);
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             return response()->json([
-                'status'=> false,
-                'message'=>$validator->errors()], 422);
+                'status' => false,
+                'message' => $validator->errors()], 422);
         }
         $artist_id = $request->input('id');
         if ($artist_id == null) {
@@ -113,10 +112,9 @@ class ArtistController extends Controller
             endif;
 
             return response()->json(['status' => true, 'message' => 'Add Successfully', 'data' => $artist]);
-        }
-        else{
+        } else {
 
-            $artist= Artist::find($artist_id);
+            $artist = Artist::find($artist_id);
             $artist->artist_name = $request->input('artist_name');
             $artist->email = $request->input('email');
             $artist->city = $request->input('city');
@@ -133,8 +131,8 @@ class ArtistController extends Controller
                     'image' => 'mimes:jpg,jpeg,png',
                 ]);
 //            $path =  Storage::disk('public')->put('artist', $request->file('image'));
-                if (!empty($artist->image)){
-                    $image_path = public_path().'/storage/'.$artist->image;
+                if (!empty($artist->image)) {
+                    $image_path = public_path() . '/storage/' . $artist->image;
                     unlink($image_path);
                 }
                 //Update Image
@@ -155,16 +153,16 @@ class ArtistController extends Controller
 
                     $path = Storage::disk('public')->put('images', $item);
                     $arr[] = $path;
-                    $thumbnailpath = public_path('storage/'.$path);
+                    $thumbnailpath = public_path('storage/' . $path);
                     $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
                         $constraint->aspectRatio();
                         $constraint->upsize();
                     });
                     $img->save($thumbnailpath);
                     Images::insert([
-                        'artist_id'=> $artist->id,
-                        'image'=>  $path,
-                        'updated_at'=>now()
+                        'artist_id' => $artist->id,
+                        'image' => $path,
+                        'updated_at' => now()
                         //you can put other insertion here
                     ]);
                 endforeach;
@@ -173,6 +171,19 @@ class ArtistController extends Controller
                 $image = '';
             endif;
 
+            $remove_image = $request->input('remove_images');
+//            if ($remove_image) {
+                foreach ($remove_image as $item) {
+                    $image = Images::where('id', $item)->get();
+                    if (!empty($image)) {
+                        foreach ($image as $value) {
+                            $image_path = public_path() . '/storage/' . $value->image;
+                            unlink($image_path);
+                        }
+                        DB::table('image')->where('id', $item)->delete();
+                    }
+                }
+//            }
 
             return response()->json(['status' => true, 'message' => 'Update Successfully', 'data' => $artist]);
 
@@ -184,45 +195,42 @@ class ArtistController extends Controller
     public function artistApprove(Request $request)
     {
 
-        $artist_approve= $request->approve;
-        $artist_id= $request->artist_id;
-        if ($artist_approve == null && $artist_id == null){
-            $art = Artist::select(DB::raw('artist.*,users.name,users.mobile as user_mobile'))->orderby('artist.id','DESC')->leftjoin('users','artist.CreatedBy', '=','users.id')->get();
+        $artist_approve = $request->approve;
+        $artist_id = $request->artist_id;
+        if ($artist_approve == null && $artist_id == null) {
+            $art = Artist::select(DB::raw('artist.*,users.name,users.mobile as user_mobile'))->orderby('artist.id', 'DESC')->leftjoin('users', 'artist.CreatedBy', '=', 'users.id')->get();
             foreach ($art as $item) {
-                $images = Images::where('artist_id',$item->id)->get();
-                $item['images']=$images;
+                $images = Images::where('artist_id', $item->id)->get();
+                $item['images'] = $images;
 
-                $qu= Video::where('artist_id',$item->id)
+                $qu = Video::where('artist_id', $item->id)
                     ->get();
                 foreach ($qu as $value) {
-                    if ($value->price == null){
-                        $value['payment_status']= 'free';
+                    if ($value->price == null) {
+                        $value['payment_status'] = 'free';
+                    } else {
+                        $value['payment_status'] = 'payable';
                     }
-                    else{
-                        $value['payment_status']= 'payable';
-                    }
-                    if ($value->url == null){
+                    if ($value->url == null) {
                         $value['video_status'] = 1;
-                    }
-                    else{
+                    } else {
                         $value['video_status'] = 2;
                     }
                 }
-                $item['videos']=$qu;
+                $item['videos'] = $qu;
             }
-            return response()->json(['status' => true, 'message' => 'Data Retrieve Successfully', 'data' => $art],200);
+            return response()->json(['status' => true, 'message' => 'Data Retrieve Successfully', 'data' => $art], 200);
         }
         $artist = Artist::find($artist_id);
         if (isset($artist)) {
-            if ($artist_approve == 0){
+            if ($artist_approve == 0) {
                 $artist->to_approve = 0;
                 $artist->save();
-                return response()->json(['status' => true, 'message' => 'Not Approved', 'data' => $artist],200);
-            }
-            elseif ($artist_approve == 1) {
+                return response()->json(['status' => true, 'message' => 'Not Approved', 'data' => $artist], 200);
+            } elseif ($artist_approve == 1) {
                 $artist->to_approve = 1;
                 $artist->save();
-                return response()->json(['status' => true, 'message' => 'Approve Successfully', 'data' => $artist],200);
+                return response()->json(['status' => true, 'message' => 'Approve Successfully', 'data' => $artist], 200);
 
             } else {
                 $artist->to_approve = 2;
@@ -265,18 +273,17 @@ class ArtistController extends Controller
 //                    }
 //                    DB::table('image')->where('artist_id', $artist_id)->delete();
 //                }
-                return response()->json(['status' => true, 'message' => 'Reject Successfully', 'data' => $artist],200);
+                return response()->json(['status' => true, 'message' => 'Reject Successfully', 'data' => $artist], 200);
             }
-        }
-        else{
-            return response()->json(['status' => false, 'message' => 'Artist Not Found'],422);
+        } else {
+            return response()->json(['status' => false, 'message' => 'Artist Not Found'], 422);
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Artist  $artist
+     * @param \App\Artist $artist
      * @return \Illuminate\Http\Response
      */
     public function show(Artist $artist)
@@ -287,7 +294,7 @@ class ArtistController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Artist  $artist
+     * @param \App\Artist $artist
      * @return \Illuminate\Http\Response
      */
     public function edit(Artist $artist)
@@ -298,8 +305,8 @@ class ArtistController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Artist  $artist
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Artist $artist
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Artist $artist)
@@ -310,13 +317,13 @@ class ArtistController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Artist  $artist
+     * @param \App\Artist $artist
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
         $artist = $request->input('id');
-        $br = Artist::where('id',$artist)->first();
+        $br = Artist::where('id', $artist)->first();
         if (isset($br)) {
             $video = Video::where('artist_id', $artist)->get();
             $art = Artist::where('id', $artist)->first();
@@ -357,8 +364,7 @@ class ArtistController extends Controller
                 DB::table('image')->where('artist_id', $artist)->delete();
             }
             return response()->json(['status' => true, 'message' => 'Delete successfully.'], 200);
-        }
-        else{
+        } else {
             return response()->json(['status' => false, 'message' => 'Data Not Found.'], 422);
 
         }

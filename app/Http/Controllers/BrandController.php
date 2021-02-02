@@ -112,7 +112,8 @@ class BrandController extends Controller
     {
         $request->validate([
             'brand_name'=> 'required',
-            'image_data'=>'required'
+            'image_data'=>'required',
+            'mobile'=>'required'
 
         ]);
         if ($request->file('image') == null){
@@ -123,6 +124,7 @@ class BrandController extends Controller
 
         $brand = new  Brand();
         $brand->brand_name = $request->input('brand_name');
+        $brand->mobile = $request->input('mobile');
         $brand->image = $request->input('image_data');
         $brand->CreatedBy = Auth::user()->getAuthIdentifier();
         $brand->to_approve = 1;
@@ -172,9 +174,11 @@ class BrandController extends Controller
     public function update(Request $request, Brand $brand)
     {
         $request->validate([
-            'brand_name'=>['required']
+            'brand_name'=>['required'],
+            'mobile'=>['required'],
         ]);
         $brand->brand_name=$request->input('brand_name');
+        $brand->mobile=$request->input('mobile');
 
 
         if (!empty($request->input('image_data'))) {

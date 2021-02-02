@@ -170,6 +170,7 @@ class BrandViewController extends Controller
         if ($brand_id == null) {
             $request->validate([
                 'brand_name' => 'required',
+                'mobile' => 'required',
                 'image' => 'required'
 
             ]);
@@ -181,6 +182,7 @@ class BrandViewController extends Controller
 
             $brand = new  Brand();
             $brand->brand_name = $request->input('brand_name');
+            $brand->mobile = $request->input('mobile');
             $brand->CreatedBy = $id;
             $brand->to_approve = 0;
 
@@ -195,20 +197,22 @@ class BrandViewController extends Controller
         }
         else{
             $request->validate([
-                'brand_name'=>['required']
+                'brand_name'=>['required'],
+                'mobile'=>['required'],
             ]);
             $brand = Brand::find($brand_id);
             $brand->brand_name=$request->input('brand_name');
+            $brand->mobile=$request->input('mobile');
 
 
-            if (!empty($request->input('image_data'))) {
-//            $path =  Storage::disk('public')->put('brand', $request->file('image'));
+            if (!empty($request->input('image'))) {
+            $path =  Storage::disk('public')->put('brand', $request->file('image'));
                 if (!empty($brand->image)){
                     $image_path = public_path().'/storage/'.$brand->image;
                     unlink($image_path);
                 }
                 //Update Image
-                $brand->image = $request->input('image_data');
+                $brand->image = $path;
             }
             $brand->save();
             return response()->json(['status' => true, 'message' => 'Update Successfully', 'data' => $brand]);

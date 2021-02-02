@@ -166,8 +166,8 @@ class HomeController extends Controller
             $v=[];
             $video=[];
             foreach ($art as $item) {
-                $images = Images::where('artist_id',$item->id)->get();
-                $item['images']=$images;
+//                $images = Images::where('artist_id',$item->id)->get();
+//                $item['images']=$images;
 
                 $qu= Video::where('artist_id',$item->id)
                     ->get();
@@ -198,8 +198,8 @@ class HomeController extends Controller
             $v=[];
             $video=[];
             foreach ($results as $item) {
-                $images = Images::where('artist_id',$item->id)->get();
-                $item['images']=$images;
+//                $images = Images::where('artist_id',$item->id)->get();
+//                $item['images']=$images;
 
                 $qu= Video::where('artist_id',$item->id)
                     ->get();
@@ -229,8 +229,8 @@ class HomeController extends Controller
             $v=[];
             $video=[];
             foreach ($results as $item) {
-                $images = Images::where('artist_id',$item->id)->get();
-                $item['images']=$images;
+//                $images = Images::where('artist_id',$item->id)->get();
+//                $item['images']=$images;
 
                 $qu= Video::where('artist_id',$item->id)
                     ->get();
@@ -266,11 +266,11 @@ class HomeController extends Controller
         $results = Artist::where('to_approve',1)->orderBy('rate','desc')->get();
         $v=[];
         foreach ($results as $item) {
-            $qu= DB::table('image')
-                ->select(array('id','image'))
-                ->where('artist_id',$item->id)
-                ->get();
-            $item['images']= $qu;
+//            $qu= DB::table('image')
+//                ->select(array('id','image'))
+//                ->where('artist_id',$item->id)
+//                ->get();
+//            $item['images']= $qu;
         }
         return response()->json(['status' => true, 'message' => 'Available Data', 'data' => $results]);
 
