@@ -15,6 +15,7 @@ class ReferralController extends Controller
         $v=[];
         $referral = Referral::select(DB::raw('users.*,referral.status,referral.referral_code as referral'))->leftjoin('users','referral.referral_code','=','users.referral_code')->get();
         $user = $referral->unique('referral_code');
+        echo $user; die();
 //        $user->all();
         foreach ($user  as $value) {
 
