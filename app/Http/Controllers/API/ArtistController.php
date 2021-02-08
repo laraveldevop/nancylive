@@ -21,9 +21,103 @@ class ArtistController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request['id'] == null && $request['user_id'] == null) {
+            $art = Artist::where('to_approve',1)->get();
+            $v=[];
+            $video=[];
+            foreach ($art as $item) {
+//                $images = Images::where('artist_id',$item->id)->get();
+//                $item['images']=$images;
+
+                $qu= Video::where('artist_id',$item->id)
+                    ->get();
+                foreach ($qu as $value) {
+                    if ($value->price == null){
+                        $value['payment_status']= 'free';
+                    }
+                    else{
+                        $value['payment_status']= 'payable';
+                    }
+                    if ($value->url == null){
+                        $value['video_status'] = 1;
+                    }
+                    else{
+                        $value['video_status'] = 2;
+                    }
+                }
+                $item['videos']=$qu;
+            }
+
+
+            $v = $art;
+            return response()->json(['status' => true, 'message' => 'Available Data', 'data' => $v]);
+
+        }
+        elseif ($request['id'] != null){
+            $results = Artist::where('id',$request['id'])->orderBy('rate','desc')->get();
+            $v=[];
+            $video=[];
+            foreach ($results as $item) {
+                $images = Images::where('artist_id',$item->id)->get();
+                $item['images']=$images;
+
+                $qu= Video::where('artist_id',$item->id)
+                    ->get();
+                foreach ($qu as $value) {
+                    if ($value->price == null){
+                        $value['payment_status']= 'free';
+                    }
+                    else{
+                        $value['payment_status']= 'payable';
+                    }
+                    if ($value->url == null){
+                        $value['video_status'] = 1;
+                    }
+                    else{
+                        $value['video_status'] = 2;
+                    }
+                }
+                $item['videos']=$qu;
+            }
+
+
+            $v = $results;
+            return response()->json(['status' => true, 'message' => 'Available Data', 'data' => $v]);
+        }
+        elseif ($request['user_id'] != null){
+            $results = Artist::where('CreatedBy',$request['user_id'])->orderBy('rate','desc')->get();
+            $v=[];
+            $video=[];
+            foreach ($results as $item) {
+                $images = Images::where('artist_id',$item->id)->get();
+                $item['images']=$images;
+
+                $qu= Video::where('artist_id',$item->id)
+                    ->get();
+                foreach ($qu as $value) {
+                    if ($value->price == null){
+                        $value['payment_status']= 'free';
+                    }
+                    else{
+                        $value['payment_status']= 'payable';
+                    }
+                    if ($value->url == null){
+                        $value['video_status'] = 1;
+                    }
+                    else{
+                        $value['video_status'] = 2;
+                    }
+                }
+                $item['videos']=$qu;
+            }
+
+
+            $v = $results;
+            return response()->json(['status' => true, 'message' => 'Available Data', 'data' => $v]);
+        }
+
     }
 
     /**

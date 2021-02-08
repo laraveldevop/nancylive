@@ -166,8 +166,8 @@ class HomeController extends Controller
             $v=[];
             $video=[];
             foreach ($art as $item) {
-                $images = Images::where('artist_id',$item->id)->get();
-                $item['images']=$images;
+//                $images = Images::where('artist_id',$item->id)->get();
+//                $item['images']=$images;
 
                 $qu= Video::where('artist_id',$item->id)
                     ->get();
@@ -198,8 +198,8 @@ class HomeController extends Controller
             $v=[];
             $video=[];
             foreach ($results as $item) {
-                $images = Images::where('artist_id',$item->id)->get();
-                $item['images']=$images;
+//                $images = Images::where('artist_id',$item->id)->get();
+//                $item['images']=$images;
 
                 $qu= Video::where('artist_id',$item->id)
                     ->get();
@@ -229,8 +229,8 @@ class HomeController extends Controller
             $v=[];
             $video=[];
             foreach ($results as $item) {
-                $images = Images::where('artist_id',$item->id)->get();
-                $item['images']=$images;
+//                $images = Images::where('artist_id',$item->id)->get();
+//                $item['images']=$images;
 
                 $qu= Video::where('artist_id',$item->id)
                     ->get();

@@ -73,7 +73,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('brand-detail', 'API\BrandViewController@brandDetail')->middleware('checkUser');
     Route::post('brand-view', 'API\BrandViewController@brandView')->middleware('checkUser');
     Route::post('sponsor-detail', 'API\SponsorViewController@sponsorDetail')->middleware('checkUser');
-    Route::post('artist-detail', 'API\HomeController@artist')->middleware('checkUser');
+    Route::post('artist-detail', 'API\ArtistController@index')->middleware('checkUser');
     Route::post('product', 'API\ProductController@index')->middleware('checkUser');
     Route::post('user-package-history', 'API\HistoryController@userPackageHistory')->middleware('checkUser');
     Route::post('video', 'API\VideoController@index')->middleware('checkUser');
