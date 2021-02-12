@@ -83,6 +83,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('package-update', 'API\UserPackageController@userPackageUpdate')->middleware('checkUser');
     Route::post('change-password', 'API\HomeController@changePassword')->middleware('checkUser');
     Route::post('check_user', 'API\AuthController@check_user');
+    Route::post('notification', 'API\NotificationController@notification');
 
     Route::get('home', 'API\HomeController@advertise')->middleware('checkUser');
     Route::get('ok', 'API\AuthController@generateReferral')->middleware('checkUser');
