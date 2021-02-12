@@ -199,10 +199,21 @@ class CategoryViewController extends Controller
         $category = $request->input('id');
         $c = Category::find($category);
         if (isset($c)) {
-            $video = Video::where('cat_id', $category)->get();
-            $pdf = Pdf::where('cat_id', $category)->get();
-            $product = Product::where('cat_id', $category)->get();
-
+//            $video = Video::where('cat_id', $category)->get();
+//            $pdf = Pdf::where('cat_id', $category)->get();
+//            $product = Product::where('cat_id', $category)->get();
+            DB::table('product')
+                ->where('cat_id', '=',$category)
+                ->update(['cat_id' => null]);
+            DB::table('video')
+                ->where('cat_id', '=',$category)
+                ->update(['cat_id' => null]);
+            DB::table('pdf')
+                ->where('cat_id', '=',$category)
+                ->update(['cat_id' => null]);
+            DB::table('package')
+                ->where('category_id', '=',$category)
+                ->update(['category_id' => null]);
 
             //delete category
             $cat = Category::where('cat_id', $category)->first();
@@ -211,63 +222,63 @@ class CategoryViewController extends Controller
                 unlink($image_path);
             }
             Category::destroy($category);
-            DB::table('package')->where('category_id', $category)->delete();
+//            DB::table('package')->where('category_id', $category)->delete();
 
             //delete video
-            if (!empty($video)) {
-                foreach ($video as $value) {
-                    DB::table('advertise')
-                        ->where('video_id', $value->id)
-                        ->delete();
-                    if ($value->image != null) {
-                        $image_path = public_path() . '/storage/' . $value->image;
-                        unlink($image_path);
-                    }
-                    if ($value->video != null) {
-                        $image_path = public_path() . '/storage/' . $value->video;
-                        unlink($image_path);
-                    }
-                }
-            }
-            DB::table('video')->where('cat_id', $category)->delete();
+//            if (!empty($video)) {
+//                foreach ($video as $value) {
+//                    DB::table('advertise')
+//                        ->where('video_id', $value->id)
+//                        ->delete();
+//                    if ($value->image != null) {
+//                        $image_path = public_path() . '/storage/' . $value->image;
+//                        unlink($image_path);
+//                    }
+//                    if ($value->video != null) {
+//                        $image_path = public_path() . '/storage/' . $value->video;
+//                        unlink($image_path);
+//                    }
+//                }
+//            }
+//            DB::table('video')->where('cat_id', $category)->delete();
 
 
             //delete pdf
-            if (!empty($pdf)) {
-                foreach ($pdf as $value) {
-                    DB::table('advertise')
-                        ->where('pdf_id', $value->id)
-                        ->delete();
-                    if ($value->file != null) {
-                        $image_path = public_path() . '/storage/' . $value->file;
-                        unlink($image_path);
-                    }
-                }
-            }
-            DB::table('pdf')->where('cat_id', $category)->delete();
+//            if (!empty($pdf)) {
+//                foreach ($pdf as $value) {
+//                    DB::table('advertise')
+//                        ->where('pdf_id', $value->id)
+//                        ->delete();
+//                    if ($value->file != null) {
+//                        $image_path = public_path() . '/storage/' . $value->file;
+//                        unlink($image_path);
+//                    }
+//                }
+//            }
+//            DB::table('pdf')->where('cat_id', $category)->delete();
 
 
             //delete product
-            if (!empty($product)) {
-                foreach ($product as $value) {
-                    DB::table('advertise')
-                        ->where('product_id', $value->id)
-                        ->delete();
-                    $product_image = ProductImage::where('product_id', $value->id)->get();
-                    if (!empty($product_image)) {
-                        foreach ($product_image as $item) {
-                            $image_path = public_path() . '/storage/' . $item->image;
-                            unlink($image_path);
-                        }
-                    }
-                    if ($value->video != null) {
-                        $image_path = public_path() . '/storage/' . $value->video;
-                        unlink($image_path);
-                    }
-                    DB::table('product_image')->where('product_id', $value->id)->delete();
-                }
-            }
-            DB::table('product')->where('cat_id', $category)->delete();
+//            if (!empty($product)) {
+//                foreach ($product as $value) {
+//                    DB::table('advertise')
+//                        ->where('product_id', $value->id)
+//                        ->delete();
+//                    $product_image = ProductImage::where('product_id', $value->id)->get();
+//                    if (!empty($product_image)) {
+//                        foreach ($product_image as $item) {
+//                            $image_path = public_path() . '/storage/' . $item->image;
+//                            unlink($image_path);
+//                        }
+//                    }
+//                    if ($value->video != null) {
+//                        $image_path = public_path() . '/storage/' . $value->video;
+//                        unlink($image_path);
+//                    }
+//                    DB::table('product_image')->where('product_id', $value->id)->delete();
+//                }
+//            }
+//            DB::table('product')->where('cat_id', $category)->delete();
             return response()->json(['status' => true, 'message' => 'Delete successfully.'], 200);
         }
         else{

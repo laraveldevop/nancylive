@@ -225,8 +225,10 @@ class BrandViewController extends Controller
         $brand = $request->input('id');
         $br = Brand::where('id',$brand)->first();
         if (isset($br)){
-            $product = Product::where('brand', $brand)->get();
-
+//            $product = Product::where('brand', $brand)->get();
+            DB::table('product')
+                ->where('brand', '=',$brand)
+                ->update(['brand' => null]);
             $cat = Brand::where('id', $brand)->first();
             if ($cat['image'] != null) {
                 $image_path = public_path() . '/storage/' . $cat['image'];
@@ -235,26 +237,26 @@ class BrandViewController extends Controller
             Brand::destroy($brand);
 
             //delete product
-            if (!empty($product)) {
-                foreach ($product as $value) {
-                    DB::table('advertise')
-                        ->where('product_id', $value->id)
-                        ->delete();
-                    $product_image = ProductImage::where('product_id', $value->id)->get();
-                    if (!empty($product_image)) {
-                        foreach ($product_image as $item) {
-                            $image_path = public_path() . '/storage/' . $item->image;
-                            unlink($image_path);
-                        }
-                    }
-                    if ($value->video != null) {
-                        $image_path = public_path() . '/storage/' . $value->video;
-                        unlink($image_path);
-                    }
-                    DB::table('product_image')->where('product_id', $value->id)->delete();
-                }
-            }
-            DB::table('product')->where('brand', $brand)->delete();
+//            if (!empty($product)) {
+//                foreach ($product as $value) {
+//                    DB::table('advertise')
+//                        ->where('product_id', $value->id)
+//                        ->delete();
+//                    $product_image = ProductImage::where('product_id', $value->id)->get();
+//                    if (!empty($product_image)) {
+//                        foreach ($product_image as $item) {
+//                            $image_path = public_path() . '/storage/' . $item->image;
+//                            unlink($image_path);
+//                        }
+//                    }
+//                    if ($value->video != null) {
+//                        $image_path = public_path() . '/storage/' . $value->video;
+//                        unlink($image_path);
+//                    }
+//                    DB::table('product_image')->where('product_id', $value->id)->delete();
+//                }
+//            }
+//            DB::table('product')->where('brand', $brand)->delete();
             return response()->json(['status' => true, 'message' => 'Delete successfully.'], 200);
 
         }

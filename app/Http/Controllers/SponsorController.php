@@ -253,8 +253,10 @@ class SponsorController extends Controller
         $password = $request->input('password');
         $user_password = Auth::user()->getAuthPassword();
         if(Hash::check($password, $user_password)) {
-        $product = Product::where('sponsor_id',$sponsor)->get();
-
+//        $product = Product::where('sponsor_id',$sponsor)->get();
+            DB::table('product')
+                ->where('sponsor_id', '=',$sponsor)
+                ->update(['sponsor_id' => null]);
         $cat = Sponsor::where('id',$sponsor)->first();
         if ($cat['image'] != null) {
             $image_path = public_path() . '/storage/' . $cat['image'];
@@ -266,26 +268,26 @@ class SponsorController extends Controller
         }
         Sponsor::destroy($sponsor);
 
-        if (!empty($product)) {
-            foreach ($product as $value) {
-                DB::table('advertise')
-                    ->where('product_id', $value->id)
-                    ->delete();
-                $product_image = ProductImage::where('product_id', $value->id)->get();
-                if (!empty($product_image)) {
-                    foreach ($product_image as $item) {
-                        $image_path = public_path() . '/storage/' . $item->image;
-                        unlink($image_path);
-                    }
-                }
-                if ($value->video != null) {
-                    $image_path = public_path() . '/storage/' . $value->video;
-                    unlink($image_path);
-                }
-                DB::table('product_image')->where('product_id', $value->id)->delete();
-            }
-        }
-        DB::table('product')->where('sponsor_id',$sponsor)->delete();
+//        if (!empty($product)) {
+//            foreach ($product as $value) {
+//                DB::table('advertise')
+//                    ->where('product_id', $value->id)
+//                    ->delete();
+//                $product_image = ProductImage::where('product_id', $value->id)->get();
+//                if (!empty($product_image)) {
+//                    foreach ($product_image as $item) {
+//                        $image_path = public_path() . '/storage/' . $item->image;
+//                        unlink($image_path);
+//                    }
+//                }
+//                if ($value->video != null) {
+//                    $image_path = public_path() . '/storage/' . $value->video;
+//                    unlink($image_path);
+//                }
+//                DB::table('product_image')->where('product_id', $value->id)->delete();
+//            }
+//        }
+//        DB::table('product')->where('sponsor_id',$sponsor)->delete();
 
         $image = SponsorImage::where('sponsor_id', $sponsor)->get();
         if (!empty($image)) {
