@@ -33,6 +33,24 @@ class OrderController extends Controller
 
 
     }
+
+    public function orderHistory()
+    {
+        $history =History::select(DB::raw('history.id,history.user_id,history.product_id,users.name,history.total,history.status,history.created_at'))
+            ->leftJoin('users', 'history.user_id', '=', 'users.id')
+            ->orderBy('history.id', 'desc')
+            ->get();
+        foreach ($history as $item){
+            $products = DB::table('product')
+                ->where('id','=',$item->product_id)
+                ->get();
+            $item['products']=$products;
+        }
+
+
+
+        return response()->json(['status' => true, 'message' => 'Order History Retrieve successfully.', 'data' => $history], 200);
+    }
     public function orderPost(Request $request)
     {
         $userData = json_decode($request->getContent(), true);
