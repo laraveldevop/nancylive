@@ -33,7 +33,6 @@ class NotificationController extends Controller
                         // 'included_segments' => array('All'),
                         'large_icon' =>$image,
                         'include_player_ids' => $ids,
-                        'title'=> $title,
                         'contents' => $content
                     );
 
@@ -75,7 +74,6 @@ class NotificationController extends Controller
                         'app_id' => "5bee468b-1748-4717-a7f6-e0afb7e451d7", // add one single app_id
                         'large_icon' => $image,
                         'include_player_ids' => $ids,
-                        'title'=> $title,
                         'contents' => $content,
 
                     );
@@ -119,7 +117,6 @@ class NotificationController extends Controller
                         // 'included_segments' => array('All'),
                         'large_icon' => $image,
                         'include_player_ids' => $ids,
-                        'title'=> $title,
                         'contents' => $content
                     );
 
