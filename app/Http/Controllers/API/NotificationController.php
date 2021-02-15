@@ -15,9 +15,9 @@ class NotificationController extends Controller
         $body = $request->input('description');
         $image = $request->file('image');
         $role = $request->input('role');
-        $Subrole = $request->input('sub_role');
+        $Subrole = $request->input('subrole');
         if ($role != null) {
-            $user = User::where('role_id', '==', $role)->get();
+            $user = User::where('role_id', $role)->get();
             foreach ($user as $value) {
                 if ($value->device_id != null) {
                     $playerIds = $value->device_id;
@@ -59,10 +59,11 @@ class NotificationController extends Controller
                     die;
                 }
             }
+
             return response()->json(['status'=> true,
                 'message'=>'Notification Send Successfully','data'=>$user],200);
         } elseif ($Subrole != null) {
-            $user = User::where('sub_role_id', '==', $Subrole)->get();
+            $user = User::where('sub_role_id', $Subrole)->get();
             foreach ($user as $value) {
                 if ($value->device_id != null) {
                     $playerIds = $value->device_id;
@@ -105,8 +106,8 @@ class NotificationController extends Controller
                 }
             }
             return response()->json(['status'=> true,
-                'message'=>'Notification Send Successfully','data'=>$user],200);
-        } elseif ($role = null && $Subrole = null) {
+                'message'=>'Notification  Send Successfully','data'=>$user],200);
+        } elseif ($role == null && $Subrole == null) {
             $user = User::all();
             foreach ($user as $value) {
                 if ($value->device_id != null) {
@@ -151,12 +152,14 @@ class NotificationController extends Controller
                 }
             }
             return response()->json(['status'=> true,
-                'message'=>'Notification Send Successfully','data'=>$user],200);
+                'message'=>'Notification  Send Successfully','data'=>$user],200);
 
         }
         else{
             return response()->json(['status'=> true,
                 'message'=>'User Not Found','data'=>[]],200);
         }
+        die();
     }
+
 }
