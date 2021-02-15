@@ -24,18 +24,22 @@ class NotificationController extends Controller
                     $playerIds = $value->device_id;
                     $key = 'MzE2YmQ2NjYtZTI2OS00MmUwLWI2YzEtZWYzNWFkM2M5ZjRk'; // add one single key
                     $ids = array($playerIds);
+
                     $content = array(
                         "en" => $body,
-//                        "message" => $body,
+                        "en" => $title
+                    );
+                    $headings = array(
+                        "en" => $title
                     );
                     $image_path = Storage::disk('public')->put('notification', $request->file('image'));
 
                     $fields = array(
                         'app_id' => "5bee468b-1748-4717-a7f6-e0afb7e451d7", // add one single app_id
                         // 'included_segments' => array('All'),
-                        'big_picture' =>public_path('storage/' . $image_path),
+                        'big_picture' =>asset('public/storage/'.$image_path),
                         'include_player_ids' => $ids,
-                        'title'=> $title,
+                        'title'=> $headings,
                         'contents' => $content,
 
                     );
