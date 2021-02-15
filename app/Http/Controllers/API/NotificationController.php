@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Storage;
 
 class NotificationController extends Controller
 {
@@ -24,16 +25,19 @@ class NotificationController extends Controller
                     $key = 'MzE2YmQ2NjYtZTI2OS00MmUwLWI2YzEtZWYzNWFkM2M5ZjRk'; // add one single key
                     $ids = array($playerIds);
                     $content = array(
-                        "en" => 'English Message',
-                        "title" => $title,
-                        "message" => $body,
+                        "en" => $body,
+//                        "message" => $body,
                     );
+                    $image_path = Storage::disk('public')->put('notification', $request->file('image'));
+
                     $fields = array(
                         'app_id' => "5bee468b-1748-4717-a7f6-e0afb7e451d7", // add one single app_id
                         // 'included_segments' => array('All'),
-                        'large_icon' =>$image,
+                        'big_picture' =>public_path('storage/' . $image_path),
                         'include_player_ids' => $ids,
-                        'contents' => $content
+                        'title'=> $title,
+                        'contents' => $content,
+
                     );
 
                     $fields = json_encode($fields);
@@ -66,7 +70,7 @@ class NotificationController extends Controller
                     $key = 'MzE2YmQ2NjYtZTI2OS00MmUwLWI2YzEtZWYzNWFkM2M5ZjRk'; // add one single key
                     $ids = array($playerIds);
                     $content = array(
-                        "en" => 'English Message',
+//                        "en" => 'English Message',
                         "title" => $title,
                         "message" => $body,
                     );
@@ -108,7 +112,7 @@ class NotificationController extends Controller
 
                     $ids = array($playerIds);
                     $content = array(
-                        "en" => 'English Message',
+//                        "en" => 'English Message',
                         "title" => $title,
                         "message" => $body,
                     );
