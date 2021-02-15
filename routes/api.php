@@ -43,6 +43,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('add-product', 'API\ProductController@store')->middleware('checkUser');
     Route::post('add-video', 'API\VideoController@store')->middleware('checkUser');
     Route::post('add-sub-role', 'API\SubRoleController@store')->middleware('checkUser');
+    Route::post('add-package', 'API\PackageController@store')->middleware('checkUser');
     Route::post('video-updates', 'API\AllVideosController@store')->middleware('checkUser');
 
     //approve or Reject
