@@ -27,7 +27,7 @@ class NotificationController extends Controller
                     $title = '';
                     $ids = array($playerIds);
                     $content = array(
-                        "en" => 'English Message',
+                        "en" => $title,
                         "title" => $title,
                         "message" => $body,
                     );
@@ -73,7 +73,7 @@ class NotificationController extends Controller
                     $title = '';
                     $ids = array($playerIds);
                     $content = array(
-                        "en" => 'English Message',
+                        "en" => $title,
                         "title" => $title,
                         "message" => $body,
                     );
@@ -118,7 +118,7 @@ class NotificationController extends Controller
                     $title = '';
                     $ids = array($playerIds);
                     $content = array(
-                        "en" => 'English Message',
+                        "en" => $title,
                         "title" => $title,
                         "message" => $body,
                     );
