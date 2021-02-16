@@ -13,14 +13,12 @@ class ReferralController extends Controller
     public function referral()
     {
         $v=[];
-        $referral = Referral::select(DB::raw('users.*,referral.status,referral.referral_code as referral'))->leftjoin('users','referral.referral_code','=','users.referral_code')->get();
-        $user = $referral->unique('referral_code');
-//        echo $referral .'<br>';
-        echo $user; die();
-//        $user->all();
-        foreach ($user  as $value) {
+//        $referral = Referral::select(DB::raw('users.*,referral.status,referral.referral_code as referral'))->leftjoin('users','referral.referral_code','=','users.referral_code')->get();
+//        $user = $referral->unique('referral_code');
+        $user =  Referral::select(DB::raw('referral_code'))->groupBy('referral_code')->get();
 
-            $ref = DB::table('referral')->select(DB::raw('users.*'))->leftjoin('users','referral.user_id','=','users.id')->where('referral.referral_code','=',$value->referral)->get();
+        foreach ($user  as $value) {
+            $ref = DB::table('referral')->select(DB::raw('users.*'))->leftjoin('users','referral.user_id','=','users.id')->where('referral.referral_code','=',$value->referral_code)->get();
             $value['user'] = $ref;
         }
 

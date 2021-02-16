@@ -6,12 +6,23 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class NotificationController extends Controller
 {
 
     public function notification(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'title' => ['required'],
+            'image' => ['required'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => $validator->errors()->all()], 422);
+        }
         $title = $request->input('title');
         $body = $request->input('description');
         $image = $request->file('image');
@@ -56,8 +67,8 @@ class NotificationController extends Controller
                     $response = curl_exec($ch);
                     curl_close($ch);
                     //print("\nJSON sent:\n");
-                    print($response);
-                    die;
+//                    print($response);
+//                    die;
                 }
             }
 
@@ -103,8 +114,8 @@ class NotificationController extends Controller
                     $response = curl_exec($ch);
                     curl_close($ch);
                     //print("\nJSON sent:\n");
-                    print($response);
-                    die;
+//                    print($response);
+//                    die;
                 }
             }
             return response()->json(['status'=> true,
@@ -150,8 +161,8 @@ class NotificationController extends Controller
                     $response = curl_exec($ch);
                     curl_close($ch);
                     //print("\nJSON sent:\n");
-                    print($response);
-                    die;
+//                    print($response);
+//                    die;
 
                 }
             }
@@ -163,7 +174,6 @@ class NotificationController extends Controller
             return response()->json(['status'=> true,
                 'message'=>'User Not Found','data'=>[]],200);
         }
-        die();
     }
 
 }
