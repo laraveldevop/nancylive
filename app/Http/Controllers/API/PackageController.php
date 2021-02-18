@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\AllPackage;
 use App\Http\Controllers\Controller;
 use App\Package;
+use App\PackageVideo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -16,6 +17,24 @@ class PackageController extends Controller
         $package = Package::all();
 
         return response()->json(['status' => true, 'message' => 'Available Data', 'data' => $package]);
+
+    }
+
+    public function packageVideo(Request $request)
+    {
+        $request->validate([
+            'category_id' => 'required',
+            'video_id' => 'required',
+        ]);
+        $cat = $request->input('category_id');
+        $video = $request->input('video_id');
+        PackageVideo::where(function($query) use ($cat, $video) {
+            $query->where('category_id', $cat)
+                ->where('video_id', $video);
+        })->update(['status' => 2]);
+
+        $pac = PackageVideo::where([['category_id',$cat],['video_id',$video]])->get();
+        return response()->json(['status' => true, 'message' => 'Update Data', 'data' => $pac]);
 
     }
 
@@ -143,6 +162,7 @@ class PackageController extends Controller
                 }
 
                 $package->save();
+
             }
             else{
                 $request->validate([
@@ -267,4 +287,23 @@ class PackageController extends Controller
         }
 
     }
+
+    public function destroy(Request $request)
+    {
+        $allPackage = $request->input('id');
+        $pack = Package::where('id',$allPackage)->first();
+        if (isset($pack)) {
+            if ($pack['image'] != null) {
+                $image_path = public_path() . '/storage/' . $pack['image'];
+                unlink($image_path);
+            }
+            Package::destroy($allPackage);
+            return response()->json(['status' => true, 'message' => 'Delete Successfully', 'data' => []]);
+        }
+        else{
+            return response()->json(['status' => false, 'message' => 'Data Not Found.'], 422);
+
+        }
+    }
+
 }

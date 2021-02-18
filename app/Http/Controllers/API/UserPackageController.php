@@ -6,6 +6,7 @@ use App\History;
 use App\Http\Controllers\Controller;
 use App\Order;
 use App\Package;
+use App\PackageVideo;
 use App\UserPackage;
 use App\Video;
 use Illuminate\Http\Request;
@@ -59,6 +60,19 @@ class UserPackageController extends Controller
                 }
                 $userPackage->save();
 
+                if ($userPackage->stat == 2){
+                    $v = Video::where('cat_id', $userPackage->category_id)->get();
+                    if (isset($v)) {
+                        foreach ($v as $value) {
+                            $packageVideo = new PackageVideo();
+                            $packageVideo->user_package_id = $userPackage->id;
+                            $packageVideo->package_id = $userPackage->package_id;
+                            $packageVideo->category_id = $userPackage->category_id;
+                            $packageVideo->video_id = $value->id;
+                            $packageVideo->save();
+                        }
+                    }
+                }
                 $history = new History();
                 $history->expire_date = $userPackage->expire_date;
                 $history->user_id = $request['user_id'];
@@ -213,6 +227,33 @@ class UserPackageController extends Controller
 
 
         return response()->json(['status' => false, 'message' => 'User Package Not Found.', 'data' => []], 200);
+
+    }
+
+    public function packageBuy(Request $request)
+    {
+        $request->validate([
+            'stat' => 'required',
+        ]);
+        $stat = $request->input('stat');
+        $user_id = $request->input('user_id');
+        if ($stat == 1) {
+            $package = UserPackage::select(DB::raw('user_package.id,users.name as user_name,users.mobile,user_package.package_id,package.name as package_name,user_package.stat,user_package.payment,user_package.transaction_id'))
+                ->leftJoin('users', 'user_package.user_id', '=', 'users.id')
+                ->leftJoin('package', 'user_package.package_id', '=', 'package.id')
+                ->get();
+            return response()->json(['status' => true, 'message' => 'Data Available', 'data' => $package], 200);
+        }
+        elseif ($stat == 2){
+            $request->validate([
+                'user_id' => 'required',
+            ]);
+            UserPackage::select(DB::raw('user_package.id,users.name as user_name,users.mobile,user_package.package_id,package.name as package_name,user_package.stat,user_package.payment,user_package.transaction_id'))
+                ->where('user_package.user_id',$user_id)
+                ->leftJoin('users', 'user_package.user_id', '=', 'users.id')
+                ->leftJoin('package', 'user_package.package_id', '=', 'package.id')
+                ->get();
+        }
 
     }
 }

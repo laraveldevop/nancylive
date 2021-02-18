@@ -45,6 +45,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('add-sub-role', 'API\SubRoleController@store')->middleware('checkUser');
     Route::post('add-package', 'API\PackageController@store')->middleware('checkUser');
     Route::post('video-updates', 'API\AllVideosController@store')->middleware('checkUser');
+    Route::post('package-video', 'API\PackageController@packageVideo')->middleware('checkUser');
 
     //approve or Reject
     Route::post('approve-artist', 'API\ArtistController@artistApprove')->middleware('checkUser');
@@ -67,6 +68,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('delete-video', 'API\VideoController@destroy')->middleware('checkUser');
     Route::post('delete-sub-role', 'API\SubRoleController@destroy')->middleware('checkUser');
     Route::post('delete-category', 'API\CategoryViewController@destroy')->middleware('checkUser');
+    Route::post('delete-package', 'API\PackageController@destroy')->middleware('checkUser');
 
 
 
@@ -85,6 +87,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('change-password', 'API\HomeController@changePassword')->middleware('checkUser');
     Route::post('check_user', 'API\AuthController@check_user');
     Route::post('notification', 'API\NotificationController@notification');
+    Route::post('package-detail', 'API\UserPackageController@packageBuy');
 
     Route::get('home', 'API\HomeController@advertise')->middleware('checkUser');
     Route::get('ok', 'API\AuthController@generateReferral')->middleware('checkUser');
