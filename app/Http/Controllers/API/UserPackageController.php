@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Order;
 use App\Package;
 use App\PackageVideo;
+use App\User;
 use App\UserPackage;
 use App\Video;
 use Illuminate\Http\Request;
@@ -159,26 +160,26 @@ class UserPackageController extends Controller
         foreach ($package as $item) {
             array_push($a, ['stat' => $item->stat, 'video_count' => $item->video_count, 'category_id' => $item->category_id]);
             if ($item->expire_date > today()) {
-                $allPackage = DB::table('user_package')->where([
+                $allPackage = UserPackage::where([
                     ['user_id', '=', $item['user_id']],
                     ['stat', '=', 1],
                     ['video_count', '==', null],
-                    ['category_id', '=', null],
+                    ['category_id', '==', null],
                 ])->first();
-                $categoryPackage = DB::table('user_package')->where([
+                $categoryPackage = UserPackage::where([
                     ['user_id', '=', $item['user_id']],
                     ['stat', '=', 2],
                     ['video_count', '!=', null],
                     ['category_id', '=', $request['category_id']],
                 ])->first();
 
-                $singleVideoPackage = DB::table('user_package')->where([
+                $singleVideoPackage = UserPackage::where([
                     ['user_id', '=', $item['user_id']],
                     ['stat', '=', 4],
                     ['single_video_id', '=', $request['video_id']],
                     ['category_id', '=' , null],
                 ])->first();
-                $videoPackage = DB::table('user_package')->where([
+                $videoPackage = UserPackage::where([
                     ['user_id', '=', $item['user_id']],
                     ['stat', '=', 3],
                     ['video_count', '!=', null],
@@ -187,8 +188,9 @@ class UserPackageController extends Controller
 
 
                 if (!empty($allPackage)) {
-                        $vu = $allPackage->video_id . ',' . $request['video_id'];
-                        $allPackage->video_id = $vu;
+                    $vu = isset($allPackage->video_id)?$allPackage->video_id .','. $request['video_id']: $request['video_id'];
+
+                    $allPackage->video_id = $vu;
                         $allPackage->save();
 
                         $packageVideo = new PackageVideo();
@@ -206,7 +208,7 @@ class UserPackageController extends Controller
                         $categoryPackage->save();
                     }
                     else {
-                        $vu = $categoryPackage->video_id . ',' . $request['video_id'];
+                        $vu = isset($categoryPackage->video_id)?$categoryPackage->video_id .','. $request['video_id']: $request['video_id'];
                         $categoryPackage->video_id = $vu;
                         $categoryPackage->video_count = $item->video_count - 1;
                         $categoryPackage->save();
@@ -234,16 +236,15 @@ class UserPackageController extends Controller
                         $videoPackage->save();
                     }
                     else {
-                        $vu = $videoPackage->video_id . ',' . $request['video_id'];
+                        $vu =  isset($videoPackage->video_id)?$videoPackage->video_id .','. $request['video_id']: $request['video_id'];
 
                         $videoPackage->video_id = $vu;
                         $videoPackage->video_count = $item->video_count - 1;
                         $videoPackage->save();
 
                         $packageVideo = new PackageVideo();
-                        $packageVideo->user_package_id = $categoryPackage['id'];
-                        $packageVideo->package_id = $categoryPackage['package_id'];
-                        $packageVideo->category_id = $categoryPackage['category_id'];
+                        $packageVideo->user_package_id = $videoPackage['id'];
+                        $packageVideo->package_id = $videoPackage['package_id'];
                         $packageVideo->video_id = $request['video_id'];
                         $packageVideo->status = 1;
                         $packageVideo->save();

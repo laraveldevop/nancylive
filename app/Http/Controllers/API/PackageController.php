@@ -22,38 +22,21 @@ class PackageController extends Controller
 
     }
 
-//    public function packageVideo(Request $request)
-//    {
-//        $request->validate([
-//            'package_id' => 'required',
-//            'video_id' => 'required',
-//            'category_id' => 'required',
-//            'user_id' => 'required',
-//        ]);
-//        $package = $request->input('package_id');
-//        $category = $request->input('category_id');
-//        $video = $request->input('video_id');
-//        $user = $request->input('user_id');
-//
-//
-//        $v = UserPackage::where([['package_id', $package],['']])->first();
-//
-//        $packageVideo = new PackageVideo();
-//        $packageVideo->user_package_id = $userPackage->id;
-//        $packageVideo->package_id = $userPackage->package_id;
-//        $packageVideo->category_id = $userPackage->category_id;
-//        $packageVideo->video_id = $value->id;
-//        $packageVideo->save();
-//
-//        PackageVideo::where(function ($query) use ($cat, $video) {
-//            $query->where('category_id', $cat)
-//                ->where('video_id', $video);
-//        })->update(['status' => 2]);
-//
-//        $pac = PackageVideo::where([['category_id', $cat], ['video_id', $video]])->get();
-//        return response()->json(['status' => true, 'message' => 'Update Data', 'data' => $pac]);
-//
-//    }
+    public function packageVideo(Request $request)
+    {
+        $request->validate([
+            'package_id' => 'required',
+            'user_id' => 'required',
+        ]);
+        $package = $request->input('package_id');
+        $user = $request->input('user_id');
+
+        $v = UserPackage::where([['package_id', $package],['user_id',$user]])->first();
+        $v->video_count = $v['video_count'] - 1;
+        $v->save();
+        return response()->json(['status' => true, 'message' => 'Update Data Successfully', 'data' => $v]);
+
+    }
 
     public function store(Request $request)
     {
