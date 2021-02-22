@@ -33,7 +33,7 @@ class ProductController extends Controller
                 $category = Category::where('cat_id',$item->cat_id)->first();
                 $brand = Brand::where('id',$item->brand)->first();
                 $item['category_name'] = $category['cat_name'];
-                $item['brand_name'] = $brand['brand_name'];
+                $item['brand_name'] = isset($brand['brand_name'])?$brand['brand_name']:null;
 
                 $qu = DB::table('product_image')
                     ->select(array('id', 'image'))
