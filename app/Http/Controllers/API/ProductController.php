@@ -32,7 +32,7 @@ class ProductController extends Controller
             foreach ($products as $item) {
                 $category = Category::where('cat_id',$item->cat_id)->first();
                 $brand = Brand::where('id',$item->brand)->first();
-                $item['category_name'] = $category['cat_name'];
+                $item['category_name'] = isset($category['cat_name'])?$category['cat_name']:null;
                 $item['brand_name'] = isset($brand['brand_name'])?$brand['brand_name']:null;
 
                 $qu = DB::table('product_image')
@@ -48,8 +48,9 @@ class ProductController extends Controller
             foreach ($products as $item) {
                 $category = Category::where('cat_id',$item->cat_id)->first();
                 $brand = Brand::where('id',$item->brand)->first();
-                $item['category_name'] = $category['cat_name'];
-                $item['brand_name'] = $brand['brand_name'];
+                $item['category_name'] = isset($category['cat_name'])?$category['cat_name']:null;
+                $item['brand_name'] = isset($brand['brand_name'])?$brand['brand_name']:null;
+
                 $qu = DB::table('product_image')
                     ->select(array('id', 'image'))
                     ->where('product_id', $item->id)
@@ -62,8 +63,9 @@ class ProductController extends Controller
             foreach ($products as $item) {
                 $category = Category::where('cat_id',$item->cat_id)->first();
                 $brand = Brand::where('id',$item->brand)->first();
-                $item['category_name'] = $category['cat_name'];
-                $item['brand_name'] = $brand['brand_name'];
+                $item['category_name'] = isset($category['cat_name'])?$category['cat_name']:null;
+                $item['brand_name'] = isset($brand['brand_name'])?$brand['brand_name']:null;
+
                 $qu = DB::table('product_image')
                     ->select(array('id', 'image'))
                     ->where('product_id', $item->id)
