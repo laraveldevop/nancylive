@@ -37,39 +37,45 @@ class AuthController extends Controller
                 'status'=> false,
                 'message'=>$validator->errors()], 422);
         }
+        $check = User::where('referral_code',$request->input('referral_code'))->first();
+        if (!empty($check)) {
 
+            $user = new User();
 
-        $user = new User();
-
-        $user->name = $request['name'];
-        $user->email = $request['email'];
-        $user->city = $request['city'];
-        $user->address = $request['address'];
-        $user->mobile = $request['mobile'];
-        $user->business_name = $request['business_name'];
-        $user->device_id = $request['device_id'];
-        $user->password = Hash::make($request['password']);
-        $user->referral_code= str_random(6);
-        $user->email_verified_at = now();
-        if ($request->file('image')) {
-            $path = Storage::disk('public')->put('user', $request->file('image'));
-            $user->image = $path;
+            $user->name = $request['name'];
+            $user->email = $request['email'];
+            $user->city = $request['city'];
+            $user->address = $request['address'];
+            $user->mobile = $request['mobile'];
+            $user->business_name = $request['business_name'];
+            $user->device_id = $request['device_id'];
+            $user->password = Hash::make($request['password']);
+            $user->referral_code = str_random(6);
+            $user->email_verified_at = now();
+            if ($request->file('image')) {
+                $path = Storage::disk('public')->put('user', $request->file('image'));
+                $user->image = $path;
+            }
+            $user->save();
+            if ($request->input('referral_code') != null) {
+                $referral = new Referral();
+                $referral->stat = 1;
+                $referral->status = 'unpaid';
+                $referral->user_id = $user->id;
+                $referral->referral_code = $request->input('referral_code');
+                $referral->save();
+            }
+            $token = $user->createToken('MyApp')->accessToken;
+            DB::table('oauth_access_tokens')
+                ->where('user_id', $user->id)
+                ->update(['remember_token' => $token]);
+            return response()->json(['status' => true,
+                'message' => 'User Register SuccessFull', 'data' => $user, 'token' => $token], 200);
         }
-        $user->save();
-        if ($request->input('referral_code') != null){
-            $referral = new Referral();
-            $referral->stat = 1;
-            $referral->status = 'unpaid';
-            $referral->user_id = $user->id;
-            $referral->referral_code = $request->input('referral_code');
-            $referral->save();
+        else{
+            return response()->json(['status' => false,
+                'message' => 'referral Token not valid'], 422);
         }
-        $token = $user->createToken('MyApp')->accessToken;
-        DB::table('oauth_access_tokens')
-            ->where('user_id', $user->id)
-            ->update(['remember_token'=>$token]);
-        return response()->json(['status'=> true,
-           'message'=>'User Register SuccessFull','data'=>$user, 'token'=>$token],200);
 
     }
 
