@@ -22,6 +22,7 @@ class PackageController extends Controller
 
     }
 
+    // for in user package update video count
     public function packageVideo(Request $request)
     {
         $request->validate([
@@ -87,6 +88,7 @@ class PackageController extends Controller
                     $package->image = $path;
                 }
                 $package->stat = 3;
+                $package->status = $request->input('status');
                 $package->save();
             } else {
                 $request->validate([
@@ -124,6 +126,7 @@ class PackageController extends Controller
                     $package->image = $path;
                 }
                 $package->stat = 3;
+                $package->status = $request->input('status');
                 $package->save();
             }
         } elseif ($pack == 2) {
@@ -166,6 +169,7 @@ class PackageController extends Controller
                     $package->image = $path;
                 }
                 $package->stat = 2;
+                $package->status = $request->input('status');
                 $package->save();
 
             } else {
@@ -209,6 +213,7 @@ class PackageController extends Controller
                     $package->image = $path;
                 }
                 $package->stat = 2;
+                $package->status = $request->input('status');
                 $package->save();
             }
         } elseif ($pack == 1) {
@@ -248,6 +253,7 @@ class PackageController extends Controller
                     $package->image = $path;
                 }
                 $package->stat = 1;
+                $package->status = $request->input('status');
                 $package->save();
 
             } else {
@@ -286,6 +292,7 @@ class PackageController extends Controller
                     $allPackage->image = $path;
                 }
                 $allPackage->stat = 1;
+                $allPackage->status = $request->input('status');
                 $allPackage->save();
 
             }

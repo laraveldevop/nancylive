@@ -44,6 +44,8 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('add-video', 'API\VideoController@store')->middleware('checkUser');
     Route::post('add-sub-role', 'API\SubRoleController@store')->middleware('checkUser');
     Route::post('add-package', 'API\PackageController@store')->middleware('checkUser');
+    Route::post('add-ticket', 'API\TicketController@store')->middleware('checkUser');
+    Route::post('add-booking', 'API\BookController@store')->middleware('checkUser');
     Route::post('video-updates', 'API\AllVideosController@store')->middleware('checkUser');
     Route::post('package-video', 'API\PackageController@packageVideo')->middleware('checkUser');
 
@@ -101,6 +103,13 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('user', 'API\UserController@index')->middleware('checkUser');
     Route::post('user-list', 'API\UserController@userList')->middleware('checkUser');
     Route::post('role', 'API\RoleController@roleUpdate')->middleware('checkUser');
+
+    //booking
+    Route::post('booked-user-list', 'API\BookController@BookedUserList')->middleware('checkUser');
+    Route::get('show-list', 'API\BookController@showList')->middleware('checkUser');
+    Route::post('book-now', 'API\BookController@BookNow')->middleware('checkUser');
+    Route::post('booked-show', 'API\BookController@statusShow')->middleware('checkUser');
+
 
     // private routes
     Route::middleware('auth:api')->group(function () {
