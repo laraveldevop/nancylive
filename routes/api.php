@@ -104,11 +104,10 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('user-list', 'API\UserController@userList')->middleware('checkUser');
     Route::post('role', 'API\RoleController@roleUpdate')->middleware('checkUser');
 
-    //booking
-    Route::post('booked-user-list', 'API\BookController@BookedUserList')->middleware('checkUser');
-    Route::get('show-list', 'API\BookController@showList')->middleware('checkUser');
-    Route::post('book-now', 'API\BookController@BookNow')->middleware('checkUser');
-    Route::post('booked-show', 'API\BookController@statusShow')->middleware('checkUser');
+    //booking listing
+    Route::post('show-list', 'API\BookController@showList')->middleware('checkUser');
+    Route::post('booked-ticket-user-list', 'API\BookController@BookNow')->middleware('checkUser');
+
 
 
     // private routes

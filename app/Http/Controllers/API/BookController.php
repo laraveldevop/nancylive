@@ -31,6 +31,7 @@ class BookController extends Controller
             $book->user_id = $request->input('user_id');
             $book->price = $request->input('price');
             $book->status = $request->input('status');
+            $book->transaction_id = $request->input('transaction_id');
             $book->save();
             return response()->json(['status' => true, 'message' => 'Add Successfully', 'data' => $book],200);
 
@@ -40,41 +41,45 @@ class BookController extends Controller
             $book->user_id = $request->input('user_id');
             $book->price = $request->input('price');
             $book->status = $request->input('status');
+            $book->transaction_id = $request->input('transaction_id');
             $book->save();
             return response()->json(['status' => true, 'message' => 'Update Successfully', 'data' => $book],200);
 
         }
     }
 
-    public function BookedUserList(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'booked' => 'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => $validator->errors()], 422);
-        }
-        $book = $request->input('booked');
-        if ($book == 1) {
-            $user = Book::select(DB::raw('book.id as booked_id,users.id as user_id,book.price,book.ticket_id,users.name,users.mobile,users.business_name,users.city'))->leftjoin('users', 'users.id', 'book.user_id')->get();
-            return response()->json(['status' => true, 'message' => 'Data', 'data' => $user],200);
 
+
+    public function showList(Request $request)
+    {
+        $user_id = $request->input('user_id');
+        $booked = $request->input('booked');
+       if ($user_id != null){
+            $showlist = Book::select(DB::raw('ticket.*'))->leftjoin('ticket','book.ticket_id','ticket.id')->where('user_id', $user_id)->first();
+            if (!empty($showlist)){
+                $showlist['booked'] = 1;
+            }
+            else{
+                $showlist['booked'] = 0;
+
+            }
+            return response()->json(['status' => true, 'message' => 'Available Data', 'data' => $showlist], 200);
+        }
+        elseif ($user_id == null && $booked != null){
+
+            if ($booked == 1) {
+                $showlist = Book::select(DB::raw('ticket.*'))->leftjoin('ticket','book.ticket_id','ticket.id')->get();
+                return response()->json(['status' => true, 'message' => 'Available Booked Show', 'data' => $showlist], 200);
+            }else{
+                $showlist = Book::select(DB::raw('ticket.*'))->join('ticket','ticket.id','!=','book.ticket_id')->get();
+                return response()->json(['status' => true, 'message' => 'Not Booked Show', 'data' => $showlist], 200);
+            }
         }
         else{
-            $user = Book::select(DB::raw('book.id as booked_id,users.id as user_id,book.price,book.ticket_id,users.name,users.mobile,users.business_name,users.city'))->leftjoin('users', 'users.id', 'book.user_id')->get();
-            return response()->json(['status' => true, 'message' => 'Data', 'data' => $user],200);
+            $showlist = Ticket::all();
+            return response()->json(['status' => true, 'message' => 'Get All Show', 'data' => $showlist],200);
 
         }
-
-
-    }
-
-    public function showList()
-    {
-        $showlist = Ticket::all();
-        return response()->json(['status' => true, 'message' => 'Data', 'data' => $showlist],200);
 
     }
 
@@ -94,19 +99,5 @@ class BookController extends Controller
 
     }
 
-    public function statusShow(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'status' => 'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => $validator->errors()], 422);
-        }
-        $status = $request->input('status');
-            $show = Book::where('status',$status)->get();
-        return response()->json(['status' => true, 'message' => 'Data', 'data' => $show],200);
 
-    }
 }
