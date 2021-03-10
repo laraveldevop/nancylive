@@ -19,37 +19,65 @@ class AuthController extends Controller
 {
 
     public function userRegister(Request $request) {
-//        $validator = Validator::make($request->all(),[
-//            'name' => ['required', 'string', 'max:255'],
-//            'business_name' => ['required', 'string', 'max:255'],
-//            'city' => ['required', 'string', 'max:255'],
-//            'address' => ['required', 'string'],
-//            'mobile' => ['required','numeric','min:10',  'unique:users'],
-//            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-//            'password' => ['required', 'string', 'confirmed'],
-//            'image' => ['required','mimes:jpeg,jpg,png,gif'],
-//            'device_id'=>['required','string']
-//        ]);
-//
-//        if ($validator->fails())
-//        {
-//            return response()->json([
-//                'status'=> false,
-//                'message'=>$validator->errors()], 422);
-//        }
+        $validator = Validator::make($request->all(),[
+            'name' => ['required', 'string', 'max:255'],
+            'business_name' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string'],
+            'mobile' => ['required','numeric','min:10',  'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'confirmed'],
+            'image' => ['required','mimes:jpeg,jpg,png,gif'],
+            'device_id'=>['required','string']
+        ]);
 
-        $check = User::where('referral_code',$request->input('referral_code'))->first();
-        if (!empty($check)){
-            echo $check;
-            echo 'workig ';die();
+        if ($validator->fails())
+        {
+            return response()->json([
+                'status'=> false,
+                'message'=>$validator->errors()], 422);
+        }
+        $ref = $request->input('referral_code');
+        if ($ref != null) {
+            $check = User::where('referral_code', $request->input('referral_code'))->first();
+
+            if (!empty($check)) {
+
+                $user = new User();
+
+                $user->name = $request['name'];
+                $user->email = $request['email'];
+                $user->city = $request['city'];
+                $user->address = $request['address'];
+                $user->mobile = $request['mobile'];
+                $user->business_name = $request['business_name'];
+                $user->device_id = $request['device_id'];
+                $user->password = Hash::make($request['password']);
+                $user->referral_code = str_random(6);
+                $user->email_verified_at = now();
+                if ($request->file('image')) {
+                    $path = Storage::disk('public')->put('user', $request->file('image'));
+                    $user->image = $path;
+                }
+                $user->save();
+                    $referral = new Referral();
+                    $referral->stat = 1;
+                    $referral->status = 'unpaid';
+                    $referral->user_id = $user->id;
+                    $referral->referral_code = $request->input('referral_code');
+                    $referral->save();
+                $token = $user->createToken('MyApp')->accessToken;
+                DB::table('oauth_access_tokens')
+                    ->where('user_id', $user->id)
+                    ->update(['remember_token' => $token]);
+                return response()->json(['status' => true,
+                    'message' => 'User Register SuccessFull', 'data' => $user, 'token' => $token], 200);
+            } else {
+                return response()->json(['status' => false,
+                    'message' => 'referral Token not valid'], 422);
+            }
         }
         else{
-            echo 'notworking';
-            die();
-        }
-        die();
-        if (!empty($check)) {
-
             $user = new User();
 
             $user->name = $request['name'];
@@ -67,24 +95,12 @@ class AuthController extends Controller
                 $user->image = $path;
             }
             $user->save();
-            if ($request->input('referral_code') != null) {
-                $referral = new Referral();
-                $referral->stat = 1;
-                $referral->status = 'unpaid';
-                $referral->user_id = $user->id;
-                $referral->referral_code = $request->input('referral_code');
-                $referral->save();
-            }
             $token = $user->createToken('MyApp')->accessToken;
             DB::table('oauth_access_tokens')
                 ->where('user_id', $user->id)
                 ->update(['remember_token' => $token]);
             return response()->json(['status' => true,
                 'message' => 'User Register SuccessFull', 'data' => $user, 'token' => $token], 200);
-        }
-        else{
-            return response()->json(['status' => false,
-                'message' => 'referral Token not valid'], 422);
         }
 
     }
