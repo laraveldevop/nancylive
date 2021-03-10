@@ -106,7 +106,7 @@ class BookController extends Controller
                 'message' => $validator->errors()], 422);
         }
         $ticket_id = $request->input('ticket_id');
-        $bookNow = Book::where('ticket_id', $ticket_id)->get();
+        $bookNow = Book::select(DB::raw('book.*,users.name as user_name,users.mobile,users.image'))->where('ticket_id', $ticket_id)->leftjoin('users','book.user_id','users.id')->get();
         return response()->json(['status' => true, 'message' => 'Data', 'data' => $bookNow], 200);
 
     }
