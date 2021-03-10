@@ -52,14 +52,24 @@ class BookController extends Controller
 
     public function showList(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => $validator->errors()], 422);
+        }
         $user_id = $request->input('user_id');
         $booked = $request->input('booked');
        if ($user_id != null && $booked == null){
-            $showlist = Book::select(DB::raw('ticket.*'))->leftjoin('ticket','book.ticket_id','ticket.id')->where('user_id', $user_id)->first();
+//            $showlist = Book::select(DB::raw('ticket.*'))->leftjoin('ticket','book.ticket_id','ticket.id')->where('user_id', $user_id)->first();
+            $showlist = Ticket::select(DB::raw('ticket.*'))->leftjoin('book','book.ticket_id','ticket.id')->where('book.user_id', $user_id)->first();
             if (!empty($showlist)){
                 $showlist['booked'] = 1;
             }
             else{
+                $showlist = Ticket::select(DB::raw('ticket.*'))->leftjoin('book','book.ticket_id','!=','ticket.id')->first();
                 $showlist['booked'] = 0;
 
             }
