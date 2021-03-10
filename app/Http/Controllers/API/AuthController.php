@@ -19,25 +19,35 @@ class AuthController extends Controller
 {
 
     public function userRegister(Request $request) {
-        $validator = Validator::make($request->all(),[
-            'name' => ['required', 'string', 'max:255'],
-            'business_name' => ['required', 'string', 'max:255'],
-            'city' => ['required', 'string', 'max:255'],
-            'address' => ['required', 'string'],
-            'mobile' => ['required','numeric','min:10',  'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'confirmed'],
-            'image' => ['required','mimes:jpeg,jpg,png,gif'],
-            'device_id'=>['required','string']
-        ]);
+//        $validator = Validator::make($request->all(),[
+//            'name' => ['required', 'string', 'max:255'],
+//            'business_name' => ['required', 'string', 'max:255'],
+//            'city' => ['required', 'string', 'max:255'],
+//            'address' => ['required', 'string'],
+//            'mobile' => ['required','numeric','min:10',  'unique:users'],
+//            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+//            'password' => ['required', 'string', 'confirmed'],
+//            'image' => ['required','mimes:jpeg,jpg,png,gif'],
+//            'device_id'=>['required','string']
+//        ]);
+//
+//        if ($validator->fails())
+//        {
+//            return response()->json([
+//                'status'=> false,
+//                'message'=>$validator->errors()], 422);
+//        }
 
-        if ($validator->fails())
-        {
-            return response()->json([
-                'status'=> false,
-                'message'=>$validator->errors()], 422);
-        }
         $check = User::where('referral_code',$request->input('referral_code'))->first();
+        if (!empty($check)){
+            echo $check;
+            echo 'workig ';die();
+        }
+        else{
+            echo 'notworking';
+            die();
+        }
+        die();
         if (!empty($check)) {
 
             $user = new User();
