@@ -68,10 +68,10 @@ class BookController extends Controller
         elseif ($user_id == null && $booked != null){
 
             if ($booked == 1) {
-                $showlist = Book::select(DB::raw('ticket.*'))->leftjoin('ticket','book.ticket_id','ticket.id')->get();
+                $showlist = Book::select(DB::raw('ticket.*'))->leftjoin('ticket','book.ticket_id','ticket.id')->where('user_id', $user_id)->get();
                 return response()->json(['status' => true, 'message' => 'Available Booked Show', 'data' => $showlist], 200);
             }else{
-                $showlist = Book::select(DB::raw('ticket.*'))->join('ticket','ticket.id','!=','book.ticket_id')->get();
+                $showlist = Book::select(DB::raw('ticket.*'))->join('ticket','ticket.id','!=','book.ticket_id')->where('user_id', $user_id)->get();
                 return response()->json(['status' => true, 'message' => 'Not Booked Show', 'data' => $showlist], 200);
             }
         }
