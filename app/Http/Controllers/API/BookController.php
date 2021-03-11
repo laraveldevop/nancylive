@@ -62,37 +62,70 @@ class BookController extends Controller
                 'message' => $validator->errors()], 422);
         }
         $user_id = $request->input('user_id');
+        $roll = $request->input('roll');
         $booked = $request->input('booked');
-        if ($user_id != null && $booked == null) {
-            $showlist = Ticket::all();
+        $date = date('Y-m-d');
+        if ($roll == 1){
+            $showlist = Ticket::where('date','>',$date)->get();
             $book = Book::all();
-
-
-            foreach ($showlist as $value) {
-                foreach ($book as $item) {
-                    if ($value->id == $item->ticket_id && $user_id == $item->user_id) {
-                        $value['booked'] = 1;
-                        break;
-                    } else {
-                        $value['booked'] = 0;
+            if ($user_id != null && $booked == null) {
+                foreach ($showlist as $value) {
+                    foreach ($book as $item) {
+                        if ($value->id == $item->ticket_id && $user_id == $item->user_id) {
+                            $value['booked'] = 1;
+                            break;
+                        } else {
+                            $value['booked'] = 0;
+                        }
                     }
                 }
-            }
 
-            return response()->json(['status' => true, 'message' => 'Available Data', 'data' => $showlist], 200);
-        } elseif ($user_id != null && $booked != null) {
+                return response()->json(['status' => true, 'message' => 'Available Data', 'data' => $showlist], 200);
+            } elseif ($user_id != null && $booked != null) {
 
-            if ($booked == 1) {
-                $showlist = Book::select(DB::raw('ticket.*'))->leftjoin('ticket', 'book.ticket_id', 'ticket.id')->where('user_id', $user_id)->get();
-                return response()->json(['status' => true, 'message' => 'Available Booked Show', 'data' => $showlist], 200);
+                if ($booked == 1) {
+                    $showlist = Book::select(DB::raw('ticket.*'))->leftjoin('ticket', 'book.ticket_id', 'ticket.id')->where('user_id', $user_id)->get();
+                    return response()->json(['status' => true, 'message' => 'Available Booked Show', 'data' => $showlist], 200);
+                } else {
+                    $showlist = Book::select(DB::raw('ticket.*'))->join('ticket', 'ticket.id', '!=', 'book.ticket_id')->get();
+                    return response()->json(['status' => true, 'message' => 'Not Booked Show', 'data' => $showlist], 200);
+                }
             } else {
-                $showlist = Book::select(DB::raw('ticket.*'))->join('ticket', 'ticket.id', '!=', 'book.ticket_id')->get();
-                return response()->json(['status' => true, 'message' => 'Not Booked Show', 'data' => $showlist], 200);
-            }
-        } else {
-            $showlist = Ticket::all();
-            return response()->json(['status' => true, 'message' => 'Get All Show', 'data' => $showlist], 200);
+                $showlist = Ticket::all();
+                return response()->json(['status' => true, 'message' => 'Get All Show', 'data' => $showlist], 200);
 
+            }
+        }
+        else {
+            $showlist = Ticket::all();
+            $book = Book::all();
+            if ($user_id != null && $booked == null) {
+                foreach ($showlist as $value) {
+                    foreach ($book as $item) {
+                        if ($value->id == $item->ticket_id && $user_id == $item->user_id) {
+                            $value['booked'] = 1;
+                            break;
+                        } else {
+                            $value['booked'] = 0;
+                        }
+                    }
+                }
+
+                return response()->json(['status' => true, 'message' => 'Available Data', 'data' => $showlist], 200);
+            } elseif ($user_id != null && $booked != null) {
+
+                if ($booked == 1) {
+                    $showlist = Book::select(DB::raw('ticket.*'))->leftjoin('ticket', 'book.ticket_id', 'ticket.id')->where('user_id', $user_id)->get();
+                    return response()->json(['status' => true, 'message' => 'Available Booked Show', 'data' => $showlist], 200);
+                } else {
+                    $showlist = Book::select(DB::raw('ticket.*'))->join('ticket', 'ticket.id', '!=', 'book.ticket_id')->get();
+                    return response()->json(['status' => true, 'message' => 'Not Booked Show', 'data' => $showlist], 200);
+                }
+            } else {
+                $showlist = Ticket::all();
+                return response()->json(['status' => true, 'message' => 'Get All Show', 'data' => $showlist], 200);
+
+            }
         }
 
     }
