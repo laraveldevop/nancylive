@@ -18,6 +18,7 @@ class BookController extends Controller
             'user_id' => 'required',
             'price' => 'required',
             'status' => 'required',
+            'type' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -33,6 +34,7 @@ class BookController extends Controller
             $book->status = $request->input('status');
             $book->transaction_id = $request->input('transaction_id');
             $book->type = $request->input('type');
+            $book->created_at = $request->input('created_at');
             $book->save();
             return response()->json(['status' => true, 'message' => 'Add Successfully', 'data' => $book], 200);
 
@@ -44,6 +46,7 @@ class BookController extends Controller
             $book->status = $request->input('status');
             $book->transaction_id = $request->input('transaction_id');
             $book->type = $request->input('type');
+            $book->updated_at = $request->input('created_at');
             $book->save();
             return response()->json(['status' => true, 'message' => 'Update Successfully', 'data' => $book], 200);
 
