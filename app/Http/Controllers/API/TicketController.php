@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Product;
 use App\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
@@ -81,6 +83,20 @@ class TicketController extends Controller
             return response()->json(['status' => true, 'message' => 'Update Successfully', 'data' => $ticket],200);
 
 
+        }
+    }
+
+    public function destroy(Request $request)
+    {
+        $id = $request->input('id');
+        $product =  Ticket::where('id',$id)->first();
+        if (isset($product)) {
+            DB::table('book')->where('ticket_id', $id)->delete();
+            Ticket::destroy($id);
+            return response()->json(['status' => true, 'message' => 'Delete successfully.'], 200);
+        }
+        else {
+            return response()->json(['status' => false, 'message' => 'Data Not Found.'], 422);
         }
     }
 }

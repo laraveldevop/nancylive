@@ -71,6 +71,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('delete-sub-role', 'API\SubRoleController@destroy')->middleware('checkUser');
     Route::post('delete-category', 'API\CategoryViewController@destroy')->middleware('checkUser');
     Route::post('delete-package', 'API\PackageController@destroy')->middleware('checkUser');
+    Route::post('delete-ticket', 'API\TicketController@destroy')->middleware('checkUser');
 
 
 
