@@ -32,6 +32,7 @@ class BookController extends Controller
             $book->price = $request->input('price');
             $book->status = $request->input('status');
             $book->transaction_id = $request->input('transaction_id');
+            $book->type = $request->input('type');
             $book->save();
             return response()->json(['status' => true, 'message' => 'Add Successfully', 'data' => $book], 200);
 
@@ -42,6 +43,7 @@ class BookController extends Controller
             $book->price = $request->input('price');
             $book->status = $request->input('status');
             $book->transaction_id = $request->input('transaction_id');
+            $book->type = $request->input('type');
             $book->save();
             return response()->json(['status' => true, 'message' => 'Update Successfully', 'data' => $book], 200);
 

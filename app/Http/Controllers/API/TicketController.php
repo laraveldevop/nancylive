@@ -33,6 +33,10 @@ class TicketController extends Controller
             $ticket->date = $request->input('date');
             $ticket->time = $request->input('time');
             $ticket->price = $request->input('price');
+            $ticket->type = $request->input('type');
+            $ticket->silver_price = $request->input('silver_price');
+            $ticket->golden_price = $request->input('golden_price');
+            $ticket->platinum_price = $request->input('platinum_price');
             $image_path = Storage::disk('public')->put('ticket', $request->file('image'));
             $thumbnailpath = public_path('storage/' . $image_path);
             $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
@@ -51,6 +55,10 @@ class TicketController extends Controller
             $ticket->date = $request->input('date');
             $ticket->time = $request->input('time');
             $ticket->price = $request->input('price');
+            $ticket->type = $request->input('type');
+            $ticket->silver_price = $request->input('silver_price');
+            $ticket->golden_price = $request->input('golden_price');
+            $ticket->platinum_price = $request->input('platinum_price');
             if (!empty($request->file('image'))) {
                 $request->validate([
                     'image' => 'mimes:jpg,jpeg,png',
