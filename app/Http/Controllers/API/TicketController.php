@@ -18,8 +18,10 @@ class TicketController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'detail' => 'required',
-            'date' => 'required',
-            'time' => 'required',
+            'from_date' => 'required',
+            'to_date' => 'required',
+            'from_time' => 'required',
+            'to_time' => 'required',
             'price' => 'required',
         ]);
         if ($validator->fails()) {
@@ -32,8 +34,10 @@ class TicketController extends Controller
             $ticket = new Ticket();
             $ticket->name = $request->input('title');
             $ticket->detail = $request->input('detail');
-            $ticket->date = $request->input('date');
-            $ticket->time = $request->input('time');
+            $ticket->date = $request->input('from_date');
+            $ticket->time = $request->input('from_time');
+            $ticket->time = $request->input('to_date');
+            $ticket->time = $request->input('to_time');
             $ticket->price = $request->input('price');
             $ticket->type = $request->input('type');
             $ticket->silver_price = $request->input('silver_price');
@@ -54,8 +58,10 @@ class TicketController extends Controller
             $ticket = Ticket::find($id);
             $ticket->name = $request->input('title');
             $ticket->detail = $request->input('detail');
-            $ticket->date = $request->input('date');
-            $ticket->time = $request->input('time');
+            $ticket->date = $request->input('from_date');
+            $ticket->time = $request->input('from_time');
+            $ticket->time = $request->input('to_date');
+            $ticket->time = $request->input('to_time');
             $ticket->price = $request->input('price');
             $ticket->type = $request->input('type');
             $ticket->silver_price = $request->input('silver_price');
