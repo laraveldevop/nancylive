@@ -55,7 +55,7 @@ class PackageController extends Controller
                 $request->validate([
                     'name' => 'required',
                     'price' => 'required',
-                    'video_count' => 'required',
+                    'video_id' => 'required',
                     'detail' => 'required',
                     'custom_method' => 'required',
                     'time_duration' => 'required',
@@ -72,7 +72,7 @@ class PackageController extends Controller
                 $package->name = $request->input('name');
                 $package->price = $request->input('price');
                 $package->module_type = $module->id;
-                $package->content_count = $request->input('video_count');
+                $package->video_id = $request->input('video_id');
                 $package->detail = $request->input('detail');
                 $package->time_method = $method;
                 $package->count_duration = $request->input('time_duration');
@@ -104,7 +104,7 @@ class PackageController extends Controller
                 $package->name = $request->input('name');
                 $package->price = $request->input('price');
                 $package->module_type = $module->id;
-                $package->content_count = $request->input('video_count');
+                $package->video_id = $request->input('video_id');
                 $package->detail = $request->input('detail');
                 $package->time_method = $method;
                 $package->count_duration = $request->input('time_duration');
