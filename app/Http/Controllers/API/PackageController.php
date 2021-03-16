@@ -46,10 +46,10 @@ class PackageController extends Controller
         ]);
         $pack = $request->input('package');
         $id = $request->input('id');
-        if ($pack == 3) {
-            $module = DB::table('module')
-                ->where('module_name', 'video')
-                ->first();
+        $module = DB::table('module')
+            ->where('module_name', 'video')
+            ->first();
+        if ($pack == 4){
             if ($id == null) {
 
                 $request->validate([
@@ -59,7 +59,8 @@ class PackageController extends Controller
                     'detail' => 'required',
                     'custom_method' => 'required',
                     'time_duration' => 'required',
-                    'image' => 'mimes:jpeg,jpg,png'
+                    'image' => 'mimes:jpeg,jpg,png',
+
                 ]);
                 if ($request->file('image') == null) {
                     $request->validate([
@@ -87,14 +88,15 @@ class PackageController extends Controller
                     $path = Storage::disk('public')->put('package', $request->file('image'));
                     $package->image = $path;
                 }
-                $package->stat = 3;
+                $package->stat = 4;
                 $package->status = $request->input('status');
+                $package->video_duration = $request->input('video_duration');
                 $package->save();
             } else {
                 $request->validate([
                     'name' => 'required',
                     'price' => 'required',
-                    'video_count' => 'required',
+                    'video_id' => 'required',
                     'detail' => 'required',
                     'custom_method' => 'required',
                     'time_duration' => 'required',
@@ -125,8 +127,93 @@ class PackageController extends Controller
                     //Update Image
                     $package->image = $path;
                 }
+                $package->stat = 4;
+                $package->status = $request->input('status');
+                $package->video_duration = $request->input('video_duration');
+                $package->save();
+            }
+        }
+        elseif ($pack == 3) {
+
+            if ($id == null) {
+
+                $request->validate([
+                    'name' => 'required',
+                    'price' => 'required',
+                    'video_count' => 'required',
+                    'detail' => 'required',
+                    'custom_method' => 'required',
+                    'time_duration' => 'required',
+                    'image' => 'mimes:jpeg,jpg,png'
+                ]);
+                if ($request->file('image') == null) {
+                    $request->validate([
+                        'image' => 'required'
+                    ]);
+                }
+                $method = $request->input("custom_method");
+
+                $package = new Package();
+                $package->name = $request->input('name');
+                $package->price = $request->input('price');
+                $package->module_type = $module->id;
+                $package->video_count = $request->input('video_count');
+                $package->detail = $request->input('detail');
+                $package->time_method = $method;
+                $package->count_duration = $request->input('time_duration');
+                if ($method == 'day') {
+                    $package->day = $request->input('time_duration');
+                } elseif ($method == 'month') {
+                    $package->month = $request->input('time_duration');
+                } else {
+                    $package->year = $request->input('time_duration');
+                }
+                if (!empty($request->file('image'))) {
+                    $path = Storage::disk('public')->put('package', $request->file('image'));
+                    $package->image = $path;
+                }
                 $package->stat = 3;
                 $package->status = $request->input('status');
+                $package->video_duration = $request->input('video_duration');
+                $package->save();
+            } else {
+                $request->validate([
+                    'name' => 'required',
+                    'price' => 'required',
+                    'video_count' => 'required',
+                    'detail' => 'required',
+                    'custom_method' => 'required',
+                    'time_duration' => 'required',
+                ]);
+                $method = $request->input("custom_method");
+                $package = Package::where([['module_type', '!=', null], ['id', '=', $id]])->first();
+                $package->name = $request->input('name');
+                $package->price = $request->input('price');
+                $package->module_type = $module->id;
+                $package->video_count = $request->input('video_count');
+                $package->detail = $request->input('detail');
+                $package->time_method = $method;
+                $package->count_duration = $request->input('time_duration');
+                if ($method == 'day') {
+                    $package->day = $request->input('time_duration');
+                } elseif ($method == 'month') {
+                    $package->month = $request->input('time_duration');
+                } else {
+                    $package->year = $request->input('time_duration');
+                }
+
+                if (!empty($request->file('image'))) {
+                    if (!empty($package->image)) {
+                        $image_path = public_path() . '/storage/' . $package->image;
+                        unlink($image_path);
+                    }
+                    $path = Storage::disk('public')->put('package', $request->file('image'));
+                    //Update Image
+                    $package->image = $path;
+                }
+                $package->stat = 3;
+                $package->status = $request->input('status');
+                $package->video_duration = $request->input('video_duration');
                 $package->save();
             }
         } elseif ($pack == 2) {
@@ -136,7 +223,6 @@ class PackageController extends Controller
                     'price' => 'required',
                     'detail' => 'required',
                     'custom_method' => 'required',
-                    'video_count' => 'required',
                     'time_duration' => 'required',
                     'category_id' => 'required',
                     'image' => 'mimes:jpeg,jpg,png'
@@ -154,7 +240,6 @@ class PackageController extends Controller
                 $package->price = $request->input('price');
                 $package->category_id = $ct;
                 $package->detail = $request->input('detail');
-                $package->content_count = $request->input('video_count');
                 $package->time_method = $method;
                 $package->count_duration = $request->input('time_duration');
                 if ($method == 'day') {
@@ -170,6 +255,7 @@ class PackageController extends Controller
                 }
                 $package->stat = 2;
                 $package->status = $request->input('status');
+                $package->video_duration = $request->input('video_duration');
                 $package->save();
 
             } else {
@@ -190,8 +276,6 @@ class PackageController extends Controller
                 $package->name = $request->input('name');
                 $package->price = $request->input('price');
                 $package->category_id = $ct;
-                $package->content_count = $request->input('video_count');
-
                 $package->count_duration = $request->input('time_duration');
                 $package->detail = $request->input('detail');
                 $package->time_method = $method;
@@ -214,6 +298,7 @@ class PackageController extends Controller
                 }
                 $package->stat = 2;
                 $package->status = $request->input('status');
+                $package->video_duration = $request->input('video_duration');
                 $package->save();
             }
         } elseif ($pack == 1) {
@@ -254,6 +339,7 @@ class PackageController extends Controller
                 }
                 $package->stat = 1;
                 $package->status = $request->input('status');
+                $package->video_duration = $request->input('video_duration');
                 $package->save();
 
             } else {
@@ -293,6 +379,7 @@ class PackageController extends Controller
                 }
                 $allPackage->stat = 1;
                 $allPackage->status = $request->input('status');
+                $allPackage->video_duration = $request->input('video_duration');
                 $allPackage->save();
 
             }
