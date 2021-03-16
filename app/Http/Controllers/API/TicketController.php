@@ -63,7 +63,6 @@ class TicketController extends Controller
             $ticket->from_time = $request->input('from_time');
             $ticket->to_date = $request->input('to_date');
             $ticket->to_time = $request->input('to_time');
-            $ticket->price = $request->input('price');
             $ticket->venue = $request->input('venue');
             $ticket->type = $request->input('type');
             $ticket->silver_price = $request->input('silver_price');
