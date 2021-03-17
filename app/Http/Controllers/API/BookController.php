@@ -76,7 +76,7 @@ class BookController extends Controller
                     foreach ($book as $item) {
                         if ($value->id == $item->ticket_id && $user_id == $item->user_id) {
                             $value['booked'] = 1;
-                            break;
+//                            break;
                         } else {
                             $value['booked'] = 0;
                         }
