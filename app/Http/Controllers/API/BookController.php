@@ -149,5 +149,22 @@ class BookController extends Controller
 
     }
 
+public function bookedUserList(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => $validator->errors()], 422);
+        }
+        $user_id = $request->input('user_id');
+        $bookNow = Book::select(DB::raw('book.id as book_id,book.user_id,ticket.name as ticket_title,ticket.detail,ticket.date,ticket.time,ticket.silver_price,ticket.golden_price,ticket.platinum_price'))->where('user_id', $user_id)->leftjoin('ticket','book.ticket_id','ticket.id')->get();
+        return response()->json(['status' => true, 'message' => 'Data', 'data' => $bookNow], 200);
+
+    }
+
+
 
 }

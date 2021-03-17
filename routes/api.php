@@ -108,6 +108,7 @@ Route::group(['middleware' => ['json.response']], function () {
     //booking listing
     Route::post('show-list', 'API\BookController@showList')->middleware('checkUser');
     Route::post('booked-ticket-user-list', 'API\BookController@BookNow')->middleware('checkUser');
+    Route::post('booked-user-list', 'API\BookController@bookedUserList')->middleware('checkUser');
 
 
 
