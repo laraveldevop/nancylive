@@ -160,7 +160,7 @@ public function bookedUserList(Request $request)
                 'message' => $validator->errors()], 422);
         }
         $user_id = $request->input('user_id');
-        $bookNow = Book::select(DB::raw('book.id as book_id,book.user_id,ticket.name as ticket_title,ticket.detail,ticket.from_date,ticket.from_time,ticket.to_date,ticket.to_time,ticket.silver_price,ticket.golden_price,ticket.platinum_price'))->where('user_id', $user_id)->leftjoin('ticket','book.ticket_id','ticket.id')->get();
+        $bookNow = Book::select(DB::raw('book.id as book_id,book.user_id,book.price,book.status,book.transaction_id,book.type as book_type,ticket.name as ticket_title,ticket.detail,ticket.from_date,ticket.from_time,ticket.to_date,ticket.to_time,ticket.silver_price,ticket.golden_price,ticket.platinum_price'))->where('user_id', $user_id)->leftjoin('ticket','book.ticket_id','ticket.id')->get();
         return response()->json(['status' => true, 'message' => 'Data', 'data' => $bookNow], 200);
 
     }
