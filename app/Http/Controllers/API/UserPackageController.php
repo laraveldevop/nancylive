@@ -23,6 +23,7 @@ class UserPackageController extends Controller
             'user_id' => ['required', 'numeric'],
             'package_id' => ['numeric'],
             'video_id' => ['numeric'],
+            'single_video_id' => ['numeric'],
             'payment_status' =>['required'],
             'transaction_id'=>['required']
         ]);
@@ -57,9 +58,12 @@ class UserPackageController extends Controller
                     $userPackage->category_id = $package['category_id'];
                 } elseif (empty($package['category_id']) && empty($package['content_count'])) {
                     $userPackage->stat = 1;
-                } else {
+                } elseif(!empty($package['video_count'])) {
                     $userPackage->stat = 3;
                     $userPackage->video_count = $package['content_count'];
+                }else {
+                    $userPackage->stat = 4;
+                    $userPackage->video_id = $package['video_id'];
                 }
                 $userPackage->save();
 
@@ -79,8 +83,8 @@ class UserPackageController extends Controller
             } else {
                 $userPackage = new UserPackage();
                 $userPackage->user_id = $request['user_id'];
-                $userPackage->single_video_id = $request['video_id'];
-                $userPackage->stat = 4;
+                $userPackage->single_video_id = $request['single_video_id'];
+                $userPackage->stat = 5;
                 $userPackage->payment = $request['payment_status'];
                 $userPackage->transaction_id = $request['transaction_id'];
                 $userPackage->price = $request['price'];
