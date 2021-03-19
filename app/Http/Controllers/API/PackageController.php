@@ -92,6 +92,8 @@ class PackageController extends Controller
                 $package->status = $request->input('status');
                 $package->video_duration = $request->input('video_duration');
                 $package->save();
+                return response()->json(['status' => true, 'message' => 'Add Data Successfully', 'data' => $package]);
+
             } else {
                 $request->validate([
                     'name' => 'required',
@@ -131,6 +133,8 @@ class PackageController extends Controller
                 $package->status = $request->input('status');
                 $package->video_duration = $request->input('video_duration');
                 $package->save();
+                return response()->json(['status' => true, 'message' => 'Update Data Successfully', 'data' => $package]);
+
             }
         }
         elseif ($pack == 3) {
@@ -176,6 +180,8 @@ class PackageController extends Controller
                 $package->status = $request->input('status');
                 $package->video_duration = $request->input('video_duration');
                 $package->save();
+                return response()->json(['status' => true, 'message' => 'Add Data Successfully', 'data' => $package]);
+
             } else {
                 $request->validate([
                     'name' => 'required',
@@ -215,6 +221,8 @@ class PackageController extends Controller
                 $package->status = $request->input('status');
                 $package->video_duration = $request->input('video_duration');
                 $package->save();
+                return response()->json(['status' => true, 'message' => 'Update Data Successfully', 'data' => $package]);
+
             }
         } elseif ($pack == 2) {
             if ($id == null) {
@@ -257,6 +265,7 @@ class PackageController extends Controller
                 $package->status = $request->input('status');
                 $package->video_duration = $request->input('video_duration');
                 $package->save();
+                return response()->json(['status' => true, 'message' => 'Add Data Successfully', 'data' => $package]);
 
             } else {
                 $request->validate([
@@ -300,6 +309,8 @@ class PackageController extends Controller
                 $package->status = $request->input('status');
                 $package->video_duration = $request->input('video_duration');
                 $package->save();
+                return response()->json(['status' => true, 'message' => 'Update Data Successfully', 'data' => $package]);
+
             }
         } elseif ($pack == 1) {
             if ($id == null) {
@@ -341,6 +352,7 @@ class PackageController extends Controller
                 $package->status = $request->input('status');
                 $package->video_duration = $request->input('video_duration');
                 $package->save();
+                return response()->json(['status' => true, 'message' => 'Add Data Successfully', 'data' => $package]);
 
             } else {
                 $request->validate([
@@ -381,6 +393,7 @@ class PackageController extends Controller
                 $allPackage->status = $request->input('status');
                 $allPackage->video_duration = $request->input('video_duration');
                 $allPackage->save();
+                return response()->json(['status' => true, 'message' => 'Update Data Successfully', 'data' => $allPackage]);
 
             }
         } else {
