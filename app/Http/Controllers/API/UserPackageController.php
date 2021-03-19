@@ -53,17 +53,18 @@ class UserPackageController extends Controller
                 $userPackage->payment = $request['payment_status'];
                 $userPackage->transaction_id = $request['transaction_id'];
                 $userPackage->price = $request['price'];
-                if (!empty($package['category_id'])) {
+                if ($package['stat'] == 2) {
                     $userPackage->stat = 2;
                     $userPackage->category_id = $package['category_id'];
-                } elseif (empty($package['category_id']) && empty($package['content_count'])) {
+                } elseif ($package['stat'] == 1) {
                     $userPackage->stat = 1;
-                } elseif(!empty($package['video_count'])) {
+                } elseif($package['stat'] == 3) {
                     $userPackage->stat = 3;
-                    $userPackage->video_count = $package['content_count'];
+                    $userPackage->video_count = $package['video_count'];
                 }else {
                     $userPackage->stat = 4;
                     $userPackage->video_id = $package['video_id'];
+                    $userPackage->video_count = $request['video_count'];
                 }
                 $userPackage->save();
 
