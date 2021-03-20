@@ -16,23 +16,23 @@ class UserController extends Controller
         $v = [];
         $id = $request->header('USER_ID');
         $user = User::where('id', $id)->get();
-        foreach($user as $item){
-                $value =$item->roles->first();
-                $update = User::find($item->id);
-                $update->role_id = isset($value['id'])?$value['id']: null;
-                $update->save();
-            $item['role'] = isset($value['id'])?$value['id']: null;
-                array_push($v , $item);
-
-            }
-//        $package = UserPackage::select(DB::raw('users.*,user_package.price as user_package_price,user_package.transaction_id,user_package.package_id,user_package.payment'))
-//            ->leftjoin('users', 'user_package.user_id', 'users.id')
-//            ->where('users.id', $id)->get();
+//        foreach($user as $item){
+//                $value =$item->roles->first();
+//                $update = User::find($item->id);
+//                $update->role_id = isset($value['id'])?$value['id']: null;
+//                $update->save();
+//            $item['role'] = isset($value['id'])?$value['id']: null;
+//                array_push($v , $item);
 //
-//        foreach($package as $item){
-//            $item['package']=Package::where('id',$item->package_id)->get();
-//            array_push($v , $item);
-//        }
+//            }
+        $package = UserPackage::select(DB::raw('users.id,users.name,users.role_id as role,users.sub_role_id,users.referral_code,users.email,users.mobile,users.city,users.address,user_package.price as user_package_price,user_package.transaction_id,user_package.package_id,user_package.payment'))
+            ->leftjoin('users', 'user_package.user_id', 'users.id')
+            ->where('users.id', $id)->get();
+
+        foreach($package as $item){
+            $item['package']=Package::where('id',$item->package_id)->get();
+            array_push($v , $item);
+        }
         return response()->json(['status' => true, 'message' => 'Data retrieved successfully.', 'data' => $v], 200);
 
     }
