@@ -25,8 +25,8 @@ class UserController extends Controller
 //                array_push($v , $item);
 //
 //            }
-        $package = UserPackage::select(DB::raw('users.id,users.name,users.role_id as role,users.sub_role_id,users.referral_code,users.email,users.mobile,users.city,users.address,user_package.price as user_package_price,user_package.transaction_id,user_package.package_id,user_package.payment'))
-            ->leftjoin('users', 'user_package.user_id', 'users.id')
+        $package = User::select(DB::raw('users.id,users.name,users.role_id as role,users.sub_role_id,users.referral_code,users.email,users.mobile,users.city,users.address,user_package.price as user_package_price,user_package.transaction_id,user_package.package_id,user_package.payment,user_package.video_id,user_package.single_video_id,user_package.video_count,user_package.category_id,user_package.expire_date'))
+            ->leftjoin('user_package', 'user_package.user_id', 'users.id')
             ->where('users.id', $id)->get();
 
         foreach($package as $item){
