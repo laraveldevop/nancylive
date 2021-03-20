@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Package;
 use App\User;
 use App\UserPackage;
 use Illuminate\Http\Request;
@@ -24,8 +25,16 @@ class UserController extends Controller
 //                array_push($v , $item);
 //
 //            }
-        $package = UserPackage::select(DB::raw('users.id,users.name,users.role_id,users.sub_role_id,users.referral_code,users.email,users.mobile,users.city,users.address,package.name as package_name,package.price as package_price,user_package.price,user_package.transaction_id,user_package.payment'))->leftjoin('package', 'user_package.package_id', 'package.id')->leftjoin('users', 'user_package.user_id', 'users.id')->where('users.id', $id)->get();
-        return response()->json(['status' => true, 'message' => 'Data retrieved successfully.', 'data' => $package,], 200);
+        $package = UserPackage::select(DB::raw('users.id,users.name,users.role_id,users.sub_role_id,users.referral_code,users.email,users.mobile,users.city,users.address,user_package.price as user_package_price,user_package.transaction_id,user_package.package_id,user_package.payment'))
+            ->leftjoin('users', 'user_package.user_id', 'users.id')
+            ->where('users.id', $id)->get();
+
+        foreach($package as $item){
+            $item['package']=Package::where('id',$item->package_id)->get();
+            array_push($v , $item);
+        }
+        return response()->json(['status' => true, 'message' => 'Data retrieved successfully.', 'data' => $v], 200);
+
     }
 
     public function userList(Request $request)
