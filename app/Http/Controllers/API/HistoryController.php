@@ -52,7 +52,7 @@ class HistoryController extends Controller
                 $value['product_name'] = $q->name;
                 $value['cat'] = 'Product' ;
             }
-            $value['user_package_history']=PackageVideo::where('package_id',$value->package_id)->get();
+            $value['user_package_history']=PackageVideo::select(DB::raw('package_video.*,ticket.name as ticket_name,video.video_name'))->where('package_id',$value->package_id)->leftjoin('video','video.id','package_video.video_id')->leftjoin('ticket','ticket.id','package_video.ticket_id')->get();
         }
 
 //        echo $history; die();
