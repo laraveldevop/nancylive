@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\History;
 use App\Http\Controllers\Controller;
+use App\PackageVideo;
 use App\UserPackage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -51,7 +52,7 @@ class HistoryController extends Controller
                 $value['product_name'] = $q->name;
                 $value['cat'] = 'Product' ;
             }
-            $value['user_package_history']=UserPackage::where('package_id',$value->package_id)->get();
+            $value['user_package_history']=PackageVideo::where('package_id',$value->package_id)->get();
         }
 
 //        echo $history; die();
