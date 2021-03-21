@@ -254,8 +254,8 @@ class UserPackageController extends Controller
                         $videoWisePackage->save();
 
                         $packageVideo = new PackageVideo();
-                        $packageVideo->user_package_id = $videoPackage['id'];
-                        $packageVideo->package_id = $videoPackage['package_id'];
+                        $packageVideo->user_package_id = $videoWisePackage['id'];
+                        $packageVideo->package_id = $videoWisePackage['package_id'];
                         $packageVideo->video_id = $request['video_id'];
                         $packageVideo->status = 0;
                         $packageVideo->save();
