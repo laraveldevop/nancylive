@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Package;
+use App\PackageVideo;
 use App\User;
 use App\UserPackage;
 use Illuminate\Http\Request;
@@ -31,6 +32,7 @@ class UserController extends Controller
 
         foreach($package as $item){
             $item['package']=Package::where('id',$item->package_id)->get();
+            $item['user_package_history']=PackageVideo::where('package_id',$item->package_id)->get();
             array_push($v , $item);
         }
         return response()->json(['status' => true, 'message' => 'Data retrieved successfully.', 'data' => $v], 200);
