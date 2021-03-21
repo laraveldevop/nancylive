@@ -60,7 +60,6 @@ class PackageController extends Controller
                     'custom_method' => 'required',
                     'time_duration' => 'required',
                     'image' => 'mimes:jpeg,jpg,png',
-
                 ]);
                 if ($request->file('image') == null) {
                     $request->validate([
@@ -76,6 +75,7 @@ class PackageController extends Controller
                 $package->video_id = $request->input('video_id');
                 $package->detail = $request->input('detail');
                 $package->time_method = $method;
+                $package->video_count = $request->input('video_count');
                 $package->count_duration = $request->input('time_duration');
                 if ($method == 'day') {
                     $package->day = $request->input('time_duration');
@@ -132,6 +132,7 @@ class PackageController extends Controller
                 $package->stat = 4;
                 $package->status = $request->input('status');
                 $package->video_duration = $request->input('video_duration');
+                $package->video_count = $request->input('video_count');
                 $package->save();
                 return response()->json(['status' => true, 'message' => 'Update Data Successfully', 'data' => $package]);
 
