@@ -55,7 +55,7 @@ class UserPackageController extends Controller
                 }
             }
             else{
-                return response()->json(['status' => false, 'message' => 'Only Allow True Or False', 'data' => $package], 422);
+                return response()->json(['status' => false, 'message' => 'Only Allow True Or False', 'data' => []], 422);
 
             }
         }
