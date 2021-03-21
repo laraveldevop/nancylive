@@ -31,7 +31,7 @@ class UserPackageController extends Controller
         }
         $package = UserPackage::where('user_id', '=', $request['user_id'])->first();
         if (!empty($package)) {
-            if ($request->input('add') == true) {
+            if ($request->input('add') == 'true') {
                 if ($package['video_count'] == null) {
                     return response()->json(['status' => false, 'message' => 'Video Count Not Available', 'data' => $package], 422);
 
@@ -42,7 +42,7 @@ class UserPackageController extends Controller
                     $package->video_count = $package['video_count'] + 1;
                     $package->save();
                 }
-            } elseif ($request->input('add') == false) {
+            } elseif ($request->input('add') == 'false') {
                 if ($package['video_count'] == null) {
                     return response()->json(['status' => false, 'message' => 'Video Count Not Available', 'data' => $package], 422);
 
