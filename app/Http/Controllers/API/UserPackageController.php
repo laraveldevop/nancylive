@@ -188,10 +188,9 @@ class UserPackageController extends Controller
                     ['video_count', '!=', null],
                     ['category_id', '=', $request['category_id']],
                 ])->first();
-
                 $singleVideoPackage = UserPackage::where([
                     ['user_id', '=', $item['user_id']],
-                    ['stat', '=', 4],
+                    ['stat', '=', 5],
                     ['single_video_id', '=', $request['video_id']],
                     ['category_id', '=' , null],
                 ])->first();
@@ -201,19 +200,24 @@ class UserPackageController extends Controller
                     ['video_count', '!=', null],
                     ['category_id', '=', null],
                 ])->first();
+                 $videoWisePackage = UserPackage::where([
+                    ['user_id', '=', $item['user_id']],
+                    ['stat', '=', 4],
+                    ['video_count', '!=', null],
+                    ['category_id', '=', null],
+                    ['video_id', '=', $request['video_id']],
+                ])->first();
+
+
 
 
                 if (!empty($allPackage)) {
-                    $vu = isset($allPackage->video_id)?$allPackage->video_id .','. $request['video_id']: $request['video_id'];
-
-                    $allPackage->video_id = $vu;
-                        $allPackage->save();
 
                         $packageVideo = new PackageVideo();
                         $packageVideo->user_package_id = $allPackage['id'];
                         $packageVideo->package_id = $allPackage['package_id'];
                         $packageVideo->video_id = $request['video_id'];
-                        $packageVideo->status = 1;
+                        $packageVideo->status = 0;
                         $packageVideo->save();
 
                     return response()->json(['status' => true, 'message' => 'User All Package available', 'data' => $allPackage], 200);
@@ -224,8 +228,7 @@ class UserPackageController extends Controller
                         $categoryPackage->save();
                     }
                     else {
-                        $vu = isset($categoryPackage->video_id)?$categoryPackage->video_id .','. $request['video_id']: $request['video_id'];
-                        $categoryPackage->video_id = $vu;
+
                         $categoryPackage->video_count = $item->video_count - 1;
                         $categoryPackage->save();
 
@@ -234,7 +237,7 @@ class UserPackageController extends Controller
                         $packageVideo->package_id = $categoryPackage['package_id'];
                         $packageVideo->category_id = $categoryPackage['category_id'];
                         $packageVideo->video_id = $request['video_id'];
-                        $packageVideo->status = 1;
+                        $packageVideo->status = 0;
                         $packageVideo->save();
                     }
                     return response()->json(['status' => true, 'message' => 'User Category Package available', 'data' => $categoryPackage], 200);
@@ -242,19 +245,36 @@ class UserPackageController extends Controller
                     $packageVideo = new PackageVideo();
                     $packageVideo->user_package_id = $singleVideoPackage['id'];
                     $packageVideo->video_id = $request['video_id'];
-                    $packageVideo->status = 1;
+                    $packageVideo->status = 0;
                     $packageVideo->save();
                     return response()->json(['status' => true, 'message' => 'User single video Package available', 'data' => $singleVideoPackage], 200);
-                } elseif (!empty($videoPackage)) {
+                } elseif (!empty($videoWisePackage)) {
+
+                    if ($videoWisePackage->video_count == 0){
+                        $videoWisePackage->video_count = null;
+                        $videoWisePackage->save();
+                    }
+                    else {
+
+                        $videoWisePackage->video_count = $item->video_count - 1;
+                        $videoWisePackage->save();
+
+                        $packageVideo = new PackageVideo();
+                        $packageVideo->user_package_id = $videoPackage['id'];
+                        $packageVideo->package_id = $videoPackage['package_id'];
+                        $packageVideo->video_id = $request['video_id'];
+                        $packageVideo->status = 0;
+                        $packageVideo->save();
+                    }
+                    return response()->json(['status' => true, 'message' => 'User Module-wise Package available', 'data' => $videoWisePackage], 200);
+                }elseif (!empty($videoPackage)) {
 
                     if ($videoPackage->video_count == 0){
                         $videoPackage->video_count = null;
                         $videoPackage->save();
                     }
                     else {
-                        $vu =  isset($videoPackage->video_id)?$videoPackage->video_id .','. $request['video_id']: $request['video_id'];
 
-                        $videoPackage->video_id = $vu;
                         $videoPackage->video_count = $item->video_count - 1;
                         $videoPackage->save();
 
@@ -262,7 +282,7 @@ class UserPackageController extends Controller
                         $packageVideo->user_package_id = $videoPackage['id'];
                         $packageVideo->package_id = $videoPackage['package_id'];
                         $packageVideo->video_id = $request['video_id'];
-                        $packageVideo->status = 1;
+                        $packageVideo->status = 0;
                         $packageVideo->save();
                     }
                     return response()->json(['status' => true, 'message' => 'User Module-wise Package available', 'data' => $videoPackage], 200);
