@@ -98,12 +98,13 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('order-detail', 'API\HomeController@order')->middleware('checkUser');
     Route::post('artist', 'API\HomeController@artist')->middleware('checkUser');
     Route::get('document', 'API\PdfController@index')->middleware('checkUser');
-    Route::get('history', 'API\HistoryController@index')->middleware('checkUser');
+    Route::post('history', 'API\HistoryController@index')->middleware('checkUser');
     Route::get('order-history', 'API\OrderController@orderHistory')->middleware('checkUser');
     Route::get('package', 'API\PackageController@index')->middleware('checkUser');
     Route::get('user', 'API\UserController@index')->middleware('checkUser');
     Route::post('user-list', 'API\UserController@userList')->middleware('checkUser');
     Route::post('role', 'API\RoleController@roleUpdate')->middleware('checkUser');
+    Route::post('user-package-add-video-count', 'API\UserPackageController@addPlusMines')->middleware('checkUser');
 
     //booking listing
     Route::post('show-list', 'API\BookController@showList')->middleware('checkUser');

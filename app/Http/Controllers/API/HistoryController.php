@@ -13,7 +13,7 @@ class HistoryController extends Controller
 {
     public function index(Request $request)
     {
-        $id= $request->header('USER_ID');
+        $id= $request->input('user_id');
 
         $history = History::where('user_id',$id)->get();
         foreach ($history as $value){
@@ -51,6 +51,7 @@ class HistoryController extends Controller
                 $value['product_name'] = $q->name;
                 $value['cat'] = 'Product' ;
             }
+            $value['user_package_history']=UserPackage::where('package_id',$value->package_id)->get();
         }
 
 //        echo $history; die();
