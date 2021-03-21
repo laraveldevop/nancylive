@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Book;
 use App\Http\Controllers\Controller;
+use App\PackageVideo;
 use App\Ticket;
+use App\UserPackage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -19,6 +21,7 @@ class BookController extends Controller
             'price' => 'required',
             'status' => 'required',
             'type' => 'required',
+            'history' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -26,6 +29,7 @@ class BookController extends Controller
                 'message' => $validator->errors()], 422);
         }
         $id = $request->input('id');
+        $book_user = UserPackage::where('user_id', $request->input('user_id'))->first();
         if ($id == null) {
             $book = new Book();
             $book->ticket_id = $request->input('ticket_id');
@@ -36,6 +40,15 @@ class BookController extends Controller
             $book->type = $request->input('type');
             $book->created_at = $request->input('created_at');
             $book->save();
+            if ($request->input('history') == 'true') {
+                $package_video = new PackageVideo();
+                $package_video->book_id = $book['id'];
+                $package_video->ticket_id = $book['ticket_id'];
+                $package_video->user_package_id = isset($book_user['id'])?$book_user['id']:null;
+                $package_video->package_id = isset($book_user['package_id'])?$book_user['package_id']:null;
+                $package_video->category_id = isset($book_user['category_id'])?$book_user['category_id']:null;
+                $package_video->status = 1;
+            }
             return response()->json(['status' => true, 'message' => 'Add Successfully', 'data' => $book], 200);
 
         } else {
@@ -51,6 +64,7 @@ class BookController extends Controller
             return response()->json(['status' => true, 'message' => 'Update Successfully', 'data' => $book], 200);
 
         }
+
     }
 
 
@@ -68,8 +82,8 @@ class BookController extends Controller
         $roll = $request->input('roll');
         $booked = $request->input('booked');
         $date = date('Y-m-d');
-        if ($roll == 1){
-            $showlist = Ticket::where('date','>',$date)->get();
+        if ($roll == 1) {
+            $showlist = Ticket::where('date', '>', $date)->get();
             $book = Book::all();
             if ($user_id != null && $booked == null) {
                 foreach ($showlist as $value) {
@@ -98,8 +112,7 @@ class BookController extends Controller
                 return response()->json(['status' => true, 'message' => 'Get All Show', 'data' => $showlist], 200);
 
             }
-        }
-        else {
+        } else {
             $showlist = Ticket::all();
             $book = Book::all();
             if ($user_id != null && $booked == null) {
@@ -144,12 +157,12 @@ class BookController extends Controller
                 'message' => $validator->errors()], 422);
         }
         $ticket_id = $request->input('ticket_id');
-        $bookNow = Book::select(DB::raw('book.*,users.name as user_name,users.mobile,users.image'))->where('ticket_id', $ticket_id)->leftjoin('users','book.user_id','users.id')->get();
+        $bookNow = Book::select(DB::raw('book.*,users.name as user_name,users.mobile,users.image'))->where('ticket_id', $ticket_id)->leftjoin('users', 'book.user_id', 'users.id')->get();
         return response()->json(['status' => true, 'message' => 'Data', 'data' => $bookNow], 200);
 
     }
 
-public function bookedUserList(Request $request)
+    public function bookedUserList(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required',
@@ -160,11 +173,10 @@ public function bookedUserList(Request $request)
                 'message' => $validator->errors()], 422);
         }
         $user_id = $request->input('user_id');
-        $bookNow = Book::select(DB::raw('book.id as book_id,book.user_id,book.price,book.status,book.transaction_id,book.type as book_type,ticket.name as ticket_title,ticket.detail,ticket.from_date,ticket.from_time,ticket.to_date,ticket.to_time,ticket.silver_price,ticket.golden_price,ticket.platinum_price'))->where('user_id', $user_id)->leftjoin('ticket','book.ticket_id','ticket.id')->get();
+        $bookNow = Book::select(DB::raw('book.id as book_id,book.user_id,book.price,book.status,book.transaction_id,book.type as book_type,ticket.name as ticket_title,ticket.detail,ticket.from_date,ticket.from_time,ticket.to_date,ticket.to_time,ticket.silver_price,ticket.golden_price,ticket.platinum_price'))->where('user_id', $user_id)->leftjoin('ticket', 'book.ticket_id', 'ticket.id')->get();
         return response()->json(['status' => true, 'message' => 'Data', 'data' => $bookNow], 200);
 
     }
-
 
 
 }
