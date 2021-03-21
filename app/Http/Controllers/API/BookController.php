@@ -48,6 +48,11 @@ class BookController extends Controller
                 $package_video->package_id = isset($book_user['package_id'])?$book_user['package_id']:null;
                 $package_video->category_id = isset($book_user['category_id'])?$book_user['category_id']:null;
                 $package_video->status = 1;
+                $package_video->save();
+
+                $userPackage = UserPackage::find($book_user['id']);
+                $userPackage->video_count = $book_user['video_count']-1;
+                $userPackage->save();
             }
             return response()->json(['status' => true, 'message' => 'Add Successfully', 'data' => $book], 200);
 
