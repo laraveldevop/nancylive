@@ -205,14 +205,8 @@ class UserPackageController extends Controller
                     ['stat', '=', 4],
                     ['video_count', '!=', null],
                     ['category_id', '=', null],
-                    ['video_id', '=', $request['video_id']],
-                ])->first();
-
-
-
-
+                ])->whereRaw("FIND_IN_SET('".$request['video_id']."',video_id)")->first();
                 if (!empty($allPackage)) {
-
                         $packageVideo = new PackageVideo();
                         $packageVideo->user_package_id = $allPackage['id'];
                         $packageVideo->package_id = $allPackage['package_id'];
