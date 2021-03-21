@@ -32,7 +32,7 @@ class UserController extends Controller
 
         foreach($package as $item){
             $item['package']=Package::where('id',$item->package_id)->get();
-            $item['user_package_history']=PackageVideo::where('package_id',$item->package_id)->get();
+            $item['user_package_history']=PackageVideo::select(DB::raw('package_video.*,ticket.name as ticket_name,video.video_name'))->where('package_id',$item->package_id)->leftjoin('video','video.id','package_video.video_id')->leftjoin('ticket','ticket.id','package_video.ticket_id')->get();
             array_push($v , $item);
         }
         return response()->json(['status' => true, 'message' => 'Data retrieved successfully.', 'data' => $v], 200);
