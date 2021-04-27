@@ -186,7 +186,7 @@
                                                                     <div class="carousel-item active">
                                                                         <img class="d-block w-100 slide-image" src="{{ asset(!empty($value->v_image)?'public/storage/'.$value->v_image:'public/assets/img/logo.png')}}" alt="First slide">
                                                                         <div class="carousel-caption">
-                                                                            <a class="btn btn-outline-dark rounded-circle" href="{{ asset(!empty($value->video)?'public/storage/'.$value->video:'')}}" target="_blank ">
+                                                                            <a class="btn btn-outline-dark rounded-circle" href="{{ (!empty($value->video)? \Illuminate\Support\Facades\Storage::disk('s3')->url($value->video):'')}}" target="_blank ">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play"><polygon points="5 3 19 12 5 21 5 20"></polygon></svg>
                                                                             </a>
                                                                         </div>

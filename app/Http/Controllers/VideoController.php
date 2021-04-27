@@ -178,10 +178,11 @@ class VideoController extends Controller
 
     public function videoDownload(Request $request) {
             $file = $request->file('video_local');
-            $fileName = $file->getClientOriginalExtension();
+//            $fileName = $file->getClientOriginalName();
+        $md5Name = md5_file($request->file('video_local')->getRealPath());
+        $guessExtension = $request->file('video_local')->guessExtension();
+            $path =$file->storeAs('video',$md5Name.'.'.$guessExtension ,'s3');
             $request->video_local->getMimeType();
-        $path = str_replace('public/', '', $request->video_local->store('public'));
-
         echo  $path;
     }
     /**
