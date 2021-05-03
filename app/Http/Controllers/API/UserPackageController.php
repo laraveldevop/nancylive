@@ -264,7 +264,7 @@ class UserPackageController extends Controller
                     $packageVideo->user_package_id = $allPackage['id'];
                     $packageVideo->package_id = $allPackage['package_id'];
                     $packageVideo->video_id = $request['video_id'];
-                    $packageVideo->status = 0;
+                    $packageVideo->status = 'online';
                     $packageVideo->save();
 
                     return response()->json(['status' => true, 'message' => 'User All Package available', 'data' => $allPackage], 200);
@@ -283,7 +283,7 @@ class UserPackageController extends Controller
                         $packageVideo->package_id = $categoryPackage['package_id'];
                         $packageVideo->category_id = $categoryPackage['category_id'];
                         $packageVideo->video_id = $request['video_id'];
-                        $packageVideo->status = 0;
+                        $packageVideo->status = 'online';
                         $packageVideo->save();
                     }
                     return response()->json(['status' => true, 'message' => 'User Category Package available', 'data' => $categoryPackage], 200);
@@ -291,7 +291,7 @@ class UserPackageController extends Controller
                     $packageVideo = new PackageVideo();
                     $packageVideo->user_package_id = $singleVideoPackage['id'];
                     $packageVideo->video_id = $request['video_id'];
-                    $packageVideo->status = 0;
+                    $packageVideo->status = 'online';
                     $packageVideo->save();
                     return response()->json(['status' => true, 'message' => 'User single video Package available', 'data' => $singleVideoPackage], 200);
                 } elseif (!empty($videoWisePackage)) {
@@ -308,7 +308,7 @@ class UserPackageController extends Controller
                         $packageVideo->user_package_id = $videoWisePackage['id'];
                         $packageVideo->package_id = $videoWisePackage['package_id'];
                         $packageVideo->video_id = $request['video_id'];
-                        $packageVideo->status = 0;
+                        $packageVideo->status = 'online';
                         $packageVideo->save();
                     }
                     return response()->json(['status' => true, 'message' => 'User Module-wise Package available', 'data' => $videoWisePackage], 200);
@@ -326,7 +326,7 @@ class UserPackageController extends Controller
                         $packageVideo->user_package_id = $videoPackage['id'];
                         $packageVideo->package_id = $videoPackage['package_id'];
                         $packageVideo->video_id = $request['video_id'];
-                        $packageVideo->status = 0;
+                        $packageVideo->status = 'online';
                         $packageVideo->save();
                     }
                     return response()->json(['status' => true, 'message' => 'User Module-wise Package available', 'data' => $videoPackage], 200);

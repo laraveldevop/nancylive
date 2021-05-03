@@ -428,10 +428,16 @@ class PackageController extends Controller
             'user_id' => 'required',
         ]);
         $user = $request->input('user_id');
-        $user_package = UserPackage::select(DB::raw('package.id as package_id,package.name,package.price as package_price,package.detail,package.status,    user_package.created_at,user_package.expire_date,user_package.transaction_id,user_package.package_id,user_package.payment,user_package.video_id,user_package.single_video_id,user_package.video_count,user_package.category_id,users.name as user_name,users.email,users.mobile,users.city,users.address'))
+        $user_package = UserPackage::select(DB::raw('package.id as package_id,user_package.id as user_package_id,package.name,package.price as package_price,package.detail,package.status,    user_package.created_at,user_package.expire_date,user_package.transaction_id,user_package.package_id,user_package.payment,user_package.video_id,user_package.single_video_id,user_package.video_count,user_package.category_id,users.name as user_name,users.email,users.mobile,users.city,users.address'))
             ->leftjoin('package', 'package.id', 'user_package.package_id')
             ->leftjoin('users', 'users.id', 'user_package.user_id')
             ->where('user_package.user_id', $user)->get();
+        if (!empty($user_package)){
+           foreach ($user_package as $item){
+               $package_video = PackageVideo::where('user_package_id',$item->user_package_id)->get();
+               $item['package_video'] = $package_video;
+           }
+        }
         return response()->json(['status' => true, 'message' => 'Data Retrieve Successfully', 'data' => $user_package]);
 
 
