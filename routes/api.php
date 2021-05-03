@@ -93,7 +93,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('package-detail', 'API\UserPackageController@packageBuy');
 
     Route::get('home', 'API\HomeController@advertise')->middleware('checkUser');
-    Route::get('ok', 'API\AuthController@generateReferral')->middleware('checkUser');
+//    Route::get('ok', 'API\AuthController@generateReferral')->middleware('checkUser');
     Route::get('sub-role', 'API\SubRoleController@index')->middleware('checkUser');
     Route::get('order-detail', 'API\HomeController@order')->middleware('checkUser');
     Route::post('artist', 'API\HomeController@artist')->middleware('checkUser');
@@ -105,6 +105,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('user-list', 'API\UserController@userList')->middleware('checkUser');
     Route::post('role', 'API\RoleController@roleUpdate')->middleware('checkUser');
     Route::post('user-package-add-video-count', 'API\UserPackageController@addPlusMines')->middleware('checkUser');
+    Route::post('package-list', 'API\PackageController@packageList')->middleware('checkUser');
 
     //booking listing
     Route::post('show-list', 'API\BookController@showList')->middleware('checkUser');
