@@ -114,7 +114,7 @@ class UserPackageController extends Controller
                     $userPackage->video_id = $package['video_id'];
                     $userPackage->video_count = $package['video_count'];
                 }
-                $userPackage->created_at =$request['created_at'];
+                $userPackage->created_at = (!empty($request['created_at'])?$request['created_at']:date('Y-m-d'));
                 $userPackage->save();
 
 
@@ -128,7 +128,7 @@ class UserPackageController extends Controller
                 $history->payment = $request['payment_status'];
                 $history->transaction_id = $request['transaction_id'];
                 $history->price = $request['price'];
-                $history->created_at =$request['created_at'];
+                $history->created_at =(!empty($request['created_at'])?$request['created_at']:date('Y-m-d'));
                 $history->save();
                 return response()->json(['status' => true, 'message' => 'User Package Create successfully.', 'data' => $userPackage], 200);
             } else {
@@ -140,7 +140,7 @@ class UserPackageController extends Controller
                 $userPackage->transaction_id = $request['transaction_id'];
                 $userPackage->price = $request['price'];
                 $userPackage->expire_date = date('Y-m-d', strtotime(today() . '+ ' . $video['day'] . ' day'));
-                $userPackage->created_at =$request['created_at'];
+                $userPackage->created_at =(!empty($request['created_at'])?$request['created_at']:date('Y-m-d'));
                 $userPackage->save();
 
                 $history = new History();
@@ -151,7 +151,7 @@ class UserPackageController extends Controller
                 $history->payment = $request['payment_status'];
                 $history->transaction_id = $request['transaction_id'];
                 $history->price = $request['price'];
-                $history->created_at =$request['created_at'];
+                $history->created_at =(!empty($request['created_at'])?$request['created_at']:date('Y-m-d'));
                 $history->save();
                 return response()->json(['status' => true, 'message' => 'User Package Create successfully.', 'data' => $userPackage], 200);
             }
@@ -171,7 +171,7 @@ class UserPackageController extends Controller
                 $userPackage->payment = $request['payment_status'];
                 $userPackage->transaction_id = $request['transaction_id'];
                 $userPackage->price = $request['price'];
-                $userPackage->created_at =$request['created_at'];
+                $userPackage->created_at =(!empty($request['created_at'])?$request['created_at']:date('Y-m-d'));
                 if ($package['stat'] == 2) {
                     $userPackage->stat = 2;
                     $userPackage->category_id = $package['category_id'];
@@ -195,7 +195,7 @@ class UserPackageController extends Controller
                 $userPackage->payment = $request['payment_status'];
                 $userPackage->transaction_id = $request['transaction_id'];
                 $userPackage->price = $request['price'];
-                $userPackage->created_at =$request['created_at'];
+                $userPackage->created_at =(!empty($request['created_at'])?$request['created_at']:date('Y-m-d'));
                 $userPackage->expire_date = date('Y-m-d', strtotime(today() . '+ ' . $video['day'] . ' day'));
                 $userPackage->save();
 
