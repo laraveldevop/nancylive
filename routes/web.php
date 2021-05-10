@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 //Auth::routes();
 
 Auth::routes([ 'register' => false ]);
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'WelcomeController@index')->name('welcome');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('category', 'CategoryController');
