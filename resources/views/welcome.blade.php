@@ -39,7 +39,7 @@
                             <li><a href="#features">Features</a></li>
                             <li><a href="#work">Work</a></li>
 {{--                            <li><a href="#team">Team</a></li>--}}
-                            <li><a href="#price">Price</a></li>
+{{--                            <li><a href="#price">Price</a></li>--}}
                             <li><a href="#contact">Contact</a></li>
                         </ul>
                     </div>
@@ -176,20 +176,31 @@
                 <div class="swiper-container s1">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <img src="{{ asset('public/theme_assets/images/screenshot/App-1.png') }}" alt="...">
+                            <img src="{{ asset('public/theme_assets/images/screenshot/App-13.png') }}" alt="...">
                         </div>
                         <div class="swiper-slide">
-                            <img src="{{ asset('public/theme_assets/images/screenshot/App-2.png') }}" alt="...">
+                            <img src="{{ asset('public/theme_assets/images/screenshot/App-14.png') }}" alt="...">
                         </div>
                         <div class="swiper-slide">
-                            <img src="{{ asset('public/theme_assets/images/screenshot/App-3.png') }}" alt="...">
+                            <img src="{{ asset('public/theme_assets/images/screenshot/App-7.png') }}" alt="...">
+                        </div>
+                         <div class="swiper-slide">
+                            <img src="{{ asset('public/theme_assets/images/screenshot/App-9.png') }}" alt="...">
+                        </div>
+ <div class="swiper-slide">
+                            <img src="{{ asset('public/theme_assets/images/screenshot/App-6.png') }}" alt="...">
+                        </div>
+
+                        <div class="swiper-slide">
+                            <img src="{{ asset('public/theme_assets/images/screenshot/App-15.png') }}" alt="...">
                         </div>
                         <div class="swiper-slide">
-                            <img src="{{ asset('public/theme_assets/images/screenshot/App-4.png') }}" alt="...">
+                            <img src="{{ asset('public/theme_assets/images/screenshot/App-12.png') }}" alt="...">
                         </div>
                         <div class="swiper-slide">
-                            <img src="{{ asset('public/theme_assets/images/screenshot/App-5.png') }}" alt="...">
+                            <img src="{{ asset('public/theme_assets/images/screenshot/App-11.png') }}" alt="...">
                         </div>
+
                     </div>
                     <div class="swiper-pagination one"></div>
                 </div>
@@ -359,93 +370,93 @@
 <!-- Team-area End -->
 
 <!-- Pricing-plan Start -->
-<div class="pricing-plan" id="price">
-    <div class="container">
-        <!-- Section heading -->
-        <div class="section-title text-center">
-            <h2>Pricing Plan</h2>
-        </div>
-        <div class="shape"></div>
-        <div class="row">
-            <!--First column-->
-            <div class="col-lg-4 col-md-12 mb-4">
-                <!--Card-->
-                <div class="card">
-                    <!--Content-->
-                    <div class="text-center">
-                        <div class="card-body">
-                            <h5>Basic plan</h5>
-                            <div class="d-flex justify-content-center">
-                                <div class="card-circle d-flex justify-content-center align-items-center">
-                                    <i class="fa fa-home pink-text"></i>
-                                </div>
-                            </div>
-                            <!--Price-->
-                            <h2 class="font-weight-bold mt-3"><strong>59$</strong></h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa pariatur id nobis
-                                accusamus deleniti cumque hic.
-                            </p>
-                            <a class="btn btn-md btn-pink btn-rounded waves-effect waves-light">Buy now</a>
-                        </div>
-                    </div>
-                </div>
-                <!--/.Card-->
-            </div>
-            <!--/First column-->
-            <!--Second column-->
-            <div class="col-lg-4 col-md-12 mb-4">
-                <!--Card-->
-                <div class="card pink">
-                    <!--Content-->
-                    <div class="text-center white-text">
-                        <div class="card-body">
-                            <h5 class="white-text">Premium plan</h5>
-                            <div class="d-flex justify-content-center">
-                                <div class="card-circle d-flex justify-content-center align-items-center">
-                                    <i class="fa fa-group white-text"></i>
-                                </div>
-                            </div>
-                            <!--Price-->
-                            <h2 class="font-weight-bold white-text mt-3"><strong>79$</strong></h2>
-                            <p class="white-text">Esse corporis saepe laudantium velit adipisci cumque iste ratione
-                                facere non distinctio cupiditate sequi atque.
-                            </p>
-                            <a class="btn btn-md btn-pink btn-rounded waves-effect waves-light">Buy now</a>
-                        </div>
-                    </div>
-                </div>
-                <!--/.Card-->
-            </div>
-            <!--/Second column-->
-            <!--Third column-->
-            <div class="col-lg-4 col-md-12 mb-4">
-                <!--Card-->
-                <div class="card">
-                    <!--Content-->
-                    <div class="text-center">
-                        <div class="card-body">
-                            <h5>Advanced plan</h5>
-                            <div class="d-flex justify-content-center">
-                                <div class="card-circle d-flex justify-content-center align-items-center">
-                                    <i class="fa fa-bar-chart pink-text"></i>
-                                </div>
-                            </div>
-                            <!--Price-->
-                            <h2 class="font-weight-bold  mt-3"><strong>99$</strong></h2>
-                            <p>At ab ea a molestiae corrupti numquam quo beatae minima ratione magni accusantium
-                                repellat eveniet quia vitae.
-                            </p>
-                            <a class="btn btn-md btn-pink btn-rounded waves-effect waves-light">Buy now</a>
-                        </div>
-                    </div>
-                </div>
-                <!--/.Card-->
-            </div>
-            <!--/Third column-->
-        </div>
-    </div>
-    <!-- container -->
-</div>
+{{--<div class="pricing-plan" id="price">--}}
+{{--    <div class="container">--}}
+{{--        <!-- Section heading -->--}}
+{{--        <div class="section-title text-center">--}}
+{{--            <h2>Pricing Plan</h2>--}}
+{{--        </div>--}}
+{{--        <div class="shape"></div>--}}
+{{--        <div class="row">--}}
+{{--            <!--First column-->--}}
+{{--            <div class="col-lg-4 col-md-12 mb-4">--}}
+{{--                <!--Card-->--}}
+{{--                <div class="card">--}}
+{{--                    <!--Content-->--}}
+{{--                    <div class="text-center">--}}
+{{--                        <div class="card-body">--}}
+{{--                            <h5>Basic plan</h5>--}}
+{{--                            <div class="d-flex justify-content-center">--}}
+{{--                                <div class="card-circle d-flex justify-content-center align-items-center">--}}
+{{--                                    <i class="fa fa-home pink-text"></i>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <!--Price-->--}}
+{{--                            <h2 class="font-weight-bold mt-3"><strong>59$</strong></h2>--}}
+{{--                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa pariatur id nobis--}}
+{{--                                accusamus deleniti cumque hic.--}}
+{{--                            </p>--}}
+{{--                            <a class="btn btn-md btn-pink btn-rounded waves-effect waves-light">Buy now</a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <!--/.Card-->--}}
+{{--            </div>--}}
+{{--            <!--/First column-->--}}
+{{--            <!--Second column-->--}}
+{{--            <div class="col-lg-4 col-md-12 mb-4">--}}
+{{--                <!--Card-->--}}
+{{--                <div class="card pink">--}}
+{{--                    <!--Content-->--}}
+{{--                    <div class="text-center white-text">--}}
+{{--                        <div class="card-body">--}}
+{{--                            <h5 class="white-text">Premium plan</h5>--}}
+{{--                            <div class="d-flex justify-content-center">--}}
+{{--                                <div class="card-circle d-flex justify-content-center align-items-center">--}}
+{{--                                    <i class="fa fa-group white-text"></i>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <!--Price-->--}}
+{{--                            <h2 class="font-weight-bold white-text mt-3"><strong>79$</strong></h2>--}}
+{{--                            <p class="white-text">Esse corporis saepe laudantium velit adipisci cumque iste ratione--}}
+{{--                                facere non distinctio cupiditate sequi atque.--}}
+{{--                            </p>--}}
+{{--                            <a class="btn btn-md btn-pink btn-rounded waves-effect waves-light">Buy now</a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <!--/.Card-->--}}
+{{--            </div>--}}
+{{--            <!--/Second column-->--}}
+{{--            <!--Third column-->--}}
+{{--            <div class="col-lg-4 col-md-12 mb-4">--}}
+{{--                <!--Card-->--}}
+{{--                <div class="card">--}}
+{{--                    <!--Content-->--}}
+{{--                    <div class="text-center">--}}
+{{--                        <div class="card-body">--}}
+{{--                            <h5>Advanced plan</h5>--}}
+{{--                            <div class="d-flex justify-content-center">--}}
+{{--                                <div class="card-circle d-flex justify-content-center align-items-center">--}}
+{{--                                    <i class="fa fa-bar-chart pink-text"></i>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <!--Price-->--}}
+{{--                            <h2 class="font-weight-bold  mt-3"><strong>99$</strong></h2>--}}
+{{--                            <p>At ab ea a molestiae corrupti numquam quo beatae minima ratione magni accusantium--}}
+{{--                                repellat eveniet quia vitae.--}}
+{{--                            </p>--}}
+{{--                            <a class="btn btn-md btn-pink btn-rounded waves-effect waves-light">Buy now</a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <!--/.Card-->--}}
+{{--            </div>--}}
+{{--            <!--/Third column-->--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--    <!-- container -->--}}
+{{--</div>--}}
 <!-- Pricing-plan End -->
 <!-- Count-area Start -->
 <div class="count-area">
@@ -561,11 +572,11 @@
                 <ul class="list-unstyled mb-0">
                     <li>
                         <i class="fa fa-map-marker pink-text fa-2x"></i>
-                        <p>San Francisco, CA 94126, USA</p>
+                        <p>Gondal, Gujarat, India</p>
                     </li>
                     <li>
                         <i class="fa fa-phone mt-4 pink-text fa-2x"></i>
-                        <p>+ 01 234 567 89</p>
+                        <p>+ 9879729030</p>
                     </li>
                     <li>
                         <i class="fa fa-envelope mt-4 pink-text fa-2x"></i>
@@ -602,8 +613,7 @@
                             <div class="footer-contact-icon"><i class="fa fa-phone white-text fa-2x"></i></div>
                             <div class="footer-contact-content">
                                 <h5>Phone</h5>
-                                <p>Phone 01: (+088) 5555 7878</p>
-                                <p>Phone 02: (+088) 5555 7676</p>
+                                <p>9879729030</p>
                             </div>
                         </div>
                     </div>
@@ -613,8 +623,8 @@
                             <div class="footer-contact-icon"><i class="fa fa-map-marker white-text fa-2x"></i></div>
                             <div class="footer-contact-content">
                                 <h5>Address</h5>
-                                <p>Spring Store London Oxford Street, </p>
-                                <p>012 United Kingdom</p>
+{{--                                <p>Spring Store London Oxford Street, </p>--}}
+                                <p>Gondal, Gujarat</p>
                             </div>
                         </div>
                     </div>
@@ -658,8 +668,8 @@
                     <ul class="list-inline social-icon">
                         <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                         <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                        <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                        <li><a href="https://nencybeauty.com/"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
                     </ul>
                 </div>
             </div>
