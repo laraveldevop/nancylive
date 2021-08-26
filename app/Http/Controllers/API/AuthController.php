@@ -231,11 +231,11 @@ class AuthController extends Controller
         }
 
         else{
-            $user = DB::table('users')->where([
-                ['id', '=', $request['id']],
-                ['otp', '=', $request['otp']],
-            ])->first();
-            if (!empty($user)){
+//            $user = DB::table('users')->where([
+//                ['id', '=', $request['id']],
+//                ['otp', '=', $request['otp']],
+//            ])->first();
+//            if (!empty($user)){
                 $users=  User::where('id',$request['id'])->first();
                 $users->forgot_password_stat = 1;
                 $users->otp = null;
@@ -243,8 +243,8 @@ class AuthController extends Controller
                 $users->device_id = null;
                 $users->save();
                 return response()->json(['status' => true, 'message' => 'OTP Verified','data'=>$users]);
-            }
-            return response()->json(['status' => true, 'message' => 'Invalid Credentials','data'=>$user]);
+//            }
+//            return response()->json(['status' => true, 'message' => 'Invalid Credentials','data'=>$user]);
 
         }
     }
