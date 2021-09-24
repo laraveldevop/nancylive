@@ -101,7 +101,7 @@
                                             </div>
 
 
-                                            <div class="col-xl-12 text-right">
+                                            <div class="col-xl-12 text-left">
                                                 <button class="btn btn-primary" id="submit"><span>
                                                             @if ($action=='INSERT')
                                                             Add brand
