@@ -3,7 +3,7 @@
   width: 100%;
   height: auto;
 }
-.my-gallery figure {0;
+.my-gallery figure {
 }
 .my-gallery figcaption {
   display: none;
@@ -46,7 +46,7 @@ a.demo-gallery__img--main {
 .share-buttons h2 {
   text-align: center;
   border: 0;
-  
+
 }
 .share-buttons {
   text-align: center;
