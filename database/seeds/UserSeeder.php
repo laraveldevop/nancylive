@@ -16,10 +16,10 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Admin',
             'business_name' => 'Admin_business',
-            'email' =>'admin@gmail.com',
-            'mobile' =>'8888888888',
-            'city' =>'Rajkot',
-            'address' =>'rajkot',
+            'email' =>'support@nencybeauty.com',
+            'mobile' =>'x]obi+ad!ge',
+            'city' =>'Gondal',
+            'address' =>'Gondal',
             'email_verified_at' => now(),
             'password' => Hash::make('admin123456'),
         ]);
