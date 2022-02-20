@@ -20,9 +20,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ac86e1d-4ab5-4fdc-8f0e-0c63d2f045c3" name="Default Changelist" comment="fix bug">
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/phpunit.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
@@ -91,7 +88,6 @@
       <path value="$PROJECT_DIR$/vendor/filp/whoops" />
       <path value="$PROJECT_DIR$/vendor/opis/closure" />
       <path value="$PROJECT_DIR$/vendor/voku/portable-ascii" />
-      <path value="$PROJECT_DIR$/vendor/asm89/stack-cors" />
       <path value="$PROJECT_DIR$/vendor/brick/math" />
       <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
       <path value="$PROJECT_DIR$/vendor/defuse/php-encryption" />
@@ -121,7 +117,6 @@
       <path value="$PROJECT_DIR$/vendor/phpunit/php-file-iterator" />
       <path value="$PROJECT_DIR$/vendor/phpunit/php-text-template" />
       <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
-      <path value="$PROJECT_DIR$/vendor/phpunit/php-token-stream" />
       <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
       <path value="$PROJECT_DIR$/vendor/symfony/console" />
       <path value="$PROJECT_DIR$/vendor/symfony/css-selector" />
@@ -185,6 +180,11 @@
       <path value="$PROJECT_DIR$/vendor/laravel/serializable-closure" />
       <path value="$PROJECT_DIR$/vendor/psr/http-client" />
       <path value="$PROJECT_DIR$/vendor/phpunit/php-invoker" />
+      <path value="$PROJECT_DIR$/vendor/fruitcake/php-cors" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/complexity" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/cli-parser" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit" />
     </include_path>
   </component>
   <component name="ProjectId" id="1f5Gc57Pg9uaaMwQ5aw64UPjUtH" />
@@ -209,6 +209,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../Truelysell" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -1021,13 +1022,10 @@
       <workItem from="1643647607944" duration="234000" />
       <workItem from="1645162273714" duration="804000" />
       <workItem from="1645169598072" duration="1739000" />
-    </task>
-    <task id="LOCAL-00251" summary="fix bug">
-      <created>1615376468384</created>
-      <option name="number" value="00251" />
-      <option name="presentableId" value="LOCAL-00251" />
-      <option name="project" value="LOCAL" />
-      <updated>1615376468385</updated>
+      <workItem from="1645171452363" duration="1905000" />
+      <workItem from="1645173687959" duration="13000" />
+      <workItem from="1645341810785" duration="856000" />
+      <workItem from="1645342967131" duration="434000" />
     </task>
     <task id="LOCAL-00252" summary="fix bug">
       <created>1615378677421</created>
@@ -1365,7 +1363,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641377383621</updated>
     </task>
-    <option name="localTasksCounter" value="300" />
+    <task id="LOCAL-00300" summary="change php v">
+      <created>1645171617877</created>
+      <option name="number" value="00300" />
+      <option name="presentableId" value="LOCAL-00300" />
+      <option name="project" value="LOCAL" />
+      <updated>1645171617879</updated>
+    </task>
+    <option name="localTasksCounter" value="301" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1385,7 +1390,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="add user in api" />
     <MESSAGE value="fix bug user in api" />
     <MESSAGE value="role update and user list API" />
     <MESSAGE value="fix bug in user list api" />
@@ -1410,28 +1414,33 @@
     <MESSAGE value="change in theme and add ss" />
     <MESSAGE value="fix bug" />
     <MESSAGE value="change v" />
-    <option name="LAST_COMMIT_MESSAGE" value="change v" />
+    <MESSAGE value="change php v" />
+    <option name="LAST_COMMIT_MESSAGE" value="change php v" />
   </component>
   <component name="WindowStateProjectService">
     <state x="459" y="281" width="447" height="265" key="ComposerInitDialogKey" timestamp="1640615767339">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="459" y="281" width="447" height="265" key="ComposerInitDialogKey/0.0.1366.738@0.0.1366.738" timestamp="1640615767339" />
+    <state x="92" y="92" width="1182" height="554" key="DiffContextDialog" timestamp="1645171962219">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="92" y="92" width="1182" height="554" key="DiffContextDialog/0.0.1366.738@0.0.1366.738" timestamp="1645171962219" />
     <state x="463" y="124" key="FileChooserDialogImpl" timestamp="1641632581440">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="463" y="124" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1641632581440" />
-    <state x="275" y="89" key="Vcs.Push.Dialog.v2" timestamp="1641377405622">
+    <state x="275" y="89" key="Vcs.Push.Dialog.v2" timestamp="1645171953831">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="275" y="89" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1641377405622" />
+    <state x="275" y="89" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1645171953831" />
     <state x="92" y="92" width="1182" height="554" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1640616111855">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="92" y="92" width="1182" height="554" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1366.738@0.0.1366.738" timestamp="1640616111855" />
-    <state x="21" y="-7" width="1025" height="738" key="find.popup" timestamp="1633169054632">
+    <state x="500" y="283" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1645171912026">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="21" y="-7" width="1025" height="738" key="find.popup/0.0.1366.738@0.0.1366.738" timestamp="1633169054632" />
+    <state x="500" y="283" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.738@0.0.1366.738" timestamp="1645171912026" />
   </component>
 </project>
