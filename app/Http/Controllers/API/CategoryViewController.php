@@ -156,8 +156,7 @@ class CategoryViewController extends Controller
             $category->module_id = $request->input('module_id');
 
             $path = Storage::disk('public')->put('category', $request->file('image'));
-            $thumbnailpath = public_path('storage/'.$path);
-            echo $thumbnailpath;die();
+            $thumbnailpath = asset('storage/'.$path);
             $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
