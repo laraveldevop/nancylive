@@ -1520,10 +1520,18 @@
     <option name="LAST_COMMIT_MESSAGE" value="fix bug" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1655107909138">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1655107909138" />
     <state x="164" y="117" key="FileChooserDialogImpl" timestamp="1649077206838">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="164" y="117" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1649077206838" />
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2" timestamp="1655107912409">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1655107912409" />
     <state x="92" y="92" width="1182" height="554" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1654950849983">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
