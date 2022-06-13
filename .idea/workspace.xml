@@ -21,7 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3ac86e1d-4ab5-4fdc-8f0e-0c63d2f045c3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/CategoryViewController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/CategoryViewController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -1131,14 +1130,8 @@
       <workItem from="1654949711714" duration="1137000" />
       <workItem from="1655106257706" duration="81000" />
       <workItem from="1655106511524" duration="1785000" />
-      <workItem from="1655108671771" duration="729000" />
-    </task>
-    <task id="LOCAL-00258" summary="fix bug">
-      <created>1615537945514</created>
-      <option name="number" value="00258" />
-      <option name="presentableId" value="LOCAL-00258" />
-      <option name="project" value="LOCAL" />
-      <updated>1615537945515</updated>
+      <workItem from="1655108671771" duration="1370000" />
+      <workItem from="1655110834319" duration="682000" />
     </task>
     <task id="LOCAL-00259" summary="fix bug">
       <created>1615804644860</created>
@@ -1476,7 +1469,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655108774749</updated>
     </task>
-    <option name="localTasksCounter" value="307" />
+    <task id="LOCAL-00307" summary="fix bug">
+      <created>1655109431021</created>
+      <option name="number" value="00307" />
+      <option name="presentableId" value="LOCAL-00307" />
+      <option name="project" value="LOCAL" />
+      <updated>1655109431021</updated>
+    </task>
+    <option name="localTasksCounter" value="308" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1524,18 +1524,18 @@
     <option name="LAST_COMMIT_MESSAGE" value="fix bug" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1655108772512">
+    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1655109429136">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1655108772512" />
+    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1655109429136" />
     <state x="164" y="117" key="FileChooserDialogImpl" timestamp="1649077206838">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="164" y="117" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1649077206838" />
-    <state x="275" y="102" key="Vcs.Push.Dialog.v2" timestamp="1655108776834">
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2" timestamp="1655109432629">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="275" y="102" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1655108776834" />
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1655109432629" />
     <state x="92" y="92" width="1182" height="554" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1654950849983">
       <screen x="0" y="0" width="1366" height="738" />
     </state>

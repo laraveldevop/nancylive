@@ -156,11 +156,12 @@ class CategoryViewController extends Controller
             $category->module_id = $request->input('module_id');
 
             $path = Storage::disk('public')->put('category', $request->file('image'));
-            $thumbnailpath = public_path($path);
+            $thumbnailpath = public_path('storage/'.$path);
             $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
-            })->save($thumbnailpath);
+            });
+            $img->save($thumbnailpath);
             $category->cat_image = $path;
             $category->save();
             return response()->json(['status' => true, 'message' => 'Add Successfully', 'data' =>$category]);
