@@ -21,8 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3ac86e1d-4ab5-4fdc-8f0e-0c63d2f045c3" name="Default Changelist" comment="fix bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,23 +204,23 @@
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="GitIgnore" />
     <property name="javascript.nodejs.core.library.configured.version" value="10.16.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="10.17.51" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Truelysell" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../realtors_app" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\video-status\public" />
+      <recent name="C:\xampp\htdocs\video-status" />
+      <recent name="C:\xampp\htdocs\video-status\resources\views\container\video" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\video-status\resources\views" />
       <recent name="C:\xampp\htdocs\video-status\resources\views\container" />
       <recent name="C:\xampp\htdocs\video-status\public" />
       <recent name="C:\xampp\htdocs\video-status" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\video-status\public" />
-      <recent name="C:\xampp\htdocs\video-status" />
-      <recent name="C:\xampp\htdocs\video-status\resources\views\container\video" />
     </key>
   </component>
   <component name="RunManager">
@@ -231,7 +229,7 @@
       <method v="2" />
     </configuration>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -1025,21 +1023,113 @@
       <workItem from="1645171452363" duration="1905000" />
       <workItem from="1645173687959" duration="13000" />
       <workItem from="1645341810785" duration="856000" />
-      <workItem from="1645342967131" duration="434000" />
-    </task>
-    <task id="LOCAL-00252" summary="fix bug">
-      <created>1615378677421</created>
-      <option name="number" value="00252" />
-      <option name="presentableId" value="LOCAL-00252" />
-      <option name="project" value="LOCAL" />
-      <updated>1615378677423</updated>
-    </task>
-    <task id="LOCAL-00253" summary="fix bug">
-      <created>1615384190139</created>
-      <option name="number" value="00253" />
-      <option name="presentableId" value="LOCAL-00253" />
-      <option name="project" value="LOCAL" />
-      <updated>1615384190140</updated>
+      <workItem from="1645342967131" duration="1394000" />
+      <workItem from="1645345163966" duration="599000" />
+      <workItem from="1645420644540" duration="817000" />
+      <workItem from="1645813093325" duration="541000" />
+      <workItem from="1645847313969" duration="56000" />
+      <workItem from="1645861355854" duration="659000" />
+      <workItem from="1645864132414" duration="605000" />
+      <workItem from="1646032437421" duration="77000" />
+      <workItem from="1646044073713" duration="657000" />
+      <workItem from="1646045432376" duration="809000" />
+      <workItem from="1646047693005" duration="1640000" />
+      <workItem from="1646049629616" duration="347000" />
+      <workItem from="1646068273510" duration="682000" />
+      <workItem from="1646465035697" duration="534000" />
+      <workItem from="1646465637552" duration="594000" />
+      <workItem from="1646468170319" duration="863000" />
+      <workItem from="1646470141259" duration="588000" />
+      <workItem from="1646472216518" duration="590000" />
+      <workItem from="1646474491936" duration="1180000" />
+      <workItem from="1646477591845" duration="844000" />
+      <workItem from="1646479436812" duration="11000" />
+      <workItem from="1646495696869" duration="566000" />
+      <workItem from="1646496297741" duration="1771000" />
+      <workItem from="1646498112679" duration="1768000" />
+      <workItem from="1646500035023" duration="1733000" />
+      <workItem from="1646501851068" duration="1003000" />
+      <workItem from="1646503667698" duration="7000" />
+      <workItem from="1646720734622" duration="735000" />
+      <workItem from="1646728257454" duration="1479000" />
+      <workItem from="1646730467795" duration="675000" />
+      <workItem from="1646732753761" duration="1305000" />
+      <workItem from="1646734110910" duration="1767000" />
+      <workItem from="1646735929815" duration="23000" />
+      <workItem from="1646736594832" duration="221000" />
+      <workItem from="1646737265938" duration="451000" />
+      <workItem from="1646737777398" duration="285000" />
+      <workItem from="1646831134819" duration="802000" />
+      <workItem from="1646890741247" duration="109000" />
+      <workItem from="1646890953954" duration="16000" />
+      <workItem from="1646892011714" duration="647000" />
+      <workItem from="1646892951726" duration="24000" />
+      <workItem from="1646894630605" duration="107000" />
+      <workItem from="1646894771366" duration="323000" />
+      <workItem from="1647095556575" duration="1416000" />
+      <workItem from="1647097315096" duration="1255000" />
+      <workItem from="1647157076645" duration="980000" />
+      <workItem from="1647158123828" duration="88000" />
+      <workItem from="1647339623940" duration="966000" />
+      <workItem from="1647340954344" duration="1285000" />
+      <workItem from="1647342720907" duration="585000" />
+      <workItem from="1647344553041" duration="95000" />
+      <workItem from="1647522856990" duration="604000" />
+      <workItem from="1647531765766" duration="365000" />
+      <workItem from="1647840375015" duration="659000" />
+      <workItem from="1647841107950" duration="1168000" />
+      <workItem from="1648287158809" duration="668000" />
+      <workItem from="1648287864133" duration="32000" />
+      <workItem from="1648288886496" duration="634000" />
+      <workItem from="1648289761585" duration="603000" />
+      <workItem from="1649068099965" duration="1275000" />
+      <workItem from="1649086729259" duration="3398000" />
+      <workItem from="1649499221360" duration="3754000" />
+      <workItem from="1649751033382" duration="2832000" />
+      <workItem from="1649832698868" duration="1193000" />
+      <workItem from="1649914516769" duration="691000" />
+      <workItem from="1649934417790" duration="7512000" />
+      <workItem from="1650033558456" duration="1313000" />
+      <workItem from="1650085780318" duration="14000" />
+      <workItem from="1650616730811" duration="2813000" />
+      <workItem from="1651757636498" duration="1025000" />
+      <workItem from="1651758817614" duration="1537000" />
+      <workItem from="1651760925992" duration="603000" />
+      <workItem from="1651829107725" duration="1661000" />
+      <workItem from="1651831742077" duration="1001000" />
+      <workItem from="1651834108273" duration="1124000" />
+      <workItem from="1651835920282" duration="737000" />
+      <workItem from="1651838880513" duration="1815000" />
+      <workItem from="1651840925847" duration="297000" />
+      <workItem from="1651858042212" duration="18000" />
+      <workItem from="1652190798078" duration="1118000" />
+      <workItem from="1652191944495" duration="296000" />
+      <workItem from="1652193123788" duration="809000" />
+      <workItem from="1652196352000" duration="27000" />
+      <workItem from="1652205108991" duration="107000" />
+      <workItem from="1652205734839" duration="725000" />
+      <workItem from="1652206493097" duration="1476000" />
+      <workItem from="1652208330520" duration="1230000" />
+      <workItem from="1652251510756" duration="973000" />
+      <workItem from="1652254214292" duration="1766000" />
+      <workItem from="1652256097832" duration="595000" />
+      <workItem from="1652258865583" duration="1532000" />
+      <workItem from="1652260754980" duration="706000" />
+      <workItem from="1652262827330" duration="617000" />
+      <workItem from="1653291444442" duration="987000" />
+      <workItem from="1653293460523" duration="687000" />
+      <workItem from="1653294842016" duration="1227000" />
+      <workItem from="1653296844117" duration="952000" />
+      <workItem from="1654168449564" duration="721000" />
+      <workItem from="1654169234498" duration="975000" />
+      <workItem from="1654264299482" duration="60000" />
+      <workItem from="1654603648053" duration="28000" />
+      <workItem from="1654604255449" duration="591000" />
+      <workItem from="1654606346394" duration="53000" />
+      <workItem from="1654949261405" duration="402000" />
+      <workItem from="1654949711714" duration="1137000" />
+      <workItem from="1655106257706" duration="81000" />
+      <workItem from="1655106511524" duration="977000" />
     </task>
     <task id="LOCAL-00254" summary="fix bug">
       <created>1615466397415</created>
@@ -1370,11 +1460,25 @@
       <option name="project" value="LOCAL" />
       <updated>1645171617879</updated>
     </task>
-    <option name="localTasksCounter" value="301" />
+    <task id="LOCAL-00301" summary="fix version v8.6.11">
+      <created>1645343483600</created>
+      <option name="number" value="00301" />
+      <option name="presentableId" value="LOCAL-00301" />
+      <option name="project" value="LOCAL" />
+      <updated>1645343483601</updated>
+    </task>
+    <task id="LOCAL-00302" summary="fix version v8.6.11">
+      <created>1645343495467</created>
+      <option name="number" value="00302" />
+      <option name="presentableId" value="LOCAL-00302" />
+      <option name="project" value="LOCAL" />
+      <updated>1645343495468</updated>
+    </task>
+    <option name="localTasksCounter" value="303" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -1390,7 +1494,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="fix bug user in api" />
     <MESSAGE value="role update and user list API" />
     <MESSAGE value="fix bug in user list api" />
     <MESSAGE value="approve and reject api" />
@@ -1415,32 +1518,25 @@
     <MESSAGE value="fix bug" />
     <MESSAGE value="change v" />
     <MESSAGE value="change php v" />
-    <option name="LAST_COMMIT_MESSAGE" value="change php v" />
+    <MESSAGE value="fix version v8.6.11" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix version v8.6.11" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="459" y="281" width="447" height="265" key="ComposerInitDialogKey" timestamp="1640615767339">
+    <state x="164" y="117" key="FileChooserDialogImpl" timestamp="1649077206838">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="459" y="281" width="447" height="265" key="ComposerInitDialogKey/0.0.1366.738@0.0.1366.738" timestamp="1640615767339" />
-    <state x="92" y="92" width="1182" height="554" key="DiffContextDialog" timestamp="1645171962219">
+    <state x="164" y="117" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1649077206838" />
+    <state x="92" y="92" width="1182" height="554" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1654950849983">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="92" y="92" width="1182" height="554" key="DiffContextDialog/0.0.1366.738@0.0.1366.738" timestamp="1645171962219" />
-    <state x="463" y="124" key="FileChooserDialogImpl" timestamp="1641632581440">
+    <state x="92" y="92" width="1182" height="554" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1366.738@0.0.1366.738" timestamp="1654950849983" />
+    <state x="389" y="94" width="634" height="534" key="find.popup" timestamp="1655106279733">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="463" y="124" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1641632581440" />
-    <state x="275" y="89" key="Vcs.Push.Dialog.v2" timestamp="1645171953831">
+    <state x="389" y="94" width="634" height="534" key="find.popup/0.0.1366.738@0.0.1366.738" timestamp="1655106279733" />
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1651831837416">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="275" y="89" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1645171953831" />
-    <state x="92" y="92" width="1182" height="554" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1640616111855">
-      <screen x="0" y="0" width="1366" height="738" />
-    </state>
-    <state x="92" y="92" width="1182" height="554" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1366.738@0.0.1366.738" timestamp="1640616111855" />
-    <state x="500" y="283" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1645171912026">
-      <screen x="0" y="0" width="1366" height="738" />
-    </state>
-    <state x="500" y="283" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.738@0.0.1366.738" timestamp="1645171912026" />
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1651831837416" />
   </component>
 </project>

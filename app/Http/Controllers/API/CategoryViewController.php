@@ -160,8 +160,8 @@ class CategoryViewController extends Controller
             $img = Image::make($thumbnailpath)->resize(400, 400, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
-            });
-            $img->save($thumbnailpath);
+            })->save($thumbnailpath);
+//            $img->save($thumbnailpath);
             $category->cat_image = $path;
             $category->save();
             return response()->json(['status' => true, 'message' => 'Add Successfully', 'data' =>$category]);
